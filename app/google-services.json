@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "888105679809",
+    "project_id": "dbrahapp-23a09",
+    "storage_bucket": "dbrahapp-23a09.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:888105679809:android:806bf5061f63da8f038d40",
+        "android_client_info": {
+          "package_name": "com.apps.dbrah"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "888105679809-uqs26mc6llksv5dnf8qft5pqh754fbsu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.apps.dbrah",
+            "certificate_hash": "6d39e57f3c880ad5ec12fe731d3e4a908fca8758"
+          }
+        },
+        {
+          "client_id": "888105679809-djubpod02feicop7dsvb4jjmlatsdrr4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRC3eCnAeOaSDtxRwoftgv3AB1ShbHWCo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "888105679809-djubpod02feicop7dsvb4jjmlatsdrr4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

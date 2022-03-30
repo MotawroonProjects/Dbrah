@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/logo_only" />
+
+                <androidx.legacy.widget.Space
+                    android:layout_width="24dp"
+                    android:layout_height="0dp" />
+
+                <LinearLayout
+                    android:id="@+id/llSearch"
+                    android:layout_width="0dp"
+                    android:layout_height="46dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_grey6_stroke"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_search" />
+
+                    <androidx.legacy.widget.Space
+                        android:layout_width="16dp"
+                        android:layout_height="0dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/what_are_you_looking_for"
+                        android:textColor="@color/grey7"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <androidx.legacy.widget.Space
+                    android:layout_width="12dp"
+                    android:layout_height="0dp" />
+
+                <FrameLayout
+                    android:id="@+id/flNotification"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_notification" />
+
+                    <TextView
+                        android:id="@+id/tvNotificationCount"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/circle_primary"
+                        android:gravity="center"
+                        android:lines="1"
+                        android:textColor="@color/white"
+                        android:textSize="10sp"
+                        tools:ignore="SmallSp" />
+
+                </FrameLayout>
+
+                <androidx.legacy.widget.Space
+                    android:layout_width="4dp"
+                    android:layout_height="0dp" />
+            </LinearLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <fragment
+            android:id="@+id/navHostFragmentCart"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/fragment_cart_navigation"
+
+            />
+    </LinearLayout>
+
+</layout>
