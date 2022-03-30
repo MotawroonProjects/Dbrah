@@ -66,6 +66,7 @@
     <string name="no_products_to_show">لا توجد منتجات لعرضها</string>
     <string name="most_sale_products">المنتجات الاكثر مبيعا</string>
     <string name="recent_products">المنتجات الاحدث</string>
+    <string name="my_list">قائمة المفضلة</string>
 
 
 </resources>

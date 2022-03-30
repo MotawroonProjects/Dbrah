@@ -25,6 +25,7 @@ import com.apps.dbrah.databinding.ActivityHomeBinding;
 import com.apps.dbrah.language.Language;
 import com.apps.dbrah.uis.activity_home.market_module.FragmentHome;
 import com.apps.dbrah.uis.activity_home.notification_module.FragmentNotification;
+import com.apps.dbrah.uis.activity_home.search_module.FragmentSearch;
 import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
@@ -35,11 +36,12 @@ import java.util.Stack;
 
 import io.paperdb.Paper;
 
-public class HomeActivity extends BaseActivity implements ViewPager.OnPageChangeListener{
+public class HomeActivity extends BaseActivity {
     private GeneralMvvm generalMvvm;
     private ActivityHomeBinding binding;
     private MyPagerAdapter adapter;
     private List<Fragment> fragments;
+    private Stack<Integer> stack;
 
 
     @Override
@@ -55,8 +57,10 @@ public class HomeActivity extends BaseActivity implements ViewPager.OnPageChange
     private void initView() {
         generalMvvm = ViewModelProviders.of(this).get(GeneralMvvm.class);
         setUpPager();
-        generalMvvm.onNotificationNavigate().observe(this, this::updatePagePos);
-
+        generalMvvm.onHomeNavigate().observe(this, this::updateStack);
+        generalMvvm.onHomeBackNavigate().observe(this,value->{
+            onBackPressed();
+        });
 
        /* homeActivityMvvm = ViewModelProviders.of(this).get(HomeActivityMvvm.class);
 
@@ -76,23 +80,28 @@ public class HomeActivity extends BaseActivity implements ViewPager.OnPageChange
     }
 
     private void setUpPager() {
+        stack = new Stack<>();
         fragments = new ArrayList<>();
         fragments.add(FragmentHome.newInstance());
         fragments.add(FragmentNotification.newInstance());
+        fragments.add(FragmentSearch.newInstance());
 
-        adapter = new MyPagerAdapter(getSupportFragmentManager(),fragments, null);
+        adapter = new MyPagerAdapter(getSupportFragmentManager(), fragments, null);
         binding.pager.setAdapter(adapter);
         binding.pager.setOffscreenPageLimit(fragments.size());
-        binding.pager.addOnPageChangeListener(this);
 
-
+        stack.push(0);
 
 
     }
 
-    public void updatePagePos(int pos) {
-        binding.pager.setCurrentItem(pos);
+    private void updateStack(int pagePos) {
+        stack.push(pagePos);
+        binding.pager.setCurrentItem(pagePos);
+
     }
+
+
 
     public void refreshActivity(String lang) {
         Paper.book().write("lang", lang);
@@ -118,35 +127,19 @@ public class HomeActivity extends BaseActivity implements ViewPager.OnPageChange
 
     @Override
     public void onBackPressed() {
-
-        if (binding.pager.getCurrentItem()!=0) {
-            updatePagePos(0);
-
+        Log.e("size",stack.size()+"_");
+        if (stack.size() > 1) {
+            stack.pop();
+            binding.pager.setCurrentItem(stack.peek());
         } else {
-
             FragmentHome fragmentHome = (FragmentHome) adapter.getItem(0);
             if (!fragmentHome.onBackPress()) {
                 super.onBackPressed();
             }
-
 
         }
 
 
     }
 
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
-    }
 }

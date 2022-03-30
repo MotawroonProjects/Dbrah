@@ -65,5 +65,6 @@
     <string name="no_products_to_show">No products to show</string>
     <string name="most_sale_products">Most sale products</string>
     <string name="recent_products">Recent products</string>
+    <string name="my_list">My list</string>
 
 </resources>

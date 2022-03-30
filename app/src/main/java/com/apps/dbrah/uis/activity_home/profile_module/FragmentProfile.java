@@ -67,7 +67,6 @@ public class FragmentProfile extends BaseFragment {
     private void initView() {
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
         binding.setNotificationCount("0");
-        binding.flNotification.setOnClickListener(v -> generalMvvm.onNotificationNavigate().setValue(1));
 
         if (getUserModel() != null) {
             binding.setModel(getUserModel());

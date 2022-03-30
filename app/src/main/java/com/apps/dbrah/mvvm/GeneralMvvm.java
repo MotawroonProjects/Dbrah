@@ -7,42 +7,29 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 public class GeneralMvvm extends AndroidViewModel {
-    private MutableLiveData<Integer> actionNotificationNavigator;
-    private MutableLiveData<Boolean> actionMarketBackNavigator;
-    private MutableLiveData<Integer> actionMarketForwardNavigator;
-    private MutableLiveData<Boolean> actionMarketBottomNavSearchShow;
+    private MutableLiveData<Integer> actionHomeNavigator;
+    private MutableLiveData<Boolean> actionHomeBackNavigator;
+
 
     public GeneralMvvm(@NonNull Application application) {
         super(application);
     }
 
-    public MutableLiveData<Integer> onNotificationNavigate() {
-        if (actionNotificationNavigator == null) {
-            actionNotificationNavigator = new MutableLiveData<>();
+    public MutableLiveData<Integer> onHomeNavigate() {
+        if (actionHomeNavigator == null) {
+            actionHomeNavigator = new MutableLiveData<>();
         }
-        return actionNotificationNavigator;
+        return actionHomeNavigator;
     }
 
-    public MutableLiveData<Boolean> onMarketFragmentBackNavigate() {
-        if (actionMarketBackNavigator == null) {
-            actionMarketBackNavigator = new MutableLiveData<>();
+    public MutableLiveData<Boolean> onHomeBackNavigate() {
+        if (actionHomeBackNavigator == null) {
+            actionHomeBackNavigator = new MutableLiveData<>();
         }
-        return actionMarketBackNavigator;
+        return actionHomeBackNavigator;
     }
 
-    public MutableLiveData<Integer> onMarketFragmentForwardNavigate() {
-        if (actionMarketForwardNavigator == null) {
-            actionMarketForwardNavigator = new MutableLiveData<>();
-        }
-        return actionMarketForwardNavigator;
-    }
 
-    public MutableLiveData<Boolean> getActionMarketBottomNavSearchShow() {
-        if (actionMarketBottomNavSearchShow == null) {
-            actionMarketBottomNavSearchShow = new MutableLiveData<>();
-        }
-        return actionMarketBottomNavSearchShow;
-    }
 
 
 }

@@ -2,6 +2,7 @@ package com.apps.dbrah.uis.activity_home.notification_module;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,7 +55,8 @@ public class FragmentNotification extends BaseFragment {
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
         View view = activity.setUpToolbar(binding.toolbar, getString(R.string.notifications), R.color.white, R.color.black, R.drawable.small_rounded_grey4, false);
         view.setOnClickListener(v -> {
-            generalMvvm.onNotificationNavigate().setValue(0);
+            generalMvvm.onHomeBackNavigate().setValue(true);
+
         });
     }
 

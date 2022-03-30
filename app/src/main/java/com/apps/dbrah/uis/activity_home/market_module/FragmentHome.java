@@ -71,14 +71,10 @@ public class FragmentHome extends BaseFragment implements ViewPager.OnPageChange
 
     private void initView() {
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
-        generalMvvm.getActionMarketBottomNavSearchShow().observe(this,isShow->{
-            if (isShow){
-                binding.bottomNavigationView.setVisibility(View.VISIBLE);
-            }else {
-                binding.bottomNavigationView.setVisibility(View.GONE);
+        binding.setNotificationCount("0");
+        binding.llSearch.setOnClickListener(v -> generalMvvm.onHomeNavigate().setValue(2));
+        binding.flNotification.setOnClickListener(v-> generalMvvm.onHomeNavigate().setValue(1));
 
-            }
-        });
         setUpPager();
 
     }
@@ -98,7 +94,7 @@ public class FragmentHome extends BaseFragment implements ViewPager.OnPageChange
         map.put(2, R.id.cart);
         map.put(3, R.id.profile);
 
-        fragments.add(FragmentMarketContainer.newInstance());
+        fragments.add(FragmentMarket.newInstance());
         fragments.add(FragmentOrder.newInstance());
         fragments.add(FragmentCart.newInstance());
         fragments.add(FragmentProfile.newInstance());
@@ -153,31 +149,13 @@ public class FragmentHome extends BaseFragment implements ViewPager.OnPageChange
     }
 
     public boolean onBackPress() {
-        if (binding.pager.getCurrentItem()==0){
-            FragmentMarketContainer fragmentMarketContainer = (FragmentMarketContainer) adapter.getItem(0);
-            if (!fragmentMarketContainer.onBackPress()){
-                Log.e("1","1");
-                if (stack.size() > 1) {
-                    stack.pop();
-                    binding.pager.setCurrentItem(stack.peek());
-                    return true;
-                } else {
-                    return false;
-                }
-            }else {
-                generalMvvm.getActionMarketBottomNavSearchShow().setValue(true);
-                return true;
-            }
-        }else {
-            if (stack.size() > 1) {
-                stack.pop();
-                binding.pager.setCurrentItem(stack.peek());
-                return true;
-            } else {
-                return false;
-            }
+        if (stack.size() > 1) {
+            stack.pop();
+            binding.pager.setCurrentItem(stack.peek());
+            return true;
+        } else {
+            return false;
         }
-
     }
 
 

@@ -56,8 +56,7 @@ public class FragmentOrder extends BaseFragment {
 
     private void initView() {
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
-        binding.setNotificationCount("0");
-        binding.flNotification.setOnClickListener(v -> generalMvvm.onNotificationNavigate().setValue(1));
+
         setUpPager();
     }
 
@@ -73,9 +72,7 @@ public class FragmentOrder extends BaseFragment {
         binding.pager.setOffscreenPageLimit(fragments.size());
         binding.tab.setupWithViewPager(binding.pager);
 
-        for (int index =0;index<binding.tab.getTabCount();index++){
 
-        }
 
     }
 

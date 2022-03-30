@@ -1,4 +1,4 @@
-package com.apps.dbrah.uis.activity_home.market_module;
+package com.apps.dbrah.uis.activity_home.search_module;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,7 +12,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.apps.dbrah.R;
-import com.apps.dbrah.databinding.FragmentOrderBinding;
 import com.apps.dbrah.databinding.FragmentSearchBinding;
 import com.apps.dbrah.mvvm.GeneralMvvm;
 import com.apps.dbrah.uis.activity_base.BaseFragment;
@@ -52,8 +51,7 @@ public class FragmentSearch extends BaseFragment {
         binding.setLang(getLang());
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
         binding.arrow.setOnClickListener(v -> {
-            generalMvvm.getActionMarketBottomNavSearchShow().setValue(true);
-            generalMvvm.onMarketFragmentBackNavigate().setValue(true);
+            generalMvvm.onHomeBackNavigate().setValue(true);
         });
     }
 
