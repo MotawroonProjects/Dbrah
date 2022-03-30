@@ -14,7 +14,7 @@
     <string name="continue1">Continue</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="no_data_to_show">No data to show</string>
-    <string name="phone">Phone</string>
+    <string name="phone">Phone Number</string>
     <string name="login">Login</string>
     <string name="terms_and_conditions">Terms and conditions</string>
     <string name="about_us">About us</string>
@@ -66,5 +66,8 @@
     <string name="most_sale_products">Most sale products</string>
     <string name="recent_products">Recent products</string>
     <string name="my_list">My list</string>
+    <string name="delivery_addresses">Delivery addresses</string>
+    <string name="your_not_logged_in">You are not logged in</string>
+    <string name="welcome_back">Welcome Back!</string>
 
 </resources>

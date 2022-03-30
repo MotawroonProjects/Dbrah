@@ -66,13 +66,14 @@ public class FragmentProfile extends BaseFragment {
 
     private void initView() {
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
-        binding.setNotificationCount("0");
-
         if (getUserModel() != null) {
             binding.setModel(getUserModel());
-        }
-        binding.setLang(getLang());
 
+        }else {
+
+        }
+
+        binding.profileLayout.setLang(getLang());
 
     }
 

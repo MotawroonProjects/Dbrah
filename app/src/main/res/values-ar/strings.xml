@@ -67,6 +67,9 @@
     <string name="most_sale_products">المنتجات الاكثر مبيعا</string>
     <string name="recent_products">المنتجات الاحدث</string>
     <string name="my_list">قائمة المفضلة</string>
+    <string name="delivery_addresses">عناوين التوصيل</string>
+    <string name="your_not_logged_in">لم تقم بتسجيل الدخول</string>
+    <string name="welcome_back">مرحبا بعودتك!</string>
 
 
 </resources>

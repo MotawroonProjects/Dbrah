@@ -2,10 +2,19 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+        <variable
+            name="lang"
+            type="String" />
+
+    </data>
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:background="@color/grey9"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -67,7 +76,7 @@
                 >
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
+                    android:layout_height="72dp"
                     app:cardElevation="1dp"
                     app:cardCornerRadius="12dp"
                     android:layout_margin="2dp"
@@ -102,6 +111,173 @@
                             android:layout_width="0dp"
                             android:layout_height="0dp"
                             android:layout_weight="1"
+                            />
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:background="@drawable/circle_white"
+                            android:src="@drawable/ic_right_arrow"
+                            android:padding="5dp"
+                            android:rotation='@{lang.equals("ar")?180:0}'
+                            />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    app:cardElevation="1dp"
+                    app:cardCornerRadius="12dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginTop="8dp"
+                    app:cardBackgroundColor="@color/grey1"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        >
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_addresses"
+                            />
+                        <androidx.legacy.widget.Space
+                            android:layout_width="16dp"
+                            android:layout_height="0dp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:fontFamily="@font/font_regular"
+                            android:textColor="@color/black"
+                            android:text="@string/delivery_addresses"
+                            />
+                        <androidx.legacy.widget.Space
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            />
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:background="@drawable/circle_white"
+                            android:src="@drawable/ic_right_arrow"
+                            android:padding="5dp"
+                            android:rotation='@{lang.equals("ar")?180:0}'
+                            />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    app:cardElevation="1dp"
+                    app:cardCornerRadius="12dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginTop="8dp"
+                    app:cardBackgroundColor="@color/grey1"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        >
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_edit_profile"
+                            />
+                        <androidx.legacy.widget.Space
+                            android:layout_width="16dp"
+                            android:layout_height="0dp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:fontFamily="@font/font_regular"
+                            android:textColor="@color/black"
+                            android:text="@string/edit_profile"
+                            />
+                        <androidx.legacy.widget.Space
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            />
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:background="@drawable/circle_white"
+                            android:src="@drawable/ic_right_arrow"
+                            android:padding="5dp"
+                            android:rotation='@{lang.equals("ar")?180:0}'
+                            />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    app:cardElevation="1dp"
+                    app:cardCornerRadius="12dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginTop="8dp"
+                    app:cardBackgroundColor="@color/grey1"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        >
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_settings"
+                            />
+                        <androidx.legacy.widget.Space
+                            android:layout_width="16dp"
+                            android:layout_height="0dp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:fontFamily="@font/font_regular"
+                            android:textColor="@color/black"
+                            android:text="@string/settings"
+                            />
+                        <androidx.legacy.widget.Space
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            />
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:background="@drawable/circle_white"
+                            android:src="@drawable/ic_right_arrow"
+                            android:padding="5dp"
+                            android:rotation='@{lang.equals("ar")?180:0}'
                             />
 
                     </LinearLayout>

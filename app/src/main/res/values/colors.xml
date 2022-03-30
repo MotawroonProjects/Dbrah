@@ -19,10 +19,12 @@
     <color name="grey6">#eee</color>
     <color name="grey7">#DADADA</color>
     <color name="grey8">#747474</color>
+    <color name="grey9">#FDFDFD</color>
 
     <color name="color1">#FCF1F1</color>
     <color name="color2">#BE3033</color>
     <color name="color3">#FF9096</color>
+    <color name="shadow">#10000000</color>
 
 
 </resources>

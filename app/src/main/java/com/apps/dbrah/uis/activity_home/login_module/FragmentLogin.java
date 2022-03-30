@@ -1,36 +1,33 @@
-package com.apps.dbrah.uis.activity_home.market_module;
+package com.apps.dbrah.uis.activity_home.login_module;
 
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.apps.dbrah.R;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProviders;
 
-import com.apps.dbrah.adapter.MyPagerAdapter;
-import com.apps.dbrah.databinding.FragmentMarketBinding;
+import com.apps.dbrah.R;
+import com.apps.dbrah.databinding.FragmentLoginBinding;
+import com.apps.dbrah.databinding.FragmentNotificationBinding;
 import com.apps.dbrah.mvvm.GeneralMvvm;
 import com.apps.dbrah.uis.activity_base.BaseFragment;
 import com.apps.dbrah.uis.activity_home.HomeActivity;
 
-import java.util.ArrayList;
-import java.util.List;
 
-
-public class FragmentMarket extends BaseFragment {
-    private GeneralMvvm generalMvvm;
+public class FragmentLogin extends BaseFragment {
     private HomeActivity activity;
-    private FragmentMarketBinding binding;
+    private FragmentLoginBinding binding;
+    private GeneralMvvm generalMvvm;
 
+
+    public static FragmentLogin newInstance() {
+        return new FragmentLogin();
+    }
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -38,14 +35,10 @@ public class FragmentMarket extends BaseFragment {
         activity = (HomeActivity) context;
     }
 
-    public static FragmentMarket newInstance() {
-        return new FragmentMarket();
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_market, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false);
         return binding.getRoot();
     }
 
@@ -58,8 +51,11 @@ public class FragmentMarket extends BaseFragment {
 
     private void initView() {
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
-        binding.setNotificationCount("0");
-        binding.setLang(getLang());
+        View view = activity.setUpToolbar(binding.toolbar, getString(R.string.notifications), R.color.white, R.color.black, R.drawable.small_rounded_grey4, false);
+        view.setOnClickListener(v -> {
+            generalMvvm.onHomeBackNavigate().setValue(true);
+
+        });
     }
 
 

@@ -15,37 +15,66 @@
             name="model"
             type="com.apps.dbrah.model.UserModel" />
 
-        <variable
-            name="notificationCount"
-            type="String" />
+
+
     </data>
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+        android:background="@color/grey9"
+        android:orientation="vertical">
+
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/grey2"
             android:fillViewport="true"
 
             >
 
 
-            <LinearLayout
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/grey2"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{model==null?View.GONE:View.VISIBLE,default=gone}"
+
+                    >
+                    <include
+                        android:id="@+id/profileLayout"
+                        layout="@layout/profile_layout"
+                        />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{model==null?View.VISIBLE:View.GONE,default=gone}"
+
+                    >
+                    <include
+                        android:id="@+id/profileNotLoggedLayout"
+                        layout="@layout/profile_login_layout"
+                        />
+                </FrameLayout>
 
 
-
-            </LinearLayout>
+            </FrameLayout>
 
         </androidx.core.widget.NestedScrollView>
 
-    </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:alpha=".5"
+            android:background="@drawable/shadow"
+            android:layout_gravity="bottom"
+
+            />
+
+    </FrameLayout>
 
 </layout>

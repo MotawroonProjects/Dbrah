@@ -2,7 +2,6 @@ package com.apps.dbrah.uis.activity_home.market_module;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,16 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
 import com.apps.dbrah.R;
 import com.apps.dbrah.adapter.MyPagerAdapter;
 import com.apps.dbrah.databinding.FragmentHomeBinding;
-import com.apps.dbrah.databinding.FragmentMarketBinding;
 import com.apps.dbrah.mvvm.GeneralMvvm;
-import com.apps.dbrah.uis.FragmentBaseNavigation;
 import com.apps.dbrah.uis.activity_base.BaseFragment;
 import com.apps.dbrah.uis.activity_home.HomeActivity;
 import com.apps.dbrah.uis.activity_home.cart_module.FragmentCart;
@@ -73,7 +69,7 @@ public class FragmentHome extends BaseFragment implements ViewPager.OnPageChange
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
         binding.setNotificationCount("0");
         binding.llSearch.setOnClickListener(v -> generalMvvm.onHomeNavigate().setValue(2));
-        binding.flNotification.setOnClickListener(v-> generalMvvm.onHomeNavigate().setValue(1));
+        binding.flNotification.setOnClickListener(v -> generalMvvm.onHomeNavigate().setValue(1));
 
         setUpPager();
 
@@ -156,6 +152,7 @@ public class FragmentHome extends BaseFragment implements ViewPager.OnPageChange
         } else {
             return false;
         }
+
     }
 
 

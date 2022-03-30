@@ -8,7 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/grey2"
+        android:background="@color/grey9"
         android:orientation="vertical">
 
 
@@ -33,11 +33,26 @@
                 />
         </FrameLayout>
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/pager"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            />
+            >
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="@drawable/shadow"
+                android:layout_gravity="bottom"
+                android:alpha=".5"
+
+                />
+        </FrameLayout>
+
 
     </LinearLayout>
 
