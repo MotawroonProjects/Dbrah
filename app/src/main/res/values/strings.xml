@@ -74,5 +74,8 @@
     <string name="we_sent_an_code_to_verify_yor_phone">We sent an code to verify yor phone</string>
     <string name="enter_your_verification_code">Enter your verification code</string>
     <string name="verify">Verify</string>
+    <string name="facility_name">Facility name</string>
+    <string name="vat_number">VAT Number</string>
+    <string name="let_s_start">Let\'s Start</string>
 
 </resources>

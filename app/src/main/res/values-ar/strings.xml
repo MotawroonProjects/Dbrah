@@ -10,13 +10,13 @@
     <string name="send">ارسال</string>
     <string name="home">السوق</string>
     <string name="profile">حسابي</string>
-    <string name="logout">تسجيل خروج</string>
+    <string name="logout">تسجيل الخروج</string>
     <string name="create_your_account_now">قم بانشاء حسابك الأن</string>
     <string name="continue1">استمرار</string>
     <string name="edit_profile">تعديل الحساب</string>
     <string name="no_data_to_show">لا توجد عناصر لعرضها</string>
     <string name="phone">رقم الجوال</string>
-    <string name="login">تسجيل دخول</string>
+    <string name="login">تسجيل الدخول</string>
     <string name="terms_and_conditions">الشروط والاحكام</string>
     <string name="about_us">عن التطبيق</string>
     <string name="privacy_policy">السياسة والخصوصية</string>
@@ -75,6 +75,9 @@
     <string name="we_sent_an_code_to_verify_yor_phone">لقد ارسلنا رمز التحقق الى</string>
     <string name="enter_your_verification_code">من فضلك أدخل رمز التحقق</string>
     <string name="verify">تحقق</string>
+    <string name="facility_name">إسم المنشأة</string>
+    <string name="vat_number">الرقم الضريبي</string>
+    <string name="let_s_start">لنبدأ</string>
 
 
 </resources>
