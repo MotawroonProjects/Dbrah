@@ -30,7 +30,7 @@ public class ContactUsActivity extends BaseActivity {
     private void initView() {
         preferences = Preferences.getInstance();
         userModel = preferences.getUserData(this);
-        setUpToolbar(binding.toolbar, getString(R.string.contact_us), R.color.white, R.color.black,R.drawable.small_rounded_grey4,true);
+        setUpToolbar(binding.toolbar, getString(R.string.contact_us), R.color.white, R.color.black, R.drawable.small_rounded_grey4, true);
 
         contactUsModel = new ContactUsModel();
         if (userModel != null) {

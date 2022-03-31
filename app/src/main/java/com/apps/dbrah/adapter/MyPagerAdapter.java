@@ -21,20 +21,20 @@ public class MyPagerAdapter extends FragmentStatePagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        return fragments!=null?fragments.get(position):null;
+        return fragments != null ? fragments.get(position) : null;
 
     }
 
 
     @Override
     public int getCount() {
-        return fragments!=null?fragments.size():0;
+        return fragments != null ? fragments.size() : 0;
     }
 
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
 
-        return titles!=null?titles.get(position):null;
+        return titles != null ? titles.get(position) : null;
     }
 }

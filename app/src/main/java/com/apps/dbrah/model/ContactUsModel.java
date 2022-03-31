@@ -16,7 +16,7 @@ public class ContactUsModel extends BaseObservable {
     private String email;
     private String subject;
     private String message;
-  
+
 
     public boolean isDataValid(Context context) {
 

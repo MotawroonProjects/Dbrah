@@ -1,18 +1,15 @@
 package com.apps.dbrah.interfaces;
 
 
-
 public interface Listeners {
 
-    interface BackListener
-    {
+    interface BackListener {
         void back();
     }
-    interface VerificationListener{
+
+    interface VerificationListener {
         void onVerificationSuccess();
     }
-
-
 
 
 }

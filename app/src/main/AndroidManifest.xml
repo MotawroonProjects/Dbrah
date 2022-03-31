@@ -34,9 +34,7 @@
             android:name="com.apps.dbrah.uis.activity_sign_up.SignUpActivity"
             android:exported="false" />
 
-        <activity
-            android:name="com.apps.dbrah.uis.activity_verification_code.VerificationCodeActivity"
-            android:exported="false" />
+
 
         <activity
             android:name="com.apps.dbrah.uis.activity_login.LoginActivity"
@@ -51,6 +49,7 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name="com.apps.dbrah.uis.activity_splash.SplashActivity"
+            android:theme="@style/splash"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

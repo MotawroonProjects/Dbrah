@@ -66,7 +66,9 @@
                         android:layout_height="wrap_content"
                         android:text="@string/what_are_you_looking_for"
                         android:textColor="@color/grey7"
-                        android:textSize="14sp" />
+                        android:textSize="13sp"
+                        android:fontFamily="@font/font_regular"
+                        android:lines="1" />
 
                 </LinearLayout>
 
@@ -110,13 +112,11 @@
         </androidx.appcompat.widget.Toolbar>
 
 
-
         <com.apps.dbrah.uis.NonSwipeablePager
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            />
+            android:layout_weight="1" />
 
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -128,7 +128,12 @@
             app:itemIconTint="@drawable/bottom_item_nav_bg"
             app:itemTextColor="@drawable/bottom_item_nav_bg"
             app:labelVisibilityMode="labeled"
-            app:menu="@menu/menu" />
+            app:menu="@menu/menu"
+            app:itemTextAppearanceActive="@style/nav_style"
+            app:itemTextAppearanceInactive="@style/nav_style"
+
+
+            />
 
 
     </LinearLayout>

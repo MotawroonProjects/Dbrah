@@ -26,9 +26,11 @@ public class FragmentCart extends BaseFragment {
         super.onAttach(context);
         activity = (HomeActivity) context;
     }
-    public static FragmentCart newInstance(){
+
+    public static FragmentCart newInstance() {
         return new FragmentCart();
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

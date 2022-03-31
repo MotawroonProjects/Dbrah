@@ -25,6 +25,6 @@
     <color name="color2">#BE3033</color>
     <color name="color3">#FF9096</color>
     <color name="shadow">#10000000</color>
-
+    <color name="grey10">#777777</color>
 
 </resources>

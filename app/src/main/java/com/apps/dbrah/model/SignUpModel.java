@@ -15,11 +15,8 @@ public class SignUpModel extends BaseObservable {
     private String seconed_name;
 
 
-
-
     public ObservableField<String> error_first_name = new ObservableField<>();
     public ObservableField<String> error_seconed_name = new ObservableField<>();
-
 
 
     public boolean isDataValid(Context context) {
@@ -52,7 +49,6 @@ public class SignUpModel extends BaseObservable {
             }
 
 
-
             return false;
         }
     }
@@ -66,9 +62,6 @@ public class SignUpModel extends BaseObservable {
     }
 
 
-
-
-
     @Bindable
     public String getFirst_name() {
         return first_name;
@@ -79,6 +72,7 @@ public class SignUpModel extends BaseObservable {
         notifyPropertyChanged(BR.first_name);
 
     }
+
     @Bindable
     public String getSeconed_name() {
         return seconed_name;
@@ -89,8 +83,6 @@ public class SignUpModel extends BaseObservable {
         notifyPropertyChanged(BR.seconed_name);
 
     }
-
-
 
 
 }

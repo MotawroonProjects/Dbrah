@@ -183,8 +183,6 @@
                 </LinearLayout>
 
 
-
-
                 <Button
                     android:id="@+id/btnSignup"
                     android:layout_width="wrap_content"

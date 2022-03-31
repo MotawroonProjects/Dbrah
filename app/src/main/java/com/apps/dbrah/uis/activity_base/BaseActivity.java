@@ -71,14 +71,14 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 
-    public View setUpToolbar(ToolbarBinding binding, String title, int background, int arrowTitleColor, int arrowBg,boolean action) {
+    public View setUpToolbar(ToolbarBinding binding, String title, int background, int arrowTitleColor, int arrowBg, boolean action) {
         binding.setLang(getLang());
         binding.setTitle(title);
         binding.arrow.setColorFilter(ContextCompat.getColor(this, arrowTitleColor));
         binding.arrow.setBackgroundResource(arrowBg);
         binding.tvTitle.setTextColor(ContextCompat.getColor(this, arrowTitleColor));
         binding.toolbar.setBackgroundResource(background);
-        if(action){
+        if (action) {
             binding.llBack.setOnClickListener(v -> finish());
 
         }

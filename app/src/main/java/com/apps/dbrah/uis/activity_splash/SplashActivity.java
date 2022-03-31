@@ -32,10 +32,10 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        View decorView = getWindow().getDecorView();
+       /* View decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
         decorView.setSystemUiVisibility(uiOptions);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
+      */  binding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
         initView();
 
     }

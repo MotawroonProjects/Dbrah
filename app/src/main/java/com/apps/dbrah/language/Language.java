@@ -15,6 +15,7 @@ public class Language {
         persistLanguage(c, language);
         updateResources(c, language);
     }
+
     public static Context updateResources(Context context, String language) {
         Locale locale = new Locale(language);
         Locale.setDefault(locale);
@@ -36,10 +37,11 @@ public class Language {
 
 
     }
+
     private static void persistLanguage(Context c, String language) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(c);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("lang",language);
+        editor.putString("lang", language);
         editor.apply();
     }
 }

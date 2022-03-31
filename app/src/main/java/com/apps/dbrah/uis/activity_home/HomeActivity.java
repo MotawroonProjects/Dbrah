@@ -23,7 +23,6 @@ import com.apps.dbrah.R;
 
 import com.apps.dbrah.databinding.ActivityHomeBinding;
 import com.apps.dbrah.language.Language;
-import com.apps.dbrah.uis.activity_home.login_module.FragmentLogin;
 import com.apps.dbrah.uis.activity_home.market_module.FragmentHome;
 import com.apps.dbrah.uis.activity_home.notification_module.FragmentNotification;
 import com.apps.dbrah.uis.activity_home.search_module.FragmentSearch;
@@ -59,7 +58,7 @@ public class HomeActivity extends BaseActivity {
         generalMvvm = ViewModelProviders.of(this).get(GeneralMvvm.class);
         setUpPager();
         generalMvvm.onHomeNavigate().observe(this, this::updateStack);
-        generalMvvm.onHomeBackNavigate().observe(this,value->{
+        generalMvvm.onHomeBackNavigate().observe(this, value -> {
             onBackPressed();
         });
 
@@ -86,7 +85,6 @@ public class HomeActivity extends BaseActivity {
         fragments.add(FragmentHome.newInstance());
         fragments.add(FragmentNotification.newInstance());
         fragments.add(FragmentSearch.newInstance());
-        fragments.add(FragmentLogin.newInstance());
 
         adapter = new MyPagerAdapter(getSupportFragmentManager(), fragments, null);
         binding.pager.setAdapter(adapter);
@@ -102,7 +100,6 @@ public class HomeActivity extends BaseActivity {
         binding.pager.setCurrentItem(pagePos);
 
     }
-
 
 
     public void refreshActivity(String lang) {

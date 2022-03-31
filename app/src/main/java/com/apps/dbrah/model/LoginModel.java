@@ -14,33 +14,22 @@ import java.io.Serializable;
 public class LoginModel extends BaseObservable implements Serializable {
     private String phone_code;
     private String phone;
-    public ObservableField<String> error_phone = new ObservableField<>();
+    private boolean valid;
 
     public LoginModel() {
-        phone_code ="+20";
-        phone ="";
+        phone_code = "+966";
+        phone = "";
+        valid = false;
     }
 
-    public boolean isDataValid(Context context){
-        if (!phone.isEmpty()){
-            error_phone.set(null);
-
-
-            return true;
-        }else {
-
-            if (phone.isEmpty()){
-                error_phone.set(context.getString(R.string.field_required));
-
-            }else {
-                error_phone.set(null);
-
-            }
-
-
-            return false;
+    public void isDataValid() {
+        if (!phone.isEmpty()) {
+            setValid(true);
+        } else {
+            setValid(false);
         }
     }
+
     @Bindable
     public String getPhone_code() {
         return phone_code;
@@ -50,6 +39,7 @@ public class LoginModel extends BaseObservable implements Serializable {
         this.phone_code = phone_code;
         notifyPropertyChanged(BR.phone_code);
     }
+
     @Bindable
     public String getPhone() {
         return phone;
@@ -58,8 +48,17 @@ public class LoginModel extends BaseObservable implements Serializable {
     public void setPhone(String phone) {
         this.phone = phone;
         notifyPropertyChanged(BR.phone);
+        isDataValid();
 
     }
 
+    @Bindable
+    public boolean isValid() {
+        return valid;
+    }
 
+    public void setValid(boolean valid) {
+        this.valid = valid;
+        notifyPropertyChanged(BR.valid);
+    }
 }

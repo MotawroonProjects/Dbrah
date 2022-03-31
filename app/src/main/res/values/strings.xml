@@ -25,7 +25,7 @@
     <string name="prev">Previous</string>
     <string name="choose_your_language">Choose your language</string>
     <string name="next">Next</string>
-    <string name="notifications">notifications</string>
+    <string name="notifications">Notifications</string>
     <string name="sign_up">Sign up</string>
     <string name="update">Update</string>
     <string name="please_enter_code_sent_to">please enter code sent to</string>
@@ -69,5 +69,10 @@
     <string name="delivery_addresses">Delivery addresses</string>
     <string name="your_not_logged_in">You are not logged in</string>
     <string name="welcome_back">Welcome Back!</string>
+    <string name="saudi_arabia">Saudi Arabia</string>
+    <string name="egypt">Egypt</string>
+    <string name="we_sent_an_code_to_verify_yor_phone">We sent an code to verify yor phone</string>
+    <string name="enter_your_verification_code">Enter your verification code</string>
+    <string name="verify">Verify</string>
 
 </resources>

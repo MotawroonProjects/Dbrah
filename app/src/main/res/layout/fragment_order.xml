@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -12,13 +11,12 @@
         android:orientation="vertical">
 
 
-
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:background="@color/color1"
-            >
+            android:background="@color/color1">
+
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tab"
                 android:layout_width="match_parent"
@@ -30,18 +28,17 @@
                 app:tabTextColor="@color/grey8"
                 app:tabSelectedTextColor="@color/white"
                 app:tabBackground="@drawable/tab_indicator"
-                />
+                app:tabTextAppearance="@style/tabStyle" />
         </FrameLayout>
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
+
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/pager"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
+                android:layout_height="match_parent" />
 
             <View
                 android:layout_width="match_parent"

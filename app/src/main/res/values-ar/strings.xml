@@ -70,6 +70,11 @@
     <string name="delivery_addresses">عناوين التوصيل</string>
     <string name="your_not_logged_in">لم تقم بتسجيل الدخول</string>
     <string name="welcome_back">مرحبا بعودتك!</string>
+    <string name="saudi_arabia">المملكة العربية السعودية</string>
+    <string name="egypt">مصر</string>
+    <string name="we_sent_an_code_to_verify_yor_phone">لقد ارسلنا رمز التحقق الى</string>
+    <string name="enter_your_verification_code">من فضلك أدخل رمز التحقق</string>
+    <string name="verify">تحقق</string>
 
 
 </resources>

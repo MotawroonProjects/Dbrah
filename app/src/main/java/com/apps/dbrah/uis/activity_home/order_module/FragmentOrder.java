@@ -37,9 +37,10 @@ public class FragmentOrder extends BaseFragment {
         activity = (HomeActivity) context;
     }
 
-    public static FragmentOrder newInstance(){
+    public static FragmentOrder newInstance() {
         return new FragmentOrder();
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -67,11 +68,10 @@ public class FragmentOrder extends BaseFragment {
         fragments.add(FragmentPreviousOrder.newInstance());
         titles.add(getString(R.string.current));
         titles.add(getString(R.string.prev));
-        adapter = new MyPagerAdapter(getChildFragmentManager(),fragments,titles);
+        adapter = new MyPagerAdapter(getChildFragmentManager(), fragments, titles);
         binding.pager.setAdapter(adapter);
         binding.pager.setOffscreenPageLimit(fragments.size());
         binding.tab.setupWithViewPager(binding.pager);
-
 
 
     }

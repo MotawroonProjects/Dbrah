@@ -71,8 +71,9 @@
                         android:paddingStart="8dp"
                         android:paddingEnd="8dp"
                         android:textColor="@color/black"
+                        android:fontFamily="@font/font_regular"
                         android:textColorHint="@color/grey7"
-                        android:textSize="14sp" />
+                        android:textSize="13sp" />
 
                 </LinearLayout>
 

@@ -9,6 +9,8 @@ import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -43,6 +45,12 @@ public class FragmentProfile extends BaseFragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         activity = (HomeActivity) context;
+        launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (req == 1 && result.getResultCode() == Activity.RESULT_OK) {
+                binding.setModel(getUserModel());
+
+            }
+        });
 
     }
 
@@ -66,15 +74,17 @@ public class FragmentProfile extends BaseFragment {
 
     private void initView() {
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
-        if (getUserModel() != null) {
-            binding.setModel(getUserModel());
-
-        }else {
-
-        }
-
+        binding.setModel(getUserModel());
         binding.profileLayout.setLang(getLang());
+        binding.profileNotLoggedLayout.btnLogin.setOnClickListener(v -> {
+            navigateToLoginActivity();
+        });
+    }
 
+    private void navigateToLoginActivity() {
+        req = 1;
+        Intent intent = new Intent(activity, LoginActivity.class);
+        launcher.launch(intent);
     }
 
 

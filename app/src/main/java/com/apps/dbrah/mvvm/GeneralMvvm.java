@@ -30,6 +30,4 @@ public class GeneralMvvm extends AndroidViewModel {
     }
 
 
-
-
 }

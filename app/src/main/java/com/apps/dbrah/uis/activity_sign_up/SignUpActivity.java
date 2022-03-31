@@ -81,14 +81,13 @@ public class SignUpActivity extends BaseActivity {
                             //Picasso.get().load(new File(path)).fit().into(binding.image);
 
                         } else {
-                           // Picasso.get().load(uri).fit().into(binding.image);
+                            // Picasso.get().load(uri).fit().into(binding.image);
 
                         }
                     }
                 }
             }
         });
-
 
 
         binding.flImage.setOnClickListener(view -> openSheet());

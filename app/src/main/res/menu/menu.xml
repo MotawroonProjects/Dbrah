@@ -2,18 +2,22 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/market"
+    <item
+        android:id="@+id/market"
         android:title="@string/home"
-        android:icon="@drawable/ic_home"/>
-    <item android:id="@+id/order"
+        android:icon="@drawable/ic_home" />
+    <item
+        android:id="@+id/order"
         android:title="@string/orders"
-        android:icon="@drawable/ic_order"/>
-    <item android:id="@+id/cart"
+        android:icon="@drawable/ic_order" />
+    <item
+        android:id="@+id/cart"
         android:title="@string/cart"
-        android:icon="@drawable/ic_cart"/>
-    <item android:id="@+id/profile"
+        android:icon="@drawable/ic_cart" />
+    <item
+        android:id="@+id/profile"
         android:title="@string/profile"
-        android:icon="@drawable/ic_profile"/>
+        android:icon="@drawable/ic_profile" />
 
 
 </menu>

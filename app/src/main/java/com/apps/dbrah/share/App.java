@@ -12,13 +12,14 @@ public class App extends MultiDexApplication {
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(Language.updateResources(newBase,"ar"));
+        super.attachBaseContext(Language.updateResources(newBase, "ar"));
     }
 
 
     @Override
     public void onCreate() {
         super.onCreate();
+
 
     }
 }
