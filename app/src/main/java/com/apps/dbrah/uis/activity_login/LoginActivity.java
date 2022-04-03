@@ -24,6 +24,7 @@ import com.apps.dbrah.model.CountryCodeModel;
 import com.apps.dbrah.model.LoginModel;
 import com.apps.dbrah.mvvm.ActivityLoginMvvm;
 import com.apps.dbrah.uis.activity_base.BaseActivity;
+import com.apps.dbrah.uis.activity_sign_up.SignUpActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,17 +82,17 @@ public class LoginActivity extends BaseActivity {
             createVerificationCodeDialog();
         });
 
-        mvvm.getTime().observe(this,time->{
-            if (dailogVerificationCodeBinding!=null){
+        mvvm.getTime().observe(this, time -> {
+            if (dailogVerificationCodeBinding != null) {
                 dailogVerificationCodeBinding.tvResend.setText(time);
 
             }
         });
 
-        mvvm.canResend().observe(this,canResend->{
-            if (dailogVerificationCodeBinding!=null){
+        mvvm.canResend().observe(this, canResend -> {
+            if (dailogVerificationCodeBinding != null) {
                 dailogVerificationCodeBinding.tvResend.setEnabled(canResend);
-                if (canResend){
+                if (canResend) {
                     dailogVerificationCodeBinding.tvResend.setText(getString(R.string.resend));
 
                 }
@@ -134,7 +135,7 @@ public class LoginActivity extends BaseActivity {
         dailogVerificationCodeBinding.setModel(model);
         builder.setView(dailogVerificationCodeBinding.getRoot());
         builder.setCancelable(true);
-        builder.setCanceledOnTouchOutside(true);
+        builder.setCanceledOnTouchOutside(false);
         dailogVerificationCodeBinding.edtCode.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -148,14 +149,22 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                dailogVerificationCodeBinding.btnVerify.setEnabled(s.toString().length()==6);
+                dailogVerificationCodeBinding.btnVerify.setEnabled(s.toString().length() == 6);
 
             }
         });
         dailogVerificationCodeBinding.tvResend.setOnClickListener(v -> mvvm.reSendSmsCode(model));
         builder.show();
 
+        dailogVerificationCodeBinding.btnVerify.setOnClickListener(v -> {
+            navigateToSignUpActivity();
+        });
         builder.setOnCancelListener(dialog -> mvvm.stopTimer());
 
+    }
+
+    private void navigateToSignUpActivity() {
+        Intent intent = new Intent(this, SignUpActivity.class);
+        launcher.launch(intent);
     }
 }

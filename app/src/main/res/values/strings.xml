@@ -18,8 +18,8 @@
     <string name="login">Login</string>
     <string name="terms_and_conditions">Terms and conditions</string>
     <string name="about_us">About us</string>
-    <string name="privacy_policy">Privacy policy</string>
-    <string name="contact_us">Contact us</string>
+    <string name="privacy_policy">Privacy</string>
+    <string name="contact_us">Contact Us</string>
     <string name="wait">Wait...</string>
     <string name="current">Current</string>
     <string name="prev">Previous</string>
@@ -35,7 +35,7 @@
     <string name="search">Search...</string>
     <string name="rate_app">Rate App</string>
     <string name="settings">Settings</string>
-    <string name="change_language">Change language</string>
+    <string name="change_language">Language</string>
     <string name="no_reservation_to_show">No reservation to show</string>
     <string name="sorry">Sorry !</string>
     <string name="no_notifications_to_show">No notifications to show</string>
@@ -77,5 +77,10 @@
     <string name="facility_name">Facility name</string>
     <string name="vat_number">VAT Number</string>
     <string name="let_s_start">Let\'s Start</string>
+    <string name="choose_photo">Choose photo</string>
+    <string name="sign_up_inf"><![CDATA[<h4>1.Photo</h4> <p> lorem </p><br> <h4>2.Company Name</h4> <p> lorem </p> <br> <h4>3.Email</h4> <p> lorem </p> <br> <h4>4.Tax Number</h4> <p> lorem </p>]]></string>
+    <string name="information">Information</string>
+    <string name="share_app">Share App</string>
+    <string name="follow_us">Follow Us</string>
 
 </resources>

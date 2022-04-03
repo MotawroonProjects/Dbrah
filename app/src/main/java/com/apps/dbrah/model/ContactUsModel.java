@@ -1,6 +1,7 @@
 package com.apps.dbrah.model;
 
 import android.content.Context;
+import android.util.Log;
 import android.util.Patterns;
 
 import androidx.databinding.BaseObservable;
@@ -10,31 +11,27 @@ import androidx.databinding.ObservableField;
 import com.apps.dbrah.BR;
 import com.apps.dbrah.R;
 
+import java.io.Serializable;
 
-public class ContactUsModel extends BaseObservable {
+
+public class ContactUsModel extends BaseObservable implements Serializable {
     private String name;
     private String email;
     private String subject;
     private String message;
+    private boolean valid;
 
+    public void isDataValid() {
 
-    public boolean isDataValid(Context context) {
-
-        if (!name.isEmpty() &&
-                !email.isEmpty() &&
-                Patterns.EMAIL_ADDRESS.matcher(email).matches() &&
-                !subject.isEmpty() &&
-                !message.isEmpty()
+        if (!name.trim().isEmpty() &&
+                Patterns.EMAIL_ADDRESS.matcher(email.trim()).matches() &&
+                !subject.trim().isEmpty() &&
+                !message.trim().isEmpty()
 
         ) {
-
-
-            return true;
-
+            setValid(true);
         } else {
-
-
-            return false;
+            setValid(false);
 
         }
 
@@ -55,6 +52,7 @@ public class ContactUsModel extends BaseObservable {
     public void setName(String name) {
         this.name = name;
         notifyPropertyChanged(BR.name);
+        isDataValid();
     }
 
     @Bindable
@@ -65,6 +63,7 @@ public class ContactUsModel extends BaseObservable {
     public void setEmail(String email) {
         this.email = email;
         notifyPropertyChanged(BR.email);
+        isDataValid();
 
     }
 
@@ -76,6 +75,7 @@ public class ContactUsModel extends BaseObservable {
     public void setSubject(String subject) {
         this.subject = subject;
         notifyPropertyChanged(BR.subject);
+        isDataValid();
 
     }
 
@@ -87,6 +87,17 @@ public class ContactUsModel extends BaseObservable {
     public void setMessage(String message) {
         this.message = message;
         notifyPropertyChanged(BR.message);
+        isDataValid();
 
+    }
+
+    @Bindable
+    public boolean isValid() {
+        return valid;
+    }
+
+    public void setValid(boolean valid) {
+        this.valid = valid;
+        notifyPropertyChanged(BR.valid);
     }
 }

@@ -36,7 +36,7 @@
     <string name="search">عن ماذا تبحث..</string>
     <string name="rate_app">قييم التطبيق</string>
     <string name="settings">الإعدادات</string>
-    <string name="change_language">تغيير اللغة</string>
+    <string name="change_language">اللغة</string>
     <string name="no_reservation_to_show">لا توجد حجوزات لعرضها</string>
     <string name="sorry">عفوا !</string>
     <string name="no_notifications_to_show">لا توجد إشعارات لعرضها</string>
@@ -78,6 +78,11 @@
     <string name="facility_name">إسم المنشأة</string>
     <string name="vat_number">الرقم الضريبي</string>
     <string name="let_s_start">لنبدأ</string>
+    <string name="choose_photo">إختر صورة</string>
+    <string name="sign_up_inf"><![CDATA[<h4>1.الصورة</h4>  <p> تفاصيل الصورة </p> <br> <h4>2.إسم المنشأة</h4> <p> تفاصيل المنشأة </p> <br> <h4>3.البريد الالكتروني</h4>  <p> تفاصيل البريد </p> <br> <h4>4.الرقم الضريبي</h4> <p> تفاصيل الرقم الضريبي </p>]]></string>
+    <string name="information">معلومات</string>
+    <string name="share_app">مشاركة التطبيق</string>
+    <string name="follow_us">تابعونا على</string>
 
 
 </resources>

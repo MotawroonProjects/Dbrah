@@ -64,11 +64,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/font_regular"
+                        android:lines="1"
                         android:text="@string/what_are_you_looking_for"
                         android:textColor="@color/grey7"
-                        android:textSize="13sp"
-                        android:fontFamily="@font/font_regular"
-                        android:lines="1" />
+                        android:textSize="13sp" />
 
                 </LinearLayout>
 
@@ -126,11 +126,11 @@
             android:background="@color/white"
             app:elevation="8dp"
             app:itemIconTint="@drawable/bottom_item_nav_bg"
+            app:itemTextAppearanceActive="@style/nav_style"
+            app:itemTextAppearanceInactive="@style/nav_style"
             app:itemTextColor="@drawable/bottom_item_nav_bg"
             app:labelVisibilityMode="labeled"
             app:menu="@menu/menu"
-            app:itemTextAppearanceActive="@style/nav_style"
-            app:itemTextAppearanceInactive="@style/nav_style"
 
 
             />

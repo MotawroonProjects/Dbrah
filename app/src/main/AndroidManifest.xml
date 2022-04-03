@@ -13,9 +13,8 @@
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
 
-
     <application
-        android:name="com.apps.dbrah.share.App"
+        android:name=".share.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -26,52 +25,48 @@
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup"
         tools:targetApi="q">
-
         <activity
-            android:name="com.apps.dbrah.uis.activity_language.LanguageActivity"
+            android:name=".uis.activity_about_app.AboutAppActivity"
+            android:exported="false" />
+        <activity
+            android:name=".uis.activity_language.LanguageActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name="com.apps.dbrah.uis.activity_sign_up.SignUpActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:exported="false"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"
-            tools:ignore="LockedOrientationActivity" />
-
-
-        <activity
-            android:name="com.apps.dbrah.uis.activity_login.LoginActivity"
+            android:name=".uis.activity_sign_up.SignUpActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name="com.apps.dbrah.uis.activity_contact_us.ContactUsActivity"
+            android:name=".uis.activity_login.LoginActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".uis.activity_contact_us.ContactUsActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"
-
             tools:ignore="LockedOrientationActivity" />
-
         <activity
-            android:name="com.apps.dbrah.uis.activity_home.HomeActivity"
+            android:name=".uis.activity_home.HomeActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
-
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name="com.apps.dbrah.uis.activity_splash.SplashActivity"
+            android:name=".uis.activity_splash.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/splash"
-
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -93,12 +88,12 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="${application_id}.provider"
+            android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_provider" />
+                android:resource="@xml/file_provider"></meta-data>
         </provider>
     </application>
 

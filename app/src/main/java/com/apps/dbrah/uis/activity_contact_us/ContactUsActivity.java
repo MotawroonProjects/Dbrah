@@ -16,8 +16,7 @@ import com.apps.dbrah.uis.activity_base.BaseActivity;
 public class ContactUsActivity extends BaseActivity {
     private ActivityContactUsBinding binding;
     private ContactUsModel contactUsModel;
-    private UserModel userModel;
-    private Preferences preferences;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,22 +27,14 @@ public class ContactUsActivity extends BaseActivity {
     }
 
     private void initView() {
-        preferences = Preferences.getInstance();
-        userModel = preferences.getUserData(this);
         setUpToolbar(binding.toolbar, getString(R.string.contact_us), R.color.white, R.color.black, R.drawable.small_rounded_grey4, true);
 
         contactUsModel = new ContactUsModel();
-        if (userModel != null) {
-            contactUsModel.setName(userModel.getData().getName());
-
+        if (getUserModel() != null) {
         }
 
         binding.setContactModel(contactUsModel);
-        binding.btnSend.setOnClickListener(view -> {
-            if (contactUsModel.isDataValid(this)) {
-                //contactusActivityMvvm.contactus(this, contactUsModel);
-            }
-        });
+
        /* contactusActivityMvvm.send.observe(this, aBoolean -> {
             if (aBoolean) {
                 Toast.makeText(ContactUsActivity.this, getResources().getString(R.string.suc), Toast.LENGTH_LONG).show();

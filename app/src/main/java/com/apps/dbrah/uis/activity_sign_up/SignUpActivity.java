@@ -4,8 +4,10 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -16,27 +18,40 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.Html;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
+import com.apps.dbrah.BuildConfig;
 import com.apps.dbrah.R;
 import com.apps.dbrah.databinding.ActivitySignUpBinding;
+import com.apps.dbrah.databinding.DialogChooseImageBinding;
+import com.apps.dbrah.databinding.DialogInformationBinding;
 import com.apps.dbrah.model.SignUpModel;
 import com.apps.dbrah.preferences.Preferences;
 import com.apps.dbrah.share.Common;
 import com.apps.dbrah.uis.activity_base.BaseActivity;
+import com.bumptech.glide.Glide;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class SignUpActivity extends BaseActivity {
     private ActivitySignUpBinding binding;
     private SignUpModel model;
-    private Preferences preferences;
     private String phone_code, phone;
+    private ActivityResultLauncher<String[]> permissions;
     private ActivityResultLauncher<Intent> launcher;
-    private Uri uri = null;
+    private Uri outPutUri = null;
+    private String imagePath = "";
     private int req;
 
     @Override
@@ -55,85 +70,159 @@ public class SignUpActivity extends BaseActivity {
     }
 
     private void initView() {
-        preferences = Preferences.getInstance();
+        setUpToolbar(binding.toolbar, getString(R.string.sign_up), R.color.white, R.color.black, R.drawable.small_rounded_grey4, true);
         model = new SignUpModel();
         model.setPhone_code(phone_code);
         model.setPhone(phone);
         binding.setModel(model);
+        permissions = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), permissions -> {
+            if (req == 1) {
+                if (permissions.containsValue(false)) {
+                    Toast.makeText(this, R.string.perm_image_denied, Toast.LENGTH_SHORT).show();
+                } else {
+                    openCamera();
+                }
+            } else if (req == 2) {
+                if (permissions.containsValue(false)) {
+                    Toast.makeText(this, R.string.perm_image_denied, Toast.LENGTH_SHORT).show();
+                } else {
+                    openGallery();
+                }
+            }
+        });
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (result.getResultCode() == RESULT_OK) {
+            if (req == 2 && result.getResultCode() == RESULT_OK && result.getData() != null) {
+                Uri uri = result.getData().getData();
+                model.setImage_uri(uri.toString());
+                model.setImage_path(Common.getImagePath(this, uri));
+
+                Glide.with(this)
+                        .asBitmap()
+                        .load(uri)
+                        .into(binding.image);
+            } else if (req == 1 && result.getResultCode() == RESULT_OK) {
+                model.setImage_uri(outPutUri.toString());
+                model.setImage_path(imagePath);
+
+                Glide.with(this)
+                        .asBitmap()
+                        .load(outPutUri)
+                        .into(binding.image);
 
             }
         });
 
 
-        binding.flImage.setOnClickListener(v -> checkPhotoPermission());
-        binding.btnSignup.setOnClickListener(view -> {
+        binding.imageInfo.setOnClickListener(v -> {
+            openSheetInfo();
 
+        });
+        binding.flImage.setOnClickListener(v -> openSheet());
+        binding.btnSignup.setOnClickListener(view -> {
         });
 
     }
 
+    private void openSheet() {
+        AlertDialog dialog = new AlertDialog.Builder(this).create();
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_window_bg);
+        DialogChooseImageBinding imageBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.dialog_choose_image, null, false);
+        dialog.setView(imageBinding.getRoot());
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.setCancelable(true);
+        imageBinding.tvCamera.setOnClickListener(v -> {
+            checkCameraPermission();
+            dialog.dismiss();
+        });
+        imageBinding.tvGallery.setOnClickListener(v -> {
+            checkPhotoPermission();
+            dialog.dismiss();
+        });
+        imageBinding.tvCancel.setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+        dialog.show();
+    }
 
-    public void checkPhotoPermission() {
+    private void openSheetInfo() {
+        AlertDialog dialog = new AlertDialog.Builder(this).create();
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_window_bg2);
+        DialogInformationBinding informationBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.dialog_information, null, false);
+        dialog.setView(informationBinding.getRoot());
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.setCancelable(true);
+        informationBinding.tvDetails.setText(Html.fromHtml(getString(R.string.sign_up_inf)));
+        informationBinding.tvCancel.setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+        dialog.show();
+    }
 
 
+    public void checkCameraPermission() {
+        req = 1;
+        String[] permissions = new String[]{WRITE_PERM, CAM_PERM};
         if (ContextCompat.checkSelfPermission(this, WRITE_PERM) == PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(this, CAM_PERM) == PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(this, READ_PERM) == PackageManager.PERMISSION_GRANTED
-        ) {
-            SelectImage();
+                && ContextCompat.checkSelfPermission(this, CAM_PERM) == PackageManager.PERMISSION_GRANTED) {
+            openCamera();
         } else {
-            ActivityCompat.requestPermissions(this, new String[]{READ_PERM, WRITE_PERM, CAM_PERM}, req);
+            this.permissions.launch(permissions);
         }
     }
 
-    private void SelectImage() {
+    public void checkPhotoPermission() {
+        req = 2;
+        String[] permissions = new String[]{READ_PERM};
+        if (ContextCompat.checkSelfPermission(this, READ_PERM) == PackageManager.PERMISSION_GRANTED
+
+        ) {
+            openGallery();
+        } else {
+            this.permissions.launch(permissions);
+        }
+    }
+
+    private void openCamera() {
+        req = 1;
+        outPutUri = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".provider", getCameraOutPutFile());
+
+        if (outPutUri != null) {
+            Intent intentCamera = new Intent();
+            intentCamera.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+            intentCamera.putExtra(MediaStore.EXTRA_OUTPUT, outPutUri);
+            launcher.launch(intentCamera);
+        } else {
+            Toast.makeText(this, "You don't allow to access photos", Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
+
+    private void openGallery() {
+        req = 2;
         Intent intentGallery = new Intent();
         intentGallery.setAction(Intent.ACTION_GET_CONTENT);
         intentGallery.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intentGallery.setType("image/*");
-
-        Intent intentCamera = new Intent();
-        intentCamera.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-        Uri outPutUri = null;
-        intentCamera.putExtra(MediaStore.EXTRA_OUTPUT,uri);
-
-
+        launcher.launch(Intent.createChooser(intentGallery, "Choose photos"));
 
 
     }
 
+    private File getCameraOutPutFile() {
+        File file = null;
+        String stamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
+        String imageName = "JPEG_" + stamp + "_";
 
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == req) {
-
-            if (grantResults.length > 0) {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED &&
-                        grantResults[1] == PackageManager.PERMISSION_GRANTED &&
-                        grantResults[2] == PackageManager.PERMISSION_GRANTED
-                ) {
-                    SelectImage();
-
-                } else {
-                    Toast.makeText(this, getString(R.string.perm_image_denied), Toast.LENGTH_SHORT).show();
-
-                }
-            } else {
-                Toast.makeText(this, getString(R.string.perm_image_denied), Toast.LENGTH_SHORT).show();
-            }
-
+        File appFile = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        try {
+            file = File.createTempFile(imageName, ".jpg", appFile);
+            imagePath = file.getAbsolutePath();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-    }
 
-    private Uri getUriFromBitmap(Bitmap bitmap) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        return Uri.parse(MediaStore.Images.Media.insertImage(this.getContentResolver(), bitmap, "", ""));
+        return file;
     }
-
 
 }

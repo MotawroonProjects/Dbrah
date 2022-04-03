@@ -79,6 +79,19 @@ public class FragmentProfile extends BaseFragment {
         binding.profileNotLoggedLayout.btnLogin.setOnClickListener(v -> {
             navigateToLoginActivity();
         });
+
+        binding.profileLayout.cardMyList.setOnClickListener(v -> {
+            generalMvvm.onHomeNavigate().setValue(3);
+        });
+
+        binding.profileLayout.cardMyAddresses.setOnClickListener(v -> {
+            generalMvvm.onHomeNavigate().setValue(4);
+        });
+
+        binding.profileLayout.carViewSetting.setOnClickListener(v -> {
+            generalMvvm.onHomeNavigate().setValue(5);
+        });
+
     }
 
     private void navigateToLoginActivity() {

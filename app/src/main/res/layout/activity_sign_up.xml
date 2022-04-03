@@ -128,6 +128,7 @@
                         android:textColor="@color/black"
                         android:textColorHint="@color/grey8"
                         android:textSize="14sp"
+                        android:fontFamily="@font/font_regular"
 
 
                         />
@@ -169,7 +170,7 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
                         android:background="@drawable/small_rounded_stroke_grey4"
-                        android:hint="@string/email"
+                        android:hint="mail@example.com"
                         android:inputType="textEmailAddress"
                         android:lines="1"
                         android:paddingStart="16dp"
@@ -178,6 +179,8 @@
                         android:textColor="@color/black"
                         android:textColorHint="@color/grey8"
                         android:textSize="14sp"
+                        android:fontFamily="@font/font_regular"
+
 
                         />
 
@@ -218,14 +221,17 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
                         android:background="@drawable/small_rounded_stroke_grey4"
-                        android:hint="@string/vat_number"
+                        android:hint="#### #### #### ###"
                         android:lines="1"
                         android:paddingStart="16dp"
                         android:paddingEnd="16dp"
                         android:text="@={model.vat}"
                         android:textColor="@color/black"
                         android:textColorHint="@color/grey8"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:fontFamily="@font/font_regular"
+
+                        />
 
 
                     <Button

@@ -1,6 +1,7 @@
 package com.apps.dbrah.model;
 
 import android.content.Context;
+import android.util.Log;
 import android.util.Patterns;
 
 import androidx.databinding.BaseObservable;
@@ -13,6 +14,7 @@ import com.apps.dbrah.R;
 
 public class SignUpModel extends BaseObservable {
     private String image_uri;
+    private String image_path;
     private String phone_code;
     private String phone;
     private String name;
@@ -26,19 +28,22 @@ public class SignUpModel extends BaseObservable {
                 !vat.isEmpty()
 
         ) {
+            setValid(true);
         } else {
-
+            setValid(false);
 
 
         }
     }
 
     public SignUpModel() {
+        image_uri = "";
+        image_path = "";
         phone_code = "";
-        phone="";
-        name ="";
-        email ="";
-        vat ="";
+        phone = "";
+        name = "";
+        email = "";
+        vat = "";
 
     }
 
@@ -107,5 +112,13 @@ public class SignUpModel extends BaseObservable {
     public void setValid(boolean valid) {
         this.valid = valid;
         notifyPropertyChanged(BR.valid);
+    }
+
+    public String getImage_path() {
+        return image_path;
+    }
+
+    public void setImage_path(String image_path) {
+        this.image_path = image_path;
     }
 }

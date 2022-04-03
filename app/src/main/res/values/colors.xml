@@ -20,11 +20,13 @@
     <color name="grey7">#DADADA</color>
     <color name="grey8">#747474</color>
     <color name="grey9">#FDFDFD</color>
+    <color name="grey10">#777777</color>
+    <color name="grey11">#C4C4C4</color>
+
 
     <color name="color1">#FCF1F1</color>
     <color name="color2">#BE3033</color>
     <color name="color3">#FF9096</color>
-    <color name="shadow">#10000000</color>
-    <color name="grey10">#777777</color>
+    <color name="shadow">#20000000</color>
 
 </resources>
