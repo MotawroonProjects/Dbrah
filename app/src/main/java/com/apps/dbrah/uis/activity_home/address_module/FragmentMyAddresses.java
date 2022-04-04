@@ -10,20 +10,26 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.apps.dbrah.R;
+import com.apps.dbrah.adapter.AddressAdapter;
 import com.apps.dbrah.databinding.FragmentMyAddressesBinding;
 import com.apps.dbrah.databinding.FragmentMyListBinding;
 import com.apps.dbrah.mvvm.GeneralMvvm;
 import com.apps.dbrah.uis.activity_base.BaseFragment;
 import com.apps.dbrah.uis.activity_home.HomeActivity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class FragmentMyAddresses extends BaseFragment {
     private HomeActivity activity;
     private FragmentMyAddressesBinding binding;
     private GeneralMvvm generalMvvm;
-
+    private AddressAdapter addressAdapter;
+    private List<Object> addressList;
 
     public static FragmentMyAddresses newInstance() {
         return new FragmentMyAddresses();
@@ -50,12 +56,16 @@ public class FragmentMyAddresses extends BaseFragment {
     }
 
     private void initView() {
+        addressList=new ArrayList<>();
+        addressAdapter=new AddressAdapter(addressList,activity);
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
         View view = activity.setUpToolbar(binding.toolbar, getString(R.string.delivery_addresses), R.color.white, R.color.black, R.drawable.small_rounded_grey4, false);
         view.setOnClickListener(v -> {
             generalMvvm.onHomeBackNavigate().setValue(true);
 
         });
+        binding.recViewLayout.recView.setLayoutManager(new LinearLayoutManager(activity));
+        binding.recViewLayout.recView.setAdapter(addressAdapter);
     }
 
 

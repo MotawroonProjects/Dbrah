@@ -83,6 +83,8 @@
     <string name="information">معلومات</string>
     <string name="share_app">مشاركة التطبيق</string>
     <string name="follow_us">تابعونا على</string>
+    <string name="to">إلى</string>
+    <string name="new_address">عنوان جديد</string>
 
 
 </resources>

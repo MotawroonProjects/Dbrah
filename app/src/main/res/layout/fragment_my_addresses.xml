@@ -7,9 +7,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:background="@color/grey9"
-        >
+        android:orientation="vertical">
 
         <include
             android:id="@+id/toolbar"
@@ -17,8 +16,9 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
             <include
                 android:id="@+id/recViewLayout"
                 layout="@layout/recview_layout" />
@@ -26,12 +26,37 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="24dp"
-                android:background="@drawable/shadow_top"
                 android:alpha=".5"
-                />
+                android:background="@drawable/shadow_top" />
 
         </FrameLayout>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/rounded_grey4_stroke_color2"
+            android:orientation="horizontal"
+            android:padding="12dp">
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="14.5dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_add" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/new_address"
+                android:textColor="@color/color2"
+                android:textSize="14sp"/>
+
+        </LinearLayout>
     </LinearLayout>
 
 
