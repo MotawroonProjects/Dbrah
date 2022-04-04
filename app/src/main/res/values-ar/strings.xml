@@ -85,13 +85,13 @@
     <string name="follow_us">تابعونا على</string>
     <string name="to">إلى</string>
     <string name="new_address">عنوان جديد</string>
+    <string name="order">طلب</string>
     <string name="location_title">عنوان الموقع</string>
     <string name="administrator_s_name">اسم المسؤول</string>
     <string name="phone_number">رقم الهاتف</string>
     <string name="preferred_delivery_time">وقت التوصيل المفضل</string>
     <string name="address">العنوان</string>
     <string name="address2">العنوان</string>
-    <string name="order">Order</string>
     <string name="add">إضافة</string>
     <string name="add_address">إضافة عنوان</string>
     <string name="order_number">رقم الطلب :</string>
