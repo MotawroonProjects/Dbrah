@@ -96,5 +96,9 @@
     <string name="order_number">Order number :</string>
     <string name="done">Done</string>
     <string name="order_time">Order time</string>
+    <string name="delivered">Delivered</string>
+    <string name="re_order">Re Order</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
