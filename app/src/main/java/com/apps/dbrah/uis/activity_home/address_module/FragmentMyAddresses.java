@@ -1,6 +1,7 @@
 package com.apps.dbrah.uis.activity_home.address_module;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.apps.dbrah.R;
@@ -64,8 +66,16 @@ public class FragmentMyAddresses extends BaseFragment {
             generalMvvm.onHomeBackNavigate().setValue(true);
 
         });
-        binding.recViewLayout.recView.setLayoutManager(new LinearLayoutManager(activity));
-        binding.recViewLayout.recView.setAdapter(addressAdapter);
+        binding.recView.setLayoutManager(new LinearLayoutManager(activity));
+        binding.recView.setAdapter(addressAdapter);
+
+        binding.llNewAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
     }
 
 

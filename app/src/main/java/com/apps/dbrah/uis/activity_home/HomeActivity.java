@@ -29,6 +29,7 @@ import com.apps.dbrah.uis.activity_home.my_list_module.FragmentMyList;
 import com.apps.dbrah.uis.activity_home.notification_module.FragmentNotification;
 import com.apps.dbrah.uis.activity_home.search_module.FragmentSearch;
 import com.apps.dbrah.uis.activity_home.setting_module.FragmentSetting;
+import com.apps.dbrah.uis.add_address_module.FragmentAddAddress;
 import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
@@ -89,7 +90,7 @@ public class HomeActivity extends BaseActivity {
         fragments.add(FragmentNotification.newInstance());
         fragments.add(FragmentSearch.newInstance());
         fragments.add(FragmentMyList.newInstance());
-        fragments.add(FragmentMyAddresses.newInstance());
+        fragments.add(FragmentAddAddress.newInstance());
         fragments.add(FragmentSetting.newInstance());
 
         adapter = new MyPagerAdapter(getSupportFragmentManager(), fragments, null);

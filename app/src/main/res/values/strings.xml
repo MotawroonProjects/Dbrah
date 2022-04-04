@@ -85,5 +85,15 @@
     <string name="order">Order</string>
     <string name="to">To</string>
     <string name="new_address">New Address</string>
+    <string name="location_title">Location Title</string>
+    <string name="administrator_s_name">Administrator\'s name</string>
+    <string name="phone_number">Phone number</string>
+    <string name="preferred_delivery_time">Preferred delivery time</string>
+    <string name="address">Address</string>
+    <string name="address2">address</string>
+    <string name="add">Add</string>
+    <string name="add_address">Add Address</string>
+    <string name="order_number">Order number :</string>
+    <string name="done">Done</string>
 
 </resources>

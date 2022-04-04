@@ -37,15 +37,18 @@
 
             <FrameLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                >
 
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="start"
                     android:fontFamily="@font/font_bold"
-                    android:text="Iced tea Green tea Lipton Tea bag"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="12dp"
+                    android:text="شاي مثلج شاي أخضر كيس شاي ليبتون"
                     android:textColor="@color/black2"
 
                     android:textSize="14sp" />
