@@ -9,12 +9,16 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.apps.dbrah.R;
+import com.apps.dbrah.adapter.MainCartAdapter;
 import com.apps.dbrah.databinding.FragmentCartBinding;
 import com.apps.dbrah.uis.activity_base.BaseFragment;
 import com.apps.dbrah.uis.activity_home.HomeActivity;
 import com.apps.dbrah.uis.activity_home.profile_module.FragmentProfile;
+
+import java.util.ArrayList;
 
 
 public class FragmentCart extends BaseFragment {
@@ -46,7 +50,8 @@ public class FragmentCart extends BaseFragment {
     }
 
     private void initView() {
-
+        binding.recViewLayout.recView.setLayoutManager(new LinearLayoutManager(activity));
+        binding.recViewLayout.recView.setAdapter(new MainCartAdapter(new ArrayList<Object>(),activity));
     }
 
 
