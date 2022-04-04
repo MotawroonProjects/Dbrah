@@ -97,6 +97,7 @@
     <string name="order_number">رقم الطلب :</string>
     <string name="done">تم</string>
     <string name="order_time">وقت الطلب</string>
+    <string name="expected_delivery_time">وقت التسليم المتوقع:</string>
     <string name="delivered">تم التوصيل</string>
     <string name="re_order">إعادة الطلب</string>
 
