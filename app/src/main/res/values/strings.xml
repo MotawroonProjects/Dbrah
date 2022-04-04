@@ -95,5 +95,6 @@
     <string name="add_address">Add Address</string>
     <string name="order_number">Order number :</string>
     <string name="done">Done</string>
+    <string name="order_time">Order time</string>
 
 </resources>

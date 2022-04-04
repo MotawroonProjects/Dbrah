@@ -96,6 +96,7 @@
     <string name="add_address">إضافة عنوان</string>
     <string name="order_number">رقم الطلب :</string>
     <string name="done">تم</string>
+    <string name="order_time">وقت الطلب</string>
 
 
 </resources>

@@ -10,18 +10,25 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.apps.dbrah.R;
+import com.apps.dbrah.adapter.OrderAdapter;
 import com.apps.dbrah.databinding.FragmentCurrentOrderBinding;
 import com.apps.dbrah.mvvm.GeneralMvvm;
 import com.apps.dbrah.uis.activity_base.BaseFragment;
 import com.apps.dbrah.uis.activity_home.HomeActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class FragmentPreviousOrder extends BaseFragment {
     private GeneralMvvm generalMvvm;
     private HomeActivity activity;
     private FragmentCurrentOrderBinding binding;
+    private OrderAdapter orderAdapter;
+    private List<Object> orderList;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -49,6 +56,10 @@ public class FragmentPreviousOrder extends BaseFragment {
 
     private void initView() {
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
+        orderList = new ArrayList<>();
+        orderAdapter = new OrderAdapter(orderList, activity);
+        binding.recViewLayout.recView.setLayoutManager(new LinearLayoutManager(activity));
+        binding.recViewLayout.recView.setAdapter(orderAdapter);
     }
 
 
