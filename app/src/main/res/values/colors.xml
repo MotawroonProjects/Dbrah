@@ -24,6 +24,7 @@
     <color name="grey10">#777777</color>
     <color name="grey11">#C4C4C4</color>
     <color name="grey12">#E5E5E5</color>
+    <color name="grey13">#F2F2F2</color>
 
 
     <color name="color1">#FCF1F1</color>
@@ -32,6 +33,7 @@
     <color name="color4">#FFB800</color>
     <color name="color5">#008DB9</color>
     <color name="color6">#D6C000</color>
+    <color name="color7">#3B9A00</color>
     <color name="shadow">#20000000</color>
 
 </resources>
