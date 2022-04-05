@@ -100,6 +100,18 @@
     <string name="expected_delivery_time">وقت التسليم المتوقع:</string>
     <string name="delivered">تم التوصيل</string>
     <string name="re_order">إعادة الطلب</string>
+    <string name="rate_provider">قيم مقدم الخدمة</string>
+    <string name="total_cost">التكلفة الإجمالية</string>
+    <string name="sar">ر.س</string>
+    <string name="preparing">جاري التحضير</string>
+    <string name="on_the_way">فى الطريق</string>
+    <string name="edit">تعديل</string>
+    <string name="collecting_packages_from_suppliers">تجميع الطرود من الموردين</string>
+    <string name="show_offer">إظهار العرض</string>
+    <string name="some_products_are_not_available">بعض المنتجات غير متوفرة</string>
+    <string name="there_are_other_brand_to_some_products">هناك ماركات أخرى لبعض المنتجات</string>
+    <string name="some_products_have_less_quantities">تحتوي بعض المنتجات على كميات أقل</string>
+    <string name="order_details">تفاصيل الطلب</string>
 
 
 </resources>

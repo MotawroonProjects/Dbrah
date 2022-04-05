@@ -26,6 +26,12 @@
         tools:ignore="AllowBackup"
         tools:targetApi="q">
         <activity
+            android:name=".uis.activity_previous_order_details.PreviousOrderDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".uis.activity_current_order_details.CurrentOrderDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".uis.activity_about_app.AboutAppActivity"
             android:exported="false" />
         <activity
@@ -93,7 +99,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_provider"></meta-data>
+                android:resource="@xml/file_provider" />
         </provider>
     </application>
 

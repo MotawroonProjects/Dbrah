@@ -29,6 +29,9 @@
     <color name="color1">#FCF1F1</color>
     <color name="color2">#BE3033</color>
     <color name="color3">#FF9096</color>
+    <color name="color4">#FFB800</color>
+    <color name="color5">#008DB9</color>
+    <color name="color6">#D6C000</color>
     <color name="shadow">#20000000</color>
 
 </resources>

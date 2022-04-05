@@ -1,6 +1,7 @@
 package com.apps.dbrah.uis.activity_home.order_module;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.apps.dbrah.databinding.FragmentCurrentOrderBinding;
 import com.apps.dbrah.databinding.FragmentOrderBinding;
 import com.apps.dbrah.mvvm.GeneralMvvm;
 import com.apps.dbrah.uis.activity_base.BaseFragment;
+import com.apps.dbrah.uis.activity_current_order_details.CurrentOrderDetailsActivity;
 import com.apps.dbrah.uis.activity_home.HomeActivity;
 
 import java.util.ArrayList;
@@ -59,11 +61,15 @@ public class FragmentCurrentOrder extends BaseFragment {
     private void initView() {
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
         orderList = new ArrayList<>();
-        orderAdapter = new OrderAdapter(orderList, activity);
+        orderAdapter = new OrderAdapter(orderList, activity,this);
         binding.recViewLayout.recView.setLayoutManager(new LinearLayoutManager(activity));
         binding.recViewLayout.recView.setAdapter(orderAdapter);
 
     }
 
 
+    public void navigateToDetails() {
+        Intent intent=new Intent(activity, CurrentOrderDetailsActivity.class);
+        startActivity(intent);
+    }
 }
