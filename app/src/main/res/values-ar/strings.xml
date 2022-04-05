@@ -112,7 +112,6 @@
     <string name="there_are_other_brand_to_some_products">هناك ماركات أخرى لبعض المنتجات</string>
     <string name="some_products_have_less_quantities">تحتوي بعض المنتجات على كميات أقل</string>
     <string name="order_details">تفاصيل الطلب</string>
-    <string name="expected_delivery_time2">Expected delivery time :</string>
     <string name="single_price2">سعر الواحد :</string>
     <string name="total_price2">إجمالي السعر :</string>
     <string name="unavailable">غير متاح</string>
@@ -121,5 +120,7 @@
     <string name="offer_detials">تفاصيل العرض</string>
     <string name="reject">رفض</string>
     <string name="accept">قبول</string>
+    <string name="products_cost">تكلفة المنتجات:</string>
+    <string name="vat">الضريبة:</string>
 
 </resources>

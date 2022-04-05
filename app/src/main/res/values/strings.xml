@@ -111,7 +111,6 @@
     <string name="there_are_other_brand_to_some_products">There are Other brand to some products</string>
     <string name="some_products_have_less_quantities">Some products have Less quantities</string>
     <string name="order_details">Order Details</string>
-    <string name="expected_delivery_time2">Expected delivery time :</string>
     <string name="unavailable">Unavailable</string>
     <string name="available_quantity">Available Quantity :</string>
     <string name="single_price2">Single Price :</string>
@@ -120,5 +119,7 @@
     <string name="offer_detials">Offer Detials</string>
     <string name="reject">Reject</string>
     <string name="accept">Accept</string>
+    <string name="products_cost">products cost :</string>
+    <string name="vat">VAT :</string>
 
 </resources>

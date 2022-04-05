@@ -29,6 +29,7 @@
                     android:id="@+id/nested"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
+                    android:fillViewport="true"
                     app:layout_constraintBottom_toTopOf="@+id/llData"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -121,11 +122,11 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="16dp"
-                                android:layout_marginTop="13dp"
+                                android:layout_marginTop="11dp"
                                 android:layout_marginEnd="16dp"
                                 android:fontFamily="@font/font_regular"
-                                android:text="@string/expected_delivery_time2"
-                                android:textColor="@color/grey7"
+                                android:text="@string/expected_delivery_time"
+                                android:textColor="@color/grey8"
                                 android:textSize="12sp" />
 
                             <LinearLayout
@@ -178,6 +179,7 @@
                             android:id="@+id/recViewOffer"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="18dp"
                             android:layout_marginStart="16dp"
                             android:layout_marginEnd="16dp" />
 
@@ -187,7 +189,7 @@
                             android:layout_marginStart="22dp"
                             android:layout_marginTop="16dp"
                             android:layout_marginEnd="22dp"
-                            android:layout_marginBottom="16dp"
+                            android:layout_marginBottom="30dp"
                             android:background="@drawable/rounded_grey13_stroke_black2"
                             android:orientation="vertical">
 
@@ -205,7 +207,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
                                     android:fontFamily="@font/font_regular"
-                                    android:text="@string/total_cost"
+                                    android:text="@string/products_cost"
                                     android:textColor="@color/black2"
                                     android:textSize="16sp" />
 
@@ -228,9 +230,11 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
                                     android:fontFamily="@font/font_regular"
-                                    android:text="R.S"
+                                    android:text="@string/sar"
+                                    android:layout_marginStart="4dp"
+                                    android:layout_marginEnd="4dp"
                                     android:textColor="@color/grey8"
-                                    android:textSize="18sp" />
+                                    android:textSize="14sp" />
                             </LinearLayout>
 
                             <View
@@ -254,7 +258,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
                                     android:fontFamily="@font/font_regular"
-                                    android:text="@string/total_cost"
+                                    android:text="@string/vat"
                                     android:textColor="@color/black2"
                                     android:textSize="16sp" />
 
@@ -277,9 +281,11 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
                                     android:fontFamily="@font/font_regular"
-                                    android:text="R.S"
+                                    android:text="@string/sar"
+                                    android:layout_marginStart="4dp"
+                                    android:layout_marginEnd="4dp"
                                     android:textColor="@color/grey8"
-                                    android:textSize="18sp" />
+                                    android:textSize="14sp" />
 
                             </LinearLayout>
 
@@ -329,9 +335,11 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
                                     android:fontFamily="@font/font_bold"
-                                    android:text="R.S"
+                                    android:text="@string/sar"
+                                    android:layout_marginStart="4dp"
+                                    android:layout_marginEnd="4dp"
                                     android:textColor="@color/grey8"
-                                    android:textSize="18sp" />
+                                    android:textSize="14sp" />
 
                             </LinearLayout>
 
@@ -345,10 +353,9 @@
                     android:id="@+id/llData"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="14dp"
+                    android:layout_marginStart="31dp"
+                    android:layout_marginEnd="31dp"
+                    android:layout_marginBottom="28dp"
                     app:layout_constraintTop_toBottomOf="@+id/nested"
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:orientation="horizontal">

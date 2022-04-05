@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/rounded_white_stroke_gray12"
         android:orientation="vertical">
 
@@ -24,9 +24,9 @@
             <com.makeramen.roundedimageview.RoundedImageView
                 android:layout_width="56dp"
                 android:layout_height="56dp"
-                app:riv_corner_radius="8dp"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/ic_date" />
+                android:src="@drawable/ic_date"
+                app:riv_corner_radius="8dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -66,8 +66,7 @@
                 android:fontFamily="@font/font_bold"
                 android:text="2 X"
                 android:textColor="@color/black2"
-                android:textSize="18sp"
-                />
+                android:textSize="18sp" />
 
             <androidx.legacy.widget.Space
                 android:layout_width="0dp"
@@ -118,14 +117,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
                 android:fontFamily="@font/font_bold"
-                android:layout_gravity="center_vertical"
                 android:text="2 X"
                 android:textColor="@color/black2"
-                android:textSize="18sp"
-                />
+                android:textSize="18sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -171,43 +169,64 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:fontFamily="@font/font_regular"
                 android:text="@string/single_price2"
-                android:textSize="14sp"
                 android:textColor="@color/black2"
-                android:layout_gravity="center_vertical"/>
+                android:textSize="14sp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
                 android:fontFamily="@font/font_regular"
-                android:text="30 R.S"
-                android:textSize="18sp"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
+                android:text="30"
                 android:textColor="@color/black2"
-                android:layout_gravity="center_vertical"/>
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:fontFamily="@font/font_regular"
+                android:text="@string/sar"
+                android:textColor="@color/grey8"
+                android:textSize="14sp"/>
+
             <androidx.legacy.widget.Space
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:fontFamily="@font/font_regular"
                 android:text="@string/total_price2"
-                android:textSize="14sp"
                 android:textColor="@color/black2"
-                android:layout_gravity="center_vertical"/>
+                android:textSize="14sp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
                 android:fontFamily="@font/font_bold"
-                android:text="150 R.S"
-                android:textSize="18sp"
+                android:text="150"
                 android:textColor="@color/black2"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_gravity="center_vertical"/>
+                android:textSize="18sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:fontFamily="@font/font_regular"
+                android:text="@string/sar"
+                android:textColor="@color/grey8"
+                android:textSize="14sp"/>
         </LinearLayout>
     </LinearLayout>
 </layout>

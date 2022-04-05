@@ -3,20 +3,37 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/drawable/circle_color5.xml" value="0.24074074074074073" />
+        <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/drawable/circle_color6.xml" value="0.24074074074074073" />
+        <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/drawable/circle_grey11.xml" value="0.24444444444444444" />
+        <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/drawable/circle_primary.xml" value="0.24444444444444444" />
+        <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/drawable/circle_white.xml" value="0.24444444444444444" />
         <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/drawable/circle_white_stroke.xml" value="0.19537037037037036" />
         <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/drawable/circle_white_stroke_grey11.xml" value="0.19537037037037036" />
+        <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/drawable/horizontal_line.xml" value="0.24444444444444444" />
         <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/drawable/ic_addresses.xml" value="0.24722222222222223" />
+        <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/drawable/ic_arrow_left.xml" value="0.24166666666666667" />
+        <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/drawable/ic_close.xml" value="0.24444444444444444" />
         <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/drawable/ic_date.xml" value="0.24722222222222223" />
+        <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/drawable/ic_edit2.xml" value="0.24444444444444444" />
         <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/drawable/ic_left_arrow1.xml" value="0.24722222222222223" />
+        <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/drawable/ic_line.xml" value="0.24444444444444444" />
         <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/drawable/ic_order.xml" value="0.24722222222222223" />
         <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/drawable/ic_order2.xml" value="0.24722222222222223" />
+        <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/drawable/ic_star.xml" value="0.24444444444444444" />
         <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/drawable/ic_time.xml" value="0.24722222222222223" />
         <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/drawable/ic_user2.xml" value="0.24722222222222223" />
+        <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/drawable/rounded_color7.xml" value="0.24166666666666667" />
         <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/drawable/rounded_grey1.xml" value="0.19537037037037036" />
+        <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/drawable/rounded_grey12.xml" value="0.24444444444444444" />
+        <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/drawable/rounded_grey13_stroke_black2.xml" value="0.24166666666666667" />
         <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/drawable/rounded_grey1_stroke_color2.xml" value="0.19537037037037036" />
+        <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/drawable/rounded_grey4.xml" value="0.24166666666666667" />
         <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/drawable/rounded_grey4_stroke_color2.xml" value="0.21296296296296297" />
         <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/drawable/rounded_grey4_stroke_color3.xml" value="0.24722222222222223" />
         <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/drawable/rounded_grey6_stroke.xml" value="0.24722222222222223" />
+        <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/drawable/rounded_grey8.xml" value="0.24444444444444444" />
+        <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/drawable/rounded_primary.xml" value="0.24444444444444444" />
         <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/drawable/rounded_white_stroke_color2.xml" value="0.24722222222222223" />
         <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/drawable/rounded_white_stroke_gray12.xml" value="0.24722222222222223" />
         <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/drawable/shadow.xml" value="0.24722222222222223" />
@@ -26,22 +43,28 @@
         <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/drawable/small_rounded_stroke_grey4.xml" value="0.24722222222222223" />
         <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/drawable/small_rounded_white.xml" value="0.24722222222222223" />
         <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/drawable/small_stroke_primary.xml" value="0.24722222222222223" />
+        <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/layout/activity_current_order_details.xml" value="0.25416666666666665" />
+        <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/layout/activity_offer_detials.xml" value="0.25416666666666665" />
+        <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/layout/activity_previous_order_details.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/layout/address_row.xml" value="0.2" />
         <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/layout/cart_row.xml" value="0.13020833333333334" />
         <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/layout/dailog_verification_code.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/layout/fragment_add_address.xml" value="0.24010416666666667" />
         <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/layout/fragment_current_order.xml" value="0.25416666666666665" />
+        <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/layout/fragment_current_order_details.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/layout/fragment_my_addresses.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/layout/fragment_order.xml" value="0.25416666666666665" />
+        <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/layout/fragment_previous_order_details.xml" value="0.25416666666666665" />
+        <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/layout/fragment_previous_order_detials.xml" value="0.24010416666666667" />
         <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/layout/fragment_profile.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/layout/main_cart_row.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/layout/main_order_row.xml" value="0.25416666666666665" />
+        <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/layout/offer_detials_row.xml" value="0.25416666666666665" />
+        <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/layout/offer_row.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/layout/order_row.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/layout/recview_layout.xml" value="0.25416666666666665" />
-        <entry key="..\:/Dbrah/app/src/main/res/drawable/rounded_color1.xml" value="0.21944444444444444" />
+        <entry key="..\:/AndroidProjects/Dbrah/app/src/main/res/layout/toolbar.xml" value="0.25416666666666665" />
         <entry key="..\:/Dbrah/app/src/main/res/drawable/rounded_color1_stroke_color3.xml" value="0.2388888888888889" />
-        <entry key="..\:/Dbrah/app/src/main/res/drawable/rounded_color7.xml" value="0.134375" />
-        <entry key="..\:/Dbrah/app/src/main/res/drawable/rounded_grey13_stroke_black2.xml" value="0.21944444444444444" />
         <entry key="..\:/Dbrah/app/src/main/res/drawable/rounded_grey4_stroke.xml" value="0.2388888888888889" />
         <entry key="..\:/Dbrah/app/src/main/res/drawable/rounded_white_stroke_color3.xml" value="0.2324074074074074" />
         <entry key="..\:/Dbrah/app/src/main/res/drawable/rounded_white_stroke_gray12.xml" value="0.2324074074074074" />
@@ -51,9 +74,7 @@
         <entry key="..\:/Dbrah/app/src/main/res/drawable/small_rounded_white.xml" value="0.2388888888888889" />
         <entry key="..\:/Dbrah/app/src/main/res/drawable/small_stroke_primary.xml" value="0.2388888888888889" />
         <entry key="..\:/Dbrah/app/src/main/res/drawable/tab_indicator.xml" value="0.24444444444444444" />
-        <entry key="..\:/Dbrah/app/src/main/res/layout/activity_current_order_details.xml" value="0.21" />
         <entry key="..\:/Dbrah/app/src/main/res/layout/activity_login.xml" value="0.1925925925925926" />
-        <entry key="..\:/Dbrah/app/src/main/res/layout/activity_offer_detials.xml" value="0.23958333333333334" />
         <entry key="..\:/Dbrah/app/src/main/res/layout/address_row.xml" value="0.23958333333333334" />
         <entry key="..\:/Dbrah/app/src/main/res/layout/base_fragment_cart.xml" value="0.23958333333333334" />
         <entry key="..\:/Dbrah/app/src/main/res/layout/base_fragment_market.xml" value="0.23958333333333334" />
@@ -65,15 +86,12 @@
         <entry key="..\:/Dbrah/app/src/main/res/layout/dialog_choose_image.xml" value="0.23958333333333334" />
         <entry key="..\:/Dbrah/app/src/main/res/layout/dialog_information.xml" value="0.23958333333333334" />
         <entry key="..\:/Dbrah/app/src/main/res/layout/fragment_cart.xml" value="0.23958333333333334" />
-        <entry key="..\:/Dbrah/app/src/main/res/layout/fragment_current_order_details.xml" value="0.1140625" />
         <entry key="..\:/Dbrah/app/src/main/res/layout/fragment_order.xml" value="0.23958333333333334" />
         <entry key="..\:/Dbrah/app/src/main/res/layout/fragment_previous_order_detials.xml" value="0.25" />
         <entry key="..\:/Dbrah/app/src/main/res/layout/fragment_profile.xml" value="0.23958333333333334" />
         <entry key="..\:/Dbrah/app/src/main/res/layout/fragment_search.xml" value="0.23958333333333334" />
         <entry key="..\:/Dbrah/app/src/main/res/layout/fragment_setting.xml" value="0.23958333333333334" />
         <entry key="..\:/Dbrah/app/src/main/res/layout/main_cart_row.xml" value="0.33" />
-        <entry key="..\:/Dbrah/app/src/main/res/layout/offer_detials_row.xml" value="0.1140625" />
-        <entry key="..\:/Dbrah/app/src/main/res/layout/offer_row.xml" value="0.2546875" />
         <entry key="..\:/Dbrah/app/src/main/res/layout/order_row.xml" value="0.1140625" />
         <entry key="..\:/Dbrah/app/src/main/res/layout/profile_layout.xml" value="0.23958333333333334" />
         <entry key="..\:/Dbrah/app/src/main/res/layout/profile_login_layout.xml" value="0.1925925925925926" />
