@@ -137,7 +137,7 @@
                         android:layout_height="10dp"
                         android:layout_gravity="center"
 
-                        app:dotsColor="@android:color/darker_gray"
+                        app:dotsColor="@color/grey11"
                         app:dotsCornerRadius="8dp"
                         app:dotsSize="10dp"
                         app:dotsSpacing="2dp"
