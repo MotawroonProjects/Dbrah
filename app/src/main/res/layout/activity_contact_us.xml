@@ -15,7 +15,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/grey9"
+        android:background="@color/grey4"
         android:orientation="vertical">
 
         <include
@@ -29,17 +29,18 @@
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="16dp"
                 android:background="@drawable/small_rounded_white"
                 android:fillViewport="true"
-                android:padding="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="14dp"
 
                 >
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:orientation="vertical">
 
                     <ImageView
@@ -56,6 +57,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="48dp"
+                        android:layout_marginStart="21dp"
+                        android:layout_marginEnd="21dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
@@ -67,26 +70,29 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            android:layout_marginEnd="12dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
                             android:fontFamily="@font/font_regular"
                             android:text="@string/name"
                             android:textColor="@color/black"
-                            android:textSize="15sp" />
+                            android:textSize="16sp" />
 
 
                     </LinearLayout>
 
                     <EditText
+                        error="@{contactModel.error_name}"
                         android:layout_width="match_parent"
-                        android:layout_height="56dp"
+                        android:layout_height="53dp"
                         android:layout_marginTop="8dp"
                         android:background="@drawable/small_rounded_stroke_grey7"
                         android:hint="@string/name"
                         android:lines="1"
-                        android:paddingStart="16dp"
-                        android:paddingEnd="16dp"
+                        android:layout_marginStart="21dp"
+                        android:layout_marginEnd="21dp"
+                        android:padding="16dp"
                         android:text="@={contactModel.name}"
+                        android:textColorHint="@color/grey8"
                         android:textColor="@color/black"
                         android:textSize="14sp"
                         android:fontFamily="@font/font_regular"
@@ -96,6 +102,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        android:layout_marginStart="21dp"
+                        android:layout_marginEnd="21dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
@@ -107,26 +115,29 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            android:layout_marginEnd="12dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
                             android:fontFamily="@font/font_regular"
                             android:text="@string/email"
                             android:textColor="@color/black"
-                            android:textSize="15sp" />
+                            android:textSize="16sp" />
 
 
                     </LinearLayout>
 
                     <EditText
+                        error="@{contactModel.error_email}"
                         android:layout_width="match_parent"
-                        android:layout_height="56dp"
+                        android:layout_height="53dp"
                         android:layout_marginTop="8dp"
                         android:background="@drawable/small_rounded_stroke_grey7"
                         android:hint="@string/email"
                         android:inputType="textEmailAddress"
                         android:lines="1"
-                        android:paddingStart="16dp"
-                        android:paddingEnd="16dp"
+                        android:padding="16dp"
+                        android:layout_marginStart="21dp"
+                        android:layout_marginEnd="21dp"
+                        android:textColorHint="@color/grey8"
                         android:text="@={contactModel.email}"
                         android:textColor="@color/black"
                         android:textSize="14sp"
@@ -138,6 +149,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        android:layout_marginStart="21dp"
+                        android:layout_marginEnd="21dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
@@ -149,25 +162,28 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            android:layout_marginEnd="12dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
                             android:fontFamily="@font/font_regular"
                             android:text="@string/subject"
                             android:textColor="@color/black"
-                            android:textSize="15sp" />
+                            android:textSize="16sp" />
 
 
                     </LinearLayout>
 
                     <EditText
+                        error="@{contactModel.error_subject}"
                         android:layout_width="match_parent"
-                        android:layout_height="56dp"
+                        android:layout_height="53dp"
                         android:layout_marginTop="8dp"
                         android:background="@drawable/small_rounded_stroke_grey7"
                         android:hint="@string/subject"
                         android:lines="1"
-                        android:paddingStart="16dp"
-                        android:paddingEnd="16dp"
+                        android:padding="16dp"
+                        android:layout_marginStart="21dp"
+                        android:layout_marginEnd="21dp"
+                        android:textColorHint="@color/grey8"
                         android:text="@={contactModel.subject}"
                         android:textColor="@color/black"
                         android:textSize="14sp"
@@ -180,6 +196,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        android:layout_marginStart="21dp"
+                        android:layout_marginEnd="21dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
@@ -191,17 +209,18 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            android:layout_marginEnd="12dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
                             android:fontFamily="@font/font_regular"
                             android:text="@string/message"
                             android:textColor="@color/black"
-                            android:textSize="15sp" />
+                            android:textSize="16sp" />
 
 
                     </LinearLayout>
 
                     <EditText
+                        error="@{contactModel.error_message}"
                         android:layout_width="match_parent"
                         android:layout_height="114dp"
                         android:layout_marginTop="8dp"
@@ -210,6 +229,9 @@
                         android:hint="@string/message"
                         android:lines="1"
                         android:padding="16dp"
+                        android:layout_marginStart="21dp"
+                        android:layout_marginEnd="21dp"
+                        android:textColorHint="@color/grey8"
                         android:text="@={contactModel.message}"
                         android:textColor="@color/black"
                         android:textSize="14sp"
@@ -218,14 +240,14 @@
                         />
 
                     <Button
+                        android:id="@+id/btnSend"
                         android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:layout_marginStart="5dp"
+                        android:layout_height="56dp"
+                        android:layout_marginStart="21dp"
                         android:layout_marginTop="16dp"
-                        android:layout_marginEnd="5dp"
+                        android:layout_marginEnd="21dp"
                         android:layout_marginBottom="16dp"
                         android:background="@drawable/btn_small_enabled"
-                        android:enabled="@{contactModel.valid,default=false}"
                         android:text="@string/send"
                         android:textColor="@color/white"
                         android:textSize="16sp"

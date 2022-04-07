@@ -59,6 +59,7 @@
     <string name="no_search_result">لا توجد نتائج البحث</string>
     <string name="orders">الطلبات</string>
     <string name="cart">السلة</string>
+    <string name="inv_email">البريد الالكتروني غير صحيح</string>
     <string name="field_required">الحقل مطلوب</string>
     <string name="what_are_you_looking_for">عن ماذا تبحث ؟</string>
     <string name="categories">الأقسام</string>
@@ -124,5 +125,9 @@
     <string name="vat">الضريبة:</string>
     <string name="specifications">Specifications</string>
     <string name="add_to_cart">Add to Cart</string>
+    <string name="note">ملاحظة</string>
+    <string name="add_note">إضافة ملاحظة</string>
+    <string name="complete_order">إكمال الطلب</string>
+    <string name="search_for_product">ابحث عن المنتج</string>
 
 </resources>
