@@ -13,149 +13,143 @@
             type="com.apps.dbrah.model.ProductModel" />
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/motion"
         android:layout_width="164dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:background="@drawable/rounded_white_stroke_gray12"
-        android:orientation="vertical">
+        app:layoutDescription="@xml/recent_row_scene"
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        >
 
-            <com.makeramen.roundedimageview.RoundedImageView
-                image="@{model.main_image}"
-                android:layout_width="match_parent"
-                android:layout_height="148dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="8dp"
-                android:scaleType="fitXY"
-                app:riv_corner_radius="8dp" />
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/image"
+            image="@{model.main_image}"
+            android:layout_width="0dp"
+            android:layout_height="148dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:riv_corner_radius="8dp"
 
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="end"
-                android:layout_marginStart="6dp"
-                android:layout_marginTop="6dp"
-                android:layout_marginEnd="8dp"
-                android:src="@drawable/ic_save" />
-        </FrameLayout>
+            />
+
+        <ImageView
+            android:id="@+id/imageTag"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_save"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+
+            />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:fontFamily="@font/font_regular"
+            android:gravity="center_vertical"
+            android:lines="2"
             android:text='@{lang.equals("ar")?model.title_ar:model.title_en}'
             android:textColor="@color/black2"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/image" />
 
-        <FrameLayout
-            android:id="@+id/fl"
-            android:layout_width="match_parent"
-            android:layout_height="32dp"
+        <ImageView
+            android:id="@+id/imgCart"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:layout_gravity="center"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="4dp"
+            android:background="@drawable/circle_white_stroke_color3"
+            android:padding="4dp"
+            android:src="@drawable/ic_cart1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+
+            />
+
+        <TextView
+            android:id="@+id/tvCartAmount"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@drawable/rounded_primary"
+            android:fontFamily="@font/font_regular"
             android:gravity="center"
+            android:text="1"
+            android:textColor="@color/white"
+            android:textSize="16sp"
             android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/imgCart"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
-            >
 
-            <LinearLayout
-                android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/llAmount"
+            android:layout_width="1dp"
+            android:layout_height="36dp"
+            android:alpha="1"
+            android:background="@drawable/rounded_white_stroke_color3"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/imgCart"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle">
+
+            <ImageView
+                android:id="@+id/imageDecrease"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_margin="5dp"
+                android:src="@drawable/ic_minus"
+                app:tint="@color/color3"
+
+                />
+
+            <TextView
+                android:id="@+id/tvCounter"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@drawable/rounded_white_stroke_color3"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/imageDecrease"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_margin="5dp"
-                    android:src="@drawable/ic_minus"
-                    app:tint="@color/color3"
-
-                    />
-
-                <TextView
-                    android:id="@+id/tvCounter"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/font_bold"
-                    android:gravity="center"
-                    android:text='1'
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="14sp" />
-
-
-                <ImageView
-                    android:id="@+id/imageIncrease"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_margin="5dp"
-                    android:padding="5dp"
-                    android:src="@drawable/ic_add"
-                    app:tint="@color/color3" />
-
-
-            </LinearLayout>
-
-
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/flCart"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_gravity="end"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="4dp"
-            android:visibility="visible">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/circle_white_stroke_color3"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/font_bold"
                 android:gravity="center"
-                android:padding="8dp"
-                android:visibility="visible">
+                android:text='1'
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp" />
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/ic_cart1" />
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/rounded_primary"
-                android:visibility="gone">
+            <ImageView
+                android:id="@+id/imageIncrease"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_add"
+                app:tint="@color/color3" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/font_regular"
-                    android:gravity="center"
-                    android:text="1"
-                    android:textColor="@color/white"
-                    android:textSize="16sp" />
-            </LinearLayout>
 
-        </FrameLayout>
-    </LinearLayout>
+        </LinearLayout>
+
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+
+
 </layout>

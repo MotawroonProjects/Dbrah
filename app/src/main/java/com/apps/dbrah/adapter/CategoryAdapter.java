@@ -1,46 +1,113 @@
 package com.apps.dbrah.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.palette.graphics.Palette;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.apps.dbrah.R;
 import com.apps.dbrah.databinding.CategoryRowBinding;
 import com.apps.dbrah.model.CategoryDataModel;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 
 import java.util.List;
 import java.util.Random;
 
-public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+import de.hdodenhof.circleimageview.CircleImageView;
+
+public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<CategoryDataModel.CategoryModel> list;
     private Context context;
     private LayoutInflater inflater;
     private Fragment fragment;
+    private String lang;
 
-    public CategoryAdapter( Context context, Fragment fragment) {
+    public CategoryAdapter(Context context, Fragment fragment,String lang) {
         this.context = context;
-        this.fragment=fragment;
+        this.fragment = fragment;
         inflater = LayoutInflater.from(context);
+        this.lang = lang;
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        CategoryRowBinding binding= DataBindingUtil.inflate(inflater, R.layout.category_row,parent,false);
+        CategoryRowBinding binding = DataBindingUtil.inflate(inflater, R.layout.category_row, parent, false);
         return new MyHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        MyHolder myHolder=(MyHolder) holder;
+        MyHolder myHolder = (MyHolder) holder;
         myHolder.binding.setModel(list.get(position));
-//        myHolder.itemView.setBackgroundColor(getRandomColorCode());
+        myHolder.binding.setLang(lang);
+        if (lang.equals("ar")){
+            myHolder.binding.img.setTranslationX(-10);
+        }else {
+            myHolder.binding.img.setTranslationX(10);
+
+        }
+        loadImage(list.get(position), myHolder.binding);
+
+    }
+
+    private void loadImage(CategoryDataModel.CategoryModel categoryModel, CategoryRowBinding binding) {
+        ImageView view = binding.img;
+        view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                if (categoryModel.getImage() != null) {
+                    RequestOptions options = new RequestOptions().override(view.getWidth(), view.getHeight());
+                    Glide.with(view.getContext())
+                            .asBitmap()
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .load(categoryModel.getImage())
+                            .centerCrop()
+                            .apply(options)
+                            .into(new SimpleTarget<Bitmap>() {
+                                @Override
+                                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                                    view.setImageBitmap(resource);
+                                    getColorsBg(binding,resource);
+
+                                }
+                            });
+                }
+            }
+        });
+    }
+
+    private void getColorsBg(CategoryRowBinding binding, Bitmap resource) {
+        Palette.from(resource).maximumColorCount(64).generate(palette -> {
+            if (palette!=null){
+                Palette.Swatch swatch = palette.getDominantSwatch();
+                if (swatch!=null){
+                    GradientDrawable gd = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM,new int[]{swatch.getRgb(),Color.WHITE,});
+                    gd.setGradientType(GradientDrawable.RADIAL_GRADIENT);
+                    gd.setGradientRadius(140.0f);
+                    binding.flBg.setBackground(gd);
+                }
+            }
+
+        });
     }
 
     @Override
@@ -63,11 +130,5 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         this.list = list;
         notifyDataSetChanged();
     }
-    public int getRandomColorCode(){
 
-        Random random = new Random();
-
-        return Color.argb(255, random.nextInt(256), random.nextInt(256),     random.nextInt(256));
-
-    }
 }

@@ -95,7 +95,7 @@ public class FragmentMarket extends BaseFragment {
             }
         });
 
-        categoryAdapter=new CategoryAdapter(activity,this);
+        categoryAdapter=new CategoryAdapter(activity,this,getLang());
         binding.recViewCategory.setLayoutManager(new GridLayoutManager(activity,2));
         binding.recViewCategory.setAdapter(categoryAdapter);
         fragmentMarketMvvm.getCategoryModelLiveData().observe(activity, categoryModels -> {
