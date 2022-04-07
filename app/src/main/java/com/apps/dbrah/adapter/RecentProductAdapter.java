@@ -12,12 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.apps.dbrah.R;
 
 import com.apps.dbrah.databinding.RecentRowBinding;
+import com.apps.dbrah.model.ProductModel;
 import com.apps.dbrah.model.RecentProductDataModel;
 
 import java.util.List;
 
 public class RecentProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
-    private List<RecentProductDataModel.RecentProductModel> list;
+    private List<ProductModel> list;
     private Context context;
     private LayoutInflater inflater;
     private Fragment fragment;
@@ -57,7 +58,7 @@ public class RecentProductAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
     }
 
-    public void updateList(List<RecentProductDataModel.RecentProductModel> list) {
+    public void updateList(List<ProductModel> list) {
         this.list = list;
         notifyDataSetChanged();
     }

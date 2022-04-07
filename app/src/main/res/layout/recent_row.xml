@@ -8,7 +8,7 @@
             type="String" />
         <variable
             name="model"
-            type="com.apps.dbrah.model.RecentProductDataModel.RecentProductModel" />
+            type="com.apps.dbrah.model.ProductModel" />
     </data>
 
     <LinearLayout

@@ -9,6 +9,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.apps.dbrah.model.CategoryDataModel;
+import com.apps.dbrah.model.ProductModel;
 import com.apps.dbrah.model.RecentProductDataModel;
 import com.apps.dbrah.model.SliderDataModel;
 import com.apps.dbrah.remote.Api;
@@ -28,7 +29,7 @@ public class FragmentMarketMvvm extends AndroidViewModel {
     private Context context;
     private MutableLiveData<SliderDataModel> sliderDataModelMutableLiveData;
     private MutableLiveData<List<CategoryDataModel.CategoryModel>> categoryModelLiveData;
-    private MutableLiveData<List<RecentProductDataModel.RecentProductModel>> recentModelLiveData;
+    private MutableLiveData<List<ProductModel>> recentModelLiveData;
     private CompositeDisposable disposable = new CompositeDisposable();
     private MutableLiveData<Boolean> isLoadingLiveData;
     public FragmentMarketMvvm(@NonNull Application application) {
@@ -57,7 +58,7 @@ public class FragmentMarketMvvm extends AndroidViewModel {
         return categoryModelLiveData;
     }
 
-    public MutableLiveData<List<RecentProductDataModel.RecentProductModel>> getRecentModelLiveData() {
+    public MutableLiveData<List<ProductModel>> getRecentModelLiveData() {
         if (recentModelLiveData==null){
             recentModelLiveData=new MutableLiveData<>();
         }
