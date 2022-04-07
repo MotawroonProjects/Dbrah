@@ -13,17 +13,16 @@ import androidx.viewpager.widget.PagerAdapter;
 
 import com.apps.dbrah.R;
 import com.apps.dbrah.databinding.SliderBinding;
+import com.apps.dbrah.model.SliderDataModel;
 
 import java.util.List;
 
 public class SliderAdapter extends PagerAdapter {
-
-
-    List<Object> IMAGES;
+    List<SliderDataModel.SliderModel> IMAGES;
     private LayoutInflater inflater;
     Context context;
 
-    public SliderAdapter(List<Object> IMAGES, Context context) {
+    public SliderAdapter(List<SliderDataModel.SliderModel> IMAGES, Context context) {
         this.context = context;
         this.IMAGES = IMAGES;
         inflater = LayoutInflater.from(context);
@@ -42,7 +41,7 @@ public class SliderAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup view, int position) {
         SliderBinding rowBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.slider, view, false);
-
+        rowBinding.setPhoto(IMAGES.get(position).getImage());
         view.addView(rowBinding.getRoot());
         return rowBinding.getRoot();
     }

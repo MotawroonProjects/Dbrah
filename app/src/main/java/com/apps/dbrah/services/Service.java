@@ -1,8 +1,11 @@
 package com.apps.dbrah.services;
 
 
+import com.apps.dbrah.model.CategoryDataModel;
+import com.apps.dbrah.model.RecentProductDataModel;
 import com.apps.dbrah.model.NotificationDataModel;
 import com.apps.dbrah.model.PlaceGeocodeData;
+import com.apps.dbrah.model.SliderDataModel;
 import com.apps.dbrah.model.StatusResponse;
 import com.apps.dbrah.model.UserModel;
 
@@ -22,6 +25,16 @@ import retrofit2.http.Query;
 
 public interface Service {
 
+    @GET("api/sliders")
+    Single<Response<SliderDataModel>> getSlider();
+
+
+    @GET("api/main_categories")
+    Single<Response<CategoryDataModel>> getCategory();
+
+
+    @GET("api/latest_products")
+    Single<Response<RecentProductDataModel>> getRecentProduct();
     @GET("geocode/json")
     Single<Response<PlaceGeocodeData>> getGeoData(@Query(value = "latlng") String latlng,
                                                   @Query(value = "language") String language,

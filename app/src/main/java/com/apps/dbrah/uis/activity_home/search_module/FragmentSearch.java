@@ -53,6 +53,8 @@ public class FragmentSearch extends BaseFragment {
         binding.arrow.setOnClickListener(v -> {
             generalMvvm.onHomeBackNavigate().setValue(true);
         });
+
+
     }
 
 
