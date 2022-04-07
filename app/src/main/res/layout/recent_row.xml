@@ -3,9 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="lang"
             type="String" />
+
         <variable
             name="model"
             type="com.apps.dbrah.model.ProductModel" />

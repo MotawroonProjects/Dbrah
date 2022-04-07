@@ -2,6 +2,7 @@ package com.apps.dbrah.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import com.apps.dbrah.R;
 import com.apps.dbrah.databinding.RecentRowBinding;
 import com.apps.dbrah.model.ProductModel;
 import com.apps.dbrah.model.RecentProductDataModel;
+import com.apps.dbrah.uis.activity_home.market_module.FragmentMarket;
 
 import java.util.List;
 
@@ -40,6 +42,15 @@ public class RecentProductAdapter extends RecyclerView.Adapter<RecyclerView.View
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MyHolder myHolder=(MyHolder) holder;
         myHolder.binding.setModel(list.get(position));
+        myHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(fragment instanceof FragmentMarket){
+                    FragmentMarket fragmentMarket=(FragmentMarket) fragment;
+                    fragmentMarket.showProductDetials(list.get(holder.getAdapterPosition()));
+                }
+            }
+        });
     }
 
     @Override

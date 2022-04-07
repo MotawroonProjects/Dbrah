@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 public class GeneralMvvm extends AndroidViewModel {
     private MutableLiveData<Integer> actionHomeNavigator;
     private MutableLiveData<Boolean> actionHomeBackNavigator;
+    private MutableLiveData<String> Product_id;
 
 
     public GeneralMvvm(@NonNull Application application) {
@@ -29,5 +30,10 @@ public class GeneralMvvm extends AndroidViewModel {
         return actionHomeBackNavigator;
     }
 
-
+    public MutableLiveData<String> getProduct_id() {
+        if (Product_id == null) {
+            Product_id = new MutableLiveData<>();
+        }
+        return Product_id;
+    }
 }

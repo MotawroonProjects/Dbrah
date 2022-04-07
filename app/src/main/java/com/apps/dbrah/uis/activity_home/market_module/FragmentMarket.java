@@ -22,6 +22,7 @@ import com.apps.dbrah.adapter.CategoryAdapter;
 import com.apps.dbrah.adapter.RecentProductAdapter;
 import com.apps.dbrah.adapter.SliderAdapter;
 import com.apps.dbrah.databinding.FragmentMarketBinding;
+import com.apps.dbrah.model.ProductModel;
 import com.apps.dbrah.model.RecentProductDataModel;
 import com.apps.dbrah.model.SliderDataModel;
 import com.apps.dbrah.mvvm.FragmentMarketMvvm;
@@ -125,6 +126,12 @@ public class FragmentMarket extends BaseFragment {
         fragmentMarketMvvm.getSlider();
         fragmentMarketMvvm.getCategory();
         fragmentMarketMvvm.getRecentProduct();
+    }
+
+    public void showProductDetials(ProductModel productModel) {
+        generalMvvm.getProduct_id().setValue(productModel.getId());
+        generalMvvm.onHomeNavigate().setValue(6);
+
     }
 
     public class MyTask extends TimerTask {

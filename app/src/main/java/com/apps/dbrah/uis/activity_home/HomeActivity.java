@@ -27,6 +27,7 @@ import com.apps.dbrah.uis.activity_home.address_module.FragmentMyAddresses;
 import com.apps.dbrah.uis.activity_home.market_module.FragmentHome;
 import com.apps.dbrah.uis.activity_home.my_list_module.FragmentMyList;
 import com.apps.dbrah.uis.activity_home.notification_module.FragmentNotification;
+import com.apps.dbrah.uis.activity_home.product_detials_module.FragmentProductDetials;
 import com.apps.dbrah.uis.activity_home.search_module.FragmentSearch;
 import com.apps.dbrah.uis.activity_home.setting_module.FragmentSetting;
 import com.apps.dbrah.uis.add_address_module.FragmentAddAddress;
@@ -92,6 +93,7 @@ public class HomeActivity extends BaseActivity {
         fragments.add(FragmentMyList.newInstance());
         fragments.add(FragmentAddAddress.newInstance());
         fragments.add(FragmentSetting.newInstance());
+        fragments.add(FragmentProductDetials.newInstance());
 
         adapter = new MyPagerAdapter(getSupportFragmentManager(), fragments, null);
         binding.pager.setAdapter(adapter);

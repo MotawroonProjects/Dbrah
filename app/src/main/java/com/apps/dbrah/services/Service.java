@@ -5,6 +5,7 @@ import com.apps.dbrah.model.CategoryDataModel;
 import com.apps.dbrah.model.RecentProductDataModel;
 import com.apps.dbrah.model.NotificationDataModel;
 import com.apps.dbrah.model.PlaceGeocodeData;
+import com.apps.dbrah.model.SingleProductModel;
 import com.apps.dbrah.model.SliderDataModel;
 import com.apps.dbrah.model.StatusResponse;
 import com.apps.dbrah.model.UserModel;
@@ -109,5 +110,6 @@ public interface Service {
                                                              @Query(value = "api_key") String api_key,
                                                              @Query(value = "user_id") String user_id
     );
-
+    @GET("api/product_details")
+    Single<Response<SingleProductModel>> getSingleProduct(@Query("id") String id);
 }

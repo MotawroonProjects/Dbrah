@@ -121,5 +121,7 @@
     <string name="accept">Accept</string>
     <string name="products_cost">products cost :</string>
     <string name="vat">VAT :</string>
+    <string name="specifications">Specifications</string>
+    <string name="add_to_cart">Add to Cart</string>
 
 </resources>
