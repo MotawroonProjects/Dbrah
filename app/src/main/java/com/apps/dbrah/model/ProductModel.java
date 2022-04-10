@@ -14,6 +14,7 @@ public class ProductModel implements Serializable {
     private String details_en;
     private String created_at;
     private String updated_at;
+    private int amount;
     private List<Image> images;
 
     public String getId() {
@@ -59,7 +60,16 @@ public class ProductModel implements Serializable {
     public List<Image> getImages() {
         return images;
     }
-    public class Image implements Serializable{
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public static class Image implements Serializable{
         private String id;
         private String image;
         private String product_id;
