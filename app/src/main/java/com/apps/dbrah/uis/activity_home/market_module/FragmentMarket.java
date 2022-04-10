@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -112,10 +113,17 @@ public class FragmentMarket extends BaseFragment {
         binding.recViewMostRecentProducts.setAdapter(recentProductAdapter);
         fragmentMarketMvvm.getRecentModelLiveData().observe(activity, recentProductModels -> {
             if (recentProductModels.size() > 0) {
+            Log.e("asda",recentProductModels.size()+"_");
+            if (recentProductModels.size()>0){
                 binding.tvNoMostRecentProduct.setVisibility(View.GONE);
                 recentProductAdapter.updateList(recentProductModels);
             } else {
+            }else {
                 binding.tvNoMostRecentProduct.setVisibility(View.VISIBLE);
+            }
+            if (recentProductAdapter!=null){
+                recentProductAdapter.updateList(recentProductModels);
+
             }
         });
 

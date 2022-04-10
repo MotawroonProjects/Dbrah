@@ -11,6 +11,8 @@
         <variable
             name="model"
             type="com.apps.dbrah.model.ProductModel" />
+
+        <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.motion.widget.MotionLayout
@@ -19,6 +21,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_white_stroke_gray12"
         app:layoutDescription="@xml/recent_row_scene"
+        android:layout_margin="5dp"
 
         >
 
@@ -65,7 +68,9 @@
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/image" />
+            app:layout_constraintTop_toBottomOf="@id/image"
+
+            />
 
         <ImageView
             android:id="@+id/imgCart"
@@ -73,13 +78,16 @@
             android:layout_height="36dp"
             android:layout_gravity="center"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/circle_white_stroke_color3"
             android:padding="4dp"
             android:src="@drawable/ic_cart1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            android:visibility="@{model.amount>0?View.GONE:View.VISIBLE,default=visible}"
 
             />
 
@@ -87,30 +95,38 @@
             android:id="@+id/tvCartAmount"
             android:layout_width="36dp"
             android:layout_height="36dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/rounded_primary"
             android:fontFamily="@font/font_regular"
             android:gravity="center"
-            android:text="1"
+            android:text='@{String.valueOf(model.amount)}'
             android:textColor="@color/white"
             android:textSize="16sp"
-            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/imgCart"
-            app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            android:visibility="@{model.amount>0?View.INVISIBLE:View.VISIBLE,default=invisible}"
+            />
 
 
         <LinearLayout
             android:id="@+id/llAmount"
             android:layout_width="1dp"
             android:layout_height="36dp"
-            android:alpha="1"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:alpha="0"
             android:background="@drawable/rounded_white_stroke_color3"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/imgCart"
             app:layout_constraintHorizontal_bias="1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvTitle">
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+
+
+            >
 
             <ImageView
                 android:id="@+id/imageDecrease"
@@ -132,7 +148,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/font_bold"
                 android:gravity="center"
-                android:text='1'
+                android:text='@{String.valueOf(model.amount)}'
                 android:textColor="@color/colorPrimary"
                 android:textSize="14sp" />
 
