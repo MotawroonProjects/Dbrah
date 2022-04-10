@@ -36,6 +36,18 @@ public interface Service {
 
     @GET("api/latest_products")
     Single<Response<RecentProductDataModel>> getRecentProduct();
+
+
+
+    @FormUrlEncoded
+    @POST("api/contact_us")
+    Single<Response<StatusResponse>> contactUs(@Field("name") String name,
+                                               @Field("email") String email,
+                                               @Field("subject") String subject,
+                                               @Field("message") String message
+
+
+    );
     @GET("geocode/json")
     Single<Response<PlaceGeocodeData>> getGeoData(@Query(value = "latlng") String latlng,
                                                   @Query(value = "language") String language,

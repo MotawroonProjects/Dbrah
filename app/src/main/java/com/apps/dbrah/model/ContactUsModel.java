@@ -21,17 +21,64 @@ public class ContactUsModel extends BaseObservable implements Serializable {
     private String message;
     private boolean valid;
 
-    public void isDataValid() {
+    public ObservableField<String> error_name = new ObservableField<>();
+    public ObservableField<String> error_email = new ObservableField<>();
+    public ObservableField<String> error_subject = new ObservableField<>();
+    public ObservableField<String> error_message = new ObservableField<>();
 
-        if (!name.trim().isEmpty() &&
-                Patterns.EMAIL_ADDRESS.matcher(email.trim()).matches() &&
-                !subject.trim().isEmpty() &&
-                !message.trim().isEmpty()
+    public boolean isDataValid(Context context) {
+
+        if (!name.isEmpty() &&
+                !email.isEmpty() &&
+                Patterns.EMAIL_ADDRESS.matcher(email).matches() &&
+                !subject.isEmpty() &&
+                !message.isEmpty()
 
         ) {
-            setValid(true);
+
+
+            error_name.set(null);
+            error_email.set(null);
+            error_subject.set(null);
+            error_message.set(null);
+
+
+            return true;
+
         } else {
-            setValid(false);
+
+            if (name.isEmpty()){
+                error_name.set(context.getString(R.string.field_required));
+            }else {
+                error_name.set(null);
+
+            }
+
+
+            if (email.isEmpty()){
+                error_email.set(context.getString(R.string.field_required));
+            }if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                error_email.set(context.getString(R.string.inv_email));
+            }else {
+                error_email.set(null);
+
+            }
+
+            if (subject.isEmpty()){
+                error_subject.set(context.getString(R.string.field_required));
+            }else {
+                error_subject.set(null);
+
+            }
+
+            if (message.isEmpty()){
+                error_message.set(context.getString(R.string.field_required));
+            }else {
+                error_message.set(null);
+
+            }
+
+            return false;
 
         }
 
@@ -52,7 +99,6 @@ public class ContactUsModel extends BaseObservable implements Serializable {
     public void setName(String name) {
         this.name = name;
         notifyPropertyChanged(BR.name);
-        isDataValid();
     }
 
     @Bindable
@@ -63,7 +109,6 @@ public class ContactUsModel extends BaseObservable implements Serializable {
     public void setEmail(String email) {
         this.email = email;
         notifyPropertyChanged(BR.email);
-        isDataValid();
 
     }
 
@@ -75,7 +120,6 @@ public class ContactUsModel extends BaseObservable implements Serializable {
     public void setSubject(String subject) {
         this.subject = subject;
         notifyPropertyChanged(BR.subject);
-        isDataValid();
 
     }
 
@@ -87,7 +131,6 @@ public class ContactUsModel extends BaseObservable implements Serializable {
     public void setMessage(String message) {
         this.message = message;
         notifyPropertyChanged(BR.message);
-        isDataValid();
 
     }
 
