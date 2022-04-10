@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.apps.dbrah.R;
 import com.apps.dbrah.databinding.CategoryRowBinding;
 import com.apps.dbrah.model.CategoryDataModel;
+import com.apps.dbrah.uis.activity_home.market_module.FragmentMarket;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
@@ -65,7 +66,14 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         }
         loadImage(list.get(position), myHolder.binding);
-
+myHolder.itemView.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        if(fragment instanceof FragmentMarket){
+            FragmentMarket fragmentMarket=(FragmentMarket) fragment;
+        fragmentMarket.showCategoryDetials(list.get(holder.getAdapterPosition()));}
+    }
+});
     }
 
     private void loadImage(CategoryDataModel.CategoryModel categoryModel, CategoryRowBinding binding) {

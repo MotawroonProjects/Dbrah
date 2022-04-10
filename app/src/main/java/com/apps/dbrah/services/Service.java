@@ -33,10 +33,14 @@ public interface Service {
     @GET("api/main_categories")
     Single<Response<CategoryDataModel>> getCategory();
 
-
+    @GET("api/sub_categories")
+    Single<Response<CategoryDataModel>> getSubCategory(@Query("category_id")String category_id);
     @GET("api/latest_products")
     Single<Response<RecentProductDataModel>> getRecentProduct();
-
+    @GET("api/search")
+    Single<Response<RecentProductDataModel>> searchByCatProduct(@Query("category_id")String category_id,
+                                                                @Query("sub_category_id")String sub_category_id,
+                                                                @Query("search_word")String search_word);
 
 
     @FormUrlEncoded

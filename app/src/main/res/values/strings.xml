@@ -130,5 +130,6 @@
     <string name="search_for_product">Search for product</string>
     <string name="specifications">Specifications</string>
     <string name="add_to_cart">Add to Cart</string>
+    <string name="products">Products</string>
 
 </resources>

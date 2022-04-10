@@ -4,34 +4,41 @@
 
     <data>
 
+        <variable
+            name="lang"
+            type="String" />
+
+        <variable
+            name="model"
+            type="com.apps.dbrah.model.CategoryDataModel.CategoryModel" />
     </data>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_marginEnd="6dp"
-        android:background="@drawable/rounded_white_stroke_grey7"
+        android:background='@{model.selected?@drawable/rounded_primary:@drawable/rounded_white_stroke_grey7}'
+        android:gravity="center"
         android:orientation="horizontal"
         android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:gravity="center"
-        >
+        android:paddingEnd="8dp">
+
         <ImageView
+            image="@{model.image}"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginStart="3dp"
             android:layout_marginEnd="3dp"
-            android:padding="3dp"
-            android:src="@drawable/product"
-             />
+            android:padding="3dp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="product"
-            android:textColor="@color/black"
-            android:textSize="15sp"
             android:layout_marginEnd="12dp"
-            />
+            android:fontFamily="@font/font_regular"
+            android:text='@{lang.equals("ar")?model.title_ar:model.title_en}'
+            android:textColor='@{model.selected?@color/white:@color/black}'
+            android:textSize="15sp" />
 
     </LinearLayout>
 

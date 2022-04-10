@@ -22,6 +22,7 @@ import com.apps.dbrah.adapter.CategoryAdapter;
 import com.apps.dbrah.adapter.RecentProductAdapter;
 import com.apps.dbrah.adapter.SliderAdapter;
 import com.apps.dbrah.databinding.FragmentMarketBinding;
+import com.apps.dbrah.model.CategoryDataModel;
 import com.apps.dbrah.model.ProductModel;
 import com.apps.dbrah.model.RecentProductDataModel;
 import com.apps.dbrah.model.SliderDataModel;
@@ -95,25 +96,25 @@ public class FragmentMarket extends BaseFragment {
             }
         });
 
-        categoryAdapter=new CategoryAdapter(activity,this,getLang());
-        binding.recViewCategory.setLayoutManager(new GridLayoutManager(activity,2));
+        categoryAdapter = new CategoryAdapter(activity, this, getLang());
+        binding.recViewCategory.setLayoutManager(new GridLayoutManager(activity, 2));
         binding.recViewCategory.setAdapter(categoryAdapter);
         fragmentMarketMvvm.getCategoryModelLiveData().observe(activity, categoryModels -> {
-            if (categoryModels.size()>0){
+            if (categoryModels.size() > 0) {
                 binding.tvNoCategories.setVisibility(View.GONE);
                 categoryAdapter.updateList(categoryModels);
-            }else {
+            } else {
                 binding.tvNoCategories.setVisibility(View.VISIBLE);
             }
         });
-        recentProductAdapter =new RecentProductAdapter(activity,this);
-        binding.recViewMostRecentProducts.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL,false));
+        recentProductAdapter = new RecentProductAdapter(activity, this);
+        binding.recViewMostRecentProducts.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false));
         binding.recViewMostRecentProducts.setAdapter(recentProductAdapter);
         fragmentMarketMvvm.getRecentModelLiveData().observe(activity, recentProductModels -> {
-            if (recentProductModels.size()>0){
+            if (recentProductModels.size() > 0) {
                 binding.tvNoMostRecentProduct.setVisibility(View.GONE);
                 recentProductAdapter.updateList(recentProductModels);
-            }else {
+            } else {
                 binding.tvNoMostRecentProduct.setVisibility(View.VISIBLE);
             }
         });
@@ -132,6 +133,11 @@ public class FragmentMarket extends BaseFragment {
         generalMvvm.getProduct_id().setValue(productModel.getId());
         generalMvvm.onHomeNavigate().setValue(6);
 
+    }
+
+    public void showCategoryDetials(CategoryDataModel.CategoryModel categoryModel) {
+        generalMvvm.getCat_id().setValue(categoryModel.getId());
+        generalMvvm.onHomeNavigate().setValue(7);
     }
 
     public class MyTask extends TimerTask {

@@ -10,7 +10,7 @@ public class CategoryDataModel extends StatusResponse implements Serializable {
         return data;
     }
 
-    public static class CategoryModel implements Serializable{
+    public static class CategoryModel implements Serializable {
         private String id;
         private String title_ar;
         private String title_en;
@@ -18,6 +18,7 @@ public class CategoryDataModel extends StatusResponse implements Serializable {
         private String level;
         private String created_at;
         private String updated_at;
+        private boolean selected;
 
         public String getId() {
             return id;
@@ -45,6 +46,14 @@ public class CategoryDataModel extends StatusResponse implements Serializable {
 
         public String getUpdated_at() {
             return updated_at;
+        }
+
+        public boolean isSelected() {
+            return selected;
+        }
+
+        public void setSelected(boolean selected) {
+            this.selected = selected;
         }
     }
 }

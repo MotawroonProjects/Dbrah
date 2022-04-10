@@ -129,5 +129,6 @@
     <string name="add_note">إضافة ملاحظة</string>
     <string name="complete_order">إكمال الطلب</string>
     <string name="search_for_product">ابحث عن المنتج</string>
+    <string name="products">Products</string>
 
 </resources>

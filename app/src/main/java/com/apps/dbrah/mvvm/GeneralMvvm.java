@@ -10,6 +10,7 @@ public class GeneralMvvm extends AndroidViewModel {
     private MutableLiveData<Integer> actionHomeNavigator;
     private MutableLiveData<Boolean> actionHomeBackNavigator;
     private MutableLiveData<String> Product_id;
+    private MutableLiveData<String> cat_id;
 
 
     public GeneralMvvm(@NonNull Application application) {
@@ -35,5 +36,11 @@ public class GeneralMvvm extends AndroidViewModel {
             Product_id = new MutableLiveData<>();
         }
         return Product_id;
+    }
+    public MutableLiveData<String> getCat_id() {
+        if (cat_id == null) {
+            cat_id = new MutableLiveData<>();
+        }
+        return cat_id;
     }
 }

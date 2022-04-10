@@ -7,30 +7,42 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.apps.dbrah.R;
 import com.apps.dbrah.adapter.MainProductCategoryAdapter;
+import com.apps.dbrah.adapter.RecentProductAdapter;
 import com.apps.dbrah.adapter.SubProductCategoryAdapter;
 import com.apps.dbrah.databinding.FragmentProductsBinding;
+import com.apps.dbrah.model.CategoryDataModel;
+import com.apps.dbrah.mvvm.FragmentProductsMvvm;
 import com.apps.dbrah.mvvm.GeneralMvvm;
 import com.apps.dbrah.uis.activity_base.BaseFragment;
 import com.apps.dbrah.uis.activity_home.HomeActivity;
 import com.apps.dbrah.uis.activity_home.complete_order_module.FragmentCompleteOrder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class FragmentProducts extends BaseFragment {
     private HomeActivity activity;
     private GeneralMvvm generalMvvm;
+    private FragmentProductsMvvm fragmentProductsMvvm;
     private FragmentProductsBinding binding;
     private MainProductCategoryAdapter mainProductCategoryAdapter;
     private SubProductCategoryAdapter subProductCategoryAdapter;
+    private RecentProductAdapter recentProductAdapter;
+    private String cat_id;
+    private String query;
 
     public static FragmentProducts newInstance() {
         return new FragmentProducts();
@@ -49,6 +61,7 @@ public class FragmentProducts extends BaseFragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_products, container, false);
         return binding.getRoot();
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -57,16 +70,73 @@ public class FragmentProducts extends BaseFragment {
     }
 
     private void initView() {
-        mainProductCategoryAdapter=new MainProductCategoryAdapter(activity,this);
-        subProductCategoryAdapter=new SubProductCategoryAdapter(activity,this);
-        binding.recViewMain.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL,false));
-        binding.recViewSub.setLayoutManager(new LinearLayoutManager(activity,RecyclerView.HORIZONTAL,false));
+        generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
+        fragmentProductsMvvm = ViewModelProviders.of(activity).get(FragmentProductsMvvm.class);
+        generalMvvm.getCat_id().observe(activity, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                if (s != null) {
+
+                    cat_id = s;
+                    fragmentProductsMvvm.getCategory();
+
+                }
+            }
+        });
+        fragmentProductsMvvm.getIsLoadingLiveData().observe(activity, isLoading -> {
+            if (isLoading) {
+            }
+        });
+        mainProductCategoryAdapter = new MainProductCategoryAdapter(activity, this, getLang());
+        subProductCategoryAdapter = new SubProductCategoryAdapter(activity, this, getLang());
+        binding.recViewMain.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false));
+        binding.recViewSub.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false));
         binding.recViewMain.setAdapter(mainProductCategoryAdapter);
         binding.recViewSub.setAdapter(subProductCategoryAdapter);
-        generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
-        View view = activity.setUpToolbar(binding.toolbar, getString(R.string.delivery_addresses), R.color.white, R.color.black, R.drawable.small_rounded_grey4, false);
+        recentProductAdapter = new RecentProductAdapter(activity, this);
+        binding.recViewProducts.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false));
+        binding.recViewSub.setAdapter(recentProductAdapter);
+        View view = activity.setUpToolbar(binding.toolbar, getString(R.string.products), R.color.white, R.color.black, R.drawable.small_rounded_grey4, false);
         view.setOnClickListener(v -> {
             generalMvvm.onHomeBackNavigate().setValue(true);
         });
+        fragmentProductsMvvm.getCategoryModelLiveData().observe(activity, this::updateMainCategoryData);
+        fragmentProductsMvvm.getSubCategoryModelLiveData().observe(activity, this::updateSubCategoryData);
+
+    }
+
+    private void updateSubCategoryData(List<CategoryDataModel.CategoryModel> categoryModels) {
+        if (categoryModels.size() > 0) {
+            CategoryDataModel.CategoryModel categoryModel = categoryModels.get(0);
+            categoryModel.setSelected(true);
+            categoryModels.set(0, categoryModel);
+            subProductCategoryAdapter.updateList(categoryModels);
+            fragmentProductsMvvm.searchProduct(cat_id, categoryModel.getId(), query);
+        } else {
+            subProductCategoryAdapter.updateList(new ArrayList<>());
+
+        }
+    }
+
+    private void updateMainCategoryData(List<CategoryDataModel.CategoryModel> categoryModels) {
+        if (categoryModels.size() > 0) {
+            for (int i = 0; i < categoryModels.size(); i++) {
+                ///   Log.e("fllfll",cat_id+"_"+categoryModels.get(i).getId());
+                if (categoryModels.get(i).getId().equals(cat_id)) {
+                    CategoryDataModel.CategoryModel categoryModel = categoryModels.get(i);
+                    categoryModel.setSelected(true);
+                    categoryModels.set(i, categoryModel);
+                    break;
+                }
+            }
+            mainProductCategoryAdapter.updateList(categoryModels);
+            fragmentProductsMvvm.getSubCategory(cat_id);
+        } else {
+        }
+    }
+
+    public void getsubcat(CategoryDataModel.CategoryModel categoryModel) {
+        cat_id = categoryModel.getId();
+        fragmentProductsMvvm.getSubCategory(cat_id);
     }
 }
