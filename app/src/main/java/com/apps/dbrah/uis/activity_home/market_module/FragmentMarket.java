@@ -114,11 +114,10 @@ public class FragmentMarket extends BaseFragment {
         fragmentMarketMvvm.getRecentModelLiveData().observe(activity, recentProductModels -> {
             if (recentProductModels.size() > 0) {
             Log.e("asda",recentProductModels.size()+"_");
-            if (recentProductModels.size()>0){
                 binding.tvNoMostRecentProduct.setVisibility(View.GONE);
                 recentProductAdapter.updateList(recentProductModels);
-            } else {
-            }else {
+            }
+            else {
                 binding.tvNoMostRecentProduct.setVisibility(View.VISIBLE);
             }
             if (recentProductAdapter!=null){
