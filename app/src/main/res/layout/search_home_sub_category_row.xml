@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="lang"
+            type="String" />
+
+        <variable
+            name="model"
+            type="com.apps.dbrah.model.CategoryModel" />
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_margin="5dp"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="2dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:maxEms="12"
+            android:text='@{lang.equals("ar")?model.title_ar:model.title_en}'
+            android:ellipsize="end"
+            android:fontFamily="@font/font_regular"
+
+            />
+    </androidx.cardview.widget.CardView>
+</layout>

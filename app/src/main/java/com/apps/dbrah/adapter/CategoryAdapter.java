@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.apps.dbrah.R;
 import com.apps.dbrah.databinding.CategoryRowBinding;
 import com.apps.dbrah.model.CategoryDataModel;
+import com.apps.dbrah.model.CategoryModel;
 import com.apps.dbrah.uis.activity_home.market_module.FragmentMarket;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -29,18 +29,15 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 
 import java.util.List;
-import java.util.Random;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<CategoryDataModel.CategoryModel> list;
+    private List<CategoryModel> list;
     private Context context;
     private LayoutInflater inflater;
     private Fragment fragment;
     private String lang;
 
-    public CategoryAdapter(Context context, Fragment fragment,String lang) {
+    public CategoryAdapter(Context context, Fragment fragment, String lang) {
         this.context = context;
         this.fragment = fragment;
         inflater = LayoutInflater.from(context);
@@ -59,24 +56,25 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         MyHolder myHolder = (MyHolder) holder;
         myHolder.binding.setModel(list.get(position));
         myHolder.binding.setLang(lang);
-        if (lang.equals("ar")){
+        if (lang.equals("ar")) {
             myHolder.binding.img.setTranslationX(-10);
-        }else {
+        } else {
             myHolder.binding.img.setTranslationX(10);
 
         }
         loadImage(list.get(position), myHolder.binding);
-myHolder.itemView.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        if(fragment instanceof FragmentMarket){
-            FragmentMarket fragmentMarket=(FragmentMarket) fragment;
-        fragmentMarket.showCategoryDetials(list.get(holder.getAdapterPosition()));}
-    }
-});
+        myHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (fragment instanceof FragmentMarket) {
+                    FragmentMarket fragmentMarket = (FragmentMarket) fragment;
+                    fragmentMarket.showCategoryDetails(list.get(holder.getAdapterPosition()));
+                }
+            }
+        });
     }
 
-    private void loadImage(CategoryDataModel.CategoryModel categoryModel, CategoryRowBinding binding) {
+    private void loadImage(CategoryModel categoryModel, CategoryRowBinding binding) {
         ImageView view = binding.img;
         view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -94,7 +92,7 @@ myHolder.itemView.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                                     view.setImageBitmap(resource);
-                                    getColorsBg(binding,resource);
+                                    getColorsBg(binding, resource);
 
                                 }
                             });
@@ -105,10 +103,10 @@ myHolder.itemView.setOnClickListener(new View.OnClickListener() {
 
     private void getColorsBg(CategoryRowBinding binding, Bitmap resource) {
         Palette.from(resource).maximumColorCount(64).generate(palette -> {
-            if (palette!=null){
+            if (palette != null) {
                 Palette.Swatch swatch = palette.getDominantSwatch();
-                if (swatch!=null){
-                    GradientDrawable gd = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM,new int[]{swatch.getRgb(),Color.WHITE,});
+                if (swatch != null) {
+                    GradientDrawable gd = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, new int[]{swatch.getRgb(), Color.WHITE,});
                     gd.setGradientType(GradientDrawable.RADIAL_GRADIENT);
                     gd.setGradientRadius(140.0f);
                     binding.flBg.setBackground(gd);
@@ -134,7 +132,7 @@ myHolder.itemView.setOnClickListener(new View.OnClickListener() {
         }
     }
 
-    public void updateList(List<CategoryDataModel.CategoryModel> list) {
+    public void updateList(List<CategoryModel> list) {
         this.list = list;
         notifyDataSetChanged();
     }

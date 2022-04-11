@@ -9,6 +9,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.apps.dbrah.model.CategoryDataModel;
+import com.apps.dbrah.model.CategoryModel;
 import com.apps.dbrah.model.ProductModel;
 import com.apps.dbrah.model.RecentProductDataModel;
 import com.apps.dbrah.remote.Api;
@@ -26,8 +27,8 @@ import retrofit2.Response;
 public class FragmentProductsMvvm extends AndroidViewModel {
 
     private Context context;
-    private MutableLiveData<List<CategoryDataModel.CategoryModel>> categoryModelLiveData;
-    private MutableLiveData<List<CategoryDataModel.CategoryModel>> subcategoryModelLiveData;
+    private MutableLiveData<List<CategoryModel>> categoryModelLiveData;
+    private MutableLiveData<List<CategoryModel>> subcategoryModelLiveData;
 
     private CompositeDisposable disposable = new CompositeDisposable();
     private MutableLiveData<Boolean> isLoadingLiveData;
@@ -47,7 +48,7 @@ public class FragmentProductsMvvm extends AndroidViewModel {
         return isLoadingLiveData;
     }
 
-    public MutableLiveData<List<CategoryDataModel.CategoryModel>> getCategoryModelLiveData() {
+    public MutableLiveData<List<CategoryModel>> getCategoryModelLiveData() {
         if (categoryModelLiveData==null){
             categoryModelLiveData=new MutableLiveData<>();
         }
@@ -61,7 +62,7 @@ public class FragmentProductsMvvm extends AndroidViewModel {
         return listMutableLiveData;
     }
 
-    public MutableLiveData<List<CategoryDataModel.CategoryModel>> getSubCategoryModelLiveData() {
+    public MutableLiveData<List<CategoryModel>> getSubCategoryModelLiveData() {
         if (subcategoryModelLiveData==null){
             subcategoryModelLiveData=new MutableLiveData<>();
         }

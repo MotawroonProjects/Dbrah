@@ -18,13 +18,12 @@ import com.apps.dbrah.model.SliderDataModel;
 import java.util.List;
 
 public class SliderAdapter extends PagerAdapter {
-    List<SliderDataModel.SliderModel> IMAGES;
+    private List<SliderDataModel.SliderModel> list;
     private LayoutInflater inflater;
-    Context context;
+    private Context context;
 
-    public SliderAdapter(List<SliderDataModel.SliderModel> IMAGES, Context context) {
+    public SliderAdapter(Context context) {
         this.context = context;
-        this.IMAGES = IMAGES;
         inflater = LayoutInflater.from(context);
     }
 
@@ -35,13 +34,13 @@ public class SliderAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return IMAGES.size();
+        return list!=null?list.size():0;
     }
 
     @Override
     public Object instantiateItem(ViewGroup view, int position) {
         SliderBinding rowBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.slider, view, false);
-        rowBinding.setPhoto(IMAGES.get(position).getImage());
+        rowBinding.setPhoto(list.get(position).getImage());
         view.addView(rowBinding.getRoot());
         return rowBinding.getRoot();
     }
@@ -63,5 +62,10 @@ public class SliderAdapter extends PagerAdapter {
     @Override
     public int getItemPosition(@NonNull Object object) {
         return POSITION_NONE;
+    }
+
+    public void updateList(List<SliderDataModel.SliderModel> list){
+        this.list =list;
+        notifyDataSetChanged();
     }
 }

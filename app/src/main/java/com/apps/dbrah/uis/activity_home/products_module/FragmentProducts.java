@@ -25,6 +25,7 @@ import com.apps.dbrah.adapter.RecentProductAdapter;
 import com.apps.dbrah.adapter.SubProductCategoryAdapter;
 import com.apps.dbrah.databinding.FragmentProductsBinding;
 import com.apps.dbrah.model.CategoryDataModel;
+import com.apps.dbrah.model.CategoryModel;
 import com.apps.dbrah.model.ProductModel;
 import com.apps.dbrah.mvvm.FragmentProductsMvvm;
 import com.apps.dbrah.mvvm.GeneralMvvm;
@@ -128,19 +129,21 @@ public class FragmentProducts extends BaseFragment {
     }
 
     private void updateProductData(List<ProductModel> productModels) {
-        Log.e("ldldkk", productModels.size() + "");
         if (productModels.size() > 0) {
-            recentProductAdapter.updateList(productModels);
-        } else {
-            recentProductAdapter.updateList(new ArrayList<>());
+            Log.e("ldldkk", productModels.size() + "");
+            if (productModels.size() > 0) {
+                recentProductAdapter.updateList(productModels);
+            } else {
+                recentProductAdapter.updateList(new ArrayList<>());
 
+            }
         }
+
     }
 
-    private void updateSubCategoryData(List<CategoryDataModel.CategoryModel> categoryModels) {
-
+    private void updateSubCategoryData(List<CategoryModel> categoryModels) {
         if (categoryModels.size() > 0) {
-            CategoryDataModel.CategoryModel categoryModel = categoryModels.get(0);
+            CategoryModel categoryModel = categoryModels.get(0);
             categoryModel.setSelected(true);
             categoryModels.set(0, categoryModel);
             subProductCategoryAdapter.updateList(categoryModels);
@@ -153,12 +156,12 @@ public class FragmentProducts extends BaseFragment {
         }
     }
 
-    private void updateMainCategoryData(List<CategoryDataModel.CategoryModel> categoryModels) {
+    private void updateMainCategoryData(List<CategoryModel> categoryModels) {
         if (categoryModels.size() > 0) {
             for (int i = 0; i < categoryModels.size(); i++) {
                 ///   Log.e("fllfll",cat_id+"_"+categoryModels.get(i).getId());
                 if (categoryModels.get(i).getId().equals(cat_id)) {
-                    CategoryDataModel.CategoryModel categoryModel = categoryModels.get(i);
+                    CategoryModel categoryModel = categoryModels.get(i);
                     categoryModel.setSelected(true);
                     categoryModels.set(i, categoryModel);
                     break;
@@ -170,12 +173,12 @@ public class FragmentProducts extends BaseFragment {
         }
     }
 
-    public void getsubcat(CategoryDataModel.CategoryModel categoryModel) {
+    public void getsubcat(CategoryModel categoryModel) {
         cat_id = categoryModel.getId();
         fragmentProductsMvvm.getSubCategory(cat_id);
     }
 
-    public void showProducts(CategoryDataModel.CategoryModel categoryModel) {
+    public void showProducts(CategoryModel categoryModel) {
         sub_cat_id = categoryModel.getId();
         fragmentProductsMvvm.searchProduct(cat_id, categoryModel.getId(), query);
 

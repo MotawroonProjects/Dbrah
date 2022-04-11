@@ -12,12 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.apps.dbrah.R;
 import com.apps.dbrah.databinding.SubCategoryRowBinding;
 import com.apps.dbrah.model.CategoryDataModel;
+import com.apps.dbrah.model.CategoryModel;
 import com.apps.dbrah.uis.activity_home.products_module.FragmentProducts;
 
 import java.util.List;
 
 public class SubProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<CategoryDataModel.CategoryModel> list;
+    private List<CategoryModel> list;
     private Context context;
     private LayoutInflater inflater;
     private Fragment fragment;
@@ -57,7 +58,7 @@ public class SubProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView
         myHolder.itemView.setOnClickListener(v -> {
             if (oldHolder != null) {
 
-                CategoryDataModel.CategoryModel oldCategory = list.get(oldPos);
+               CategoryModel oldCategory = list.get(oldPos);
                 oldCategory.setSelected(false);
                 list.set(oldPos, oldCategory);
                 MyHolder oHolder = (MyHolder) oldHolder;
@@ -66,7 +67,7 @@ public class SubProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView
 
             }
             currentPos = myHolder.getAdapterPosition();
-            CategoryDataModel.CategoryModel category = list.get(currentPos);
+            CategoryModel category = list.get(currentPos);
             category.setSelected(true);
             list.set(currentPos, category);
 
@@ -100,7 +101,7 @@ public class SubProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView
         }
     }
 
-    public void updateList(List<CategoryDataModel.CategoryModel> list) {
+    public void updateList(List<CategoryModel> list) {
         this.list = list;
         currentPos = 0;
         oldPos = currentPos;

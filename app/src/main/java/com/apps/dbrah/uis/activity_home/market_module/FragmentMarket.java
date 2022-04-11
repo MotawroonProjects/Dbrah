@@ -6,13 +6,11 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,12 +18,13 @@ import android.view.ViewGroup;
 import com.apps.dbrah.R;
 
 import com.apps.dbrah.adapter.CategoryAdapter;
+import com.apps.dbrah.adapter.MostSaleProductAdapter;
 import com.apps.dbrah.adapter.RecentProductAdapter;
 import com.apps.dbrah.adapter.SliderAdapter;
 import com.apps.dbrah.databinding.FragmentMarketBinding;
 import com.apps.dbrah.model.CategoryDataModel;
+import com.apps.dbrah.model.CategoryModel;
 import com.apps.dbrah.model.ProductModel;
-import com.apps.dbrah.model.RecentProductDataModel;
 import com.apps.dbrah.model.SliderDataModel;
 import com.apps.dbrah.mvvm.FragmentMarketMvvm;
 import com.apps.dbrah.mvvm.GeneralMvvm;
@@ -42,12 +41,12 @@ public class FragmentMarket extends BaseFragment {
     private GeneralMvvm generalMvvm;
     private HomeActivity activity;
     private FragmentMarketBinding binding;
-    private FragmentMarketMvvm fragmentMarketMvvm;
+    private FragmentMarketMvvm mvvm;
     private SliderAdapter sliderAdapter;
-    private List<SliderDataModel.SliderModel> sliderModelList;
     private Timer timer;
     private CategoryAdapter categoryAdapter;
     private RecentProductAdapter recentProductAdapter;
+    private MostSaleProductAdapter mostSaleProductAdapter;
 
 
     @Override
@@ -78,71 +77,135 @@ public class FragmentMarket extends BaseFragment {
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
         binding.setNotificationCount("0");
         binding.setLang(getLang());
-        sliderModelList = new ArrayList<>();
-        fragmentMarketMvvm = ViewModelProviders.of(this).get(FragmentMarketMvvm.class);
-        fragmentMarketMvvm.getIsLoadingLiveData().observe(activity, isLoading -> {
-            if (isLoading) {
-                binding.progBarSlider.setVisibility(View.VISIBLE);
+        binding.swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
+
+        mvvm = ViewModelProviders.of(this).get(FragmentMarketMvvm.class);
+        mvvm.getIsLoadingSlider().observe(activity, isLoading -> {
+            if (!isLoading) {
+                binding.loaderSlider.stopShimmer();
+                binding.loaderSlider.setVisibility(View.GONE);
             }
         });
-        fragmentMarketMvvm.getSliderDataModelMutableLiveData().observe(activity, sliderDataModel -> {
-            if (sliderDataModel.getData() != null) {
-                binding.progBarSlider.setVisibility(View.GONE);
-                sliderModelList.clear();
-                sliderModelList.addAll(sliderDataModel.getData());
-                sliderAdapter.notifyDataSetChanged();
-                timer = new Timer();
-                timer.scheduleAtFixedRate(new MyTask(), 3000, 3000);
+        mvvm.getIsLoadingCategory().observe(activity, isLoading -> {
+            if (!isLoading) {
+                binding.loaderCategory.stopShimmer();
+                binding.loaderCategory.setVisibility(View.GONE);
+            }
+        });
+        mvvm.getIsLoadingRecentProduct().observe(activity, isLoading -> {
+            if (!isLoading) {
+                binding.loaderRecent.stopShimmer();
+                binding.loaderRecent.setVisibility(View.GONE);
+            }
+        });
+
+        mvvm.getIsLoadingMostSaleProduct().observe(activity, isLoading -> {
+            if (!isLoading) {
+                binding.loaderMostSales.stopShimmer();
+                binding.loaderMostSales.setVisibility(View.GONE);
+            }
+        });
+
+        mvvm.getOnSliderDataSuccess().observe(activity, list -> {
+           binding.swipeRefresh.setRefreshing(false);
+            if (sliderAdapter != null) {
+                sliderAdapter.updateList(list);
+            }
+            if (list.size() > 0) {
+                binding.flSlider.setVisibility(View.VISIBLE);
+                if (list.size() > 1) {
+                    timer = new Timer();
+                    timer.scheduleAtFixedRate(new MyTask(), 3000, 3000);
+                }
+            } else {
+                binding.flSlider.setVisibility(View.GONE);
+            }
+        });
+        mvvm.getOnCategoryDataSuccess().observe(activity, list -> {
+            binding.swipeRefresh.setRefreshing(false);
+
+            if (list.size() > 0) {
+                binding.tvNoCategories.setVisibility(View.GONE);
+            } else {
+                binding.tvNoCategories.setVisibility(View.VISIBLE);
+            }
+
+            if (categoryAdapter != null) {
+                categoryAdapter.updateList(list);
 
             }
         });
+        mvvm.getOnRecentProductDataModel().observe(activity, list -> {
+            binding.swipeRefresh.setRefreshing(false);
+            if (list.size() > 0) {
+                binding.tvNoMostRecentProduct.setVisibility(View.GONE);
+            } else {
+                binding.tvNoMostRecentProduct.setVisibility(View.VISIBLE);
+            }
+            if (recentProductAdapter != null) {
+                recentProductAdapter.updateList(list);
+
+            }
+
+        });
+        mvvm.getOnMostProductDataModel().observe(activity, list -> {
+            binding.swipeRefresh.setRefreshing(false);
+            if (list.size() > 0) {
+                binding.tvNoMostSaleProduct.setVisibility(View.GONE);
+            } else {
+                binding.tvNoMostSaleProduct.setVisibility(View.VISIBLE);
+            }
+            if (mostSaleProductAdapter != null) {
+                mostSaleProductAdapter.updateList(list);
+
+            }
+
+        });
+
+        setUpSliderData();
 
         categoryAdapter = new CategoryAdapter(activity, this, getLang());
         binding.recViewCategory.setLayoutManager(new GridLayoutManager(activity, 2));
         binding.recViewCategory.setAdapter(categoryAdapter);
-        fragmentMarketMvvm.getCategoryModelLiveData().observe(activity, categoryModels -> {
-            if (categoryModels.size() > 0) {
-                binding.tvNoCategories.setVisibility(View.GONE);
-                categoryAdapter.updateList(categoryModels);
-            } else {
-                binding.tvNoCategories.setVisibility(View.VISIBLE);
-            }
-        });
+
+
         recentProductAdapter = new RecentProductAdapter(activity, this);
         binding.recViewMostRecentProducts.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false));
         binding.recViewMostRecentProducts.setAdapter(recentProductAdapter);
-        fragmentMarketMvvm.getRecentModelLiveData().observe(activity, recentProductModels -> {
-            if (recentProductModels.size() > 0) {
-            ///Log.e("asda",recentProductModels.size()+"_");
-                binding.tvNoMostRecentProduct.setVisibility(View.GONE);
-                recentProductAdapter.updateList(recentProductModels);
-            }
-            else {
-                binding.tvNoMostRecentProduct.setVisibility(View.VISIBLE);
-            }
-            if (recentProductAdapter!=null){
-                recentProductAdapter.updateList(recentProductModels);
 
-            }
-        });
+        mostSaleProductAdapter = new MostSaleProductAdapter(activity, this);
+        binding.recViewMostSaleProducts.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false));
+        binding.recViewMostSaleProducts.setAdapter(mostSaleProductAdapter);
 
-        sliderAdapter = new SliderAdapter(sliderModelList, activity);
+
+        binding.swipeRefresh.setOnRefreshListener(this::getData);
+
+
+        getData();
+    }
+
+    private void getData() {
+        mvvm.getSlider();
+        mvvm.getCategory();
+        mvvm.getMostSaleProduct();
+        mvvm.getRecentProduct();
+
+    }
+
+    private void setUpSliderData() {
+        sliderAdapter = new SliderAdapter(activity);
         binding.pager.setAdapter(sliderAdapter);
         binding.pager.setClipToPadding(false);
         binding.pager.setPadding(20, 0, 20, 0);
-
-        fragmentMarketMvvm.getSlider();
-        fragmentMarketMvvm.getCategory();
-        fragmentMarketMvvm.getRecentProduct();
     }
 
-    public void showProductDetials(ProductModel productModel) {
+    public void showProductDetails(ProductModel productModel) {
         generalMvvm.getProduct_id().setValue(productModel.getId());
         generalMvvm.onHomeNavigate().setValue(6);
 
     }
 
-    public void showCategoryDetials(CategoryDataModel.CategoryModel categoryModel) {
+    public void showCategoryDetails(CategoryModel categoryModel) {
         generalMvvm.getCat_id().setValue(categoryModel.getId());
         generalMvvm.onHomeNavigate().setValue(7);
     }

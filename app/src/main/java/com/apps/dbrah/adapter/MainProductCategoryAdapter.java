@@ -14,12 +14,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.apps.dbrah.R;
 import com.apps.dbrah.databinding.MainCategoryRowBinding;
 import com.apps.dbrah.model.CategoryDataModel;
+import com.apps.dbrah.model.CategoryModel;
 import com.apps.dbrah.uis.activity_home.products_module.FragmentProducts;
 
 import java.util.List;
 
 public class MainProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<CategoryDataModel.CategoryModel> list;
+    private List<CategoryModel> list;
     private Context context;
     private LayoutInflater inflater;
     private Fragment fragment;
@@ -56,8 +57,7 @@ public class MainProductCategoryAdapter extends RecyclerView.Adapter<RecyclerVie
                 oldPos = currentPos;
             }
 
-        }
-        else {
+        } else {
             if (list.get(position).isSelected()) {
                 oldHolder = myHolder;
                 currentPos = position;
@@ -67,7 +67,7 @@ public class MainProductCategoryAdapter extends RecyclerView.Adapter<RecyclerVie
         myHolder.itemView.setOnClickListener(v -> {
             if (oldHolder != null) {
 
-                CategoryDataModel.CategoryModel oldCategory = list.get(oldPos);
+                CategoryModel oldCategory = list.get(oldPos);
                 oldCategory.setSelected(false);
                 list.set(oldPos, oldCategory);
                 MainProductCategoryAdapter.MyHolder oHolder = (MainProductCategoryAdapter.MyHolder) oldHolder;
@@ -76,7 +76,7 @@ public class MainProductCategoryAdapter extends RecyclerView.Adapter<RecyclerVie
 
             }
             currentPos = myHolder.getAdapterPosition();
-            CategoryDataModel.CategoryModel category = list.get(currentPos);
+            CategoryModel category = list.get(currentPos);
             category.setSelected(true);
             list.set(currentPos, category);
 
@@ -84,10 +84,10 @@ public class MainProductCategoryAdapter extends RecyclerView.Adapter<RecyclerVie
 
             oldHolder = myHolder;
             oldPos = currentPos;
-if(fragment instanceof FragmentProducts){
-    FragmentProducts fragmentProducts=(FragmentProducts) fragment;
-    fragmentProducts.getsubcat(list.get(currentPos));
-}
+            if (fragment instanceof FragmentProducts) {
+                FragmentProducts fragmentProducts = (FragmentProducts) fragment;
+                fragmentProducts.getsubcat(list.get(currentPos));
+            }
 
         });
     }
@@ -108,7 +108,7 @@ if(fragment instanceof FragmentProducts){
         }
     }
 
-    public void updateList(List<CategoryDataModel.CategoryModel> list) {
+    public void updateList(List<CategoryModel> list) {
         this.list = list;
         notifyDataSetChanged();
     }

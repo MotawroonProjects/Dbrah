@@ -9,6 +9,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.apps.dbrah.model.CategoryDataModel;
+import com.apps.dbrah.model.CategoryModel;
 import com.apps.dbrah.model.ProductModel;
 import com.apps.dbrah.model.RecentProductDataModel;
 import com.apps.dbrah.model.SliderDataModel;
@@ -26,47 +27,79 @@ import retrofit2.Response;
 
 public class FragmentMarketMvvm extends AndroidViewModel {
 
-    private Context context;
-    private MutableLiveData<SliderDataModel> sliderDataModelMutableLiveData;
-    private MutableLiveData<List<CategoryDataModel.CategoryModel>> categoryModelLiveData;
-    private MutableLiveData<List<ProductModel>> recentModelLiveData;
+    private MutableLiveData<List<SliderDataModel.SliderModel>> onSliderDataSuccess;
+    private MutableLiveData<List<CategoryModel>> onCategoryDataSuccess;
+    private MutableLiveData<List<ProductModel>> onRecentProductDataModel;
+    private MutableLiveData<List<ProductModel>> onMostProductDataModel;
+
     private CompositeDisposable disposable = new CompositeDisposable();
-    private MutableLiveData<Boolean> isLoadingLiveData;
+    private MutableLiveData<Boolean> isLoadingSlider;
+    private MutableLiveData<Boolean> isLoadingCategory;
+    private MutableLiveData<Boolean> isLoadingMostSaleProduct;
+    private MutableLiveData<Boolean> isLoadingRecentProduct;
+
     public FragmentMarketMvvm(@NonNull Application application) {
         super(application);
-        context = application.getApplicationContext();
     }
 
-    public MutableLiveData<SliderDataModel> getSliderDataModelMutableLiveData() {
-        if (sliderDataModelMutableLiveData == null) {
-            sliderDataModelMutableLiveData = new MutableLiveData<>();
+    public MutableLiveData<List<SliderDataModel.SliderModel>> getOnSliderDataSuccess() {
+        if (onSliderDataSuccess == null) {
+            onSliderDataSuccess = new MutableLiveData<>();
         }
-        return sliderDataModelMutableLiveData;
+        return onSliderDataSuccess;
     }
 
-    public MutableLiveData<Boolean> getIsLoadingLiveData() {
-        if (isLoadingLiveData == null) {
-            isLoadingLiveData = new MutableLiveData<>();
+    public MutableLiveData<Boolean> getIsLoadingSlider() {
+        if (isLoadingSlider == null) {
+            isLoadingSlider = new MutableLiveData<>();
         }
-        return isLoadingLiveData;
+        return isLoadingSlider;
     }
 
-    public MutableLiveData<List<CategoryDataModel.CategoryModel>> getCategoryModelLiveData() {
-        if (categoryModelLiveData==null){
-            categoryModelLiveData=new MutableLiveData<>();
+    public MutableLiveData<Boolean> getIsLoadingCategory() {
+        if (isLoadingCategory == null) {
+            isLoadingCategory = new MutableLiveData<>();
         }
-        return categoryModelLiveData;
+        return isLoadingCategory;
     }
 
-    public MutableLiveData<List<ProductModel>> getRecentModelLiveData() {
-        if (recentModelLiveData==null){
-            recentModelLiveData=new MutableLiveData<>();
+    public MutableLiveData<Boolean> getIsLoadingMostSaleProduct() {
+        if (isLoadingMostSaleProduct == null) {
+            isLoadingMostSaleProduct = new MutableLiveData<>();
         }
-        return recentModelLiveData;
+        return isLoadingMostSaleProduct;
     }
 
-    public void getSlider(){
-        isLoadingLiveData.setValue(true);
+    public MutableLiveData<Boolean> getIsLoadingRecentProduct() {
+        if (isLoadingRecentProduct == null) {
+            isLoadingRecentProduct = new MutableLiveData<>();
+        }
+        return isLoadingRecentProduct;
+    }
+
+    public MutableLiveData<List<CategoryModel>> getOnCategoryDataSuccess() {
+        if (onCategoryDataSuccess == null) {
+            onCategoryDataSuccess = new MutableLiveData<>();
+        }
+        return onCategoryDataSuccess;
+    }
+
+    public MutableLiveData<List<ProductModel>> getOnRecentProductDataModel() {
+        if (onRecentProductDataModel == null) {
+            onRecentProductDataModel = new MutableLiveData<>();
+        }
+        return onRecentProductDataModel;
+    }
+
+    public MutableLiveData<List<ProductModel>> getOnMostProductDataModel() {
+        if (onMostProductDataModel == null) {
+            onMostProductDataModel = new MutableLiveData<>();
+        }
+        return onMostProductDataModel;
+    }
+
+    public void getSlider() {
+        getIsLoadingSlider().setValue(true);
         Api.getService(Tags.base_url).getSlider()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -78,25 +111,25 @@ public class FragmentMarketMvvm extends AndroidViewModel {
 
                     @Override
                     public void onSuccess(@NonNull Response<SliderDataModel> response) {
-                        isLoadingLiveData.postValue(false);
-                        if (response.isSuccessful()&& response.body()!=null){
-                            if (response.body().getStatus()==200){
-                                sliderDataModelMutableLiveData.postValue(response.body());
+                        if (response.isSuccessful() && response.body() != null) {
+                            if (response.body().getStatus() == 200) {
+                                getIsLoadingSlider().setValue(false);
+
+                                getOnSliderDataSuccess().setValue(response.body().getData());
                             }
                         }
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        isLoadingLiveData.setValue(false);
-                        Log.e("error",e.toString());
+                        Log.e("error", e.toString());
                     }
                 });
 
     }
 
-    public void getCategory(){
-        isLoadingLiveData.setValue(true);
+    public void getCategory() {
+        getIsLoadingCategory().setValue(true);
         Api.getService(Tags.base_url).getCategory()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -108,24 +141,25 @@ public class FragmentMarketMvvm extends AndroidViewModel {
 
                     @Override
                     public void onSuccess(@NonNull Response<CategoryDataModel> response) {
-                        isLoadingLiveData.postValue(false);
 
-                        if (response.isSuccessful() && response.body()!=null){
-                            if (response.body().getData()!=null && response.body().getStatus()==200){
-                                categoryModelLiveData.postValue(response.body().getData());
+                        if (response.isSuccessful() && response.body() != null) {
+                            if (response.body().getData() != null && response.body().getStatus() == 200) {
+                                getIsLoadingCategory().setValue(false);
+
+                                getOnCategoryDataSuccess().setValue(response.body().getData());
                             }
                         }
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        isLoadingLiveData.setValue(false);
-                        Log.e("error",e.toString());
+                        Log.e("error", e.toString());
                     }
                 });
     }
-    public void getRecentProduct(){
-        isLoadingLiveData.setValue(true);
+
+    public void getRecentProduct() {
+        getIsLoadingRecentProduct().setValue(true);
         Api.getService(Tags.base_url).getRecentProduct()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -137,19 +171,50 @@ public class FragmentMarketMvvm extends AndroidViewModel {
 
                     @Override
                     public void onSuccess(@NonNull Response<RecentProductDataModel> response) {
-                        isLoadingLiveData.postValue(false);
-                        if (response.isSuccessful() && response.body()!=null){
-                            if (response.body().getData()!=null && response.body().getStatus()==200){
-                                recentModelLiveData.postValue(response.body().getData());
+                        if (response.isSuccessful() && response.body() != null) {
+                            if (response.body().getData() != null && response.body().getStatus() == 200) {
+                                getIsLoadingRecentProduct().setValue(false);
+
+                                getOnRecentProductDataModel().setValue(response.body().getData());
                             }
                         }
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        isLoadingLiveData.setValue(false);
-                        Log.e("error",e.toString());
+                        Log.e("error", e.toString());
                     }
                 });
     }
+
+    public void getMostSaleProduct() {
+        getIsLoadingMostSaleProduct().setValue(true);
+        Api.getService(Tags.base_url).getMostSaleProduct()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<Response<RecentProductDataModel>>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        disposable.add(d);
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull Response<RecentProductDataModel> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            if (response.body().getData() != null && response.body().getStatus() == 200) {
+                                getIsLoadingMostSaleProduct().setValue(false);
+
+                                getOnMostProductDataModel().setValue(response.body().getData());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.e("error", e.toString());
+                    }
+                });
+    }
+
+
 }

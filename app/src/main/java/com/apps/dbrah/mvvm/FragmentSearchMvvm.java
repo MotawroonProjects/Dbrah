@@ -1,16 +1,15 @@
 package com.apps.dbrah.mvvm;
 
 import android.app.Application;
-import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
-import com.apps.dbrah.model.CategoryDataModel;
 import com.apps.dbrah.model.ProductModel;
 import com.apps.dbrah.model.RecentProductDataModel;
+import com.apps.dbrah.model.SearchHomeDataModel;
 import com.apps.dbrah.remote.Api;
 import com.apps.dbrah.tags.Tags;
 
@@ -25,62 +24,62 @@ import retrofit2.Response;
 
 public class FragmentSearchMvvm extends AndroidViewModel {
 
-    private Context context;
-
-
     private CompositeDisposable disposable = new CompositeDisposable();
-    private MutableLiveData<Boolean> isLoadingLiveData;
-    private MutableLiveData<List<ProductModel>> listMutableLiveData;
+    private MutableLiveData<Boolean> isLoading;
+
+    private MutableLiveData<SearchHomeDataModel.Data> onDataSuccess;
 
     public FragmentSearchMvvm(@NonNull Application application) {
         super(application);
-        context = application.getApplicationContext();
     }
 
 
 
-    public MutableLiveData<Boolean> getIsLoadingLiveData() {
-        if (isLoadingLiveData == null) {
-            isLoadingLiveData = new MutableLiveData<>();
+    public MutableLiveData<Boolean> getIsLoading() {
+        if (isLoading == null) {
+            isLoading = new MutableLiveData<>();
         }
-        return isLoadingLiveData;
+        return isLoading;
     }
 
 
 
-    public MutableLiveData<List<ProductModel>> getListMutableLiveData() {
-        if (listMutableLiveData==null){
-            listMutableLiveData=new MutableLiveData<>();
+
+
+
+    public MutableLiveData<SearchHomeDataModel.Data> getOnDataSuccess() {
+        if (onDataSuccess ==null){
+            onDataSuccess =new MutableLiveData<>();
         }
-        return listMutableLiveData;
+        return onDataSuccess;
     }
 
 
 
-    public void searchProduct(String query){
-        isLoadingLiveData.setValue(true);
+    public void search(String query){
+
+        getIsLoading().setValue(true);
         Api.getService(Tags.base_url).searchProduct(query)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<Response<RecentProductDataModel>>() {
+                .subscribe(new SingleObserver<Response<SearchHomeDataModel>>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
                         disposable.add(d);
                     }
 
                     @Override
-                    public void onSuccess(@NonNull Response<RecentProductDataModel> response) {
-                        isLoadingLiveData.postValue(false);
+                    public void onSuccess(@NonNull Response<SearchHomeDataModel> response) {
                         if (response.isSuccessful() && response.body()!=null){
                             if (response.body().getData()!=null && response.body().getStatus()==200){
-                                listMutableLiveData.postValue(response.body().getData());
+                                getIsLoading().setValue(false);
+                                onDataSuccess.setValue(response.body().getData());
                             }
                         }
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        isLoadingLiveData.setValue(false);
                         Log.e("error",e.toString());
                     }
                 });

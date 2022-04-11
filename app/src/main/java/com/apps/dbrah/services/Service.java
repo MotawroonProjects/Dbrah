@@ -5,6 +5,7 @@ import com.apps.dbrah.model.CategoryDataModel;
 import com.apps.dbrah.model.RecentProductDataModel;
 import com.apps.dbrah.model.NotificationDataModel;
 import com.apps.dbrah.model.PlaceGeocodeData;
+import com.apps.dbrah.model.SearchHomeDataModel;
 import com.apps.dbrah.model.SingleProductModel;
 import com.apps.dbrah.model.SliderDataModel;
 import com.apps.dbrah.model.StatusResponse;
@@ -39,13 +40,18 @@ public interface Service {
     @GET("api/latest_products")
     Single<Response<RecentProductDataModel>> getRecentProduct();
 
+    @GET("api/mostSales")
+    Single<Response<RecentProductDataModel>> getMostSaleProduct();
+
+
+
     @GET("api/search")
     Single<Response<RecentProductDataModel>> searchByCatProduct(@Query("category_id") String category_id,
                                                                 @Query("sub_category_id") String sub_category_id,
                                                                 @Query("search_word") String search_word);
 
     @GET("api/home_search")
-    Single<Response<RecentProductDataModel>> searchProduct(@Query("search_word") String search_word);
+    Single<Response<SearchHomeDataModel>> searchProduct(@Query("search_word") String search_word);
 
 
     @FormUrlEncoded
