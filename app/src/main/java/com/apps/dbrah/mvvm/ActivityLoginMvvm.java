@@ -1,24 +1,34 @@
 package com.apps.dbrah.mvvm;
 
 import android.app.Application;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
+import com.apps.dbrah.R;
 import com.apps.dbrah.model.LoginModel;
 import com.apps.dbrah.model.UserModel;
+import com.apps.dbrah.remote.Api;
+import com.apps.dbrah.share.Common;
+import com.apps.dbrah.tags.Tags;
+
+import java.io.IOException;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
+import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.Response;
 
 public class ActivityLoginMvvm extends AndroidViewModel {
     private MutableLiveData<String> onSmsCodeSuccess;
@@ -114,11 +124,11 @@ public class ActivityLoginMvvm extends AndroidViewModel {
 
 
 
-    private void login(Context context, String phone_code, String phone) {
-       /* ProgressDialog dialog = Common.createProgressDialog(context, context.getResources().getString(R.string.wait));
+    public void login(Context context, String phone_code, String phone) {
+        ProgressDialog dialog = Common.createProgressDialog(context, context.getResources().getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
-        Api.getService(Tags.base_url).login(phone_code, phone, "yes")
+        Api.getService(Tags.base_url).login(phone_code, phone)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<UserModel>>() {
@@ -138,11 +148,8 @@ public class ActivityLoginMvvm extends AndroidViewModel {
                                 if (response.body().getStatus() == 200) {
 
                                     getUserData().setValue(response.body());
-                                } else if (response.body().getStatus() == 404) {
+                                } else if (response.body().getStatus() == 400) {
                                     getUserData().setValue(null);
-
-                                } else if (response.body().getStatus() == 405) {
-                                    Toast.makeText(context, R.string.cont_log, Toast.LENGTH_LONG).show();
 
                                 }
                             }
@@ -162,7 +169,7 @@ public class ActivityLoginMvvm extends AndroidViewModel {
                         dialog.dismiss();
 
                     }
-                });*/
+                });
     }
 
 

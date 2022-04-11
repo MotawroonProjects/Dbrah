@@ -48,7 +48,7 @@ public class FragmentProfile extends BaseFragment {
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (req == 1 && result.getResultCode() == Activity.RESULT_OK) {
                 binding.setModel(getUserModel());
-
+                binding.profileLayout.setModel(getUserModel());
             }
         });
 
@@ -76,6 +76,8 @@ public class FragmentProfile extends BaseFragment {
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
         binding.setModel(getUserModel());
         binding.profileLayout.setLang(getLang());
+        if(getUserModel()!=null){
+        binding.profileLayout.setModel(getUserModel());}
         binding.profileNotLoggedLayout.btnLogin.setOnClickListener(v -> {
             navigateToLoginActivity();
         });

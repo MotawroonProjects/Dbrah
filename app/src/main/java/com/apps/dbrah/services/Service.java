@@ -64,31 +64,21 @@ public interface Service {
                                                   @Query(value = "key") String key);
 
 
+
+
+
     @FormUrlEncoded
     @POST("api/login")
-    Single<Response<UserModel>> login(@Field("api_key") String api_key,
-                                      @Field("phone_code") String phone_code,
-                                      @Field("phone") String phone);
-
-    @FormUrlEncoded
-    @POST("api/client-register")
-    Single<Response<UserModel>> signUp(@Field("api_key") String api_key,
-                                       @Field("name") String name,
-                                       @Field("phone_code") String phone_code,
-                                       @Field("phone") String phone,
-                                       @Field("software_type") String software_type
-
-
+    Single<Response<UserModel>> login(@Field("phone_code") String phone_code,
+                                      @Field("phone") String phone
     );
-
-
     @Multipart
-    @POST("api/client-register")
-    Observable<Response<UserModel>> signUpwithImage(@Part("api_key") RequestBody api_key,
-                                                    @Part("name") RequestBody name,
+    @POST("api/register")
+    Observable<Response<UserModel>> signUpwithImage(@Part("name") RequestBody name,
                                                     @Part("phone_code") RequestBody phone_code,
                                                     @Part("phone") RequestBody phone,
-                                                    @Part("software_type") RequestBody software_type,
+                                                    @Part("email") RequestBody email,
+                                                    @Part("vat_number") RequestBody vat_number,
                                                     @Part MultipartBody.Part logo
 
 
@@ -135,4 +125,6 @@ public interface Service {
 
     @GET("api/product_details")
     Single<Response<SingleProductModel>> getSingleProduct(@Query("id") String id);
+
+
 }

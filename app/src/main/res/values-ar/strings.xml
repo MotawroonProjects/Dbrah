@@ -123,12 +123,14 @@
     <string name="accept">قبول</string>
     <string name="products_cost">تكلفة المنتجات:</string>
     <string name="vat">الضريبة:</string>
-    <string name="specifications">Specifications</string>
-    <string name="add_to_cart">Add to Cart</string>
+    <string name="specifications">مواصفات</string>
+    <string name="add_to_cart">اضف الى السله</string>
     <string name="note">ملاحظة</string>
     <string name="add_note">إضافة ملاحظة</string>
     <string name="complete_order">إكمال الطلب</string>
     <string name="search_for_product">ابحث عن المنتج</string>
-    <string name="products">Products</string>
+    <string name="products">المنتجات</string>
+    <string name="ph_found">رقم الجوال موجود مسبقا</string>
+    <string name="em_found">البريد الالكترونى موجود مسبقا</string>
 
 </resources>

@@ -44,14 +44,20 @@ public class SubProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MyHolder myHolder = (MyHolder) holder;
         if (oldHolder == null) {
-            oldHolder = myHolder;
+            if(list.get(position).isSelected()){
+            oldHolder = myHolder;}
         }
+        else{
+            if(list.get(position).isSelected()){
+                oldHolder = myHolder;}
+        }
+
         myHolder.binding.setLang(lang);
         myHolder.binding.setModel(list.get(position));
         myHolder.itemView.setOnClickListener(v -> {
             if (oldHolder != null) {
 
-               CategoryDataModel.CategoryModel oldCategory = list.get(oldPos);
+                CategoryDataModel.CategoryModel oldCategory = list.get(oldPos);
                 oldCategory.setSelected(false);
                 list.set(oldPos, oldCategory);
                 MyHolder oHolder = (MyHolder) oldHolder;
@@ -68,10 +74,10 @@ public class SubProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView
 
             oldHolder = myHolder;
             oldPos = currentPos;
-if(fragment instanceof FragmentProducts){
-    FragmentProducts fragmentProducts=(FragmentProducts) fragment;
-    fragmentProducts.showProducts(list.get(currentPos));
-}
+            if (fragment instanceof FragmentProducts) {
+                FragmentProducts fragmentProducts = (FragmentProducts) fragment;
+                fragmentProducts.showProducts(list.get(currentPos));
+            }
 
 
         });
@@ -96,6 +102,8 @@ if(fragment instanceof FragmentProducts){
 
     public void updateList(List<CategoryDataModel.CategoryModel> list) {
         this.list = list;
+        currentPos = 0;
+        oldPos = currentPos;
         notifyDataSetChanged();
     }
 }

@@ -31,6 +31,7 @@ import com.apps.dbrah.databinding.ActivitySignUpBinding;
 import com.apps.dbrah.databinding.DialogChooseImageBinding;
 import com.apps.dbrah.databinding.DialogInformationBinding;
 import com.apps.dbrah.model.SignUpModel;
+import com.apps.dbrah.mvvm.ActivitySignupMvvm;
 import com.apps.dbrah.preferences.Preferences;
 import com.apps.dbrah.share.Common;
 import com.apps.dbrah.uis.activity_base.BaseActivity;
@@ -47,6 +48,7 @@ import java.util.Locale;
 public class SignUpActivity extends BaseActivity {
     private ActivitySignUpBinding binding;
     private SignUpModel model;
+    private ActivitySignupMvvm activitySignupMvvm;
     private String phone_code, phone;
     private ActivityResultLauncher<String[]> permissions;
     private ActivityResultLauncher<Intent> launcher;
@@ -70,6 +72,15 @@ public class SignUpActivity extends BaseActivity {
     }
 
     private void initView() {
+        activitySignupMvvm = ViewModelProviders.of(this).get(ActivitySignupMvvm.class);
+        activitySignupMvvm.getUserData().observe(this, userModel -> {
+            if (userModel != null) {
+                setUserModel(userModel);
+                setResult(RESULT_OK);
+                finish();
+            }
+        });
+
         setUpToolbar(binding.toolbar, getString(R.string.sign_up), R.color.white, R.color.black, R.drawable.small_rounded_grey4, true);
         model = new SignUpModel();
         model.setPhone_code(phone_code);
@@ -119,6 +130,7 @@ public class SignUpActivity extends BaseActivity {
         });
         binding.flImage.setOnClickListener(v -> openSheet());
         binding.btnSignup.setOnClickListener(view -> {
+            activitySignupMvvm.signUp(model, this);
         });
 
     }

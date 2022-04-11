@@ -45,7 +45,7 @@ public class FragmentProducts extends BaseFragment {
     private SubProductCategoryAdapter subProductCategoryAdapter;
     private RecentProductAdapter recentProductAdapter;
     private String cat_id;
-    private String query;
+    private String query = "";
     private String sub_cat_id;
 
     public static FragmentProducts newInstance() {
@@ -107,43 +107,44 @@ public class FragmentProducts extends BaseFragment {
         fragmentProductsMvvm.getCategoryModelLiveData().observe(activity, this::updateMainCategoryData);
         fragmentProductsMvvm.getSubCategoryModelLiveData().observe(activity, this::updateSubCategoryData);
         fragmentProductsMvvm.getListMutableLiveData().observe(activity, productModels -> updateProductData(productModels));
-    binding.edtSearch.addTextChangedListener(new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        binding.edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-        }
+            }
 
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-        }
+            }
 
-        @Override
-        public void afterTextChanged(Editable editable) {
-            query=binding.edtSearch.getText().toString();
-fragmentProductsMvvm.searchProduct(cat_id,sub_cat_id,query);
-        }
-    });
+            @Override
+            public void afterTextChanged(Editable editable) {
+                query = binding.edtSearch.getText().toString();
+                fragmentProductsMvvm.searchProduct(cat_id, sub_cat_id, query);
+            }
+        });
 
     }
 
     private void updateProductData(List<ProductModel> productModels) {
-        if(productModels.size()>0){
+        Log.e("ldldkk", productModels.size() + "");
+        if (productModels.size() > 0) {
             recentProductAdapter.updateList(productModels);
-        }
-        else{
+        } else {
             recentProductAdapter.updateList(new ArrayList<>());
 
         }
     }
 
     private void updateSubCategoryData(List<CategoryDataModel.CategoryModel> categoryModels) {
+
         if (categoryModels.size() > 0) {
             CategoryDataModel.CategoryModel categoryModel = categoryModels.get(0);
             categoryModel.setSelected(true);
             categoryModels.set(0, categoryModel);
             subProductCategoryAdapter.updateList(categoryModels);
-            sub_cat_id=categoryModel.getId();
+            sub_cat_id = categoryModel.getId();
             fragmentProductsMvvm.searchProduct(cat_id, categoryModel.getId(), query);
         } else {
             subProductCategoryAdapter.updateList(new ArrayList<>());
@@ -175,7 +176,7 @@ fragmentProductsMvvm.searchProduct(cat_id,sub_cat_id,query);
     }
 
     public void showProducts(CategoryDataModel.CategoryModel categoryModel) {
-        sub_cat_id=categoryModel.getId();
+        sub_cat_id = categoryModel.getId();
         fragmentProductsMvvm.searchProduct(cat_id, categoryModel.getId(), query);
 
     }

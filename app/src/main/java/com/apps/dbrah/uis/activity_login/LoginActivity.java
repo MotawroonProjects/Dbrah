@@ -4,6 +4,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.DialogInterface;
@@ -22,6 +23,7 @@ import com.apps.dbrah.databinding.ActivityLoginBinding;
 import com.apps.dbrah.databinding.DailogVerificationCodeBinding;
 import com.apps.dbrah.model.CountryCodeModel;
 import com.apps.dbrah.model.LoginModel;
+import com.apps.dbrah.model.UserModel;
 import com.apps.dbrah.mvvm.ActivityLoginMvvm;
 import com.apps.dbrah.uis.activity_base.BaseActivity;
 import com.apps.dbrah.uis.activity_sign_up.SignUpActivity;
@@ -78,8 +80,7 @@ public class LoginActivity extends BaseActivity {
             }
         });
         binding.btnLogin.setOnClickListener(v -> {
-            mvvm.sendSmsCode(model);
-            createVerificationCodeDialog();
+            mvvm.login(this, model.getPhone_code(), model.getPhone());
         });
 
         mvvm.getTime().observe(this, time -> {
@@ -99,7 +100,18 @@ public class LoginActivity extends BaseActivity {
             }
 
         });
-
+        mvvm.getUserData().observe(this, new Observer<UserModel>() {
+            @Override
+            public void onChanged(UserModel userModel) {
+                if (userModel != null) {
+                    setUserModel(userModel);
+                    setResult(RESULT_OK);
+                    finish();
+                } else {
+                    createVerificationCodeDialog();
+                }
+            }
+        });
 
     }
 
@@ -165,6 +177,8 @@ public class LoginActivity extends BaseActivity {
 
     private void navigateToSignUpActivity() {
         Intent intent = new Intent(this, SignUpActivity.class);
+        intent.putExtra("phone_code", model.getPhone_code());
+        intent.putExtra("phone", model.getPhone());
         launcher.launch(intent);
     }
 }

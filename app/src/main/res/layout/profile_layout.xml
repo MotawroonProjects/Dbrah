@@ -8,6 +8,9 @@
             name="lang"
             type="String" />
 
+        <variable
+            name="model"
+            type="com.apps.dbrah.model.UserModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -42,6 +45,7 @@
                     android:id="@+id/avatar"
                     android:layout_width="96dp"
                     android:layout_height="96dp"
+                    user_image="@{model.data.image}"
                     android:src="@drawable/circle_avatar"
                     app:civ_border_color="@color/white"
                     app:civ_border_width="3dp"
@@ -57,6 +61,7 @@
                     android:fontFamily="@font/font_bold"
                     android:textColor="@color/black"
                     android:textSize="18sp"
+                    android:text="@{model.data.name}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

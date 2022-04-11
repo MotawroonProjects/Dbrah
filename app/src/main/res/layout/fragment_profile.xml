@@ -39,7 +39,7 @@
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="@{model!=null?View.VISIBLE:View.VISIBLE,default=gone}"
+                    android:visibility="@{model!=null?View.VISIBLE:View.GONE,default=gone}"
 
                     >
 
@@ -51,7 +51,7 @@
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="@{model!=null?View.VISIBLE:View.GONE,default=gone}"
+                    android:visibility="@{model==null?View.VISIBLE:View.GONE,default=gone}"
 
                     >
 
