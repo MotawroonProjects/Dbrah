@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.apps.dbrah.R;
 import com.apps.dbrah.databinding.SubCategoryRowBinding;
 import com.apps.dbrah.model.CategoryDataModel;
+import com.apps.dbrah.uis.activity_home.products_module.FragmentProducts;
 
 import java.util.List;
 
@@ -67,7 +68,10 @@ public class SubProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView
 
             oldHolder = myHolder;
             oldPos = currentPos;
-
+if(fragment instanceof FragmentProducts){
+    FragmentProducts fragmentProducts=(FragmentProducts) fragment;
+    fragmentProducts.showProducts(list.get(currentPos));
+}
 
 
         });

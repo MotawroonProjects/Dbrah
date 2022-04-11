@@ -12,6 +12,8 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +25,7 @@ import com.apps.dbrah.adapter.RecentProductAdapter;
 import com.apps.dbrah.adapter.SubProductCategoryAdapter;
 import com.apps.dbrah.databinding.FragmentProductsBinding;
 import com.apps.dbrah.model.CategoryDataModel;
+import com.apps.dbrah.model.ProductModel;
 import com.apps.dbrah.mvvm.FragmentProductsMvvm;
 import com.apps.dbrah.mvvm.GeneralMvvm;
 import com.apps.dbrah.uis.activity_base.BaseFragment;
@@ -43,6 +46,7 @@ public class FragmentProducts extends BaseFragment {
     private RecentProductAdapter recentProductAdapter;
     private String cat_id;
     private String query;
+    private String sub_cat_id;
 
     public static FragmentProducts newInstance() {
         return new FragmentProducts();
@@ -95,14 +99,42 @@ public class FragmentProducts extends BaseFragment {
         binding.recViewSub.setAdapter(subProductCategoryAdapter);
         recentProductAdapter = new RecentProductAdapter(activity, this);
         binding.recViewProducts.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false));
-        binding.recViewSub.setAdapter(recentProductAdapter);
+        binding.recViewProducts.setAdapter(recentProductAdapter);
         View view = activity.setUpToolbar(binding.toolbar, getString(R.string.products), R.color.white, R.color.black, R.drawable.small_rounded_grey4, false);
         view.setOnClickListener(v -> {
             generalMvvm.onHomeBackNavigate().setValue(true);
         });
         fragmentProductsMvvm.getCategoryModelLiveData().observe(activity, this::updateMainCategoryData);
         fragmentProductsMvvm.getSubCategoryModelLiveData().observe(activity, this::updateSubCategoryData);
+        fragmentProductsMvvm.getListMutableLiveData().observe(activity, productModels -> updateProductData(productModels));
+    binding.edtSearch.addTextChangedListener(new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            query=binding.edtSearch.getText().toString();
+fragmentProductsMvvm.searchProduct(cat_id,sub_cat_id,query);
+        }
+    });
+
+    }
+
+    private void updateProductData(List<ProductModel> productModels) {
+        if(productModels.size()>0){
+            recentProductAdapter.updateList(productModels);
+        }
+        else{
+            recentProductAdapter.updateList(new ArrayList<>());
+
+        }
     }
 
     private void updateSubCategoryData(List<CategoryDataModel.CategoryModel> categoryModels) {
@@ -111,9 +143,11 @@ public class FragmentProducts extends BaseFragment {
             categoryModel.setSelected(true);
             categoryModels.set(0, categoryModel);
             subProductCategoryAdapter.updateList(categoryModels);
+            sub_cat_id=categoryModel.getId();
             fragmentProductsMvvm.searchProduct(cat_id, categoryModel.getId(), query);
         } else {
             subProductCategoryAdapter.updateList(new ArrayList<>());
+            recentProductAdapter.updateList(new ArrayList<>());
 
         }
     }
@@ -138,5 +172,11 @@ public class FragmentProducts extends BaseFragment {
     public void getsubcat(CategoryDataModel.CategoryModel categoryModel) {
         cat_id = categoryModel.getId();
         fragmentProductsMvvm.getSubCategory(cat_id);
+    }
+
+    public void showProducts(CategoryDataModel.CategoryModel categoryModel) {
+        sub_cat_id=categoryModel.getId();
+        fragmentProductsMvvm.searchProduct(cat_id, categoryModel.getId(), query);
+
     }
 }

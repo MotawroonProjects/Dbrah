@@ -34,13 +34,18 @@ public interface Service {
     Single<Response<CategoryDataModel>> getCategory();
 
     @GET("api/sub_categories")
-    Single<Response<CategoryDataModel>> getSubCategory(@Query("category_id")String category_id);
+    Single<Response<CategoryDataModel>> getSubCategory(@Query("category_id") String category_id);
+
     @GET("api/latest_products")
     Single<Response<RecentProductDataModel>> getRecentProduct();
+
     @GET("api/search")
-    Single<Response<RecentProductDataModel>> searchByCatProduct(@Query("category_id")String category_id,
-                                                                @Query("sub_category_id")String sub_category_id,
-                                                                @Query("search_word")String search_word);
+    Single<Response<RecentProductDataModel>> searchByCatProduct(@Query("category_id") String category_id,
+                                                                @Query("sub_category_id") String sub_category_id,
+                                                                @Query("search_word") String search_word);
+
+    @GET("api/home_search")
+    Single<Response<RecentProductDataModel>> searchProduct(@Query("search_word") String search_word);
 
 
     @FormUrlEncoded
@@ -52,6 +57,7 @@ public interface Service {
 
 
     );
+
     @GET("geocode/json")
     Single<Response<PlaceGeocodeData>> getGeoData(@Query(value = "latlng") String latlng,
                                                   @Query(value = "language") String language,
@@ -126,6 +132,7 @@ public interface Service {
                                                              @Query(value = "api_key") String api_key,
                                                              @Query(value = "user_id") String user_id
     );
+
     @GET("api/product_details")
     Single<Response<SingleProductModel>> getSingleProduct(@Query("id") String id);
 }
