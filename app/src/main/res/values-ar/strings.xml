@@ -133,5 +133,6 @@
     <string name="em_found">البريد الالكترونى موجود مسبقا</string>
     <string name="products">المنتجات</string>
     <string name="no_search_results">لا توجد نتائج للبحث</string>
+    <string name="ch_time">Choose Time</string>
 
 </resources>

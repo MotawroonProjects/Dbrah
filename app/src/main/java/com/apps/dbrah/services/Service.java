@@ -9,6 +9,7 @@ import com.apps.dbrah.model.SearchHomeDataModel;
 import com.apps.dbrah.model.SingleProductModel;
 import com.apps.dbrah.model.SliderDataModel;
 import com.apps.dbrah.model.StatusResponse;
+import com.apps.dbrah.model.TimeDataModel;
 import com.apps.dbrah.model.UserModel;
 
 import io.reactivex.Observable;
@@ -131,6 +132,8 @@ public interface Service {
 
     @GET("api/product_details")
     Single<Response<SingleProductModel>> getSingleProduct(@Query("id") String id);
+    @GET("api/delivery_times")
+    Single<Response<TimeDataModel>> getTime();
 
 
 }

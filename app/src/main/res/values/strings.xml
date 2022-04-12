@@ -132,5 +132,6 @@
     <string name="no_search_results">No search results</string>
     <string name="ph_found">Phone Found</string>
     <string name="em_found">Email Found</string>
+    <string name="ch_time">Choose Time</string>
 
 </resources>

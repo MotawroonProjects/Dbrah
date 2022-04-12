@@ -216,15 +216,14 @@
                             android:orientation="horizontal"
                             android:padding="16dp">
 
-                            <EditText
+                            <Spinner
+                                android:id="@+id/spinner"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="@color/transparent"
-                                android:fontFamily="@font/font_regular"
-                                android:hint="@string/preferred_delivery_time"
-                                android:textColor="@color/black2"
-                                android:textColorHint="@color/grey8"
-                                android:textSize="14sp" />
+                                android:clickable="false"
+                                android:longClickable="false"
+
+                                />
                         </LinearLayout>
 
                         <LinearLayout
