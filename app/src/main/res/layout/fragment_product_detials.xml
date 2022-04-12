@@ -10,6 +10,8 @@
 
         <import type="android.text.Html" />
 
+        <import type="android.view.View" />
+
         <variable
             name="prductModel"
             type="com.apps.dbrah.model.ProductModel" />
@@ -19,15 +21,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/consData"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone">
+            android:orientation="vertical"
+            android:visibility="@{prductModel!=null?View.VISIBLE:View.GONE,default=gone}">
 
-            <ScrollView
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_weight="1"
                 android:background="@color/grey3"
                 android:fillViewport="true"
                 app:layout_constraintBottom_toTopOf="@+id/llCart"
@@ -45,8 +48,7 @@
 
                         <FrameLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="30dp">
+                            android:layout_height="wrap_content">
 
                             <androidx.viewpager.widget.ViewPager
                                 android:id="@+id/pager"
@@ -57,102 +59,50 @@
                                 android:id="@+id/image"
                                 image="@{prductModel.main_image}"
                                 android:layout_width="match_parent"
-                                android:layout_height="280dp"
-                                android:scaleType="fitXY" />
+                                android:layout_height="340dp"
+                                android:scaleType="centerCrop" />
 
                             <ImageView
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:layout_gravity="end"
                                 android:layout_marginStart="16dp"
-                                android:layout_marginTop="40dp"
+                                android:layout_marginTop="60dp"
                                 android:layout_marginEnd="16dp"
                                 android:src="@drawable/ic_save" />
+
+                            <FrameLayout
+                                android:id="@+id/fl"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center|bottom"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:background="@drawable/rounded_grey12"
+                                android:padding="4dp"
+
+
+                                >
+
+                                <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+                                    android:id="@+id/tab"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="10dp"
+                                    android:layout_gravity="center"
+                                    app:dotsColor="@color/grey11"
+                                    app:dotsCornerRadius="8dp"
+                                    app:dotsSize="10dp"
+                                    app:dotsSpacing="2dp"
+                                    app:dotsWidthFactor="2.5"
+                                    app:progressMode="false"
+                                    app:selectedDotColor="@color/colorAccent" />
+
+                            </FrameLayout>
                         </FrameLayout>
 
-                        <androidx.appcompat.widget.Toolbar
-                            android:id="@+id/toolbar"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal"
-                                android:paddingStart="12dp"
-                                android:paddingTop="12dp"
-                                android:paddingEnd="12dp"
-                                android:paddingBottom="12dp">
-
-                                <FrameLayout
-                                    android:id="@+id/flBack"
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
-                                    android:background="@drawable/rounded_grey4">
-
-                                    <ImageView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:padding="8dp"
-                                        android:rotation='@{lang.equals("ar")?180:0}'
-                                        android:src="@drawable/ic_arrow_left"
-                                        app:tint="@color/black" />
-
-                                </FrameLayout>
-
-                                <androidx.legacy.widget.Space
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1" />
-
-                                <FrameLayout
-                                    android:id="@+id/flShare"
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp">
-
-                                    <ImageView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:src="@drawable/ic_share"
-
-                                        />
-
-                                </FrameLayout>
-
-                            </LinearLayout>
-
-                        </androidx.appcompat.widget.Toolbar>
 
                     </FrameLayout>
 
-                    <FrameLayout
-                        android:id="@+id/fl"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="7dp"
-                        android:layout_marginBottom="7dp"
-                        android:background="@drawable/rounded_grey12"
-                        android:padding="4dp"
-
-                        >
-
-                        <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
-                            android:id="@+id/tab"
-                            android:layout_width="wrap_content"
-                            android:layout_height="10dp"
-                            android:layout_gravity="center"
-
-                            app:dotsColor="@color/grey11"
-                            app:dotsCornerRadius="8dp"
-                            app:dotsSize="10dp"
-                            app:dotsSpacing="2dp"
-                            app:dotsWidthFactor="2.5"
-                            app:progressMode="false"
-                            app:selectedDotColor="@color/colorAccent" />
-
-                    </FrameLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -161,7 +111,6 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
                         android:fontFamily="@font/font_regular"
-                        android:gravity="center"
                         android:text='@{lang.equals("ar")?prductModel.title_ar:prductModel.title_en}'
                         android:textColor="@color/black2"
                         android:textSize="18sp"
@@ -178,9 +127,10 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
+                        android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
-                        android:layout_marginEnd="5dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="16dp"
                         android:background="@drawable/rounded_color1"
                         android:orientation="vertical">
 
@@ -188,7 +138,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
-                            android:orientation="horizontal">
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+
+                            >
 
                             <ImageView
                                 android:layout_width="wrap_content"
@@ -222,11 +175,13 @@
                             android:text='@{prductModel!=null?(lang.equals("ar")?Html.fromHtml(prductModel.details_at).toString():Html.fromHtml(prductModel.details_en).toString()):""}'
                             android:textColor="@color/grey14"
                             android:textSize="14sp" />
-                        <!--                            android:text="@{Html.fromHtml(model.details).toString()}"-->
 
                     </LinearLayout>
+
                 </LinearLayout>
-            </ScrollView>
+
+            </androidx.core.widget.NestedScrollView>
+
 
             <LinearLayout
                 android:id="@+id/llCart"
@@ -250,12 +205,74 @@
 
                     />
             </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <ProgressBar
-            android:id="@+id/progBar"
-            android:layout_width="wrap_content"
+        </LinearLayout>
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/loaderCategory"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:shimmer_duration="800"
+            android:visibility="@{prductModel!=null?View.GONE:View.VISIBLE}"
+
+
+            >
+
+            <include layout="@layout/product_details_loader" />
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            android:background="@color/transparent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/rounded_grey4"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/llBack"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="8dp"
+                            android:rotation='@{lang.equals("ar")?180:0}'
+                            android:src="@drawable/ic_arrow_left"
+                            app:tint="@color/black" />
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/imageShare"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/ic_share"
+                        android:visibility="@{prductModel!=null?View.VISIBLE:View.GONE,default=gone}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
     </FrameLayout>
+
 </layout>

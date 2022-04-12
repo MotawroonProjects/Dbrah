@@ -71,25 +71,10 @@ public class FragmentProductDetials extends BaseFragment {
         binding.setLang(getLang());
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
         fragmentProductDetailsMvvm = ViewModelProviders.of(activity).get(FragmentProductDetailsMvvm.class);
-        generalMvvm.getProduct_id().observe(activity, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                if (s != null) {
-                    productId = s;
-                    fragmentProductDetailsMvvm.getSingleProduct(productId);
-                }
-            }
-        });
-        fragmentProductDetailsMvvm.getIsDataLoading().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                if (aBoolean) {
-                    binding.pager.setVisibility(View.VISIBLE);
-                    binding.consData.setVisibility(View.GONE);
-                } else {
-                    binding.progBar.setVisibility(View.GONE);
-                    binding.consData.setVisibility(View.VISIBLE);
-                }
+        generalMvvm.getProduct_id().observe(activity, product_id -> {
+            if (product_id != null) {
+                productId = product_id;
+                fragmentProductDetailsMvvm.getSingleProduct(productId);
             }
         });
         fragmentProductDetailsMvvm.getOnDataSuccess().observe(this, new Observer<ProductModel>() {
@@ -100,14 +85,12 @@ public class FragmentProductDetials extends BaseFragment {
                 }
             }
         });
-        binding.flBack.setOnClickListener(v -> {
+        binding.llBack.setOnClickListener(v -> {
             generalMvvm.onHomeBackNavigate().setValue(true);
         });
         sliderAdapter = new ProductSliderAdapter(imagesList, activity);
         binding.pager.setAdapter(sliderAdapter);
         binding.pager.setClipToPadding(false);
-        // binding.pagerProduct.setPadding(80, 0, 80, 0);
-        //binding.pagerProduct.setPageMargin(20);
         binding.tab.setViewPager(binding.pager);
 
     }

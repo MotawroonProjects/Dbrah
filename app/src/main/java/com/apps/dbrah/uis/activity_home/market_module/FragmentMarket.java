@@ -107,7 +107,7 @@ public class FragmentMarket extends BaseFragment {
         });
 
         mvvm.getOnSliderDataSuccess().observe(activity, list -> {
-           binding.swipeRefresh.setRefreshing(false);
+            binding.swipeRefresh.setRefreshing(false);
             if (sliderAdapter != null) {
                 sliderAdapter.updateList(list);
             }
@@ -179,7 +179,6 @@ public class FragmentMarket extends BaseFragment {
 
 
         binding.swipeRefresh.setOnRefreshListener(this::getData);
-
 
         getData();
     }
