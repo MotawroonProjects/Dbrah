@@ -22,17 +22,13 @@ import com.apps.dbrah.adapter.MostSaleProductAdapter;
 import com.apps.dbrah.adapter.RecentProductAdapter;
 import com.apps.dbrah.adapter.SliderAdapter;
 import com.apps.dbrah.databinding.FragmentMarketBinding;
-import com.apps.dbrah.model.CategoryDataModel;
 import com.apps.dbrah.model.CategoryModel;
 import com.apps.dbrah.model.ProductModel;
-import com.apps.dbrah.model.SliderDataModel;
 import com.apps.dbrah.mvvm.FragmentMarketMvvm;
 import com.apps.dbrah.mvvm.GeneralMvvm;
 import com.apps.dbrah.uis.activity_base.BaseFragment;
 import com.apps.dbrah.uis.activity_home.HomeActivity;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -123,6 +119,7 @@ public class FragmentMarket extends BaseFragment {
         });
         mvvm.getOnCategoryDataSuccess().observe(activity, list -> {
             binding.swipeRefresh.setRefreshing(false);
+            generalMvvm.getCategoryList().setValue(list);
 
             if (list.size() > 0) {
                 binding.tvNoCategories.setVisibility(View.GONE);
@@ -204,8 +201,8 @@ public class FragmentMarket extends BaseFragment {
 
     }
 
-    public void showCategoryDetails(CategoryModel categoryModel) {
-        generalMvvm.getCat_id().setValue(categoryModel.getId());
+    public void showCategoryDetails(CategoryModel categoryModel, int pos) {
+        generalMvvm.getCategory_pos().setValue(pos);
         generalMvvm.onHomeNavigate().setValue(7);
     }
 

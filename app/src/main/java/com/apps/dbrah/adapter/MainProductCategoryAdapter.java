@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.apps.dbrah.R;
 import com.apps.dbrah.databinding.MainCategoryRowBinding;
-import com.apps.dbrah.model.CategoryDataModel;
 import com.apps.dbrah.model.CategoryModel;
 import com.apps.dbrah.uis.activity_home.products_module.FragmentProducts;
 
@@ -26,9 +25,7 @@ public class MainProductCategoryAdapter extends RecyclerView.Adapter<RecyclerVie
     private Fragment fragment;
     private String lang;
     private String cat_id;
-    private int currentPos = -1;
-    private int oldPos = currentPos;
-    private RecyclerView.ViewHolder oldHolder;
+    private MyHolder oldHolder;
 
     public MainProductCategoryAdapter(Context context, Fragment fragment, String lang) {
         this.context = context;
@@ -49,44 +46,28 @@ public class MainProductCategoryAdapter extends RecyclerView.Adapter<RecyclerVie
         MyHolder myHolder = (MyHolder) holder;
         myHolder.binding.setModel(list.get(position));
         myHolder.binding.setLang(lang);
-        if (oldHolder == null) {
-            if (list.get(position).isSelected()) {
-                Log.e("sslsll", String.valueOf(position));
-                oldHolder = myHolder;
-                currentPos = position;
-                oldPos = currentPos;
-            }
-
-        } else {
-            if (list.get(position).isSelected()) {
-                oldHolder = myHolder;
-                currentPos = position;
-                oldPos = currentPos;
-            }
+        if (list.get(position).isSelected()) {
+            oldHolder = myHolder;
         }
         myHolder.itemView.setOnClickListener(v -> {
             if (oldHolder != null) {
 
-                CategoryModel oldCategory = list.get(oldPos);
+                CategoryModel oldCategory = list.get(oldHolder.getAdapterPosition());
                 oldCategory.setSelected(false);
-                list.set(oldPos, oldCategory);
-                MainProductCategoryAdapter.MyHolder oHolder = (MainProductCategoryAdapter.MyHolder) oldHolder;
-                oHolder.binding.setModel(oldCategory);
+                list.set(oldHolder.getAdapterPosition(), oldCategory);
+                oldHolder.binding.setModel(oldCategory);
 
 
             }
-            currentPos = myHolder.getAdapterPosition();
-            CategoryModel category = list.get(currentPos);
+            CategoryModel category = list.get(myHolder.getAdapterPosition());
             category.setSelected(true);
-            list.set(currentPos, category);
-
+            list.set(myHolder.getAdapterPosition(), category);
             myHolder.binding.setModel(category);
 
             oldHolder = myHolder;
-            oldPos = currentPos;
             if (fragment instanceof FragmentProducts) {
                 FragmentProducts fragmentProducts = (FragmentProducts) fragment;
-                fragmentProducts.getsubcat(list.get(currentPos));
+                fragmentProducts.getSubCat(list.get(myHolder.getAdapterPosition()));
             }
 
         });
@@ -111,5 +92,9 @@ public class MainProductCategoryAdapter extends RecyclerView.Adapter<RecyclerVie
     public void updateList(List<CategoryModel> list) {
         this.list = list;
         notifyDataSetChanged();
+    }
+
+    public void setSelectedPos(int pos) {
+
     }
 }

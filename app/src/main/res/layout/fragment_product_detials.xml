@@ -224,7 +224,9 @@
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/transparent">
+            android:background="@color/transparent"
+            app:elevation="0dp"
+            >
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"

@@ -12,6 +12,14 @@ public class CategoryModel implements Serializable {
     private String updated_at;
     private boolean selected;
 
+    public CategoryModel(String id, String title_ar, String title_en, String image, boolean selected) {
+        this.id = id;
+        this.title_ar = title_ar;
+        this.title_en = title_en;
+        this.image = image;
+        this.selected = selected;
+    }
+
     public String getId() {
         return id;
     }

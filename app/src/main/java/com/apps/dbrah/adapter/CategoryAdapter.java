@@ -63,13 +63,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         }
         loadImage(list.get(position), myHolder.binding);
-        myHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (fragment instanceof FragmentMarket) {
-                    FragmentMarket fragmentMarket = (FragmentMarket) fragment;
-                    fragmentMarket.showCategoryDetails(list.get(holder.getAdapterPosition()));
-                }
+        myHolder.itemView.setOnClickListener(view -> {
+            if (fragment instanceof FragmentMarket) {
+                FragmentMarket fragmentMarket = (FragmentMarket) fragment;
+                fragmentMarket.showCategoryDetails(list.get(holder.getAdapterPosition()),myHolder.getAdapterPosition());
             }
         });
     }

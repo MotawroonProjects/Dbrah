@@ -72,7 +72,9 @@ public class FragmentProductDetials extends BaseFragment {
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
         fragmentProductDetailsMvvm = ViewModelProviders.of(activity).get(FragmentProductDetailsMvvm.class);
         generalMvvm.getProduct_id().observe(activity, product_id -> {
+            binding.setPrductModel(null);
             if (product_id != null) {
+
                 productId = product_id;
                 fragmentProductDetailsMvvm.getSingleProduct(productId);
             }

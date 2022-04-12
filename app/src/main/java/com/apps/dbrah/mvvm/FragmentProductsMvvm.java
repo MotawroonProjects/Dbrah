@@ -1,7 +1,6 @@
 package com.apps.dbrah.mvvm;
 
 import android.app.Application;
-import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -26,81 +25,89 @@ import retrofit2.Response;
 
 public class FragmentProductsMvvm extends AndroidViewModel {
 
-    private Context context;
-    private MutableLiveData<List<CategoryModel>> categoryModelLiveData;
-    private MutableLiveData<List<CategoryModel>> subcategoryModelLiveData;
+    private MutableLiveData<Boolean> isLoading;
+
+    private MutableLiveData<List<CategoryModel>> onCategoryDataSuccess;
+
+    private MutableLiveData<List<CategoryModel>> onSubCategoryDataSuccess;
+
+    private MutableLiveData<List<ProductModel>> onProductsDataSuccess;
+
+    private MutableLiveData<String> categoryId;
+
+    private MutableLiveData<String> subCategoryId;
+
+    private MutableLiveData<Integer> categoryPos;
+
 
     private CompositeDisposable disposable = new CompositeDisposable();
-    private MutableLiveData<Boolean> isLoadingLiveData;
-    private MutableLiveData<List<ProductModel>> listMutableLiveData;
+
 
     public FragmentProductsMvvm(@NonNull Application application) {
         super(application);
-        context = application.getApplicationContext();
     }
 
 
-
-    public MutableLiveData<Boolean> getIsLoadingLiveData() {
-        if (isLoadingLiveData == null) {
-            isLoadingLiveData = new MutableLiveData<>();
+    public MutableLiveData<Boolean> getIsLoading() {
+        if (isLoading == null) {
+            isLoading = new MutableLiveData<>();
         }
-        return isLoadingLiveData;
+        return isLoading;
     }
 
-    public MutableLiveData<List<CategoryModel>> getCategoryModelLiveData() {
-        if (categoryModelLiveData==null){
-            categoryModelLiveData=new MutableLiveData<>();
+    public MutableLiveData<List<CategoryModel>> getOnCategoryDataSuccess() {
+        if (onCategoryDataSuccess == null) {
+            onCategoryDataSuccess = new MutableLiveData<>();
         }
-        return categoryModelLiveData;
+        return onCategoryDataSuccess;
     }
 
-    public MutableLiveData<List<ProductModel>> getListMutableLiveData() {
-        if (listMutableLiveData==null){
-            listMutableLiveData=new MutableLiveData<>();
+
+    public MutableLiveData<List<CategoryModel>> getOnSubCategoryDataSuccess() {
+        if (onSubCategoryDataSuccess == null) {
+            onSubCategoryDataSuccess = new MutableLiveData<>();
         }
-        return listMutableLiveData;
+        return onSubCategoryDataSuccess;
     }
 
-    public MutableLiveData<List<CategoryModel>> getSubCategoryModelLiveData() {
-        if (subcategoryModelLiveData==null){
-            subcategoryModelLiveData=new MutableLiveData<>();
+
+    public MutableLiveData<List<ProductModel>> getOnProductsDataSuccess() {
+        if (onProductsDataSuccess == null) {
+            onProductsDataSuccess = new MutableLiveData<>();
         }
-        return subcategoryModelLiveData;
+        return onProductsDataSuccess;
+    }
+
+    public MutableLiveData<Integer> getCategoryPos() {
+        if (categoryPos == null) {
+            categoryPos = new MutableLiveData<>();
+        }
+        return categoryPos;
+    }
+
+    public MutableLiveData<String> getCategoryId() {
+        if (categoryId == null) {
+            categoryId = new MutableLiveData<>();
+        }
+        return categoryId;
+    }
+
+    public MutableLiveData<String> getSubCategoryId() {
+        if (subCategoryId != null) {
+            subCategoryId = new MutableLiveData<>();
+        }
+        return subCategoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        Log.e("cat", categoryId + "");
+        getCategoryId().setValue(categoryId);
+        getSubCategory(categoryId);
     }
 
 
-    public void getCategory(){
-        isLoadingLiveData.setValue(true);
-        Api.getService(Tags.base_url).getCategory()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<Response<CategoryDataModel>>() {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
-                        disposable.add(d);
-                    }
+    public void getSubCategory(String cat_id) {
 
-                    @Override
-                    public void onSuccess(@NonNull Response<CategoryDataModel> response) {
-                        isLoadingLiveData.postValue(false);
-
-                        if (response.isSuccessful() && response.body()!=null){
-                            if (response.body().getData()!=null && response.body().getStatus()==200){
-                                categoryModelLiveData.postValue(response.body().getData());
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        isLoadingLiveData.setValue(false);
-                        Log.e("error",e.toString());
-                    }
-                });
-    }
-    public void getSubCategory(String cat_id){
-        isLoadingLiveData.setValue(true);
         Api.getService(Tags.base_url).getSubCategory(cat_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -112,25 +119,31 @@ public class FragmentProductsMvvm extends AndroidViewModel {
 
                     @Override
                     public void onSuccess(@NonNull Response<CategoryDataModel> response) {
-                        isLoadingLiveData.postValue(false);
+                        if (response.isSuccessful() && response.body() != null) {
+                            if (response.body().getData() != null && response.body().getStatus() == 200) {
+                                List<CategoryModel> list = response.body().getData();
 
-                        if (response.isSuccessful() && response.body()!=null){
-                            if (response.body().getData()!=null && response.body().getStatus()==200){
-                                subcategoryModelLiveData.postValue(response.body().getData());
+                                if (list.size() > 0) {
+                                    CategoryModel model = new CategoryModel(null, "الكل", "All", null, true);
+                                    list.add(0, model);
+                                }
+                                getOnSubCategoryDataSuccess().setValue(list);
                             }
                         }
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        isLoadingLiveData.setValue(false);
-                        Log.e("error",e.toString());
+
+                        Log.e("error", e.toString());
                     }
                 });
     }
-    public void searchProduct(String cat_id,String sub_id,String query){
-        isLoadingLiveData.setValue(true);
-        Api.getService(Tags.base_url).searchByCatProduct(cat_id,sub_id,query)
+
+    public void searchProduct(String query) {
+        getIsLoading().setValue(true);
+
+        Api.getService(Tags.base_url).searchByCatProduct(getCategoryId().getValue(), getSubCategoryId().getValue(), query)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<RecentProductDataModel>>() {
@@ -141,18 +154,17 @@ public class FragmentProductsMvvm extends AndroidViewModel {
 
                     @Override
                     public void onSuccess(@NonNull Response<RecentProductDataModel> response) {
-                        isLoadingLiveData.postValue(false);
-                        if (response.isSuccessful() && response.body()!=null){
-                            if (response.body().getData()!=null && response.body().getStatus()==200){
-                                listMutableLiveData.postValue(response.body().getData());
+                        if (response.isSuccessful() && response.body() != null) {
+                            if (response.body().getData() != null && response.body().getStatus() == 200) {
+                                getIsLoading().setValue(false);
+                                getOnProductsDataSuccess().setValue(response.body().getData());
                             }
                         }
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        isLoadingLiveData.setValue(false);
-                        Log.e("error",e.toString());
+                        Log.e("error", e.toString());
                     }
                 });
     }

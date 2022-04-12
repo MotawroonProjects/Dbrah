@@ -6,12 +6,16 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
+import com.apps.dbrah.model.CategoryModel;
+
+import java.util.List;
+
 public class GeneralMvvm extends AndroidViewModel {
     private MutableLiveData<Integer> actionHomeNavigator;
     private MutableLiveData<Boolean> actionHomeBackNavigator;
     private MutableLiveData<String> Product_id;
-    private MutableLiveData<String> cat_id;
-
+    private MutableLiveData<Integer> category_pos;
+    private MutableLiveData<List<CategoryModel>> categoryList;
 
     public GeneralMvvm(@NonNull Application application) {
         super(application);
@@ -37,10 +41,18 @@ public class GeneralMvvm extends AndroidViewModel {
         }
         return Product_id;
     }
-    public MutableLiveData<String> getCat_id() {
-        if (cat_id == null) {
-            cat_id = new MutableLiveData<>();
+    public MutableLiveData<Integer> getCategory_pos() {
+        if (category_pos == null) {
+            category_pos = new MutableLiveData<>();
+            category_pos.setValue(-1);
         }
-        return cat_id;
+        return category_pos;
+    }
+
+    public MutableLiveData<List<CategoryModel>> getCategoryList() {
+        if (categoryList == null) {
+            categoryList = new MutableLiveData<>();
+        }
+        return categoryList;
     }
 }

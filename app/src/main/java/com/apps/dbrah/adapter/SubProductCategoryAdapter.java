@@ -44,41 +44,11 @@ public class SubProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MyHolder myHolder = (MyHolder) holder;
-        if (oldHolder == null) {
-            if(list.get(position).isSelected()){
-            oldHolder = myHolder;}
-        }
-        else{
-            if(list.get(position).isSelected()){
-                oldHolder = myHolder;}
-        }
+
 
         myHolder.binding.setLang(lang);
         myHolder.binding.setModel(list.get(position));
         myHolder.itemView.setOnClickListener(v -> {
-            if (oldHolder != null) {
-
-               CategoryModel oldCategory = list.get(oldPos);
-                oldCategory.setSelected(false);
-                list.set(oldPos, oldCategory);
-                MyHolder oHolder = (MyHolder) oldHolder;
-                oHolder.binding.setModel(oldCategory);
-
-
-            }
-            currentPos = myHolder.getAdapterPosition();
-            CategoryModel category = list.get(currentPos);
-            category.setSelected(true);
-            list.set(currentPos, category);
-
-            myHolder.binding.setModel(category);
-
-            oldHolder = myHolder;
-            oldPos = currentPos;
-            if (fragment instanceof FragmentProducts) {
-                FragmentProducts fragmentProducts = (FragmentProducts) fragment;
-                fragmentProducts.showProducts(list.get(currentPos));
-            }
 
 
         });
