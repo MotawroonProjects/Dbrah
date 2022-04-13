@@ -128,7 +128,7 @@
     <string name="note">ملاحظة</string>
     <string name="add_note">إضافة ملاحظة</string>
     <string name="complete_order">إكمال الطلب</string>
-    <string name="search_for_product">ابحث عن المنتج</string>
+    <string name="search_for_product">ابحث عن منتج...</string>
     <string name="ph_found">رقم الجوال موجود مسبقا</string>
     <string name="em_found">البريد الالكترونى موجود مسبقا</string>
     <string name="products">المنتجات</string>

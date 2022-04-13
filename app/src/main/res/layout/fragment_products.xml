@@ -30,11 +30,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/color1">
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="24dp"
                         android:alpha=".5"
                         android:background="@drawable/shadow_top" />
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recViewMain"
                         android:layout_width="match_parent"
@@ -44,6 +46,7 @@
                         android:layout_marginBottom="10dp" />
 
                 </FrameLayout>
+
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -58,22 +61,24 @@
                         android:layout_marginBottom="10dp" />
 
                 </FrameLayout>
+
                 <LinearLayout
                     android:id="@+id/llSearch"
                     android:layout_width="match_parent"
-                    android:layout_height="46dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
                     android:background="@drawable/small_rounded_stroke_grey7"
                     android:gravity="center_vertical"
-                    android:layout_marginTop="14dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:padding="14sp">
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp">
 
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/ic_search"
-                        />
+                        android:padding="3dp"
+                        android:src="@drawable/ic_search" />
 
                     <androidx.legacy.widget.Space
                         android:layout_width="8dp"
@@ -84,22 +89,45 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@color/transparent"
+                        android:fontFamily="@font/font_regular"
                         android:hint="@string/search_for_product"
                         android:lines="1"
                         android:textColor="@color/black"
-                        android:fontFamily="@font/font_regular"
                         android:textColorHint="@color/grey7"
                         android:textSize="13sp" />
 
                 </LinearLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recViewProducts"
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginTop="12dp"/>
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="16dp">
+
+                    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                        android:id="@+id/swipeRefresh"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recViewProducts"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+                    <TextView
+                        android:id="@+id/tvNoData"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="56dp"
+                        android:fontFamily="@font/font_regular"
+                        android:text="@string/no_products_to_show"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:visibility="gone" />
+                </FrameLayout>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </LinearLayout>

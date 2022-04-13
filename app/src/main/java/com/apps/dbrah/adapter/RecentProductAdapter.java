@@ -1,6 +1,7 @@
 package com.apps.dbrah.adapter;
 
 import android.content.Context;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,8 +25,8 @@ public class RecentProductAdapter extends RecyclerView.Adapter<RecyclerView.View
     private Context context;
     private LayoutInflater inflater;
     private Fragment fragment;
-    private Handler handler = new Handler();
-    private Runnable runnable;
+    private CountDownTimer countDownTimer;
+
 
     public RecentProductAdapter(Context context, Fragment fragment) {
         this.context = context;
@@ -45,51 +46,34 @@ public class RecentProductAdapter extends RecyclerView.Adapter<RecyclerView.View
         MyHolder myHolder = (MyHolder) holder;
         ProductModel productModel = list.get(position);
 
-
         myHolder.binding.setModel(productModel);
         myHolder.binding.motion.setTransitionDuration(500);
         myHolder.binding.motion.setTransition(R.id.start, R.id.end);
-
         myHolder.binding.tvCartAmount.setOnClickListener(v -> {
             myHolder.binding.motion.transitionToEnd();
-
-            runnable = () -> myHolder.binding.motion.transitionToStart();
-            handler.postDelayed(runnable, 3000);
-
 
         });
 
         myHolder.binding.imgCart.setOnClickListener(v -> {
             myHolder.binding.motion.transitionToEnd();
-
-            runnable = () -> myHolder.binding.motion.transitionToStart();
-            handler.postDelayed(runnable, 5000);
-
-
+            startTimer(myHolder);
         });
 
         myHolder.binding.imageIncrease.setOnClickListener(v -> {
             ProductModel model = list.get(myHolder.getAdapterPosition());
             int amount = model.getAmount() + 1;
             model.setAmount(amount);
+
             myHolder.binding.setModel(model);
             list.set(myHolder.getAdapterPosition(), model);
-            handler.removeCallbacks(runnable);
-            runnable = null;
+            startTimer(myHolder);
 
-            runnable = () -> myHolder.binding.motion.transitionToStart();
-            handler.postDelayed(runnable, 5000);
+
 
 
         });
 
         myHolder.binding.imageDecrease.setOnClickListener(v -> {
-            handler.removeCallbacks(runnable);
-            runnable = null;
-
-            runnable = () -> myHolder.binding.motion.transitionToStart();
-            handler.postDelayed(runnable, 5000);
-
 
             ProductModel model = list.get(myHolder.getAdapterPosition());
             int amount = model.getAmount() - 1;
@@ -97,14 +81,28 @@ public class RecentProductAdapter extends RecyclerView.Adapter<RecyclerView.View
             if (amount > 0) {
                 model.setAmount(amount);
 
-
             } else {
                 model.setAmount(0);
 
+
             }
+
 
             myHolder.binding.setModel(model);
             list.set(myHolder.getAdapterPosition(), model);
+
+            startTimer(myHolder);
+
+
+        });
+
+        myHolder.binding.imageDelete.setOnClickListener(v -> {
+            ProductModel model = list.get(myHolder.getAdapterPosition());
+            model.setAmount(0);
+
+            myHolder.binding.setModel(model);
+            list.set(myHolder.getAdapterPosition(), model);
+            startTimer(myHolder);
 
 
         });
@@ -138,4 +136,25 @@ public class RecentProductAdapter extends RecyclerView.Adapter<RecyclerView.View
         this.list = list;
         notifyDataSetChanged();
     }
+
+    private void startTimer(MyHolder myHolder) {
+        if (countDownTimer!=null){
+            countDownTimer.cancel();
+        }
+        countDownTimer = new CountDownTimer(1500, 1000) {
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                myHolder.binding.motion.transitionToStart();
+            }
+        };
+
+        countDownTimer.start();
+    }
+
 }

@@ -14,6 +14,7 @@ import com.apps.dbrah.model.RecentProductDataModel;
 import com.apps.dbrah.remote.Api;
 import com.apps.dbrah.tags.Tags;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.SingleObserver;
@@ -36,6 +37,8 @@ public class FragmentProductsMvvm extends AndroidViewModel {
     private MutableLiveData<String> categoryId;
 
     private MutableLiveData<String> subCategoryId;
+
+    private MutableLiveData<String> query;
 
     private MutableLiveData<Integer> categoryPos;
 
@@ -92,22 +95,28 @@ public class FragmentProductsMvvm extends AndroidViewModel {
         return categoryId;
     }
 
+    public MutableLiveData<String> getQuery() {
+        if (query == null) {
+            query = new MutableLiveData<>();
+        }
+        return query;
+    }
+
     public MutableLiveData<String> getSubCategoryId() {
-        if (subCategoryId != null) {
+        if (subCategoryId == null) {
             subCategoryId = new MutableLiveData<>();
         }
         return subCategoryId;
     }
 
     public void setCategoryId(String categoryId) {
-        Log.e("cat", categoryId + "");
         getCategoryId().setValue(categoryId);
         getSubCategory(categoryId);
     }
 
 
     public void getSubCategory(String cat_id) {
-
+        getOnSubCategoryDataSuccess().setValue(new ArrayList<>());
         Api.getService(Tags.base_url).getSubCategory(cat_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -127,6 +136,8 @@ public class FragmentProductsMvvm extends AndroidViewModel {
                                     CategoryModel model = new CategoryModel(null, "الكل", "All", null, true);
                                     list.add(0, model);
                                 }
+                                getCategoryId().setValue(cat_id);
+                                searchProduct(getQuery().getValue());
                                 getOnSubCategoryDataSuccess().setValue(list);
                             }
                         }
@@ -141,7 +152,7 @@ public class FragmentProductsMvvm extends AndroidViewModel {
     }
 
     public void searchProduct(String query) {
-        getIsLoading().setValue(true);
+        getIsLoading().postValue(true);
 
         Api.getService(Tags.base_url).searchByCatProduct(getCategoryId().getValue(), getSubCategoryId().getValue(), query)
                 .subscribeOn(Schedulers.io())
@@ -156,6 +167,7 @@ public class FragmentProductsMvvm extends AndroidViewModel {
                     public void onSuccess(@NonNull Response<RecentProductDataModel> response) {
                         if (response.isSuccessful() && response.body() != null) {
                             if (response.body().getData() != null && response.body().getStatus() == 200) {
+
                                 getIsLoading().setValue(false);
                                 getOnProductsDataSuccess().setValue(response.body().getData());
                             }
@@ -164,6 +176,7 @@ public class FragmentProductsMvvm extends AndroidViewModel {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
+                        getIsLoading().setValue(false);
                         Log.e("error", e.toString());
                     }
                 });

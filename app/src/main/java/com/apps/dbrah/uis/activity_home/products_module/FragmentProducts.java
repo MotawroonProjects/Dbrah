@@ -1,5 +1,6 @@
 package com.apps.dbrah.uis.activity_home.products_module;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -7,26 +8,39 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.apps.dbrah.R;
+import com.apps.dbrah.adapter.FilterProductAdapter;
 import com.apps.dbrah.adapter.MainProductCategoryAdapter;
 import com.apps.dbrah.adapter.RecentProductAdapter;
 import com.apps.dbrah.adapter.SubProductCategoryAdapter;
 import com.apps.dbrah.databinding.FragmentProductsBinding;
 import com.apps.dbrah.model.CategoryModel;
+import com.apps.dbrah.model.ProductModel;
 import com.apps.dbrah.mvvm.FragmentProductsMvvm;
 import com.apps.dbrah.mvvm.GeneralMvvm;
 import com.apps.dbrah.uis.activity_base.BaseFragment;
 import com.apps.dbrah.uis.activity_home.HomeActivity;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 
 public class FragmentProducts extends BaseFragment {
@@ -36,7 +50,7 @@ public class FragmentProducts extends BaseFragment {
     private FragmentProductsBinding binding;
     private MainProductCategoryAdapter mainProductCategoryAdapter;
     private SubProductCategoryAdapter subProductCategoryAdapter;
-    private RecentProductAdapter recentProductAdapter;
+    private FilterProductAdapter productAdapter;
     private String query = "";
 
     public static FragmentProducts newInstance() {
@@ -64,11 +78,12 @@ public class FragmentProducts extends BaseFragment {
 
     }
 
+    @SuppressLint("CheckResult")
     private void initView() {
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
         mvvm = ViewModelProviders.of(activity).get(FragmentProductsMvvm.class);
-
         View view = activity.setUpToolbar(binding.toolbar, getString(R.string.products), R.color.white, R.color.black, R.drawable.small_rounded_grey4, false);
+
         view.setOnClickListener(v -> {
             generalMvvm.onHomeBackNavigate().setValue(true);
         });
@@ -82,31 +97,66 @@ public class FragmentProducts extends BaseFragment {
 
         generalMvvm.getCategory_pos().observe(activity, pos -> {
 
-            if (mainProductCategoryAdapter != null && mvvm.getOnCategoryDataSuccess().getValue() != null && mvvm.getCategoryPos().getValue() != null && mvvm.getCategoryPos().getValue() != -1) {
-                mvvm.getOnCategoryDataSuccess().getValue().get(mvvm.getCategoryPos().getValue()).setSelected(false);
-                mainProductCategoryAdapter.notifyItemChanged(mvvm.getCategoryPos().getValue());
-
-            }
             if (mainProductCategoryAdapter != null && mvvm.getOnCategoryDataSuccess().getValue() != null) {
+                List<CategoryModel> list = new ArrayList<>();
+                for (CategoryModel model : mvvm.getOnCategoryDataSuccess().getValue()) {
+                    model.setSelected(false);
+                    list.add(model);
+                }
+                CategoryModel model = list.get(pos);
+                model.setSelected(true);
+                list.set(pos, model);
+                mainProductCategoryAdapter = new MainProductCategoryAdapter(activity, this, getLang());
+                binding.recViewMain.setAdapter(mainProductCategoryAdapter);
+                mainProductCategoryAdapter.setSelectedPos(pos);
+                mainProductCategoryAdapter.updateList(list);
                 mvvm.setCategoryId(mvvm.getOnCategoryDataSuccess().getValue().get(pos).getId());
-                mvvm.getOnCategoryDataSuccess().getValue().get(pos).setSelected(true);
-                mainProductCategoryAdapter.notifyItemChanged(pos);
+
             }
 
             mvvm.getCategoryPos().setValue(pos);
         });
 
         mvvm.getIsLoading().observe(activity, isLoading -> {
-            if (isLoading) {
+            binding.tvNoData.setVisibility(View.GONE);
+            binding.swipeRefresh.setRefreshing(isLoading);
+        });
+
+        mvvm.getOnProductsDataSuccess().observe(activity, list -> {
+            if (list.size() > 0) {
+                binding.tvNoData.setVisibility(View.GONE);
+
+            } else {
+                binding.tvNoData.setVisibility(View.VISIBLE);
+
+            }
+            productAdapter.updateList(list);
+        });
+        mvvm.getOnSubCategoryDataSuccess().observe(activity, list -> {
+            if (subProductCategoryAdapter != null) {
+                List<CategoryModel> subCategoryList = new ArrayList<>();
+                for (CategoryModel model : list) {
+                    model.setSelected(false);
+                    subCategoryList.add(model);
+                }
+
+                if (subCategoryList.size() > 0) {
+                    CategoryModel model = subCategoryList.get(0);
+                    model.setSelected(true);
+                    subCategoryList.set(0, model);
+
+                }
+
+                subProductCategoryAdapter = new SubProductCategoryAdapter(activity, this, getLang());
+                binding.recViewSub.setAdapter(subProductCategoryAdapter);
+                subProductCategoryAdapter.setSelectedPos(0);
+                subProductCategoryAdapter.updateList(subCategoryList);
             }
         });
 
-        mvvm.getOnSubCategoryDataSuccess().observe(activity,list->{
-            if (subProductCategoryAdapter!=null){
-                subProductCategoryAdapter.updateList(list);
-            }
+        binding.swipeRefresh.setOnRefreshListener(() -> {
+            mvvm.searchProduct(mvvm.getQuery().getValue());
         });
-
         mainProductCategoryAdapter = new MainProductCategoryAdapter(activity, this, getLang());
         binding.recViewMain.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false));
         binding.recViewMain.setAdapter(mainProductCategoryAdapter);
@@ -116,10 +166,34 @@ public class FragmentProducts extends BaseFragment {
         binding.recViewSub.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false));
 
 
-        recentProductAdapter = new RecentProductAdapter(activity, this);
-        binding.recViewProducts.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false));
-        binding.recViewProducts.setAdapter(recentProductAdapter);
+        productAdapter = new FilterProductAdapter(activity, this);
+        binding.recViewProducts.setLayoutManager(new GridLayoutManager(activity,2));
+        binding.recViewProducts.setAdapter(productAdapter);
 
+        Observable.create((ObservableOnSubscribe<String>) emitter -> {
+            binding.edtSearch.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    emitter.onNext(s.toString().trim());
+                }
+            });
+        }).debounce(1, TimeUnit.SECONDS)
+                .distinctUntilChanged()
+                .subscribe(query -> {
+                    mvvm.getQuery().postValue(query);
+                    mvvm.searchProduct(query);
+                });
 
     }
 
@@ -129,8 +203,12 @@ public class FragmentProducts extends BaseFragment {
     }
 
     public void showProducts(CategoryModel categoryModel) {
-        Log.e("dd",categoryModel.getId()+"");
         mvvm.getSubCategoryId().setValue(categoryModel.getId());
-        mvvm.searchProduct(binding.edtSearch.getText().toString());
+        mvvm.searchProduct(mvvm.getQuery().getValue());
+    }
+
+    public void showProductDetails(ProductModel productModel) {
+        generalMvvm.getProduct_id().setValue(productModel.getId());
+        generalMvvm.onHomeNavigate().setValue(6);
     }
 }

@@ -14,7 +14,7 @@ public class ProductModel implements Serializable {
     private String details_en;
     private String created_at;
     private String updated_at;
-    private int amount;
+    private int amount = 0;
     private List<Image> images;
 
     public String getId() {

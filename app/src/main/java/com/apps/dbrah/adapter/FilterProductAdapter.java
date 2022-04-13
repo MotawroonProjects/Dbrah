@@ -2,9 +2,9 @@ package com.apps.dbrah.adapter;
 
 import android.content.Context;
 import android.os.CountDownTimer;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -13,20 +13,23 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.apps.dbrah.R;
+import com.apps.dbrah.databinding.FilterProductRowBinding;
 import com.apps.dbrah.databinding.RecentRowBinding;
 import com.apps.dbrah.model.ProductModel;
 import com.apps.dbrah.uis.activity_home.market_module.FragmentMarket;
+import com.apps.dbrah.uis.activity_home.products_module.FragmentProducts;
 
 import java.util.List;
 
-public class MostSaleProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class FilterProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<ProductModel> list;
     private Context context;
     private LayoutInflater inflater;
     private Fragment fragment;
     private CountDownTimer countDownTimer;
 
-    public MostSaleProductAdapter(Context context, Fragment fragment) {
+
+    public FilterProductAdapter(Context context, Fragment fragment) {
         this.context = context;
         this.fragment = fragment;
         inflater = LayoutInflater.from(context);
@@ -35,7 +38,7 @@ public class MostSaleProductAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        RecentRowBinding rowBinding = DataBindingUtil.inflate(inflater, R.layout.recent_row, parent, false);
+        FilterProductRowBinding rowBinding = DataBindingUtil.inflate(inflater, R.layout.filter_product_row, parent, false);
         return new MyHolder(rowBinding);
     }
 
@@ -60,11 +63,13 @@ public class MostSaleProductAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         myHolder.binding.imageIncrease.setOnClickListener(v -> {
             ProductModel model = list.get(myHolder.getAdapterPosition());
             int amount = model.getAmount() + 1;
-            Log.e("amount", amount + "__");
+            Log.e("amount",amount+"__");
             model.setAmount(amount);
             myHolder.binding.setModel(model);
             list.set(myHolder.getAdapterPosition(), model);
             startTimer(myHolder);
+
+
 
 
         });
@@ -82,11 +87,12 @@ public class MostSaleProductAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
 
             }
-            startTimer(myHolder);
 
 
             myHolder.binding.setModel(model);
             list.set(myHolder.getAdapterPosition(), model);
+
+            startTimer(myHolder);
 
 
         });
@@ -102,17 +108,20 @@ public class MostSaleProductAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         });
 
+
         myHolder.itemView.setOnClickListener(view -> {
             if (fragment instanceof FragmentMarket) {
                 FragmentMarket fragmentMarket = (FragmentMarket) fragment;
                 fragmentMarket.showProductDetails(list.get(holder.getAdapterPosition()));
+            }else if (fragment instanceof FragmentProducts) {
+                FragmentProducts fragmentProducts = (FragmentProducts) fragment;
+                fragmentProducts.showProductDetails(list.get(holder.getAdapterPosition()));
             }
         });
     }
 
-
     private void startTimer(MyHolder myHolder) {
-        if (countDownTimer != null) {
+        if (countDownTimer!=null){
             countDownTimer.cancel();
         }
         countDownTimer = new CountDownTimer(1500, 1000) {
@@ -137,10 +146,10 @@ public class MostSaleProductAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
 
-    public static class MyHolder extends RecyclerView.ViewHolder {
-        public RecentRowBinding binding;
+    public  class MyHolder extends RecyclerView.ViewHolder {
+        public FilterProductRowBinding binding;
 
-        public MyHolder(RecentRowBinding binding) {
+        public MyHolder(FilterProductRowBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
 

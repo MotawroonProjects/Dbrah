@@ -23,9 +23,8 @@ public class SubProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView
     private LayoutInflater inflater;
     private Fragment fragment;
     private String lang;
-    private int currentPos = 0;
-    private int oldPos = currentPos;
-    private RecyclerView.ViewHolder oldHolder;
+    private MyHolder oldHolder;
+    private int selectedPos = 0;
 
     public SubProductCategoryAdapter(Context context, Fragment fragment, String lang) {
         this.context = context;
@@ -44,11 +43,37 @@ public class SubProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MyHolder myHolder = (MyHolder) holder;
+        CategoryModel model = list.get(position);
+        if (oldHolder==null){
+            if (selectedPos == position){
+                oldHolder = myHolder;
+            }
+        }
 
 
         myHolder.binding.setLang(lang);
         myHolder.binding.setModel(list.get(position));
         myHolder.itemView.setOnClickListener(v -> {
+            CategoryModel categoryModel = list.get(myHolder.getAdapterPosition());
+            if (!categoryModel.isSelected()) {
+                if (oldHolder != null) {
+                    CategoryModel oldModel = list.get(oldHolder.getAdapterPosition());
+                    oldModel.setSelected(false);
+                    list.set(oldHolder.getAdapterPosition(), oldModel);
+                    oldHolder.binding.setModel(oldModel);
+                }
+                categoryModel.setSelected(true);
+                selectedPos = myHolder.getAdapterPosition();
+                myHolder.binding.setModel(categoryModel);
+                list.set(myHolder.getAdapterPosition(), categoryModel);
+                oldHolder = myHolder;
+
+
+                if (fragment instanceof FragmentProducts){
+                    FragmentProducts fragmentProducts = (FragmentProducts) fragment;
+                    fragmentProducts.showProducts(categoryModel);
+                }
+            }
 
 
         });
@@ -73,8 +98,9 @@ public class SubProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView
 
     public void updateList(List<CategoryModel> list) {
         this.list = list;
-        currentPos = 0;
-        oldPos = currentPos;
         notifyDataSetChanged();
     }
-}
+
+    public void setSelectedPos(int pos){
+        selectedPos = pos;
+    }}

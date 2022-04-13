@@ -25,6 +25,7 @@ public class MainProductCategoryAdapter extends RecyclerView.Adapter<RecyclerVie
     private Fragment fragment;
     private String lang;
     private String cat_id;
+    private int currentPos = -1;
     private MyHolder oldHolder;
 
     public MainProductCategoryAdapter(Context context, Fragment fragment, String lang) {
@@ -46,28 +47,41 @@ public class MainProductCategoryAdapter extends RecyclerView.Adapter<RecyclerVie
         MyHolder myHolder = (MyHolder) holder;
         myHolder.binding.setModel(list.get(position));
         myHolder.binding.setLang(lang);
-        if (list.get(position).isSelected()) {
-            oldHolder = myHolder;
-        }
-        myHolder.itemView.setOnClickListener(v -> {
-            if (oldHolder != null) {
 
-                CategoryModel oldCategory = list.get(oldHolder.getAdapterPosition());
-                oldCategory.setSelected(false);
-                list.set(oldHolder.getAdapterPosition(), oldCategory);
-                oldHolder.binding.setModel(oldCategory);
-
-
+        if (oldHolder==null){
+            if (currentPos == position){
+                oldHolder = myHolder;
             }
-            CategoryModel category = list.get(myHolder.getAdapterPosition());
-            category.setSelected(true);
-            list.set(myHolder.getAdapterPosition(), category);
-            myHolder.binding.setModel(category);
+        }
 
-            oldHolder = myHolder;
-            if (fragment instanceof FragmentProducts) {
-                FragmentProducts fragmentProducts = (FragmentProducts) fragment;
-                fragmentProducts.getSubCat(list.get(myHolder.getAdapterPosition()));
+
+        myHolder.itemView.setOnClickListener(v -> {
+
+            CategoryModel category = list.get(myHolder.getAdapterPosition());
+
+            if (!category.isSelected()) {
+
+                if (oldHolder !=null) {
+
+                    CategoryModel oldCategory = list.get(currentPos);
+                    oldCategory.setSelected(false);
+                    list.set(currentPos, oldCategory);
+                    oldHolder.binding.setModel(oldCategory);
+
+
+                }
+                category.setSelected(true);
+                list.set(myHolder.getAdapterPosition(), category);
+                myHolder.binding.setModel(category);
+
+
+                currentPos = myHolder.getAdapterPosition();
+                oldHolder = myHolder;
+                if (fragment instanceof FragmentProducts) {
+                    FragmentProducts fragmentProducts = (FragmentProducts) fragment;
+                    fragmentProducts.getSubCat(list.get(myHolder.getAdapterPosition()));
+                }
+
             }
 
         });
@@ -94,7 +108,9 @@ public class MainProductCategoryAdapter extends RecyclerView.Adapter<RecyclerVie
         notifyDataSetChanged();
     }
 
-    public void setSelectedPos(int pos) {
-
+    public void setSelectedPos(int pos){
+        currentPos = pos;
     }
+
+
 }

@@ -17,7 +17,7 @@
 
     <androidx.constraintlayout.motion.widget.MotionLayout
         android:id="@+id/motion"
-        android:layout_width="164dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:background="@drawable/rounded_white_stroke_gray12"
@@ -96,13 +96,13 @@
             android:layout_height="36dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
+            android:alpha="@{model.amount==0?0:1,default=0}"
             android:background="@drawable/rounded_primary"
             android:fontFamily="@font/font_regular"
             android:gravity="center"
             android:text='@{String.valueOf(model.amount)}'
             android:textColor="@color/white"
             android:textSize="16sp"
-            android:alpha="@{model.amount==0?0:1,default=0}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/imgCart"
             app:layout_constraintTop_toBottomOf="@id/tvTitle" />
@@ -125,6 +125,7 @@
 
 
             >
+
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -152,7 +153,6 @@
             </FrameLayout>
 
 
-
             <TextView
                 android:id="@+id/tvCounter"
                 android:layout_width="0dp"
@@ -168,7 +168,6 @@
                 android:textSize="14sp" />
 
 
-
             <ImageView
                 android:id="@+id/imageIncrease"
                 android:layout_width="24dp"
@@ -176,9 +175,7 @@
                 android:layout_margin="5dp"
                 android:padding="5dp"
                 android:src="@drawable/ic_add"
-
-                />
-
+                app:tint="@color/color3" />
 
 
         </LinearLayout>
