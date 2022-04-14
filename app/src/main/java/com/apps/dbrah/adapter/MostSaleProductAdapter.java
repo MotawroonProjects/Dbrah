@@ -47,6 +47,7 @@ public class MostSaleProductAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         myHolder.binding.setModel(productModel);
         myHolder.binding.motion.setTransitionDuration(500);
         myHolder.binding.motion.setTransition(R.id.start, R.id.end);
+
         myHolder.binding.tvCartAmount.setOnClickListener(v -> {
             myHolder.binding.motion.transitionToEnd();
 
@@ -60,11 +61,15 @@ public class MostSaleProductAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         myHolder.binding.imageIncrease.setOnClickListener(v -> {
             ProductModel model = list.get(myHolder.getAdapterPosition());
             int amount = model.getAmount() + 1;
-            Log.e("amount", amount + "__");
             model.setAmount(amount);
             myHolder.binding.setModel(model);
             list.set(myHolder.getAdapterPosition(), model);
             startTimer(myHolder);
+            if (fragment instanceof FragmentMarket){
+
+                FragmentMarket fragmentMarket = (FragmentMarket) fragment;
+                fragmentMarket.addProductToCart(model);
+            }
 
 
         });
@@ -74,11 +79,11 @@ public class MostSaleProductAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             ProductModel model = list.get(myHolder.getAdapterPosition());
             int amount = model.getAmount() - 1;
 
-            if (amount > 0) {
+            if (amount > 1) {
                 model.setAmount(amount);
 
             } else {
-                model.setAmount(0);
+                model.setAmount(1);
 
 
             }
@@ -87,7 +92,10 @@ public class MostSaleProductAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
             myHolder.binding.setModel(model);
             list.set(myHolder.getAdapterPosition(), model);
-
+            if (fragment instanceof FragmentMarket){
+                FragmentMarket fragmentMarket = (FragmentMarket) fragment;
+                fragmentMarket.addProductToCart(model);
+            }
 
         });
 
@@ -98,7 +106,10 @@ public class MostSaleProductAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             myHolder.binding.setModel(model);
             list.set(myHolder.getAdapterPosition(), model);
             startTimer(myHolder);
-
+            if (fragment instanceof FragmentMarket){
+                FragmentMarket fragmentMarket = (FragmentMarket) fragment;
+                fragmentMarket.removeProductFromCart(model);
+            }
 
         });
 

@@ -7,27 +7,30 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.apps.dbrah.R;
 import com.apps.dbrah.databinding.MainCartRowBinding;
+import com.apps.dbrah.model.cart_models.CartModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<Object> list;
+    private List<CartModel.CartObject> list;
     private Context context;
     private LayoutInflater inflater;
-    private AppCompatActivity appCompatActivity;
+    private Fragment fragment;
+    private String lang;
 
-    public MainCartAdapter(List<Object> list, Context context) {
-        this.list = list;
+    public MainCartAdapter(Context context,Fragment fragment,String lang) {
         this.context = context;
         inflater = LayoutInflater.from(context);
-        appCompatActivity = (AppCompatActivity) context;
+        this.fragment = fragment;
+        this.lang = lang;
     }
 
 
@@ -41,13 +44,18 @@ public class MainCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MyHolder myHolder = (MyHolder) holder;
-        ((MyHolder) holder).binding.recView.setLayoutManager(new LinearLayoutManager(context));
-        ((MyHolder) holder).binding.recView.setAdapter(new CartAdapter(new ArrayList<>(), context));
+        CartModel.CartObject cartObject = list.get(position);
+        myHolder.binding.setLang(lang);
+        myHolder.binding.setModel(cartObject);
+        myHolder.binding.recView.setLayoutManager(new LinearLayoutManager(context));
+        CartAdapter adapter = new CartAdapter(context,fragment,lang);
+        myHolder.binding.recView.setAdapter(adapter);
+        adapter.updateList(cartObject.getProducts());
     }
 
     @Override
     public int getItemCount() {
-        return 4;
+        return list!=null?list.size():0;
     }
 
     public static class MyHolder extends RecyclerView.ViewHolder {
@@ -60,7 +68,7 @@ public class MainCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-    public void updateList(List<Object> list) {
+    public void updateList(List<CartModel.CartObject> list) {
         this.list = list;
         notifyDataSetChanged();
     }

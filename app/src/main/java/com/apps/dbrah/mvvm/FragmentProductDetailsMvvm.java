@@ -22,18 +22,9 @@ import retrofit2.Response;
 
 public class FragmentProductDetailsMvvm extends AndroidViewModel {
 
-//    private MutableLiveData<SliderProductModel> sliderDataModelMutableLiveData;
     private MutableLiveData<Boolean> isDataLoading;
     private MutableLiveData<ProductModel> onDataSuccess;
     private CompositeDisposable disposable = new CompositeDisposable();
-
-
-//    public MutableLiveData<SliderProductModel> getSliderDataModelMutableLiveData() {
-//        if (sliderDataModelMutableLiveData==null){
-//            sliderDataModelMutableLiveData=new MutableLiveData<>();
-//        }
-//        return sliderDataModelMutableLiveData;
-//    }
 
     public MutableLiveData<Boolean> getIsDataLoading() {
         if (isDataLoading==null){

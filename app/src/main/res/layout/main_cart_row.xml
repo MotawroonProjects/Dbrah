@@ -3,19 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <variable
+            name="lang"
+            type="String" />
 
+        <variable
+            name="model"
+            type="com.apps.dbrah.model.cart_models.CartModel.CartObject" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="11dp">
+        android:padding="12dp">
 
         <FrameLayout
             android:id="@+id/flCartItem"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="43dp"
+            android:layout_marginTop="24dp"
             android:background="@drawable/rounded_grey4_stroke_color3"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -71,16 +77,20 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/product" />
+                    image="@{model.categoryModel.image}"
+                    />
 
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/font_regular"
-                    android:text="canned food"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:lines="1"
+                    android:ellipsize="end"
+                    android:text='@{lang.equals("ar")?model.categoryModel.title_ar:model.categoryModel.title_en}'
+                    />
             </LinearLayout>
         </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

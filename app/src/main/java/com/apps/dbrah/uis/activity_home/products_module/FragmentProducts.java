@@ -27,6 +27,7 @@ import com.apps.dbrah.adapter.SubProductCategoryAdapter;
 import com.apps.dbrah.databinding.FragmentProductsBinding;
 import com.apps.dbrah.model.CategoryModel;
 import com.apps.dbrah.model.ProductModel;
+import com.apps.dbrah.model.cart_models.ManageCartModel;
 import com.apps.dbrah.mvvm.FragmentProductsMvvm;
 import com.apps.dbrah.mvvm.GeneralMvvm;
 import com.apps.dbrah.uis.activity_base.BaseFragment;
@@ -52,6 +53,7 @@ public class FragmentProducts extends BaseFragment {
     private SubProductCategoryAdapter subProductCategoryAdapter;
     private FilterProductAdapter productAdapter;
     private String query = "";
+    private ManageCartModel manageCartModel;
 
     public static FragmentProducts newInstance() {
         return new FragmentProducts();
@@ -80,6 +82,8 @@ public class FragmentProducts extends BaseFragment {
 
     @SuppressLint("CheckResult")
     private void initView() {
+        manageCartModel = ManageCartModel.newInstance();
+
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
         mvvm = ViewModelProviders.of(activity).get(FragmentProductsMvvm.class);
         View view = activity.setUpToolbar(binding.toolbar, getString(R.string.products), R.color.white, R.color.black, R.drawable.small_rounded_grey4, false);
@@ -132,6 +136,7 @@ public class FragmentProducts extends BaseFragment {
             }
             productAdapter.updateList(list);
         });
+
         mvvm.getOnSubCategoryDataSuccess().observe(activity, list -> {
             if (subProductCategoryAdapter != null) {
                 List<CategoryModel> subCategoryList = new ArrayList<>();
@@ -195,7 +200,11 @@ public class FragmentProducts extends BaseFragment {
                     mvvm.searchProduct(query);
                 });
 
+
+
     }
+
+
 
 
     public void getSubCat(CategoryModel categoryModel) {
@@ -210,5 +219,17 @@ public class FragmentProducts extends BaseFragment {
     public void showProductDetails(ProductModel productModel) {
         generalMvvm.getProduct_id().setValue(productModel.getId());
         generalMvvm.onHomeNavigate().setValue(6);
+    }
+
+    public void addProductToCart(ProductModel productModel){
+        manageCartModel.add(productModel,activity);
+        generalMvvm.getOnCartRefreshed().setValue(true);
+
+    }
+
+    public void removeProductFromCart(ProductModel productModel){
+        manageCartModel.delete(productModel,activity);
+        generalMvvm.getOnCartRefreshed().setValue(true);
+
     }
 }

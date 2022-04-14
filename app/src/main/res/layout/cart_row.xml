@@ -3,7 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <variable
+            name="lang"
+            type="String" />
 
+        <variable
+            name="model"
+            type="com.apps.dbrah.model.ProductModel" />
+        <import type="android.view.View"/>
     </data>
 
     <LinearLayout
@@ -25,7 +32,8 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/product" />
+                image="@{model.main_image}"
+                />
         </FrameLayout>
 
         <LinearLayout
@@ -48,7 +56,7 @@
                     android:fontFamily="@font/font_bold"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="12dp"
-                    android:text="شاي مثلج شاي أخضر كيس شاي ليبتون"
+                    android:text='@{lang.equals("ar")?model.title_ar:model.title_en}'
                     android:textColor="@color/black2"
 
                     android:textSize="14sp" />
@@ -87,6 +95,7 @@
                             android:layout_margin="5dp"
                             android:src="@drawable/ic_minus"
                             app:tint="@color/color3"
+                            android:visibility="@{model.amount>1?View.VISIBLE:View.INVISIBLE}"
 
                             />
 
@@ -100,7 +109,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/font_bold"
                             android:gravity="center"
-                            android:text='1'
+                            android:text="@{String.valueOf(model.amount)}"
                             android:textColor="@color/colorPrimary"
                             android:textSize="14sp" />
 

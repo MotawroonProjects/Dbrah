@@ -63,13 +63,15 @@ public class FilterProductAdapter extends RecyclerView.Adapter<RecyclerView.View
         myHolder.binding.imageIncrease.setOnClickListener(v -> {
             ProductModel model = list.get(myHolder.getAdapterPosition());
             int amount = model.getAmount() + 1;
-            Log.e("amount",amount+"__");
             model.setAmount(amount);
             myHolder.binding.setModel(model);
             list.set(myHolder.getAdapterPosition(), model);
             startTimer(myHolder);
 
-
+            if (fragment instanceof FragmentProducts) {
+                FragmentProducts fragmentProducts = (FragmentProducts) fragment;
+                fragmentProducts.addProductToCart(model);
+            }
 
 
         });
@@ -79,11 +81,11 @@ public class FilterProductAdapter extends RecyclerView.Adapter<RecyclerView.View
             ProductModel model = list.get(myHolder.getAdapterPosition());
             int amount = model.getAmount() - 1;
 
-            if (amount > 0) {
+            if (amount > 1) {
                 model.setAmount(amount);
 
             } else {
-                model.setAmount(0);
+                model.setAmount(1);
 
 
             }
@@ -93,7 +95,10 @@ public class FilterProductAdapter extends RecyclerView.Adapter<RecyclerView.View
             list.set(myHolder.getAdapterPosition(), model);
 
             startTimer(myHolder);
-
+            if (fragment instanceof FragmentProducts) {
+                FragmentProducts fragmentProducts = (FragmentProducts) fragment;
+                fragmentProducts.addProductToCart(model);
+            }
 
         });
 
@@ -105,6 +110,11 @@ public class FilterProductAdapter extends RecyclerView.Adapter<RecyclerView.View
             list.set(myHolder.getAdapterPosition(), model);
             startTimer(myHolder);
 
+            if (fragment instanceof FragmentProducts) {
+                FragmentProducts fragmentProducts = (FragmentProducts) fragment;
+                fragmentProducts.removeProductFromCart(model);
+            }
+
 
         });
 
@@ -113,7 +123,7 @@ public class FilterProductAdapter extends RecyclerView.Adapter<RecyclerView.View
             if (fragment instanceof FragmentMarket) {
                 FragmentMarket fragmentMarket = (FragmentMarket) fragment;
                 fragmentMarket.showProductDetails(list.get(holder.getAdapterPosition()));
-            }else if (fragment instanceof FragmentProducts) {
+            } else if (fragment instanceof FragmentProducts) {
                 FragmentProducts fragmentProducts = (FragmentProducts) fragment;
                 fragmentProducts.showProductDetails(list.get(holder.getAdapterPosition()));
             }
@@ -121,7 +131,7 @@ public class FilterProductAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
     private void startTimer(MyHolder myHolder) {
-        if (countDownTimer!=null){
+        if (countDownTimer != null) {
             countDownTimer.cancel();
         }
         countDownTimer = new CountDownTimer(1500, 1000) {
@@ -146,7 +156,7 @@ public class FilterProductAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
 
-    public  class MyHolder extends RecyclerView.ViewHolder {
+    public class MyHolder extends RecyclerView.ViewHolder {
         public FilterProductRowBinding binding;
 
         public MyHolder(FilterProductRowBinding binding) {

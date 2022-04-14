@@ -67,7 +67,10 @@ public class RecentProductAdapter extends RecyclerView.Adapter<RecyclerView.View
             myHolder.binding.setModel(model);
             list.set(myHolder.getAdapterPosition(), model);
             startTimer(myHolder);
-
+            if (fragment instanceof FragmentMarket){
+                FragmentMarket fragmentMarket = (FragmentMarket) fragment;
+                fragmentMarket.addProductToCart(model);
+            }
 
 
 
@@ -78,13 +81,11 @@ public class RecentProductAdapter extends RecyclerView.Adapter<RecyclerView.View
             ProductModel model = list.get(myHolder.getAdapterPosition());
             int amount = model.getAmount() - 1;
 
-            if (amount > 0) {
+            if (amount > 1) {
                 model.setAmount(amount);
 
             } else {
-                model.setAmount(0);
-
-
+                model.setAmount(1);
             }
 
 
@@ -93,6 +94,10 @@ public class RecentProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
             startTimer(myHolder);
 
+            if (fragment instanceof FragmentMarket){
+                FragmentMarket fragmentMarket = (FragmentMarket) fragment;
+                fragmentMarket.addProductToCart(model);
+            }
 
         });
 
@@ -103,7 +108,10 @@ public class RecentProductAdapter extends RecyclerView.Adapter<RecyclerView.View
             myHolder.binding.setModel(model);
             list.set(myHolder.getAdapterPosition(), model);
             startTimer(myHolder);
-
+            if (fragment instanceof FragmentMarket){
+                FragmentMarket fragmentMarket = (FragmentMarket) fragment;
+                fragmentMarket.removeProductFromCart(model);
+            }
 
         });
 

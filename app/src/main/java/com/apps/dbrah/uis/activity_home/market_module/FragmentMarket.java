@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import com.apps.dbrah.adapter.SliderAdapter;
 import com.apps.dbrah.databinding.FragmentMarketBinding;
 import com.apps.dbrah.model.CategoryModel;
 import com.apps.dbrah.model.ProductModel;
+import com.apps.dbrah.model.cart_models.ManageCartModel;
 import com.apps.dbrah.mvvm.FragmentMarketMvvm;
 import com.apps.dbrah.mvvm.GeneralMvvm;
 import com.apps.dbrah.uis.activity_base.BaseFragment;
@@ -43,6 +45,7 @@ public class FragmentMarket extends BaseFragment {
     private CategoryAdapter categoryAdapter;
     private RecentProductAdapter recentProductAdapter;
     private MostSaleProductAdapter mostSaleProductAdapter;
+    private ManageCartModel manageCartModel;
 
 
     @Override
@@ -70,6 +73,7 @@ public class FragmentMarket extends BaseFragment {
     }
 
     private void initView() {
+        manageCartModel = ManageCartModel.newInstance();
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
         binding.setNotificationCount("0");
         binding.setLang(getLang());
@@ -220,6 +224,20 @@ public class FragmentMarket extends BaseFragment {
             });
 
         }
+
+    }
+
+    public void addProductToCart(ProductModel productModel){
+        Log.e("model",productModel.getId());
+        manageCartModel.add(productModel,activity);
+        generalMvvm.getOnCartRefreshed().setValue(true);
+    }
+
+    public void removeProductFromCart(ProductModel productModel){
+        Log.e("model2",productModel.getId());
+
+        manageCartModel.delete(productModel,activity);
+        generalMvvm.getOnCartRefreshed().setValue(true);
 
     }
 

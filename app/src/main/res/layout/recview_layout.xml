@@ -26,6 +26,7 @@
                 android:textSize="18sp"
                 android:text="@string/no_data_to_show"
                 android:visibility="gone"
+                android:fontFamily="@font/font_regular"
 
                 />
         </FrameLayout>

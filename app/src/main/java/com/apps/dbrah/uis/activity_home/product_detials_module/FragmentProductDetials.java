@@ -2,6 +2,7 @@ package com.apps.dbrah.uis.activity_home.product_detials_module;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +15,12 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.apps.dbrah.R;
+import com.apps.dbrah.adapter.MostSaleProductAdapter;
 import com.apps.dbrah.adapter.ProductSliderAdapter;
 import com.apps.dbrah.databinding.FragmentProductDetialsBinding;
 import com.apps.dbrah.databinding.FragmentSearchBinding;
 import com.apps.dbrah.model.ProductModel;
+import com.apps.dbrah.model.cart_models.ManageCartModel;
 import com.apps.dbrah.mvvm.FragmentProductDetailsMvvm;
 import com.apps.dbrah.mvvm.GeneralMvvm;
 import com.apps.dbrah.uis.FragmentBaseNavigation;
@@ -39,6 +42,11 @@ public class FragmentProductDetials extends BaseFragment {
     private ProductSliderAdapter sliderAdapter;
     private List<ProductModel.Image> imagesList;
     private Timer timer;
+    private int amount = 0;
+    private CountDownTimer countDownTimer;
+    private ManageCartModel manageCartModel;
+    private ProductModel productModel;
+
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -67,11 +75,20 @@ public class FragmentProductDetials extends BaseFragment {
     }
 
     private void initView() {
+        manageCartModel = ManageCartModel.newInstance();
+
         imagesList = new ArrayList<>();
         binding.setLang(getLang());
+        binding.setAmount(amount);
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
         fragmentProductDetailsMvvm = ViewModelProviders.of(activity).get(FragmentProductDetailsMvvm.class);
         generalMvvm.getProduct_id().observe(activity, product_id -> {
+            if (countDownTimer != null) {
+                countDownTimer.cancel();
+            }
+            amount = 0;
+            binding.setAmount(amount);
+            binding.motion.transitionToStart();
             binding.setPrductModel(null);
             if (product_id != null) {
 
@@ -79,22 +96,100 @@ public class FragmentProductDetials extends BaseFragment {
                 fragmentProductDetailsMvvm.getSingleProduct(productId);
             }
         });
-        fragmentProductDetailsMvvm.getOnDataSuccess().observe(this, new Observer<ProductModel>() {
-            @Override
-            public void onChanged(ProductModel productModel) {
-                if (productModel != null) {
-                    updateData(productModel);
-                }
+        fragmentProductDetailsMvvm.getOnDataSuccess().observe(this, productModel -> {
+            if (productModel != null) {
+                FragmentProductDetials.this.productModel = productModel;
+                amount = manageCartModel.getProductAmount(FragmentProductDetials.this.productModel.getId());
+                binding.setAmount(amount);
+                FragmentProductDetials.this.productModel.setAmount(amount);
+                updateData(FragmentProductDetials.this.productModel);
             }
         });
+
         binding.llBack.setOnClickListener(v -> {
             generalMvvm.onHomeBackNavigate().setValue(true);
         });
+
         sliderAdapter = new ProductSliderAdapter(imagesList, activity);
         binding.pager.setAdapter(sliderAdapter);
         binding.pager.setClipToPadding(false);
         binding.tab.setViewPager(binding.pager);
 
+
+        binding.tvCartAmount.setOnClickListener(v -> {
+            binding.motion.transitionToEnd();
+            startTimer();
+
+
+        });
+
+        binding.imgCart.setOnClickListener(v -> {
+            binding.motion.transitionToEnd();
+            startTimer();
+        });
+
+        binding.imageIncrease.setOnClickListener(v -> {
+
+            amount += 1;
+            binding.setAmount(amount);
+            startTimer();
+            productModel.setAmount(amount);
+            addProductToCart(productModel);
+
+
+
+        });
+
+        binding.imageDecrease.setOnClickListener(v -> {
+
+            amount = amount - 1;
+
+            if (amount >1) {
+                binding.setAmount(amount);
+
+
+            } else {
+                amount = 1;
+                binding.setAmount(1);
+
+
+            }
+            productModel.setAmount(amount);
+            addProductToCart(productModel);
+
+            startTimer();
+        });
+
+        binding.imageDelete.setOnClickListener(v -> {
+            amount = 0;
+            binding.setAmount(0);
+            productModel.setAmount(amount);
+            removeProductFromCart(productModel);
+            startTimer();
+
+        });
+
+
+    }
+
+    private void startTimer() {
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+        countDownTimer = new CountDownTimer(1500, 1000) {
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                binding.motion.transitionToStart();
+            }
+        };
+
+        countDownTimer.start();
     }
 
     private void updateData(ProductModel productModel) {
@@ -131,6 +226,17 @@ public class FragmentProductDetials extends BaseFragment {
 
         }
 
+    }
+
+    public void addProductToCart(ProductModel productModel) {
+        manageCartModel.add(productModel,activity);
+        generalMvvm.getOnCartRefreshed().setValue(true);
+
+    }
+
+    public void removeProductFromCart(ProductModel productModel) {
+        manageCartModel.delete(productModel,activity);
+        generalMvvm.getOnCartRefreshed().setValue(true);
     }
 
 }

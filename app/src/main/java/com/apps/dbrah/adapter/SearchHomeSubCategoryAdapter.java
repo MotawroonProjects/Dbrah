@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.apps.dbrah.R;
 import com.apps.dbrah.databinding.SearchHomeSubCategoryRowBinding;
 import com.apps.dbrah.model.CategoryModel;
+import com.apps.dbrah.uis.activity_home.search_module.FragmentSearch;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class SearchHomeSubCategoryAdapter extends RecyclerView.Adapter<RecyclerV
     private LayoutInflater inflater;
     private Fragment fragment;
     private String lang;
+    private MyHolder oldHolder;
 
     public SearchHomeSubCategoryAdapter(Context context, Fragment fragment, String lang) {
         this.context = context;
@@ -42,15 +44,34 @@ public class SearchHomeSubCategoryAdapter extends RecyclerView.Adapter<RecyclerV
         myHolder.binding.setModel(list.get(position));
         myHolder.binding.setLang(lang);
 
+        myHolder.itemView.setOnClickListener(v -> {
+            CategoryModel categoryModel = list.get(myHolder.getAdapterPosition());
 
+            if (!categoryModel.isSelected()){
+                if (oldHolder != null) {
+                    CategoryModel model = list.get(oldHolder.getAdapterPosition());
+                    model.setSelected(false);
+                    oldHolder.binding.setModel(model);
+                }
+
+                categoryModel.setSelected(true);
+                myHolder.binding.setModel(categoryModel);
+                oldHolder = myHolder;
+            }
+
+            if (fragment instanceof FragmentSearch){
+                FragmentSearch fragmentSearch = (FragmentSearch) fragment;
+                fragmentSearch.setSubCategory(categoryModel);
+            }
+
+
+        });
     }
-
 
     @Override
     public int getItemCount() {
         return list != null ? list.size() : 0;
     }
-
 
     public static class MyHolder extends RecyclerView.ViewHolder {
         public SearchHomeSubCategoryRowBinding binding;
@@ -63,6 +84,9 @@ public class SearchHomeSubCategoryAdapter extends RecyclerView.Adapter<RecyclerV
     }
 
     public void updateList(List<CategoryModel> list) {
+        if (oldHolder!=null){
+            oldHolder = null;
+        }
         if (list == null) {
             if (this.list != null) {
                 this.list.clear();

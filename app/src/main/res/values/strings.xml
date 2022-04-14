@@ -133,5 +133,6 @@
     <string name="ph_found">Phone Found</string>
     <string name="em_found">Email Found</string>
     <string name="ch_time">Choose Time</string>
+    <string name="empty_cart">Empty cart</string>
 
 </resources>

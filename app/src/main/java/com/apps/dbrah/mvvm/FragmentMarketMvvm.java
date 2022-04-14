@@ -13,6 +13,7 @@ import com.apps.dbrah.model.CategoryModel;
 import com.apps.dbrah.model.ProductModel;
 import com.apps.dbrah.model.RecentProductDataModel;
 import com.apps.dbrah.model.SliderDataModel;
+import com.apps.dbrah.model.cart_models.ManageCartModel;
 import com.apps.dbrah.remote.Api;
 import com.apps.dbrah.tags.Tags;
 
@@ -26,7 +27,7 @@ import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 
 public class FragmentMarketMvvm extends AndroidViewModel {
-
+    private ManageCartModel manageCartModel;
     private MutableLiveData<List<SliderDataModel.SliderModel>> onSliderDataSuccess;
     private MutableLiveData<List<CategoryModel>> onCategoryDataSuccess;
     private MutableLiveData<List<ProductModel>> onRecentProductDataModel;
@@ -40,6 +41,7 @@ public class FragmentMarketMvvm extends AndroidViewModel {
 
     public FragmentMarketMvvm(@NonNull Application application) {
         super(application);
+        manageCartModel = ManageCartModel.newInstance();
     }
 
     public MutableLiveData<List<SliderDataModel.SliderModel>> getOnSliderDataSuccess() {
@@ -173,9 +175,7 @@ public class FragmentMarketMvvm extends AndroidViewModel {
                     public void onSuccess(@NonNull Response<RecentProductDataModel> response) {
                         if (response.isSuccessful() && response.body() != null) {
                             if (response.body().getData() != null && response.body().getStatus() == 200) {
-                                getIsLoadingRecentProduct().setValue(false);
-
-                                getOnRecentProductDataModel().setValue(response.body().getData());
+                                prepareRecentData(response.body().getData());
                             }
                         }
                     }
@@ -186,6 +186,7 @@ public class FragmentMarketMvvm extends AndroidViewModel {
                     }
                 });
     }
+
 
     public void getMostSaleProduct() {
         getIsLoadingMostSaleProduct().setValue(true);
@@ -202,9 +203,7 @@ public class FragmentMarketMvvm extends AndroidViewModel {
                     public void onSuccess(@NonNull Response<RecentProductDataModel> response) {
                         if (response.isSuccessful() && response.body() != null) {
                             if (response.body().getData() != null && response.body().getStatus() == 200) {
-                                getIsLoadingMostSaleProduct().setValue(false);
-
-                                getOnMostProductDataModel().setValue(response.body().getData());
+                                prepareMostSaleData(response.body().getData());
                             }
                         }
                     }
@@ -214,6 +213,29 @@ public class FragmentMarketMvvm extends AndroidViewModel {
                         Log.e("error", e.toString());
                     }
                 });
+    }
+
+    private void prepareRecentData(List<ProductModel> data) {
+        for (int index = 0; index < data.size(); index++) {
+            ProductModel productModel = data.get(index);
+            productModel.setAmount(manageCartModel.getProductAmount(productModel.getId()));
+            data.set(index, productModel);
+        }
+        getIsLoadingRecentProduct().setValue(false);
+
+        getOnRecentProductDataModel().setValue(data);
+    }
+
+
+    private void prepareMostSaleData(List<ProductModel> data) {
+        for (int index = 0; index < data.size(); index++) {
+            ProductModel productModel = data.get(index);
+            productModel.setAmount(manageCartModel.getProductAmount(productModel.getId()));
+            data.set(index, productModel);
+        }
+        getIsLoadingMostSaleProduct().setValue(false);
+
+        getOnMostProductDataModel().setValue(data);
     }
 
 

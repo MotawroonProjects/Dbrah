@@ -1,5 +1,7 @@
 package com.apps.dbrah.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -16,6 +18,8 @@ public class ProductModel implements Serializable {
     private String updated_at;
     private int amount = 0;
     private List<Image> images;
+    @SerializedName("main_category")
+    private CategoryModel categoryModel;
 
     public String getId() {
         return id;
@@ -61,12 +65,32 @@ public class ProductModel implements Serializable {
         return images;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setMain_image(String main_image) {
+        this.main_image = main_image;
+    }
+
+    public void setTitle_ar(String title_ar) {
+        this.title_ar = title_ar;
+    }
+
+    public void setTitle_en(String title_en) {
+        this.title_en = title_en;
+    }
+
     public int getAmount() {
         return amount;
     }
 
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+    public CategoryModel getCategoryModel() {
+        return categoryModel;
     }
 
     public static class Image implements Serializable{

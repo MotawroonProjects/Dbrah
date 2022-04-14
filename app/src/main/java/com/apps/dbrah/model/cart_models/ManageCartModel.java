@@ -1,0 +1,73 @@
+package com.apps.dbrah.model.cart_models;
+
+import android.content.Context;
+import android.util.Log;
+
+import com.apps.dbrah.model.ProductModel;
+import com.apps.dbrah.preferences.Preferences;
+
+import java.io.Serializable;
+import java.util.List;
+
+public class ManageCartModel implements Serializable {
+    public static ManageCartModel instance = null;
+    private CartModel cartModel;
+
+    private ManageCartModel() {
+    }
+
+    public static synchronized ManageCartModel newInstance() {
+        if (instance == null) {
+            instance = new ManageCartModel();
+        }
+
+        return instance;
+    }
+
+    public void add(ProductModel productModel, Context context) {
+        Preferences preferences = Preferences.getInstance();
+
+        cartModel = preferences.getCart(context);
+        if (cartModel == null) {
+            cartModel = new CartModel();
+        }
+        cartModel.addProduct(productModel);
+        preferences.create_update_cart(context,cartModel);
+    }
+
+    public void delete(ProductModel productModel, Context context) {
+        Preferences preferences = Preferences.getInstance();
+
+        cartModel = preferences.getCart(context);
+        if (cartModel == null) {
+            cartModel = new CartModel();
+        }
+        cartModel.removeProduct(productModel);
+        preferences.create_update_cart(context,cartModel);
+
+    }
+
+    public List<CartModel.CartObject> getCartList(Context context) {
+        Preferences preferences = Preferences.getInstance();
+
+        cartModel = preferences.getCart(context);
+        if (cartModel == null) {
+            cartModel = new CartModel();
+
+        }
+
+        return cartModel.getCartList();
+    }
+
+    public int getProductAmount(String product_id){
+        return cartModel.getProductAmount(product_id);
+    }
+
+    public void clear(Context context) {
+        instance = null;
+        cartModel = null;
+        Preferences preferences = Preferences.getInstance();
+        preferences.create_update_cart(context,cartModel);
+    }
+
+}

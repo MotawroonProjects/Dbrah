@@ -18,6 +18,7 @@
         android:layout_margin="5dp"
         app:cardCornerRadius="24dp"
         app:cardElevation="2dp"
+        app:cardBackgroundColor="@{model.selected?@color/colorPrimary:@color/white}"
         >
         <TextView
             android:layout_width="wrap_content"
@@ -26,7 +27,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:textColor="@color/black"
+            android:textColor="@{model.selected?@color/white:@color/black}"
             android:textSize="14sp"
             android:maxEms="12"
             android:text='@{lang.equals("ar")?model.title_ar:model.title_en}'

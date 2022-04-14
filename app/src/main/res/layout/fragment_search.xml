@@ -118,36 +118,43 @@
             </FrameLayout>
 
 
-            <FrameLayout
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swipeRefresh"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="11dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="11dp"
+                android:layout_height="match_parent">
 
-
-                >
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recView"
+                <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
-                    />
-
-                <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/loaderProduct"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:shimmer_duration="800"
+                    android:layout_marginStart="11dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="11dp"
 
 
                     >
 
-                    <include layout="@layout/search_home_product_loader" />
-                </com.facebook.shimmer.ShimmerFrameLayout>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
 
-            </FrameLayout>
+                        />
+
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/loaderProduct"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:shimmer_duration="800"
+
+
+                        >
+
+                        <include layout="@layout/search_home_product_loader" />
+                    </com.facebook.shimmer.ShimmerFrameLayout>
+
+                </FrameLayout>
+
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         </LinearLayout>
 

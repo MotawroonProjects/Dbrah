@@ -11,6 +11,7 @@ import com.apps.dbrah.model.CategoryDataModel;
 import com.apps.dbrah.model.CategoryModel;
 import com.apps.dbrah.model.ProductModel;
 import com.apps.dbrah.model.RecentProductDataModel;
+import com.apps.dbrah.model.cart_models.ManageCartModel;
 import com.apps.dbrah.remote.Api;
 import com.apps.dbrah.tags.Tags;
 
@@ -25,6 +26,7 @@ import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 
 public class FragmentProductsMvvm extends AndroidViewModel {
+    private ManageCartModel manageCartModel;
 
     private MutableLiveData<Boolean> isLoading;
 
@@ -48,6 +50,8 @@ public class FragmentProductsMvvm extends AndroidViewModel {
 
     public FragmentProductsMvvm(@NonNull Application application) {
         super(application);
+        manageCartModel = ManageCartModel.newInstance();
+
     }
 
 
@@ -168,8 +172,7 @@ public class FragmentProductsMvvm extends AndroidViewModel {
                         if (response.isSuccessful() && response.body() != null) {
                             if (response.body().getData() != null && response.body().getStatus() == 200) {
 
-                                getIsLoading().setValue(false);
-                                getOnProductsDataSuccess().setValue(response.body().getData());
+                                prepareProducts(response.body().getData());
                             }
                         }
                     }
@@ -180,6 +183,16 @@ public class FragmentProductsMvvm extends AndroidViewModel {
                         Log.e("error", e.toString());
                     }
                 });
+    }
+
+    private void prepareProducts(List<ProductModel> data) {
+        for (int index = 0; index < data.size(); index++) {
+            ProductModel productModel = data.get(index);
+            productModel.setAmount(manageCartModel.getProductAmount(productModel.getId()));
+            data.set(index, productModel);
+        }
+        getIsLoading().setValue(false);
+        getOnProductsDataSuccess().setValue(data);
     }
 
 }

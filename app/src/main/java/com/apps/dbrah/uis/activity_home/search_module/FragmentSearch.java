@@ -22,6 +22,7 @@ import com.apps.dbrah.adapter.RecentProductAdapter;
 import com.apps.dbrah.adapter.SearchHomeProductAdapter;
 import com.apps.dbrah.adapter.SearchHomeSubCategoryAdapter;
 import com.apps.dbrah.databinding.FragmentSearchBinding;
+import com.apps.dbrah.model.CategoryModel;
 import com.apps.dbrah.model.ProductModel;
 import com.apps.dbrah.mvvm.FragmentSearchMvvm;
 import com.apps.dbrah.mvvm.GeneralMvvm;
@@ -50,7 +51,6 @@ public class FragmentSearch extends BaseFragment {
     private FragmentSearchMvvm mvvm;
     private SearchHomeSubCategoryAdapter subCategoryAdapter;
     private SearchHomeProductAdapter productAdapter;
-    private String query;
     private CompositeDisposable disposable = new CompositeDisposable();
 
 
@@ -101,15 +101,18 @@ public class FragmentSearch extends BaseFragment {
                 binding.loaderProduct.setVisibility(View.GONE);
             }
         });
-
+        mvvm.getIsLoadingProducts().observe(activity, isLoading -> {
+            binding.swipeRefresh.setRefreshing(isLoading);
+        });
         mvvm.getOnDataSuccess().observe(activity, data -> {
             if (subCategoryAdapter != null) {
+
                 subCategoryAdapter.updateList(data.getCategories());
             }
 
-            if (data.getProducts().size()>0){
+            if (data.getProducts().size() > 0) {
                 binding.tvNoData.setVisibility(View.GONE);
-            }else {
+            } else {
                 binding.tvNoData.setVisibility(View.VISIBLE);
 
             }
@@ -117,7 +120,18 @@ public class FragmentSearch extends BaseFragment {
                 productAdapter.updateList(data.getProducts());
             }
         });
+        mvvm.getOnProductsDataSuccess().observe(activity, list -> {
 
+            if (list.size() > 0) {
+                binding.tvNoData.setVisibility(View.GONE);
+            } else {
+                binding.tvNoData.setVisibility(View.VISIBLE);
+
+            }
+            if (productAdapter != null) {
+                productAdapter.updateList(list);
+            }
+        });
 
         subCategoryAdapter = new SearchHomeSubCategoryAdapter(activity, this, getLang());
         binding.recViewSubCategory.setLayoutManager(new GridLayoutManager(activity, 1, LinearLayoutManager.HORIZONTAL, false));
@@ -161,7 +175,16 @@ public class FragmentSearch extends BaseFragment {
                     mvvm.search(query);
                 });
 
-        mvvm.search(query);
+
+        binding.swipeRefresh.setOnRefreshListener(() -> {
+            if (mvvm.getSubCategoryId().getValue() != null) {
+                mvvm.getProductBySubCategory();
+            } else {
+                mvvm.search(mvvm.getQuery().getValue());
+                binding.swipeRefresh.setRefreshing(false);
+            }
+        });
+        mvvm.search(null);
 
     }
 
@@ -171,9 +194,17 @@ public class FragmentSearch extends BaseFragment {
         generalMvvm.onHomeNavigate().setValue(6);
     }
 
+
+    public void setSubCategory(CategoryModel subCategoryModel) {
+        mvvm.getSubCategoryId().setValue(subCategoryModel.getId());
+        mvvm.getProductBySubCategory();
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         disposable.clear();
     }
+
+
 }

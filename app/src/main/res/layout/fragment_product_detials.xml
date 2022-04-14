@@ -5,6 +5,10 @@
     <data>
 
         <variable
+            name="amount"
+            type="Integer" />
+
+        <variable
             name="lang"
             type="String" />
 
@@ -183,28 +187,139 @@
             </androidx.core.widget.NestedScrollView>
 
 
-            <LinearLayout
-                android:id="@+id/llCart"
+            <androidx.constraintlayout.motion.widget.MotionLayout
+                android:id="@+id/motion"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:background="@color/colorPrimary"
                 android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent">
+                app:layoutDescription="@xml/product_details_scene">
 
                 <TextView
+                    android:id="@+id/tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:fontFamily="@font/font_regular"
                     android:gravity="center"
                     android:text="@string/add_to_cart"
                     android:textColor="@color/white"
                     android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
 
                     />
-            </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/imgCart"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/circle_white_stroke_color3"
+                    android:padding="7dp"
+                    android:src="@drawable/ic_cart1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+
+                    />
+
+                <TextView
+                    android:id="@+id/tvCartAmount"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:alpha="@{amount==0?0:1,default=0}"
+                    android:background="@drawable/circle_stroke_primary"
+                    android:fontFamily="@font/font_regular"
+                    android:gravity="center"
+                    android:text='@{String.valueOf(amount)}'
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/imgCart"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <LinearLayout
+                    android:id="@+id/llAmount"
+                    android:layout_width="1dp"
+                    android:layout_height="36dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:alpha="0"
+                    android:background="@drawable/rounded_white_stroke_color3"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/imgCart"
+                    app:layout_constraintHorizontal_bias="1"
+                    app:layout_constraintTop_toTopOf="parent"
+
+
+                    >
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/imageDecrease"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_margin="5dp"
+                            android:src="@drawable/ic_minus"
+                            android:visibility="@{amount==0?View.INVISIBLE:View.VISIBLE}"
+                            app:tint="@color/colorPrimary" />
+
+                        <ImageView
+                            android:id="@+id/imageDelete"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_margin="5dp"
+                            android:padding="5dp"
+                            android:src="@drawable/ic_delete"
+                            android:visibility="@{amount==1?View.VISIBLE:View.INVISIBLE}"
+                            app:tint="@color/colorPrimary"
+
+                            />
+                    </FrameLayout>
+
+
+                    <TextView
+                        android:id="@+id/tvCounter"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/font_bold"
+                        android:gravity="center"
+                        android:text='@{String.valueOf(amount)}'
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="14sp" />
+
+
+                    <ImageView
+                        android:id="@+id/imageIncrease"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_margin="5dp"
+                        android:padding="5dp"
+                        android:src="@drawable/ic_add"
+
+                        />
+
+
+                </LinearLayout>
+            </androidx.constraintlayout.motion.widget.MotionLayout>
 
         </LinearLayout>
 
@@ -212,9 +327,8 @@
             android:id="@+id/loaderCategory"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:visibility="@{prductModel!=null?View.GONE:View.VISIBLE,default=visible}"
             app:shimmer_duration="800"
-            android:visibility="@{prductModel!=null?View.GONE:View.VISIBLE}"
-
 
             >
 
@@ -225,8 +339,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/transparent"
-            app:elevation="0dp"
-            >
+            app:elevation="0dp">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
