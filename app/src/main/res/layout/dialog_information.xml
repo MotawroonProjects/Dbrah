@@ -13,8 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
@@ -24,22 +23,20 @@
             android:text="@string/information"
             android:textColor="@color/black"
             android:textSize="18sp"
-            android:layout_margin="16sp"
-            />
+            android:layout_margin="16sp" />
 
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/grey4"
-            />
+            android:background="@color/grey4" />
 
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fillViewport="true"
-            >
+            android:fillViewport="true">
+
             <TextView
                 android:id="@+id/tvDetails"
                 android:layout_width="match_parent"
@@ -56,13 +53,11 @@
         </androidx.core.widget.NestedScrollView>
 
 
-
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/grey4"
-            android:layout_marginTop="8dp"
-            />
+            android:layout_marginTop="8dp" />
 
         <TextView
             android:id="@+id/tvCancel"
@@ -80,8 +75,7 @@
 
         <androidx.legacy.widget.Space
             android:layout_width="0dp"
-            android:layout_height="8dp"
-            />
+            android:layout_height="8dp" />
 
     </LinearLayout>
 </layout>

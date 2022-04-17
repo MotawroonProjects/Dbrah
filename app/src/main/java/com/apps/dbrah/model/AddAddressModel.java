@@ -38,7 +38,6 @@ public class AddAddressModel extends BaseObservable {
     }
 
 
-
     public String getPhone() {
         return phone;
     }

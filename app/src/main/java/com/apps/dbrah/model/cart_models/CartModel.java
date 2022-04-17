@@ -62,46 +62,45 @@ public class CartModel implements Serializable {
 
         CategoryModel categoryModel = model.getCategoryModel();
         int categoryPos = isCategoryExist(categoryModel.getId());
-        if (categoryPos!=-1){
+        if (categoryPos != -1) {
             CartObject cartObject = cartList.get(categoryPos);
             List<ProductModel> products = cartObject.getProducts();
-            int productPos = isProductExistInCategory(model.getId(),products);
+            int productPos = isProductExistInCategory(model.getId(), products);
 
-            if (productPos!=-1){
-                products.set(productPos,model);
-            }else {
+            if (productPos != -1) {
+                products.set(productPos, model);
+            } else {
                 products.add(model);
 
 
             }
             cartObject.setProducts(products);
-            cartList.set(categoryPos,cartObject);
+            cartList.set(categoryPos, cartObject);
 
-        }else {
+        } else {
             List<ProductModel> products = new ArrayList<>();
             products.add(model);
-            CartObject cartObject = new CartObject(categoryModel,products);
+            CartObject cartObject = new CartObject(categoryModel, products);
             cartList.add(cartObject);
         }
     }
 
 
-    public void removeProduct(ProductModel model){
+    public void removeProduct(ProductModel model) {
         CategoryModel categoryModel = model.getCategoryModel();
         int categoryPos = isCategoryExist(categoryModel.getId());
         CartObject cartObject = cartList.get(categoryPos);
         List<ProductModel> products = cartObject.getProducts();
-        int productPos = isProductExistInCategory(model.getId(),products);
+        int productPos = isProductExistInCategory(model.getId(), products);
         products.remove(productPos);
-        if (products.size()>0){
+        if (products.size() > 0) {
             cartObject.setProducts(products);
-            cartList.set(categoryPos,cartObject);
-        }else {
+            cartList.set(categoryPos, cartObject);
+        } else {
             cartList.remove(categoryPos);
         }
 
     }
-
 
 
     private int isCategoryExist(String category_id) {
@@ -125,18 +124,18 @@ public class CartModel implements Serializable {
     }
 
 
-   public int getProductAmount(String product_id){
-        for (CartObject cartObject :cartList){
+    public int getProductAmount(String product_id) {
+        for (CartObject cartObject : cartList) {
             List<ProductModel> products = cartObject.getProducts();
-            for (ProductModel productModel :products){
-                if (productModel.getId().equals(product_id)){
+            for (ProductModel productModel : products) {
+                if (productModel.getId().equals(product_id)) {
                     return productModel.getAmount();
                 }
             }
 
         }
         return 0;
-   }
+    }
 
 
 }

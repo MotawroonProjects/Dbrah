@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="lang"
             type="String" />
@@ -107,8 +108,8 @@
             android:layout_marginEnd="7dp"
             android:layout_marginBottom="12dp"
             android:background="@drawable/small_rounded_white"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -118,13 +119,14 @@
                 android:layout_marginTop="9dp"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
-                android:paddingTop="8dp"
-                >
+                android:paddingTop="8dp">
+
                 <ImageView
                     android:layout_width="12dp"
                     android:layout_height="12dp"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/circle_primary"/>
+                    android:src="@drawable/circle_primary" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -133,8 +135,9 @@
                     android:text="@string/some_products_are_not_available"
                     android:textColor="@color/black2"
                     android:textSize="12sp"
-                    android:layout_gravity="center_vertical"/>
+                    android:layout_gravity="center_vertical" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -144,13 +147,14 @@
                 android:layout_marginTop="11dp"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
-                android:paddingBottom="8dp"
-                >
+                android:paddingBottom="8dp">
+
                 <ImageView
                     android:layout_width="12dp"
                     android:layout_height="12dp"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/circle_color5"/>
+                    android:src="@drawable/circle_color5" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -159,8 +163,9 @@
                     android:text="@string/there_are_other_brand_to_some_products"
                     android:textColor="@color/black2"
                     android:textSize="12sp"
-                    android:layout_gravity="center_vertical"/>
+                    android:layout_gravity="center_vertical" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -169,13 +174,14 @@
                 android:layout_marginEnd="16dp"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
-                android:paddingBottom="8dp"
-                >
+                android:paddingBottom="8dp">
+
                 <ImageView
                     android:layout_width="12dp"
                     android:layout_height="12dp"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/circle_color6"/>
+                    android:src="@drawable/circle_color6" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -184,8 +190,9 @@
                     android:text="@string/some_products_have_less_quantities"
                     android:textColor="@color/black2"
                     android:textSize="12sp"
-                    android:layout_gravity="center_vertical"/>
+                    android:layout_gravity="center_vertical" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -194,6 +201,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="9dp"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

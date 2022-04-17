@@ -32,7 +32,7 @@ public class ManageCartModel implements Serializable {
             cartModel = new CartModel();
         }
         cartModel.addProduct(productModel);
-        preferences.create_update_cart(context,cartModel);
+        preferences.create_update_cart(context, cartModel);
     }
 
     public void delete(ProductModel productModel, Context context) {
@@ -43,7 +43,7 @@ public class ManageCartModel implements Serializable {
             cartModel = new CartModel();
         }
         cartModel.removeProduct(productModel);
-        preferences.create_update_cart(context,cartModel);
+        preferences.create_update_cart(context, cartModel);
 
     }
 
@@ -59,7 +59,7 @@ public class ManageCartModel implements Serializable {
         return cartModel.getCartList();
     }
 
-    public int getProductAmount(String product_id){
+    public int getProductAmount(String product_id) {
         return cartModel.getProductAmount(product_id);
     }
 
@@ -67,7 +67,7 @@ public class ManageCartModel implements Serializable {
         instance = null;
         cartModel = null;
         Preferences preferences = Preferences.getInstance();
-        preferences.create_update_cart(context,cartModel);
+        preferences.create_update_cart(context, cartModel);
     }
 
 }

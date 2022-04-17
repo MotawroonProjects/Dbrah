@@ -58,14 +58,13 @@ public class ActivitySignupMvvm extends AndroidViewModel {
         RequestBody vat_part = Common.getRequestBodyText(model.getVat());
 
 
-
         MultipartBody.Part image = null;
         if (model.getImage_uri() != null && !model.getImage_uri().isEmpty()) {
             image = Common.getMultiPart(context, Uri.parse(model.getImage_uri()), "image");
         }
 
 
-        Api.getService(Tags.base_url).signUpwithImage(name_part, phone_code_part, phone_part, email_part,vat_part, image)
+        Api.getService(Tags.base_url).signUpwithImage(name_part, phone_code_part, phone_part, email_part, vat_part, image)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<UserModel>>() {
@@ -85,8 +84,7 @@ public class ActivitySignupMvvm extends AndroidViewModel {
                                     getUserData().setValue(response.body());
                                 } else if (response.body().getStatus() == 406) {
                                     Toast.makeText(context, R.string.ph_found, Toast.LENGTH_LONG).show();
-                                }
-                                else if (response.body().getStatus() == 407) {
+                                } else if (response.body().getStatus() == 407) {
                                     Toast.makeText(context, R.string.em_found, Toast.LENGTH_LONG).show();
                                 }
                             }

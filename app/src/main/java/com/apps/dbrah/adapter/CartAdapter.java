@@ -18,13 +18,14 @@ import com.apps.dbrah.uis.activity_home.cart_module.FragmentCart;
 
 import java.util.List;
 
-public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<ProductModel> list;
     private Context context;
     private LayoutInflater inflater;
     private Fragment fragment;
     private String lang;
-    public CartAdapter(Context context,Fragment fragment,String lang) {
+
+    public CartAdapter(Context context, Fragment fragment, String lang) {
         this.context = context;
         inflater = LayoutInflater.from(context);
         this.fragment = fragment;
@@ -33,27 +34,25 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     }
 
 
-
-
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        CartRowBinding binding= DataBindingUtil.inflate(inflater, R.layout.cart_row,parent,false);
+        CartRowBinding binding = DataBindingUtil.inflate(inflater, R.layout.cart_row, parent, false);
         return new MyHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        MyHolder myHolder=(MyHolder) holder;
+        MyHolder myHolder = (MyHolder) holder;
         myHolder.binding.setLang(lang);
         myHolder.binding.setModel(list.get(position));
 
         myHolder.binding.imageIncrease.setOnClickListener(v -> {
             ProductModel productModel = list.get(myHolder.getAdapterPosition());
-            int amount = productModel.getAmount() +1;
+            int amount = productModel.getAmount() + 1;
             productModel.setAmount(amount);
-            list.set(myHolder.getAdapterPosition(),productModel);
-            if (fragment instanceof FragmentCart){
+            list.set(myHolder.getAdapterPosition(), productModel);
+            if (fragment instanceof FragmentCart) {
                 FragmentCart fragmentCart = (FragmentCart) fragment;
                 fragmentCart.addProductToCart(productModel);
             }
@@ -63,12 +62,12 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
         myHolder.binding.imageDecrease.setOnClickListener(v -> {
             ProductModel productModel = list.get(myHolder.getAdapterPosition());
-            if (productModel.getAmount()>1){
+            if (productModel.getAmount() > 1) {
 
-                int amount = productModel.getAmount() -1;
+                int amount = productModel.getAmount() - 1;
                 productModel.setAmount(amount);
-                list.set(myHolder.getAdapterPosition(),productModel);
-                if (fragment instanceof FragmentCart){
+                list.set(myHolder.getAdapterPosition(), productModel);
+                if (fragment instanceof FragmentCart) {
                     FragmentCart fragmentCart = (FragmentCart) fragment;
                     fragmentCart.addProductToCart(productModel);
                 }
@@ -81,7 +80,7 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
         myHolder.binding.imgDelete.setOnClickListener(v -> {
             ProductModel productModel = list.get(myHolder.getAdapterPosition());
-            if (fragment instanceof FragmentCart){
+            if (fragment instanceof FragmentCart) {
                 FragmentCart fragmentCart = (FragmentCart) fragment;
                 fragmentCart.removeProductFromCart(productModel);
             }
@@ -92,7 +91,7 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     @Override
     public int getItemCount() {
-        return list!=null?list.size():0;
+        return list != null ? list.size() : 0;
     }
 
     public static class MyHolder extends RecyclerView.ViewHolder {
@@ -104,6 +103,7 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
         }
     }
+
     public void updateList(List<ProductModel> list) {
         this.list = list;
         notifyDataSetChanged();

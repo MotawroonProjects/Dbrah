@@ -2,6 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+
         <variable
             name="lang"
             type="String" />
@@ -51,8 +52,7 @@
                     android:maxEms="13"
                     android:maxLines="2"
                     android:ellipsize="end"
-                    android:text='@{lang.equals("ar")?model.title_ar:model.title_en}'
-                    />
+                    android:text='@{lang.equals("ar")?model.title_ar:model.title_en}' />
 
 
             </LinearLayout>

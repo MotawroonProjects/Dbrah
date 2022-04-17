@@ -47,33 +47,34 @@ public class ContactUsModel extends BaseObservable implements Serializable {
 
         } else {
 
-            if (name.isEmpty()){
+            if (name.isEmpty()) {
                 error_name.set(context.getString(R.string.field_required));
-            }else {
+            } else {
                 error_name.set(null);
 
             }
 
 
-            if (email.isEmpty()){
+            if (email.isEmpty()) {
                 error_email.set(context.getString(R.string.field_required));
-            }if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+            }
+            if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 error_email.set(context.getString(R.string.inv_email));
-            }else {
+            } else {
                 error_email.set(null);
 
             }
 
-            if (subject.isEmpty()){
+            if (subject.isEmpty()) {
                 error_subject.set(context.getString(R.string.field_required));
-            }else {
+            } else {
                 error_subject.set(null);
 
             }
 
-            if (message.isEmpty()){
+            if (message.isEmpty()) {
                 error_message.set(context.getString(R.string.field_required));
-            }else {
+            } else {
                 error_message.set(null);
 
             }

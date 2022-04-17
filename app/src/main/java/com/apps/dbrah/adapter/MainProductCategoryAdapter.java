@@ -48,8 +48,8 @@ public class MainProductCategoryAdapter extends RecyclerView.Adapter<RecyclerVie
         myHolder.binding.setModel(list.get(position));
         myHolder.binding.setLang(lang);
 
-        if (oldHolder==null){
-            if (currentPos == position){
+        if (oldHolder == null) {
+            if (currentPos == position) {
                 oldHolder = myHolder;
             }
         }
@@ -61,7 +61,7 @@ public class MainProductCategoryAdapter extends RecyclerView.Adapter<RecyclerVie
 
             if (!category.isSelected()) {
 
-                if (oldHolder !=null) {
+                if (oldHolder != null) {
 
                     CategoryModel oldCategory = list.get(currentPos);
                     oldCategory.setSelected(false);
@@ -108,7 +108,7 @@ public class MainProductCategoryAdapter extends RecyclerView.Adapter<RecyclerVie
         notifyDataSetChanged();
     }
 
-    public void setSelectedPos(int pos){
+    public void setSelectedPos(int pos) {
         currentPos = pos;
     }
 

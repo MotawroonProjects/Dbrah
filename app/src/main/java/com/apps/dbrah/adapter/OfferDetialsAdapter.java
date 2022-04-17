@@ -15,7 +15,7 @@ import com.apps.dbrah.databinding.OfferDetialsRowBinding;
 
 import java.util.List;
 
-public class OfferDetialsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class OfferDetialsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<Object> list;
     private Context context;
     private LayoutInflater inflater;
@@ -31,13 +31,13 @@ public class OfferDetialsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        OfferDetialsRowBinding binding= DataBindingUtil.inflate(inflater, R.layout.offer_detials_row,parent,false);
+        OfferDetialsRowBinding binding = DataBindingUtil.inflate(inflater, R.layout.offer_detials_row, parent, false);
         return new MyHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        MyHolder myHolder=(MyHolder) holder;
+        MyHolder myHolder = (MyHolder) holder;
     }
 
     @Override

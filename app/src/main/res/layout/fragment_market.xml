@@ -18,8 +18,8 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -44,13 +44,13 @@
                         <FrameLayout
                             android:id="@+id/flSlider"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            >
+                            android:layout_height="wrap_content">
+
                             <androidx.viewpager.widget.ViewPager
                                 android:id="@+id/pager"
                                 android:layout_width="match_parent"
-                                android:layout_height="180dp"
-                                />
+                                android:layout_height="180dp" />
+
                             <com.facebook.shimmer.ShimmerFrameLayout
                                 android:id="@+id/loaderSlider"
                                 android:layout_width="match_parent"
@@ -111,7 +111,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="16dp"
                                     android:layout_marginStart="8dp"
-                                    android:layout_marginEnd="8dp"/>
+                                    android:layout_marginEnd="8dp" />
 
                                 <TextView
                                     android:id="@+id/tvNoCategories"
@@ -123,6 +123,7 @@
                                     android:textColor="@color/black"
                                     android:textSize="15sp"
                                     android:visibility="gone" />
+
                                 <com.facebook.shimmer.ShimmerFrameLayout
                                     android:id="@+id/loaderCategory"
                                     android:layout_width="match_parent"
@@ -187,8 +188,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="16dp"
                                     android:layout_marginStart="8dp"
-                                    android:layout_marginEnd="8dp"
-                                    />
+                                    android:layout_marginEnd="8dp" />
 
                                 <TextView
                                     android:id="@+id/tvNoMostSaleProduct"
@@ -263,7 +263,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="16dp"
-                                    android:layout_marginStart="16dp"/>
+                                    android:layout_marginStart="16dp" />
 
                                 <TextView
                                     android:id="@+id/tvNoMostRecentProduct"

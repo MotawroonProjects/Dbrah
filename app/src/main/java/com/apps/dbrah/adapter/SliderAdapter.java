@@ -34,7 +34,7 @@ public class SliderAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return list!=null?list.size():0;
+        return list != null ? list.size() : 0;
     }
 
     @Override
@@ -64,8 +64,8 @@ public class SliderAdapter extends PagerAdapter {
         return POSITION_NONE;
     }
 
-    public void updateList(List<SliderDataModel.SliderModel> list){
-        this.list =list;
+    public void updateList(List<SliderDataModel.SliderModel> list) {
+        this.list = list;
         notifyDataSetChanged();
     }
 }

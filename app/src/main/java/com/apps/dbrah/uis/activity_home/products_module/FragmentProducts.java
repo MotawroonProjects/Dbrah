@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +21,10 @@ import android.view.ViewGroup;
 import com.apps.dbrah.R;
 import com.apps.dbrah.adapter.FilterProductAdapter;
 import com.apps.dbrah.adapter.MainProductCategoryAdapter;
-import com.apps.dbrah.adapter.RecentProductAdapter;
 import com.apps.dbrah.adapter.SubProductCategoryAdapter;
 import com.apps.dbrah.databinding.FragmentProductsBinding;
 import com.apps.dbrah.model.CategoryModel;
+import com.apps.dbrah.model.ProductAmount;
 import com.apps.dbrah.model.ProductModel;
 import com.apps.dbrah.model.cart_models.ManageCartModel;
 import com.apps.dbrah.mvvm.FragmentProductsMvvm;
@@ -38,10 +37,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 
 public class FragmentProducts extends BaseFragment {
@@ -172,7 +168,7 @@ public class FragmentProducts extends BaseFragment {
 
 
         productAdapter = new FilterProductAdapter(activity, this);
-        binding.recViewProducts.setLayoutManager(new GridLayoutManager(activity,2));
+        binding.recViewProducts.setLayoutManager(new GridLayoutManager(activity, 2));
         binding.recViewProducts.setAdapter(productAdapter);
 
         Observable.create((ObservableOnSubscribe<String>) emitter -> {
@@ -201,10 +197,7 @@ public class FragmentProducts extends BaseFragment {
                 });
 
 
-
     }
-
-
 
 
     public void getSubCat(CategoryModel categoryModel) {
@@ -217,18 +210,23 @@ public class FragmentProducts extends BaseFragment {
     }
 
     public void showProductDetails(ProductModel productModel) {
-        generalMvvm.getProduct_id().setValue(productModel.getId());
+        ProductAmount productAmount = new ProductAmount(productModel.getId(), productModel.getAmount());
+        generalMvvm.getProductAmount().setValue(productAmount);
         generalMvvm.onHomeNavigate().setValue(6);
     }
 
-    public void addProductToCart(ProductModel productModel){
-        manageCartModel.add(productModel,activity);
+    public void addProductToCart(ProductModel productModel) {
+        generalMvvm.getOnCartItemUpdated().setValue(productModel);
+
+        manageCartModel.add(productModel, activity);
         generalMvvm.getOnCartRefreshed().setValue(true);
 
     }
 
-    public void removeProductFromCart(ProductModel productModel){
-        manageCartModel.delete(productModel,activity);
+    public void removeProductFromCart(ProductModel productModel) {
+        productModel.setAmount(0);
+        generalMvvm.getOnCartItemUpdated().setValue(productModel);
+        manageCartModel.delete(productModel, activity);
         generalMvvm.getOnCartRefreshed().setValue(true);
 
     }

@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +23,7 @@ import com.apps.dbrah.adapter.RecentProductAdapter;
 import com.apps.dbrah.adapter.SliderAdapter;
 import com.apps.dbrah.databinding.FragmentMarketBinding;
 import com.apps.dbrah.model.CategoryModel;
+import com.apps.dbrah.model.ProductAmount;
 import com.apps.dbrah.model.ProductModel;
 import com.apps.dbrah.model.cart_models.ManageCartModel;
 import com.apps.dbrah.mvvm.FragmentMarketMvvm;
@@ -71,6 +71,7 @@ public class FragmentMarket extends BaseFragment {
         initView();
 
     }
+
 
     private void initView() {
         manageCartModel = ManageCartModel.newInstance();
@@ -163,6 +164,26 @@ public class FragmentMarket extends BaseFragment {
 
         });
 
+        generalMvvm.getOnCartItemUpdated().observe(activity, productModel -> {
+            int productPos = getCartItemPosMostSale(productModel.getId());
+            if (productPos != -1) {
+                if (mvvm.getOnMostProductDataModel().getValue() != null) {
+                    mvvm.getOnMostProductDataModel().getValue().get(productPos).setAmount(productModel.getAmount());
+                    if (mostSaleProductAdapter != null) {
+                        mostSaleProductAdapter.notifyItemChanged(productPos);
+                    }
+                }
+            }
+            productPos = getCartItemPosRecent(productModel.getId());
+
+            if (mvvm.getOnRecentProductDataModel().getValue() != null) {
+                mvvm.getOnRecentProductDataModel().getValue().get(productPos).setAmount(productModel.getAmount());
+                if (recentProductAdapter != null) {
+                    recentProductAdapter.notifyItemChanged(productPos);
+                }
+            }
+        });
+
         setUpSliderData();
 
         categoryAdapter = new CategoryAdapter(activity, this, getLang());
@@ -200,7 +221,8 @@ public class FragmentMarket extends BaseFragment {
     }
 
     public void showProductDetails(ProductModel productModel) {
-        generalMvvm.getProduct_id().setValue(productModel.getId());
+        ProductAmount productAmount = new ProductAmount(productModel.getId(), productModel.getAmount());
+        generalMvvm.getProductAmount().setValue(productAmount);
         generalMvvm.onHomeNavigate().setValue(6);
 
     }
@@ -227,18 +249,86 @@ public class FragmentMarket extends BaseFragment {
 
     }
 
-    public void addProductToCart(ProductModel productModel){
-        Log.e("model",productModel.getId());
-        manageCartModel.add(productModel,activity);
+    public void addProductToCart(ProductModel productModel,String fromList) {
+        if (fromList.equals("most")){
+
+            int productPos = getCartItemPosRecent(productModel.getId());
+
+            if (mvvm.getOnRecentProductDataModel().getValue() != null) {
+                mvvm.getOnRecentProductDataModel().getValue().get(productPos).setAmount(productModel.getAmount());
+                if (recentProductAdapter != null) {
+                    recentProductAdapter.notifyItemChanged(productPos);
+                }
+            }
+        }else {
+            int productPos = getCartItemPosMostSale(productModel.getId());
+
+            if (productPos != -1) {
+                if (mvvm.getOnMostProductDataModel().getValue() != null) {
+                    mvvm.getOnMostProductDataModel().getValue().get(productPos).setAmount(productModel.getAmount());
+                    if (mostSaleProductAdapter != null) {
+                        mostSaleProductAdapter.notifyItemChanged(productPos);
+                    }
+                }
+            }
+        }
+
+        manageCartModel.add(productModel, activity);
         generalMvvm.getOnCartRefreshed().setValue(true);
     }
 
-    public void removeProductFromCart(ProductModel productModel){
-        Log.e("model2",productModel.getId());
-
-        manageCartModel.delete(productModel,activity);
+    public void removeProductFromCart(ProductModel productModel,String fromList) {
+        manageCartModel.delete(productModel, activity);
         generalMvvm.getOnCartRefreshed().setValue(true);
 
+
+        if (fromList.equals("most")){
+
+            int productPos = getCartItemPosRecent(productModel.getId());
+
+            if (mvvm.getOnRecentProductDataModel().getValue() != null) {
+                mvvm.getOnRecentProductDataModel().getValue().get(productPos).setAmount(productModel.getAmount());
+                if (recentProductAdapter != null) {
+                    recentProductAdapter.notifyItemChanged(productPos);
+                }
+            }
+        }else {
+            int productPos = getCartItemPosMostSale(productModel.getId());
+
+            if (productPos != -1) {
+                if (mvvm.getOnMostProductDataModel().getValue() != null) {
+                    mvvm.getOnMostProductDataModel().getValue().get(productPos).setAmount(productModel.getAmount());
+                    if (mostSaleProductAdapter != null) {
+                        mostSaleProductAdapter.notifyItemChanged(productPos);
+                    }
+                }
+            }
+        }
+
+    }
+
+    private int getCartItemPosMostSale(String product_id) {
+        if (mvvm.getOnMostProductDataModel().getValue() != null) {
+            for (int index = 0; index < mvvm.getOnMostProductDataModel().getValue().size(); index++) {
+                if (mvvm.getOnMostProductDataModel().getValue().get(index).getId().equals(product_id)) {
+                    return index;
+                }
+            }
+        }
+
+        return -1;
+    }
+
+    private int getCartItemPosRecent(String product_id) {
+        if (mvvm.getOnRecentProductDataModel().getValue() != null) {
+            for (int index = 0; index < mvvm.getOnRecentProductDataModel().getValue().size(); index++) {
+                if (mvvm.getOnRecentProductDataModel().getValue().get(index).getId().equals(product_id)) {
+                    return index;
+                }
+            }
+        }
+
+        return -1;
     }
 
 

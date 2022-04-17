@@ -66,7 +66,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         myHolder.itemView.setOnClickListener(view -> {
             if (fragment instanceof FragmentMarket) {
                 FragmentMarket fragmentMarket = (FragmentMarket) fragment;
-                fragmentMarket.showCategoryDetails(list.get(holder.getAdapterPosition()),myHolder.getAdapterPosition());
+                fragmentMarket.showCategoryDetails(list.get(holder.getAdapterPosition()), myHolder.getAdapterPosition());
             }
         });
     }

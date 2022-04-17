@@ -27,15 +27,15 @@ public class FragmentProductDetailsMvvm extends AndroidViewModel {
     private CompositeDisposable disposable = new CompositeDisposable();
 
     public MutableLiveData<Boolean> getIsDataLoading() {
-        if (isDataLoading==null){
-            isDataLoading=new MutableLiveData<>();
+        if (isDataLoading == null) {
+            isDataLoading = new MutableLiveData<>();
         }
         return isDataLoading;
     }
 
     public MutableLiveData<ProductModel> getOnDataSuccess() {
-        if (onDataSuccess==null){
-            onDataSuccess=new MutableLiveData<>();
+        if (onDataSuccess == null) {
+            onDataSuccess = new MutableLiveData<>();
         }
         return onDataSuccess;
     }
@@ -44,7 +44,7 @@ public class FragmentProductDetailsMvvm extends AndroidViewModel {
         super(application);
     }
 
-    public void getSingleProduct(String id){
+    public void getSingleProduct(String id) {
         getIsDataLoading().setValue(true);
         Api.getService(Tags.base_url).getSingleProduct(id)
                 .subscribeOn(Schedulers.io())
@@ -58,8 +58,8 @@ public class FragmentProductDetailsMvvm extends AndroidViewModel {
                     @Override
                     public void onSuccess(@NonNull Response<SingleProductModel> response) {
                         getIsDataLoading().postValue(false);
-                        if (response.isSuccessful() && response.body()!=null){
-                            if (response.body().getStatus()==200){
+                        if (response.isSuccessful() && response.body() != null) {
+                            if (response.body().getStatus() == 200) {
                                 onDataSuccess.setValue(response.body().getData());
                             }
                         }
@@ -68,7 +68,7 @@ public class FragmentProductDetailsMvvm extends AndroidViewModel {
                     @Override
                     public void onError(@NonNull Throwable e) {
                         getIsDataLoading().setValue(false);
-                        Log.e("status",e.toString());
+                        Log.e("status", e.toString());
 
                     }
                 });

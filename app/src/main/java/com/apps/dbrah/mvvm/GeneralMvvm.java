@@ -7,16 +7,19 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.apps.dbrah.model.CategoryModel;
+import com.apps.dbrah.model.ProductAmount;
+import com.apps.dbrah.model.ProductModel;
 
 import java.util.List;
 
 public class GeneralMvvm extends AndroidViewModel {
     private MutableLiveData<Integer> actionHomeNavigator;
     private MutableLiveData<Boolean> actionHomeBackNavigator;
-    private MutableLiveData<String> Product_id;
+    private MutableLiveData<ProductAmount> product_amount;
     private MutableLiveData<Integer> category_pos;
     private MutableLiveData<List<CategoryModel>> categoryList;
     private MutableLiveData<Boolean> onCartRefreshed;
+    private MutableLiveData<ProductModel> onCartItemUpdated;
 
     public GeneralMvvm(@NonNull Application application) {
         super(application);
@@ -36,12 +39,13 @@ public class GeneralMvvm extends AndroidViewModel {
         return actionHomeBackNavigator;
     }
 
-    public MutableLiveData<String> getProduct_id() {
-        if (Product_id == null) {
-            Product_id = new MutableLiveData<>();
+    public MutableLiveData<ProductAmount> getProductAmount() {
+        if (product_amount == null) {
+            product_amount = new MutableLiveData<>();
         }
-        return Product_id;
+        return product_amount;
     }
+
     public MutableLiveData<Integer> getCategory_pos() {
         if (category_pos == null) {
             category_pos = new MutableLiveData<>();
@@ -62,6 +66,13 @@ public class GeneralMvvm extends AndroidViewModel {
             onCartRefreshed = new MutableLiveData<>();
         }
         return onCartRefreshed;
+    }
+
+    public MutableLiveData<ProductModel> getOnCartItemUpdated() {
+        if (onCartItemUpdated == null) {
+            onCartItemUpdated = new MutableLiveData<>();
+        }
+        return onCartItemUpdated;
     }
 
 }

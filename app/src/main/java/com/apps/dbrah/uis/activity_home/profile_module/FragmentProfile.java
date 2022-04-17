@@ -76,8 +76,9 @@ public class FragmentProfile extends BaseFragment {
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
         binding.setModel(getUserModel());
         binding.profileLayout.setLang(getLang());
-        if(getUserModel()!=null){
-        binding.profileLayout.setModel(getUserModel());}
+        if (getUserModel() != null) {
+            binding.profileLayout.setModel(getUserModel());
+        }
         binding.profileNotLoggedLayout.btnLogin.setOnClickListener(v -> {
             navigateToLoginActivity();
         });

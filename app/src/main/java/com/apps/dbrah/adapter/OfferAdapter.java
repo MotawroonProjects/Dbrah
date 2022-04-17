@@ -17,7 +17,7 @@ import com.apps.dbrah.uis.activity_current_order_details.CurrentOrderDetailsActi
 
 import java.util.List;
 
-public class OfferAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class OfferAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<Object> list;
     private Context context;
     private LayoutInflater inflater;
@@ -31,20 +31,21 @@ public class OfferAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        OfferRowBinding binding= DataBindingUtil.inflate(inflater, R.layout.offer_row,parent,false);
+        OfferRowBinding binding = DataBindingUtil.inflate(inflater, R.layout.offer_row, parent, false);
         return new MyHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        MyHolder myHolder=(MyHolder) holder;
+        MyHolder myHolder = (MyHolder) holder;
         myHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(context instanceof CurrentOrderDetailsActivity){
-                    CurrentOrderDetailsActivity currentOrderDetailsActivity=(CurrentOrderDetailsActivity)
-context;
-                currentOrderDetailsActivity.show();}
+                if (context instanceof CurrentOrderDetailsActivity) {
+                    CurrentOrderDetailsActivity currentOrderDetailsActivity = (CurrentOrderDetailsActivity)
+                            context;
+                    currentOrderDetailsActivity.show();
+                }
             }
         });
     }

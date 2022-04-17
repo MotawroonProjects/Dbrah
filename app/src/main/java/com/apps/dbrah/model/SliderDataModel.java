@@ -11,7 +11,7 @@ public class SliderDataModel extends StatusResponse implements Serializable {
         return data;
     }
 
-    public static class SliderModel implements Serializable{
+    public static class SliderModel implements Serializable {
         private String id;
         private String product_id;
         private String image;

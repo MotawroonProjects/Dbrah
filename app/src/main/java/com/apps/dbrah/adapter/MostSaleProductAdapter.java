@@ -65,10 +65,10 @@ public class MostSaleProductAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             myHolder.binding.setModel(model);
             list.set(myHolder.getAdapterPosition(), model);
             startTimer(myHolder);
-            if (fragment instanceof FragmentMarket){
+            if (fragment instanceof FragmentMarket) {
 
                 FragmentMarket fragmentMarket = (FragmentMarket) fragment;
-                fragmentMarket.addProductToCart(model);
+                fragmentMarket.addProductToCart(model,"most");
             }
 
 
@@ -92,9 +92,9 @@ public class MostSaleProductAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
             myHolder.binding.setModel(model);
             list.set(myHolder.getAdapterPosition(), model);
-            if (fragment instanceof FragmentMarket){
+            if (fragment instanceof FragmentMarket) {
                 FragmentMarket fragmentMarket = (FragmentMarket) fragment;
-                fragmentMarket.addProductToCart(model);
+                fragmentMarket.addProductToCart(model,"most");
             }
 
         });
@@ -106,9 +106,9 @@ public class MostSaleProductAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             myHolder.binding.setModel(model);
             list.set(myHolder.getAdapterPosition(), model);
             startTimer(myHolder);
-            if (fragment instanceof FragmentMarket){
+            if (fragment instanceof FragmentMarket) {
                 FragmentMarket fragmentMarket = (FragmentMarket) fragment;
-                fragmentMarket.removeProductFromCart(model);
+                fragmentMarket.removeProductFromCart(model,"most");
             }
 
         });

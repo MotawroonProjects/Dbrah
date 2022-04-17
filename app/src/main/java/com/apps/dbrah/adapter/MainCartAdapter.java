@@ -26,7 +26,7 @@ public class MainCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private Fragment fragment;
     private String lang;
 
-    public MainCartAdapter(Context context,Fragment fragment,String lang) {
+    public MainCartAdapter(Context context, Fragment fragment, String lang) {
         this.context = context;
         inflater = LayoutInflater.from(context);
         this.fragment = fragment;
@@ -48,14 +48,14 @@ public class MainCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         myHolder.binding.setLang(lang);
         myHolder.binding.setModel(cartObject);
         myHolder.binding.recView.setLayoutManager(new LinearLayoutManager(context));
-        CartAdapter adapter = new CartAdapter(context,fragment,lang);
+        CartAdapter adapter = new CartAdapter(context, fragment, lang);
         myHolder.binding.recView.setAdapter(adapter);
         adapter.updateList(cartObject.getProducts());
     }
 
     @Override
     public int getItemCount() {
-        return list!=null?list.size():0;
+        return list != null ? list.size() : 0;
     }
 
     public static class MyHolder extends RecyclerView.ViewHolder {

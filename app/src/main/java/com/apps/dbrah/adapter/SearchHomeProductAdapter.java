@@ -74,11 +74,11 @@ public class SearchHomeProductAdapter extends RecyclerView.Adapter<RecyclerView.
     }
 
     public void updateList(List<ProductModel> list) {
-        if (list==null){
-            if (this.list!=null){
+        if (list == null) {
+            if (this.list != null) {
                 this.list.clear();
             }
-        }else {
+        } else {
             this.list = list;
         }
 

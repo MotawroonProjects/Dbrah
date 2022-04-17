@@ -93,13 +93,13 @@ public class FragmentSetting extends BaseFragment {
     }
 
     private void share() {
-        String app_url = "https://play.google.com/store/apps/details?id="+activity.getPackageName();
-        String content = getString(R.string.app_name)+"\n"+app_url;
+        String app_url = "https://play.google.com/store/apps/details?id=" + activity.getPackageName();
+        String content = getString(R.string.app_name) + "\n" + app_url;
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("plain/text");
-        intent.putExtra(Intent.EXTRA_TITLE,getString(R.string.app_name));
-        intent.putExtra(Intent.EXTRA_TEXT,content);
-        startActivity(Intent.createChooser(intent,"Share"));
+        intent.putExtra(Intent.EXTRA_TITLE, getString(R.string.app_name));
+        intent.putExtra(Intent.EXTRA_TEXT, content);
+        startActivity(Intent.createChooser(intent, "Share"));
 
     }
 
@@ -117,14 +117,14 @@ public class FragmentSetting extends BaseFragment {
 
     private void navigateToAboutAppActivity(String type) {
         String url = "";
-        if (type.equals("1")){
+        if (type.equals("1")) {
 
-        }else {
+        } else {
 
         }
         Intent intent = new Intent(activity, AboutAppActivity.class);
         intent.putExtra("type", type);
-        intent.putExtra("url",url);
+        intent.putExtra("url", url);
         startActivity(intent);
     }
 

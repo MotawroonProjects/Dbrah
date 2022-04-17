@@ -93,7 +93,7 @@ public class ProductModel implements Serializable {
         return categoryModel;
     }
 
-    public static class Image implements Serializable{
+    public static class Image implements Serializable {
         private String id;
         private String image;
         private String product_id;

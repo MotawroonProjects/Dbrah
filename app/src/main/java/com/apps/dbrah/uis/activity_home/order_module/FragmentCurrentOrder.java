@@ -61,7 +61,7 @@ public class FragmentCurrentOrder extends BaseFragment {
     private void initView() {
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
         orderList = new ArrayList<>();
-        orderAdapter = new OrderAdapter(orderList, activity,this);
+        orderAdapter = new OrderAdapter(orderList, activity, this);
         binding.recViewLayout.recView.setLayoutManager(new LinearLayoutManager(activity));
         binding.recViewLayout.recView.setAdapter(orderAdapter);
 
@@ -69,7 +69,7 @@ public class FragmentCurrentOrder extends BaseFragment {
 
 
     public void navigateToDetails() {
-        Intent intent=new Intent(activity, CurrentOrderDetailsActivity.class);
+        Intent intent = new Intent(activity, CurrentOrderDetailsActivity.class);
         startActivity(intent);
     }
 }

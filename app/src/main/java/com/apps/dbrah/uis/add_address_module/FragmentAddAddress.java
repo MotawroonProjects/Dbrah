@@ -82,8 +82,8 @@ public class FragmentAddAddress extends BaseFragment implements OnMapReadyCallba
         fragmentAddAddressMvvm.getOnDataSuccess().observe(this, new Observer<List<TimeModel>>() {
             @Override
             public void onChanged(List<TimeModel> timeModels) {
-                if(timeModels.size()>0){
-                    timeModels.add(0,new TimeModel(getString(R.string.ch_time)));
+                if (timeModels.size() > 0) {
+                    timeModels.add(0, new TimeModel(getString(R.string.ch_time)));
                     spinnerTimeAdapter.updateList(timeModels);
                 }
             }

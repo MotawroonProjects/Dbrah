@@ -67,11 +67,10 @@ public class RecentProductAdapter extends RecyclerView.Adapter<RecyclerView.View
             myHolder.binding.setModel(model);
             list.set(myHolder.getAdapterPosition(), model);
             startTimer(myHolder);
-            if (fragment instanceof FragmentMarket){
+            if (fragment instanceof FragmentMarket) {
                 FragmentMarket fragmentMarket = (FragmentMarket) fragment;
-                fragmentMarket.addProductToCart(model);
+                fragmentMarket.addProductToCart(model,"recent");
             }
-
 
 
         });
@@ -94,9 +93,9 @@ public class RecentProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
             startTimer(myHolder);
 
-            if (fragment instanceof FragmentMarket){
+            if (fragment instanceof FragmentMarket) {
                 FragmentMarket fragmentMarket = (FragmentMarket) fragment;
-                fragmentMarket.addProductToCart(model);
+                fragmentMarket.addProductToCart(model,"recent");
             }
 
         });
@@ -108,9 +107,9 @@ public class RecentProductAdapter extends RecyclerView.Adapter<RecyclerView.View
             myHolder.binding.setModel(model);
             list.set(myHolder.getAdapterPosition(), model);
             startTimer(myHolder);
-            if (fragment instanceof FragmentMarket){
+            if (fragment instanceof FragmentMarket) {
                 FragmentMarket fragmentMarket = (FragmentMarket) fragment;
-                fragmentMarket.removeProductFromCart(model);
+                fragmentMarket.removeProductFromCart(model,"recent");
             }
 
         });
@@ -146,7 +145,7 @@ public class RecentProductAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
     private void startTimer(MyHolder myHolder) {
-        if (countDownTimer!=null){
+        if (countDownTimer != null) {
             countDownTimer.cancel();
         }
         countDownTimer = new CountDownTimer(1500, 1000) {

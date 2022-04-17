@@ -38,7 +38,7 @@ public class CurrentOrderDetailsActivity extends BaseActivity {
     }
 
     public void show() {
-        Intent intent=new Intent(this, OfferDetialsActivity.class);
+        Intent intent = new Intent(this, OfferDetialsActivity.class);
         startActivity(intent);
     }
 }

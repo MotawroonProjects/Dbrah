@@ -18,29 +18,23 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.apps.dbrah.R;
-import com.apps.dbrah.adapter.RecentProductAdapter;
 import com.apps.dbrah.adapter.SearchHomeProductAdapter;
 import com.apps.dbrah.adapter.SearchHomeSubCategoryAdapter;
 import com.apps.dbrah.databinding.FragmentSearchBinding;
 import com.apps.dbrah.model.CategoryModel;
+import com.apps.dbrah.model.ProductAmount;
 import com.apps.dbrah.model.ProductModel;
 import com.apps.dbrah.mvvm.FragmentSearchMvvm;
 import com.apps.dbrah.mvvm.GeneralMvvm;
 import com.apps.dbrah.uis.activity_base.BaseFragment;
 import com.apps.dbrah.uis.activity_home.HomeActivity;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 
@@ -190,7 +184,8 @@ public class FragmentSearch extends BaseFragment {
 
 
     public void showProductDetails(ProductModel productModel) {
-        generalMvvm.getProduct_id().setValue(productModel.getId());
+        ProductAmount productAmount = new ProductAmount(productModel.getId(), productModel.getAmount());
+        generalMvvm.getProductAmount().setValue(productAmount);
         generalMvvm.onHomeNavigate().setValue(6);
     }
 

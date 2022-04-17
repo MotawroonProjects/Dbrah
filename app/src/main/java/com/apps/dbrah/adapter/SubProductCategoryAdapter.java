@@ -44,8 +44,8 @@ public class SubProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MyHolder myHolder = (MyHolder) holder;
         CategoryModel model = list.get(position);
-        if (oldHolder==null){
-            if (selectedPos == position){
+        if (oldHolder == null) {
+            if (selectedPos == position) {
                 oldHolder = myHolder;
             }
         }
@@ -69,7 +69,7 @@ public class SubProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView
                 oldHolder = myHolder;
 
 
-                if (fragment instanceof FragmentProducts){
+                if (fragment instanceof FragmentProducts) {
                     FragmentProducts fragmentProducts = (FragmentProducts) fragment;
                     fragmentProducts.showProducts(categoryModel);
                 }
@@ -101,6 +101,7 @@ public class SubProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView
         notifyDataSetChanged();
     }
 
-    public void setSelectedPos(int pos){
+    public void setSelectedPos(int pos) {
         selectedPos = pos;
-    }}
+    }
+}

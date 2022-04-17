@@ -45,7 +45,6 @@ public interface Service {
     Single<Response<RecentProductDataModel>> getMostSaleProduct();
 
 
-
     @GET("api/search")
     Single<Response<RecentProductDataModel>> searchByCatProduct(@Query("category_id") String category_id,
                                                                 @Query("sub_category_id") String sub_category_id,
@@ -71,14 +70,12 @@ public interface Service {
                                                   @Query(value = "key") String key);
 
 
-
-
-
     @FormUrlEncoded
     @POST("api/login")
     Single<Response<UserModel>> login(@Field("phone_code") String phone_code,
                                       @Field("phone") String phone
     );
+
     @Multipart
     @POST("api/register")
     Observable<Response<UserModel>> signUpwithImage(@Part("name") RequestBody name,
@@ -132,6 +129,7 @@ public interface Service {
 
     @GET("api/product_details")
     Single<Response<SingleProductModel>> getSingleProduct(@Query("id") String id);
+
     @GET("api/delivery_times")
     Single<Response<TimeDataModel>> getTime();
 

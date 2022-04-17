@@ -10,7 +10,7 @@ public class SearchHomeDataModel extends StatusResponse implements Serializable 
         return data;
     }
 
-    public static class Data implements Serializable{
+    public static class Data implements Serializable {
         private List<CategoryModel> categories;
         private List<ProductModel> products;
 

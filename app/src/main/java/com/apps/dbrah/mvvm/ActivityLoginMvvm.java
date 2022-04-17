@@ -123,7 +123,6 @@ public class ActivityLoginMvvm extends AndroidViewModel {
     }
 
 
-
     public void login(Context context, String phone_code, String phone) {
         ProgressDialog dialog = Common.createProgressDialog(context, context.getResources().getString(R.string.wait));
         dialog.setCancelable(false);
@@ -173,7 +172,7 @@ public class ActivityLoginMvvm extends AndroidViewModel {
     }
 
 
-    public void stopTimer(){
+    public void stopTimer() {
         disposable.clear();
     }
 

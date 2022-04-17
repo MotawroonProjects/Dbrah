@@ -24,10 +24,10 @@ public class OrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private LayoutInflater inflater;
     private Fragment fragment;
 
-    public OrderAdapter(List<Object> list, Context context,Fragment fragment) {
+    public OrderAdapter(List<Object> list, Context context, Fragment fragment) {
         this.list = list;
         this.context = context;
-        this.fragment=fragment;
+        this.fragment = fragment;
         inflater = LayoutInflater.from(context);
 
     }

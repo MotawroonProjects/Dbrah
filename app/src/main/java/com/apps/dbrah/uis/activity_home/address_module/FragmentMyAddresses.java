@@ -58,8 +58,8 @@ public class FragmentMyAddresses extends BaseFragment {
     }
 
     private void initView() {
-        addressList=new ArrayList<>();
-        addressAdapter=new AddressAdapter(addressList,activity);
+        addressList = new ArrayList<>();
+        addressAdapter = new AddressAdapter(addressList, activity);
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
         View view = activity.setUpToolbar(binding.toolbar, getString(R.string.delivery_addresses), R.color.white, R.color.black, R.drawable.small_rounded_grey4, false);
         view.setOnClickListener(v -> {

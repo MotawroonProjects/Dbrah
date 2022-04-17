@@ -239,6 +239,7 @@
                         android:textSize="14sp"
                         android:textStyle="bold" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
@@ -249,13 +250,14 @@
                     android:layout_marginTop="27dp"
                     android:layout_marginBottom="13dp"
                     android:padding="12dp"
-                    android:gravity="center"
-                    >
+                    android:gravity="center">
+
                     <ImageView
                         android:layout_width="16dp"
                         android:layout_height="16dp"
                         android:src="@drawable/ic_reorder"
-                        android:layout_gravity="center_vertical"/>
+                        android:layout_gravity="center_vertical" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -265,7 +267,7 @@
                         android:textColor="@color/color2"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
-                        android:layout_gravity="center_vertical"/>
+                        android:layout_gravity="center_vertical" />
                 </LinearLayout>
             </LinearLayout>
 

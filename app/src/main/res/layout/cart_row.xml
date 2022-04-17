@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="lang"
             type="String" />
@@ -10,14 +11,15 @@
         <variable
             name="model"
             type="com.apps.dbrah.model.ProductModel" />
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
         android:background="@drawable/rounded_white_stroke_gray12"
         android:orientation="horizontal">
 
@@ -32,8 +34,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                image="@{model.main_image}"
-                />
+                image="@{model.main_image}" />
         </FrameLayout>
 
         <LinearLayout
@@ -46,8 +47,7 @@
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                >
+                android:layout_gravity="start">
 
 
                 <TextView

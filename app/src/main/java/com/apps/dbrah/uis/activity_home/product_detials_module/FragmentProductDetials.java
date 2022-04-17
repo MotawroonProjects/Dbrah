@@ -3,7 +3,6 @@ package com.apps.dbrah.uis.activity_home.product_detials_module;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,19 +10,15 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.apps.dbrah.R;
-import com.apps.dbrah.adapter.MostSaleProductAdapter;
 import com.apps.dbrah.adapter.ProductSliderAdapter;
 import com.apps.dbrah.databinding.FragmentProductDetialsBinding;
-import com.apps.dbrah.databinding.FragmentSearchBinding;
 import com.apps.dbrah.model.ProductModel;
 import com.apps.dbrah.model.cart_models.ManageCartModel;
 import com.apps.dbrah.mvvm.FragmentProductDetailsMvvm;
 import com.apps.dbrah.mvvm.GeneralMvvm;
-import com.apps.dbrah.uis.FragmentBaseNavigation;
 import com.apps.dbrah.uis.activity_base.BaseFragment;
 import com.apps.dbrah.uis.activity_home.HomeActivity;
 
@@ -82,17 +77,23 @@ public class FragmentProductDetials extends BaseFragment {
         binding.setAmount(amount);
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
         fragmentProductDetailsMvvm = ViewModelProviders.of(activity).get(FragmentProductDetailsMvvm.class);
-        generalMvvm.getProduct_id().observe(activity, product_id -> {
+        generalMvvm.getProductAmount().observe(activity, productAmount -> {
             if (countDownTimer != null) {
                 countDownTimer.cancel();
             }
-            amount = 0;
-            binding.setAmount(amount);
             binding.motion.transitionToStart();
-            binding.setPrductModel(null);
-            if (product_id != null) {
+            productId = productAmount.getProduct_d();
 
-                productId = product_id;
+            if (productAmount.getProduct_d() != null && productModel != null && productAmount.getProduct_d().equals(productModel.getId())) {
+                amount = productAmount.getAmount();
+                binding.setAmount(amount);
+                productModel.setAmount(amount);
+
+
+            } else {
+                amount = 0;
+                binding.setAmount(amount);
+                binding.setPrductModel(null);
                 fragmentProductDetailsMvvm.getSingleProduct(productId);
             }
         });
@@ -137,14 +138,13 @@ public class FragmentProductDetials extends BaseFragment {
             addProductToCart(productModel);
 
 
-
         });
 
         binding.imageDecrease.setOnClickListener(v -> {
 
             amount = amount - 1;
 
-            if (amount >1) {
+            if (amount > 1) {
                 binding.setAmount(amount);
 
 
@@ -229,14 +229,17 @@ public class FragmentProductDetials extends BaseFragment {
     }
 
     public void addProductToCart(ProductModel productModel) {
-        manageCartModel.add(productModel,activity);
+        manageCartModel.add(productModel, activity);
         generalMvvm.getOnCartRefreshed().setValue(true);
+        generalMvvm.getOnCartItemUpdated().setValue(productModel);
 
     }
 
     public void removeProductFromCart(ProductModel productModel) {
-        manageCartModel.delete(productModel,activity);
+        manageCartModel.delete(productModel, activity);
         generalMvvm.getOnCartRefreshed().setValue(true);
+        productModel.setAmount(0);
+        generalMvvm.getOnCartItemUpdated().setValue(productModel);
     }
 
 }

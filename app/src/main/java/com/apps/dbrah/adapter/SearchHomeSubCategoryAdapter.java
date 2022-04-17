@@ -47,7 +47,7 @@ public class SearchHomeSubCategoryAdapter extends RecyclerView.Adapter<RecyclerV
         myHolder.itemView.setOnClickListener(v -> {
             CategoryModel categoryModel = list.get(myHolder.getAdapterPosition());
 
-            if (!categoryModel.isSelected()){
+            if (!categoryModel.isSelected()) {
                 if (oldHolder != null) {
                     CategoryModel model = list.get(oldHolder.getAdapterPosition());
                     model.setSelected(false);
@@ -59,7 +59,7 @@ public class SearchHomeSubCategoryAdapter extends RecyclerView.Adapter<RecyclerV
                 oldHolder = myHolder;
             }
 
-            if (fragment instanceof FragmentSearch){
+            if (fragment instanceof FragmentSearch) {
                 FragmentSearch fragmentSearch = (FragmentSearch) fragment;
                 fragmentSearch.setSubCategory(categoryModel);
             }
@@ -84,7 +84,7 @@ public class SearchHomeSubCategoryAdapter extends RecyclerView.Adapter<RecyclerV
     }
 
     public void updateList(List<CategoryModel> list) {
-        if (oldHolder!=null){
+        if (oldHolder != null) {
             oldHolder = null;
         }
         if (list == null) {

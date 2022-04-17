@@ -32,13 +32,13 @@ public class ActivityContactUsMvvm extends AndroidViewModel {
         super(application);
     }
 
-    public void contactUs(Context context, ContactUsModel contactUsModel){
+    public void contactUs(Context context, ContactUsModel contactUsModel) {
         ProgressDialog dialog = Common.createProgressDialog(context, context.getResources().getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
 
         Api.getService(Tags.base_url)
-                .contactUs(contactUsModel.getName(),contactUsModel.getEmail(),contactUsModel.getSubject(),contactUsModel.getMessage())
+                .contactUs(contactUsModel.getName(), contactUsModel.getEmail(), contactUsModel.getSubject(), contactUsModel.getMessage())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<StatusResponse>>() {
@@ -51,8 +51,8 @@ public class ActivityContactUsMvvm extends AndroidViewModel {
                     @Override
                     public void onSuccess(@NonNull Response<StatusResponse> response) {
                         dialog.dismiss();
-                        if (response.isSuccessful()){
-                            if (response.body().getStatus()==200){
+                        if (response.isSuccessful()) {
+                            if (response.body().getStatus() == 200) {
                                 send.postValue(true);
                             }
                         }

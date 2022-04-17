@@ -11,10 +11,11 @@ import com.apps.dbrah.uis.activity_base.BaseActivity;
 
 public class PreviousOrderDetailsActivity extends BaseActivity {
     private ActivityPreviousOrderDetailsBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding= DataBindingUtil.setContentView(this,R.layout.activity_previous_order_details);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_previous_order_details);
         initView();
     }
 

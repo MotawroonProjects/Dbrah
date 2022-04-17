@@ -45,7 +45,7 @@ public class AboutAppActivity extends BaseActivity {
         binding.webView.getSettings().setSupportZoom(true);
         binding.webView.getSettings().setJavaScriptEnabled(true);
         binding.webView.getSettings().setAllowContentAccess(true);
-        binding.webView.setWebViewClient(new WebViewClient(){
+        binding.webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageCommitVisible(WebView view, String url) {
                 super.onPageCommitVisible(view, url);

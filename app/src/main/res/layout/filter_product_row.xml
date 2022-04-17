@@ -128,8 +128,8 @@
 
             <FrameLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
+
                 <ImageView
                     android:id="@+id/imageDecrease"
                     android:layout_width="24dp"
@@ -137,8 +137,8 @@
                     android:layout_margin="5dp"
                     android:src="@drawable/ic_minus"
                     app:tint="@color/colorPrimary"
-                    android:visibility="@{model.amount==0?View.INVISIBLE:View.VISIBLE}"
-                    />
+                    android:visibility="@{model.amount==0?View.INVISIBLE:View.VISIBLE}" />
+
                 <ImageView
                     android:id="@+id/imageDelete"
                     android:layout_width="24dp"

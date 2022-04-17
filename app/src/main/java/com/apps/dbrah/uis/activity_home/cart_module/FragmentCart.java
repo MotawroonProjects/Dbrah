@@ -87,10 +87,13 @@ public class FragmentCart extends BaseFragment {
     }
 
     public void addProductToCart(ProductModel productModel) {
+        generalMvvm.getOnCartItemUpdated().setValue(productModel);
         manageCartModel.add(productModel, activity);
     }
 
     public void removeProductFromCart(ProductModel productModel) {
+        productModel.setAmount(0);
+        generalMvvm.getOnCartItemUpdated().setValue(productModel);
         manageCartModel.delete(productModel, activity);
         generalMvvm.getOnCartRefreshed().setValue(true);
 

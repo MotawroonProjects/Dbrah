@@ -59,14 +59,14 @@ public class FragmentPreviousOrder extends BaseFragment {
     private void initView() {
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
         orderList = new ArrayList<>();
-        orderAdapter = new OrderAdapter(orderList, activity,this);
+        orderAdapter = new OrderAdapter(orderList, activity, this);
         binding.recViewLayout.recView.setLayoutManager(new LinearLayoutManager(activity));
         binding.recViewLayout.recView.setAdapter(orderAdapter);
     }
 
 
     public void navigateToDetails() {
-        Intent intent=new Intent(activity, PreviousOrderDetailsActivity.class);
+        Intent intent = new Intent(activity, PreviousOrderDetailsActivity.class);
         startActivity(intent);
     }
 }
