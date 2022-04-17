@@ -74,10 +74,10 @@ public class FragmentMarket extends BaseFragment {
 
 
     private void initView() {
+        binding.setLang(getLang());
         manageCartModel = ManageCartModel.newInstance();
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
         binding.setNotificationCount("0");
-        binding.setLang(getLang());
         binding.swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
 
         mvvm = ViewModelProviders.of(this).get(FragmentMarketMvvm.class);

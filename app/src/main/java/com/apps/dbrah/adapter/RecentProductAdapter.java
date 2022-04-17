@@ -114,7 +114,6 @@ public class RecentProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
         });
 
-
         myHolder.itemView.setOnClickListener(view -> {
             if (fragment instanceof FragmentMarket) {
                 FragmentMarket fragmentMarket = (FragmentMarket) fragment;

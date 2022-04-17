@@ -9,74 +9,115 @@ import com.apps.dbrah.BR;
 
 
 public class AddAddressModel extends BaseObservable {
+    private String title;
+    private String admin_name;
+    private String phone_code;
     private String phone;
-    private String name;
-    private String email;
-    private String vat;
+    private String time_id;
+    private String address;
+    private double lat;
+    private double lng;
     private boolean valid;
 
-    public void isDataValid() {
-        if (!name.trim().isEmpty() &&
-                Patterns.EMAIL_ADDRESS.matcher(email.trim()).matches() &&
-                !vat.isEmpty()
+    public AddAddressModel() {
+        title = "";
+        admin_name = "";
+        phone_code = "+966";
+        phone = "";
+        time_id = "";
+        address = "";
+        lat = 0;
+        lng = 0;
+    }
 
+    public void isDataValid() {
+        if (!title.trim().isEmpty() &&
+                !admin_name.trim().isEmpty() &&
+                !phone.trim().isEmpty() &&
+                !time_id.isEmpty() &&
+                !address.trim().isEmpty()
         ) {
             setValid(true);
         } else {
             setValid(false);
-
-
         }
     }
 
-    public AddAddressModel() {
-        phone = "";
-        name = "";
-        email = "";
-        vat = "";
-
+    @Bindable
+    public String getTitle() {
+        return title;
     }
 
 
+    public void setTitle(String title) {
+        this.title = title;
+        notifyPropertyChanged(BR.title);
+    }
+
+    @Bindable
+    public String getAdmin_name() {
+        return admin_name;
+    }
+
+    public void setAdmin_name(String admin_name) {
+        this.admin_name = admin_name;
+        notifyPropertyChanged(BR.admin_name);
+    }
+
+    @Bindable
+    public String getPhone_code() {
+        return phone_code;
+    }
+
+    public void setPhone_code(String phone_code) {
+        this.phone_code = phone_code;
+        notifyPropertyChanged(BR.phone_code);
+    }
+
+    @Bindable
     public String getPhone() {
         return phone;
     }
 
     public void setPhone(String phone) {
         this.phone = phone;
+        notifyPropertyChanged(BR.phone);
     }
 
     @Bindable
-    public String getName() {
-        return name;
+    public String getTime_id() {
+        return time_id;
     }
 
-    public void setName(String name) {
-        this.name = name;
-        notifyPropertyChanged(BR.name);
-        isDataValid();
-    }
+    public void setTime_id(String time_id) {
+        this.time_id = time_id;
 
-    @Bindable
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-        notifyPropertyChanged(BR.email);
-        isDataValid();
     }
 
     @Bindable
-    public String getVat() {
-        return vat;
+    public String getAddress() {
+        return address;
     }
 
-    public void setVat(String vat) {
-        this.vat = vat;
-        notifyPropertyChanged(BR.vat);
-        isDataValid();
+    public void setAddress(String address) {
+        this.address = address;
+        notifyPropertyChanged(BR.address);
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public double getLng() {
+        return lng;
+    }
+
+    public void setLng(double lng) {
+        this.lng = lng;
     }
 
     @Bindable
@@ -88,5 +129,4 @@ public class AddAddressModel extends BaseObservable {
         this.valid = valid;
         notifyPropertyChanged(BR.valid);
     }
-
 }

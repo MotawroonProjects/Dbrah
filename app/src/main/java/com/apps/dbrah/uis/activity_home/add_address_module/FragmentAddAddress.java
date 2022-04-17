@@ -1,53 +1,43 @@
-package com.apps.dbrah.uis.add_address_module;
+package com.apps.dbrah.uis.activity_home.add_address_module;
 
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.apps.dbrah.R;
 import com.apps.dbrah.adapter.SpinnerTimeAdapter;
 import com.apps.dbrah.databinding.FragmentAddAddressBinding;
+import com.apps.dbrah.model.AddAddressModel;
+import com.apps.dbrah.model.AddressModel;
 import com.apps.dbrah.model.TimeModel;
 import com.apps.dbrah.mvvm.FragmentAddAddressMvvm;
 import com.apps.dbrah.mvvm.GeneralMvvm;
 import com.apps.dbrah.uis.activity_base.BaseFragment;
 import com.apps.dbrah.uis.activity_home.HomeActivity;
-import com.apps.dbrah.uis.activity_home.address_module.FragmentMyAddresses;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
 
 import java.util.List;
 
 
-public class FragmentAddAddress extends BaseFragment implements OnMapReadyCallback {
+public class FragmentAddAddress extends BaseFragment {
     private HomeActivity activity;
     private FragmentAddAddressBinding binding;
     private GeneralMvvm generalMvvm;
+    private AddressModel addressModel;
+    private AddAddressModel model;
     private SpinnerTimeAdapter spinnerTimeAdapter;
     private FragmentAddAddressMvvm fragmentAddAddressMvvm;
-
+    private View view;
 
     public static FragmentAddAddress newInstance() {
         return new FragmentAddAddress();
-    }
-
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-
-        }
     }
 
     @Override
@@ -71,31 +61,65 @@ public class FragmentAddAddress extends BaseFragment implements OnMapReadyCallba
     }
 
     private void initView() {
+        model = new AddAddressModel();
 
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
+
         fragmentAddAddressMvvm = ViewModelProviders.of(activity).get(FragmentAddAddressMvvm.class);
-        View view = activity.setUpToolbar(binding.toolbar, getString(R.string.add_address), R.color.white, R.color.black, R.drawable.small_rounded_grey4, false);
+
+        view = activity.setUpToolbar(binding.toolbar, getString(R.string.add_address), R.color.white, R.color.black, R.drawable.small_rounded_grey4, false);
+
+        fragmentAddAddressMvvm.getOnDataSuccess().observe(this, new Observer<List<TimeModel>>() {
+            @Override
+            public void onChanged(List<TimeModel> timeModels) {
+
+                if (spinnerTimeAdapter != null) {
+                    spinnerTimeAdapter.updateList(timeModels);
+
+                }
+
+
+            }
+        });
+
+        generalMvvm.getOnAddressSelectedForUpdate().observe(activity, addressModel -> {
+            this.addressModel = addressModel;
+            model.setTitle(addressModel.getTitle());
+            model.setAdmin_name(addressModel.getAdmin_name());
+            model.setPhone(addressModel.getPhone());
+            model.setTime_id(addressModel.getTime_id());
+            model.setAddress(addressModel.getAddress());
+            model.setLat(Double.parseDouble(addressModel.getLatitude()));
+            model.setLng(Double.parseDouble(addressModel.getLongitude()));
+            binding.setModel(model);
+            view = activity.setUpToolbar(binding.toolbar, getString(R.string.upd_address), R.color.white, R.color.black, R.drawable.small_rounded_grey4, false);
+            binding.btnAdd.setText(getString(R.string.update));
+
+        });
+
         view.setOnClickListener(v -> {
             generalMvvm.onHomeBackNavigate().setValue(true);
 
         });
-        fragmentAddAddressMvvm.getOnDataSuccess().observe(this, new Observer<List<TimeModel>>() {
-            @Override
-            public void onChanged(List<TimeModel> timeModels) {
-                if (timeModels.size() > 0) {
-                    timeModels.add(0, new TimeModel(getString(R.string.ch_time)));
-                    spinnerTimeAdapter.updateList(timeModels);
-                }
-            }
-        });
+
+        binding.setModel(model);
+
         spinnerTimeAdapter = new SpinnerTimeAdapter(activity);
+
         binding.spinner.setAdapter(spinnerTimeAdapter);
-        fragmentAddAddressMvvm.getTime();
+
+        fragmentAddAddressMvvm.getTime(activity);
+
+        binding.btnAdd.setOnClickListener(v -> {
+            if (getUserModel() != null) {
+                generalMvvm.onHomeBackNavigate().setValue(true);
+                model = new AddAddressModel();
+                binding.setModel(model);
+            }
+
+        });
 
     }
 
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
 
-    }
 }

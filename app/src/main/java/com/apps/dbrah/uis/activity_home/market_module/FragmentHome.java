@@ -70,7 +70,7 @@ public class FragmentHome extends BaseFragment implements ViewPager.OnPageChange
         binding.setNotificationCount("0");
         binding.llSearch.setOnClickListener(v -> generalMvvm.onHomeNavigate().setValue(2));
         binding.flNotification.setOnClickListener(v -> generalMvvm.onHomeNavigate().setValue(1));
-
+        generalMvvm.getActionFragmentHomeNavigator().observe(activity, this::setItemPos);
         setUpPager();
 
     }
@@ -129,6 +129,8 @@ public class FragmentHome extends BaseFragment implements ViewPager.OnPageChange
         }
         return true;
     }
+
+
 
     private void setItemPos(int pos) {
         binding.pager.setCurrentItem(pos);

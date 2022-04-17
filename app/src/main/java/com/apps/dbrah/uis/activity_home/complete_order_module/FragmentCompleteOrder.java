@@ -20,7 +20,6 @@ import com.apps.dbrah.databinding.FragmentCompleteOrderBinding;
 import com.apps.dbrah.mvvm.GeneralMvvm;
 import com.apps.dbrah.uis.activity_base.BaseFragment;
 import com.apps.dbrah.uis.activity_home.HomeActivity;
-import com.apps.dbrah.uis.add_address_module.FragmentAddAddress;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +29,6 @@ public class FragmentCompleteOrder extends BaseFragment {
     private FragmentCompleteOrderBinding binding;
     private HomeActivity activity;
     private GeneralMvvm generalMvvm;
-    private AddressAdapter addressAdapter;
-    private List<Object> addressList;
 
     public static FragmentCompleteOrder newInstance() {
         return new FragmentCompleteOrder();
@@ -41,9 +38,7 @@ public class FragmentCompleteOrder extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
 
-        }
     }
 
     @Override
@@ -67,15 +62,12 @@ public class FragmentCompleteOrder extends BaseFragment {
     }
 
     private void initView() {
-        addressList = new ArrayList<>();
-        addressAdapter = new AddressAdapter(addressList, activity);
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
         View view = activity.setUpToolbar(binding.toolbar, getString(R.string.complete_order), R.color.white, R.color.black, R.drawable.small_rounded_grey4, false);
         view.setOnClickListener(v -> {
             generalMvvm.onHomeBackNavigate().setValue(true);
         });
-        binding.recViewAddresses.setLayoutManager(new LinearLayoutManager(activity));
-        binding.recViewAddresses.setAdapter(addressAdapter);
+
     }
 
 

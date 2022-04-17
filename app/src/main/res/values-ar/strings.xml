@@ -135,5 +135,7 @@
     <string name="no_search_results">لا توجد نتائج للبحث</string>
     <string name="ch_time">إختر الوقت</string>
     <string name="empty_cart">السلة فارغة</string>
+    <string name="order_all">إطلب الان</string>
+    <string name="upd_address">تعديل العنوان</string>
 
 </resources>

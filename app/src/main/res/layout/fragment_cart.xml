@@ -6,33 +6,106 @@
     <data>
 
         <variable
-            name="notificationCount"
+            name="lang"
             type="String" />
+
     </data>
 
-    <FrameLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/grey9"
-
+        android:fillViewport="true"
         >
-
-
-        <include
-            android:id="@+id/recViewLayout"
-            layout="@layout/recview_layout" />
-
-
-        <View
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="7dp"
-            android:background="@drawable/shadow"
-            android:layout_gravity="bottom"
-            android:alpha=".5"
+            android:layout_height="match_parent"
+            android:background="@color/grey9"
 
-            />
+            >
 
-    </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                    <TextView
+                        android:id="@+id/tvNoData"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:text="@string/no_data_to_show"
+                        android:visibility="gone"
+                        android:fontFamily="@font/font_regular"
+
+                        />
+                </FrameLayout>
+
+
+                <FrameLayout
+                    android:id="@+id/flOrderAll"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_margin="16dp"
+                    android:background="@drawable/small_rounded_primary"
+                    android:visibility="gone"
+                    >
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center_vertical"
+                        >
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_left_arrow"
+                            app:tint="@color/white"
+                            android:padding="3dp"
+                            android:rotation='@{lang.equals("ar")?180:0}'
+                            />
+                        <androidx.legacy.widget.Space
+                            android:layout_width="8dp"
+                            android:layout_height="0dp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/order_all"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            android:fontFamily="@font/font_regular"
+                            />
+                    </LinearLayout>
+                </FrameLayout>
+
+
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="7dp"
+                android:background="@drawable/shadow"
+                android:layout_gravity="bottom"
+                android:alpha=".5"
+
+                />
+
+        </FrameLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 
 </layout>

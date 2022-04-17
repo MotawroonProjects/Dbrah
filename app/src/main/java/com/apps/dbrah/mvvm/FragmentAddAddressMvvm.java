@@ -1,12 +1,15 @@
 package com.apps.dbrah.mvvm;
 
 import android.app.Application;
+import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
+import com.apps.dbrah.R;
+import com.apps.dbrah.model.AddressModel;
 import com.apps.dbrah.model.SearchHomeDataModel;
 import com.apps.dbrah.model.TimeDataModel;
 import com.apps.dbrah.model.TimeModel;
@@ -50,7 +53,7 @@ public class FragmentAddAddressMvvm extends AndroidViewModel {
     }
 
 
-    public void getTime() {
+    public void getTime(Context context) {
 
         getIsLoading().setValue(true);
         Api.getService(Tags.base_url).getTime()
@@ -67,7 +70,10 @@ public class FragmentAddAddressMvvm extends AndroidViewModel {
                         if (response.isSuccessful() && response.body() != null) {
                             if (response.body().getData() != null && response.body().getStatus() == 200) {
                                 getIsLoading().setValue(false);
-                                onDataSuccess.setValue(response.body().getData());
+                                List<TimeModel> list = response.body().getData();
+                                list.add(0, new TimeModel(context.getString(R.string.ch_time)));
+
+                                onDataSuccess.setValue(list);
                             }
                         }
                     }

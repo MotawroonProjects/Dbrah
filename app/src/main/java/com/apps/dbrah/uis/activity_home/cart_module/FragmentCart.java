@@ -2,6 +2,7 @@ package com.apps.dbrah.uis.activity_home.cart_module;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,33 +58,45 @@ public class FragmentCart extends BaseFragment {
     }
 
     private void initView() {
+        binding.setLang(getLang());
         manageCartModel = ManageCartModel.newInstance();
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
         generalMvvm.getOnCartRefreshed().observe(activity, isRefreshed -> {
             refreshCart();
         });
 
-        binding.recViewLayout.swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
         adapter = new MainCartAdapter(activity, this, getLang());
-        binding.recViewLayout.recView.setLayoutManager(new LinearLayoutManager(activity));
-        binding.recViewLayout.recView.setAdapter(adapter);
-        binding.recViewLayout.tvNoData.setText(R.string.empty_cart);
+        binding.recView.setLayoutManager(new LinearLayoutManager(activity));
+        binding.recView.setAdapter(adapter);
+        binding.tvNoData.setText(R.string.empty_cart);
+        binding.flOrderAll.setOnClickListener(v -> {
+            if (getUserModel() != null) {
+                generalMvvm.onHomeNavigate().setValue(9);
+            } else {
+                generalMvvm.getActionFragmentHomeNavigator().setValue(3);
+            }
+        });
+
         refreshCart();
 
-        binding.recViewLayout.swipeRefresh.setOnRefreshListener(this::refreshCart);
 
     }
 
     private void refreshCart() {
         if (manageCartModel.getCartList(activity).size() > 0) {
-            binding.recViewLayout.tvNoData.setVisibility(View.GONE);
+            if (manageCartModel.getCartList(activity).size() > 1) {
+                binding.flOrderAll.setVisibility(View.VISIBLE);
+            } else {
+                binding.flOrderAll.setVisibility(View.GONE);
+
+            }
+            binding.tvNoData.setVisibility(View.GONE);
         } else {
-            binding.recViewLayout.tvNoData.setVisibility(View.VISIBLE);
+            binding.tvNoData.setVisibility(View.VISIBLE);
 
         }
         adapter.updateList(manageCartModel.getCartList(activity));
 
-        binding.recViewLayout.swipeRefresh.setRefreshing(false);
     }
 
     public void addProductToCart(ProductModel productModel) {

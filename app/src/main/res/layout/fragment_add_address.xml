@@ -4,6 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="model"
+            type="com.apps.dbrah.model.AddAddressModel" />
+        <variable
+            name="address"
+            type="String" />
 
     </data>
 
@@ -17,308 +23,345 @@
             android:id="@+id/toolbar"
             layout="@layout/toolbar" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fillViewport="true">
 
-            <androidx.core.widget.NestedScrollView
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:fillViewport="true"
-                app:layout_constraintBottom_toTopOf="@id/btnAdd"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="wrap_content">
 
-                <FrameLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginEnd="16dp"
+                        android:orientation="horizontal">
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center_vertical"
+                            android:padding="3dp"
+                            android:src="@drawable/ic_map" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="24dp"
-                            android:layout_marginEnd="16dp"
-                            android:orientation="horizontal">
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:fontFamily="@font/font_regular"
+                            android:text="@string/location_title"
+                            android:textColor="@color/black2"
+                            android:textSize="16sp" />
+                    </LinearLayout>
 
-                            <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:layout_gravity="center_vertical"
-                                android:src="@drawable/ic_map" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="53dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/small_rounded_stroke_grey4"
+                        android:orientation="horizontal"
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="8dp"
-                                android:layout_marginEnd="8dp"
-                                android:fontFamily="@font/font_regular"
-                                android:text="@string/location_title"
-                                android:textColor="@color/black2"
-                                android:textSize="16sp" />
-                        </LinearLayout>
+                        >
 
-                        <LinearLayout
+                        <EditText
                             android:layout_width="match_parent"
-                            android:layout_height="53dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginEnd="16dp"
-                            android:background="@drawable/small_rounded_stroke_grey4"
-                            android:orientation="horizontal"
-                            android:padding="16dp">
+                            android:layout_height="match_parent"
+                            android:background="@color/transparent"
+                            android:fontFamily="@font/font_regular"
+                            android:hint="@string/location_title"
+                            android:lines="1"
+                            android:paddingStart="16dp"
+                            android:paddingEnd="16dp"
+                            android:textColor="@color/black2"
+                            android:textColorHint="@color/grey8"
+                            android:textSize="14sp"
+                            android:text="@={model.title}"
 
-                            <EditText
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@color/transparent"
-                                android:fontFamily="@font/font_regular"
-                                android:hint="@string/location_title"
-                                android:textColor="@color/black2"
-                                android:textColorHint="@color/grey8"
-                                android:textSize="14sp" />
-                        </LinearLayout>
+                            />
+                    </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginEnd="16dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center_vertical"
+                            android:padding="3dp"
+                            android:src="@drawable/ic_user2" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="24dp"
-                            android:layout_marginEnd="16dp"
-                            android:orientation="horizontal">
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:fontFamily="@font/font_regular"
+                            android:text="@string/administrator_s_name"
+                            android:textColor="@color/black2"
+                            android:textSize="16sp" />
+                    </LinearLayout>
 
-                            <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:layout_gravity="center_vertical"
-                                android:src="@drawable/ic_user2" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="53dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/small_rounded_stroke_grey4"
+                        android:orientation="horizontal">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="8dp"
-                                android:layout_marginEnd="8dp"
-                                android:fontFamily="@font/font_regular"
-                                android:text="@string/administrator_s_name"
-                                android:textColor="@color/black2"
-                                android:textSize="16sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
+                        <EditText
                             android:layout_width="match_parent"
-                            android:layout_height="53dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginEnd="16dp"
-                            android:background="@drawable/small_rounded_stroke_grey4"
-                            android:orientation="horizontal"
-                            android:padding="16dp">
+                            android:layout_height="match_parent"
+                            android:background="@color/transparent"
+                            android:fontFamily="@font/font_regular"
+                            android:hint="@string/administrator_s_name"
+                            android:lines="1"
+                            android:paddingStart="16dp"
+                            android:paddingEnd="16dp"
+                            android:textColor="@color/black2"
+                            android:textColorHint="@color/grey8"
+                            android:textSize="14sp"
+                            android:text="@={model.admin_name}"
 
-                            <EditText
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@color/transparent"
-                                android:fontFamily="@font/font_regular"
-                                android:hint="@string/administrator_s_name"
-                                android:textColor="@color/black2"
-                                android:textColorHint="@color/grey8"
-                                android:textSize="14sp" />
-                        </LinearLayout>
+                            />
+                    </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginEnd="16dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center_vertical"
+                            android:padding="3dp"
+                            android:src="@drawable/ic_phone" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="24dp"
-                            android:layout_marginEnd="16dp"
-                            android:orientation="horizontal">
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:fontFamily="@font/font_regular"
+                            android:text="@string/phone_number"
+                            android:textColor="@color/black2"
+                            android:textSize="16sp" />
+                    </LinearLayout>
 
-                            <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:layout_gravity="center_vertical"
-                                android:src="@drawable/ic_phone" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="53dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/small_rounded_stroke_grey4"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="8dp"
-                                android:layout_marginEnd="8dp"
-                                android:fontFamily="@font/font_regular"
-                                android:text="@string/phone_number"
-                                android:textColor="@color/black2"
-                                android:textSize="16sp" />
-                        </LinearLayout>
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="24dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:src="@drawable/saudi_arabia"
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="53dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginEnd="16dp"
-                            android:background="@drawable/small_rounded_stroke_grey4"
-                            android:orientation="horizontal"
-                            android:padding="16dp">
+                            />
 
-                            <EditText
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@color/transparent"
-                                android:fontFamily="@font/font_regular"
-                                android:hint="@string/phone_number"
-                                android:textColor="@color/black2"
-                                android:textColorHint="@color/grey8"
-                                android:textSize="14sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        <TextView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="24dp"
-                            android:layout_marginEnd="16dp"
-                            android:orientation="horizontal">
+                            android:text="@{model.phone_code}"
+                            android:textColor="@color/black"
+                            android:textSize="15sp" />
 
-                            <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:layout_gravity="center_vertical"
-                                android:src="@drawable/ic_prefered_time" />
+                        <androidx.legacy.widget.Space
+                            android:layout_width="8dp"
+                            android:layout_height="0dp" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="8dp"
-                                android:layout_marginEnd="8dp"
-                                android:fontFamily="@font/font_regular"
-                                android:text="@string/preferred_delivery_time"
-                                android:textColor="@color/black2"
-                                android:textSize="16sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
+                        <EditText
                             android:layout_width="match_parent"
-                            android:layout_height="53dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginEnd="16dp"
-                            android:background="@drawable/small_rounded_stroke_grey4"
-                            android:orientation="horizontal"
-                            android:padding="16dp">
+                            android:layout_height="match_parent"
+                            android:background="@color/transparent"
+                            android:fontFamily="@font/font_regular"
+                            android:hint="@string/phone_number"
+                            android:inputType="number"
+                            android:lines="1"
+                            android:paddingStart="16dp"
+                            android:paddingEnd="16dp"
+                            android:textColor="@color/black2"
+                            android:textColorHint="@color/grey8"
+                            android:textSize="14sp"
+                            android:text="@={model.phone}"
+                            />
+                    </LinearLayout>
 
-                            <Spinner
-                                android:id="@+id/spinner"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:clickable="false"
-                                android:longClickable="false"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginEnd="16dp"
+                        android:orientation="horizontal">
 
-                                />
-                        </LinearLayout>
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center_vertical"
+                            android:padding="3dp"
+                            android:src="@drawable/ic_prefered_time" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        <TextView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="24dp"
-                            android:layout_marginEnd="16dp"
-                            android:orientation="horizontal">
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:fontFamily="@font/font_regular"
+                            android:text="@string/preferred_delivery_time"
+                            android:textColor="@color/black2"
+                            android:textSize="16sp" />
+                    </LinearLayout>
 
-                            <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:layout_gravity="center_vertical"
-                                android:src="@drawable/ic_address1" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="53dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/small_rounded_stroke_grey4"
+                        android:orientation="horizontal">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="8dp"
-                                android:layout_marginEnd="8dp"
-                                android:fontFamily="@font/font_regular"
-                                android:text="@string/address"
-                                android:textColor="@color/black2"
-                                android:textSize="16sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
+                        <Spinner
+                            android:id="@+id/spinner"
                             android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginEnd="16dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center_vertical"
+                            android:padding="3dp"
+                            android:src="@drawable/ic_address1" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginBottom="60dp"
-                            android:background="@drawable/small_rounded_stroke_grey4"
-                            android:orientation="vertical"
-                            android:padding="16dp">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/font_regular"
-                                android:text="@string/address2"
-                                android:textColor="@color/grey8"
-                                android:textSize="14sp" />
-
-                            <androidx.cardview.widget.CardView
-                                android:layout_width="match_parent"
-                                android:layout_height="180dp"
-                                android:layout_marginTop="8dp"
-                                android:layout_marginBottom="16dp"
-                                app:cardCornerRadius="10dp"
-                                app:cardElevation="0dp">
-
-                                <FrameLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="@drawable/small_rounded_white"
-                                    android:padding="1dp">
-
-                                    <fragment
-                                        android:id="@+id/map"
-                                        android:name="com.apps.dbrah.uis.activity_base.FragmentMapTouchListener"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent" />
-                                </FrameLayout>
-                            </androidx.cardview.widget.CardView>
-
-                        </LinearLayout>
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:fontFamily="@font/font_regular"
+                            android:text="@string/address"
+                            android:textColor="@color/black2"
+                            android:textSize="16sp" />
 
                     </LinearLayout>
 
-                    <View
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="24dp"
-                        android:alpha=".5"
-                        android:background="@drawable/shadow_top" />
-                </FrameLayout>
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:background="@drawable/small_rounded_stroke_grey4"
+                        android:orientation="vertical"
+                        android:padding="16dp">
 
-            </androidx.core.widget.NestedScrollView>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/font_regular"
+                            android:text='@{address??""}'
+                            android:textColor="@color/grey8"
+                            android:textSize="14sp"
 
-            <Button
-                android:id="@+id/btnAdd"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:background="@color/color2"
-                android:fontFamily="@font/font_regular"
-                android:text="@string/add"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                            />
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="180dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="0dp">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/small_rounded_white"
+                                android:padding="1dp"
+                                app:cardCornerRadius="5dp">
+
+
+                                <fragment
+                                    android:id="@+id/map"
+                                    android:name="com.apps.dbrah.uis.activity_base.FragmentMapTouchListener"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent" />
+                            </androidx.cardview.widget.CardView>
+                        </androidx.cardview.widget.CardView>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="7dp"
+                    android:alpha=".5"
+                    android:background="@drawable/shadow_top" />
+            </FrameLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <Button
+            android:id="@+id/btnAdd"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@drawable/btn_enabled2"
+            android:fontFamily="@font/font_regular"
+            android:text="@string/add"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:enabled="@{model.valid,default=false}"
+
+
+            />
+
     </LinearLayout>
 </layout>

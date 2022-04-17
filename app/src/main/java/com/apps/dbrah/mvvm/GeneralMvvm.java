@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
+import com.apps.dbrah.model.AddressModel;
 import com.apps.dbrah.model.CategoryModel;
 import com.apps.dbrah.model.ProductAmount;
 import com.apps.dbrah.model.ProductModel;
@@ -14,12 +15,16 @@ import java.util.List;
 
 public class GeneralMvvm extends AndroidViewModel {
     private MutableLiveData<Integer> actionHomeNavigator;
+    private MutableLiveData<Integer> actionFragmentHomeNavigator;
+
     private MutableLiveData<Boolean> actionHomeBackNavigator;
     private MutableLiveData<ProductAmount> product_amount;
     private MutableLiveData<Integer> category_pos;
     private MutableLiveData<List<CategoryModel>> categoryList;
     private MutableLiveData<Boolean> onCartRefreshed;
     private MutableLiveData<ProductModel> onCartItemUpdated;
+    private MutableLiveData<AddressModel> onAddressSelectedForUpdate;
+    private MutableLiveData<AddressModel> onAddressSelectedForOrder;
 
     public GeneralMvvm(@NonNull Application application) {
         super(application);
@@ -30,6 +35,13 @@ public class GeneralMvvm extends AndroidViewModel {
             actionHomeNavigator = new MutableLiveData<>();
         }
         return actionHomeNavigator;
+    }
+
+    public MutableLiveData<Integer> getActionFragmentHomeNavigator() {
+        if (actionFragmentHomeNavigator == null) {
+            actionFragmentHomeNavigator = new MutableLiveData<>();
+        }
+        return actionFragmentHomeNavigator;
     }
 
     public MutableLiveData<Boolean> onHomeBackNavigate() {
@@ -73,6 +85,20 @@ public class GeneralMvvm extends AndroidViewModel {
             onCartItemUpdated = new MutableLiveData<>();
         }
         return onCartItemUpdated;
+    }
+
+    public MutableLiveData<AddressModel> getOnAddressSelectedForUpdate() {
+        if (onAddressSelectedForUpdate == null) {
+            onAddressSelectedForUpdate = new MutableLiveData<>();
+        }
+        return onAddressSelectedForUpdate;
+    }
+
+    public MutableLiveData<AddressModel> getOnAddressSelectedForOrder() {
+        if (onAddressSelectedForOrder == null) {
+            onAddressSelectedForOrder = new MutableLiveData<>();
+        }
+        return onAddressSelectedForOrder;
     }
 
 }

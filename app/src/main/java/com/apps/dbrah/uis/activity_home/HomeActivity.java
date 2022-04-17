@@ -23,6 +23,7 @@ import com.apps.dbrah.R;
 
 import com.apps.dbrah.databinding.ActivityHomeBinding;
 import com.apps.dbrah.language.Language;
+import com.apps.dbrah.uis.activity_home.add_address_module.FragmentAddAddress;
 import com.apps.dbrah.uis.activity_home.address_module.FragmentMyAddresses;
 import com.apps.dbrah.uis.activity_home.market_module.FragmentHome;
 import com.apps.dbrah.uis.activity_home.my_list_module.FragmentMyList;
@@ -31,7 +32,6 @@ import com.apps.dbrah.uis.activity_home.product_detials_module.FragmentProductDe
 import com.apps.dbrah.uis.activity_home.products_module.FragmentProducts;
 import com.apps.dbrah.uis.activity_home.search_module.FragmentSearch;
 import com.apps.dbrah.uis.activity_home.setting_module.FragmentSetting;
-import com.apps.dbrah.uis.add_address_module.FragmentAddAddress;
 import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
@@ -87,15 +87,16 @@ public class HomeActivity extends BaseActivity {
 
     private void setUpPager() {
         stack = new Stack<>();
-        fragments = new ArrayList<>();
-        fragments.add(FragmentHome.newInstance());
-        fragments.add(FragmentNotification.newInstance());
-        fragments.add(FragmentSearch.newInstance());
-        fragments.add(FragmentMyList.newInstance());
-        fragments.add(FragmentAddAddress.newInstance());
-        fragments.add(FragmentSetting.newInstance());
-        fragments.add(FragmentProductDetials.newInstance());
-        fragments.add(FragmentProducts.newInstance());
+        fragments = new ArrayList<>();//0
+        fragments.add(FragmentHome.newInstance());//1
+        fragments.add(FragmentNotification.newInstance());//2
+        fragments.add(FragmentSearch.newInstance());//3
+        fragments.add(FragmentMyList.newInstance());//4
+        fragments.add(FragmentAddAddress.newInstance());//5
+        fragments.add(FragmentSetting.newInstance());//6
+        fragments.add(FragmentProductDetials.newInstance());//7
+        fragments.add(FragmentProducts.newInstance());//8
+        fragments.add(FragmentMyAddresses.newInstance());//9
 
         adapter = new MyPagerAdapter(getSupportFragmentManager(), fragments, null);
         binding.pager.setAdapter(adapter);

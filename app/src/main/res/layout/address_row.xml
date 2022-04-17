@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <variable
+            name="model"
+            type="com.apps.dbrah.model.AddressModel" />
+
 
     </data>
 
@@ -10,22 +15,26 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/rounded_grey1"
         android:orientation="horizontal">
 
-        <FrameLayout
+        <androidx.legacy.widget.Space
+            android:layout_width="16dp"
+            android:layout_height="0dp"
+            />
+        <androidx.cardview.widget.CardView
             android:layout_width="122dp"
             android:layout_height="122dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/circle_white_stroke_grey11">
+            android:layout_gravity="center_vertical"
+            app:cardCornerRadius="61dp"
+            app:cardElevation="0dp">
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/imgmap" />
-        </FrameLayout>
+                android:src="@drawable/address_image" />
+        </androidx.cardview.widget.CardView>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,19 +51,26 @@
 
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:fontFamily="@font/font_bold"
-                    android:text="Home"
+                    android:text="@{model.title}"
                     android:textColor="@color/black2"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    />
+
 
                 <ImageView
                     android:id="@+id/imgDelete"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:layout_marginEnd="19dp"
-                    android:src="@drawable/ic_delete" />
+                    android:src="@drawable/ic_delete"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:padding="3dp"
+                    />
 
 
             </LinearLayout>
@@ -62,23 +78,24 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/font_regular"
-                android:text="mohamed"
+                android:text="@{model.admin_name}"
                 android:textColor="@color/black2"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:lines="1"
+                />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="8dp"
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="16dp"
+                    android:layout_width="36dp"
+                    android:layout_height="24dp"
                     android:layout_gravity="center_vertical"
-                    android:scaleType="fitXY"
                     android:src="@drawable/saudi_arabia" />
 
                 <TextView
@@ -87,7 +104,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="10dp"
                     android:fontFamily="@font/font_regular"
-                    android:text="+996 5463125"
+                    android:text='@{model.phone}'
                     android:textColor="@color/black2"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -95,7 +112,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="8dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -103,19 +120,10 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:fontFamily="@font/font_regular"
-                    android:text="03:00"
+                    android:text="@{model.from}"
                     android:textColor="@color/black2"
                     android:textSize="14sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="2dp"
-                    android:fontFamily="@font/font_regular"
-                    android:text="am"
-                    android:textColor="@color/grey10"
-                    android:textSize="12sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -133,29 +141,24 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:fontFamily="@font/font_regular"
-                    android:text="09:00"
+                    android:text='@{model.to}'
                     android:textColor="@color/black2"
                     android:textSize="14sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="2dp"
-                    android:fontFamily="@font/font_regular"
-                    android:text="pm"
-                    android:textColor="@color/grey10"
-                    android:textSize="12sp" />
+
             </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="15dp"
                 android:fontFamily="@font/font_regular"
-                android:text="Riyadh - King Mohammed bin Salman University Street"
+                android:text="@{model.address}"
                 android:textColor="@color/grey10"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:layout_marginTop="8dp"
+                />
         </LinearLayout>
 
     </LinearLayout>

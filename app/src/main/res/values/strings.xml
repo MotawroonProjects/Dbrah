@@ -134,5 +134,7 @@
     <string name="em_found">Email Found</string>
     <string name="ch_time">Choose Time</string>
     <string name="empty_cart">Empty cart</string>
+    <string name="order_all">Order All</string>
+    <string name="upd_address">Update Address</string>
 
 </resources>
