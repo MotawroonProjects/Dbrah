@@ -1,11 +1,13 @@
 package com.apps.dbrah.services;
 
 
+import com.apps.dbrah.model.AddressesDataModel;
 import com.apps.dbrah.model.CategoryDataModel;
 import com.apps.dbrah.model.RecentProductDataModel;
 import com.apps.dbrah.model.NotificationDataModel;
 import com.apps.dbrah.model.PlaceGeocodeData;
 import com.apps.dbrah.model.SearchHomeDataModel;
+import com.apps.dbrah.model.SingleAddressData;
 import com.apps.dbrah.model.SingleProductModel;
 import com.apps.dbrah.model.SliderDataModel;
 import com.apps.dbrah.model.StatusResponse;
@@ -133,5 +135,23 @@ public interface Service {
     @GET("api/delivery_times")
     Single<Response<TimeDataModel>> getTime();
 
+    @GET("api/address")
+    Single<Response<AddressesDataModel>> getMyAddresses(@Query("user_id") String user_id);
+
+
+    @FormUrlEncoded
+    @POST("api/storeAddress")
+    Single<Response<SingleAddressData>> addAddress(@Field("user_id") String user_id,
+                                                   @Field("time_id") String time_id,
+                                                   @Field("title") String title,
+                                                   @Field("admin_name") String admin_name,
+                                                   @Field("phone_code") String phone_code,
+                                                   @Field("phone") String phone,
+                                                   @Field("address") String address,
+                                                   @Field("latitude") double latitude,
+                                                   @Field("longitude") double longitude
+
+
+    );
 
 }

@@ -22,9 +22,12 @@ public class GeneralMvvm extends AndroidViewModel {
     private MutableLiveData<List<CategoryModel>> categoryList;
     private MutableLiveData<Boolean> onCartRefreshed;
     private MutableLiveData<ProductModel> onCartItemUpdated;
-    private MutableLiveData<AddressModel> onAddressSelectedForUpdate;
+    //////////////////////////////////////////////////////////////////
     private MutableLiveData<AddressModel> onAddressSelectedForOrder;
     private MutableLiveData<AddressModel> onAddressAdded;
+    private MutableLiveData<AddressModel> onAddressUpdated;
+    private MutableLiveData<String> addAddressFragmentAction;
+    private MutableLiveData<String> myAddressFragmentAction;
 
     public GeneralMvvm(@NonNull Application application) {
         super(application);
@@ -87,12 +90,6 @@ public class GeneralMvvm extends AndroidViewModel {
         return onCartItemUpdated;
     }
 
-    public MutableLiveData<AddressModel> getOnAddressSelectedForUpdate() {
-        if (onAddressSelectedForUpdate == null) {
-            onAddressSelectedForUpdate = new MutableLiveData<>();
-        }
-        return onAddressSelectedForUpdate;
-    }
 
     public MutableLiveData<AddressModel> getOnAddressSelectedForOrder() {
         if (onAddressSelectedForOrder == null) {
@@ -107,7 +104,28 @@ public class GeneralMvvm extends AndroidViewModel {
         }
         return onAddressAdded;
     }
-    
+
+    public MutableLiveData<AddressModel> getOnAddressUpdated() {
+        if (onAddressUpdated == null) {
+            onAddressUpdated = new MutableLiveData<>();
+        }
+        return onAddressUpdated;
+    }
+
+    public MutableLiveData<String> getAddAddressFragmentAction() {
+        if (addAddressFragmentAction == null) {
+            addAddressFragmentAction = new MutableLiveData<>();
+        }
+        return addAddressFragmentAction;
+    }
+
+
+    public MutableLiveData<String> getMyAddressFragmentAction() {
+        if (myAddressFragmentAction == null) {
+            myAddressFragmentAction = new MutableLiveData<>();
+        }
+        return myAddressFragmentAction;
+    }
 
 
 }

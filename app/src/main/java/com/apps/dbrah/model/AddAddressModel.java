@@ -9,6 +9,7 @@ import com.apps.dbrah.BR;
 
 
 public class AddAddressModel extends BaseObservable {
+    private String id;
     private String title;
     private String admin_name;
     private String phone_code;
@@ -20,6 +21,7 @@ public class AddAddressModel extends BaseObservable {
     private boolean valid;
 
     public AddAddressModel() {
+        id ="";
         title = "";
         admin_name = "";
         phone_code = "+966";
@@ -41,6 +43,14 @@ public class AddAddressModel extends BaseObservable {
         } else {
             setValid(false);
         }
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Bindable

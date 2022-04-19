@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.apps.dbrah.R;
 import com.apps.dbrah.adapter.MainCartAdapter;
 import com.apps.dbrah.databinding.FragmentCartBinding;
+import com.apps.dbrah.model.AddressModel;
 import com.apps.dbrah.model.ProductModel;
 import com.apps.dbrah.model.cart_models.ManageCartModel;
 import com.apps.dbrah.mvvm.GeneralMvvm;
@@ -32,6 +33,7 @@ public class FragmentCart extends BaseFragment {
     private ManageCartModel manageCartModel;
     private MainCartAdapter adapter;
     private GeneralMvvm generalMvvm;
+    private AddressModel selectedAddress;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -64,6 +66,9 @@ public class FragmentCart extends BaseFragment {
         generalMvvm.getOnCartRefreshed().observe(activity, isRefreshed -> {
             refreshCart();
         });
+        generalMvvm.getOnAddressSelectedForOrder().observe(activity,addressModel -> {
+            this.selectedAddress = addressModel;
+        });
 
         adapter = new MainCartAdapter(activity, this, getLang());
         binding.recView.setLayoutManager(new LinearLayoutManager(activity));
@@ -71,11 +76,20 @@ public class FragmentCart extends BaseFragment {
         binding.tvNoData.setText(R.string.empty_cart);
         binding.flOrderAll.setOnClickListener(v -> {
             if (getUserModel() != null) {
-                generalMvvm.onHomeNavigate().setValue(9);
+                if (selectedAddress!=null){
+
+                }else {
+                    generalMvvm.getMyAddressFragmentAction().setValue("forOrder");
+                    generalMvvm.onHomeNavigate().setValue(9);
+
+                }
             } else {
-                generalMvvm.getActionFragmentHomeNavigator().setValue(3);
+                generalMvvm.getActionFragmentHomeNavigator().setValue(8);
+
+
             }
         });
+
 
         refreshCart();
 

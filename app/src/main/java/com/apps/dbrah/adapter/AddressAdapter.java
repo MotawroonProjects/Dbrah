@@ -1,6 +1,7 @@
 package com.apps.dbrah.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -23,9 +24,10 @@ public class AddressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private LayoutInflater inflater;
     private Fragment fragment;
 
-    public AddressAdapter( Context context) {
+    public AddressAdapter( Context context,Fragment fragment) {
         this.context = context;
         inflater = LayoutInflater.from(context);
+        this.fragment = fragment;
     }
 
     @NonNull
@@ -43,7 +45,7 @@ public class AddressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         myHolder.itemView.setOnClickListener(v -> {
             if (fragment instanceof FragmentMyAddresses) {
                 FragmentMyAddresses fragmentMyAddresses = (FragmentMyAddresses) fragment;
-                fragmentMyAddresses.setItemAddress(list.get(myHolder.getAdapterPosition()));
+                fragmentMyAddresses.setItemAddress(list.get(myHolder.getAdapterPosition()),myHolder.getAdapterPosition());
             }
         });
 

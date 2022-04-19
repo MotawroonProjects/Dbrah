@@ -88,6 +88,7 @@ public class FragmentProfile extends BaseFragment {
         });
 
         binding.profileLayout.cardMyAddresses.setOnClickListener(v -> {
+            generalMvvm.getMyAddressFragmentAction().setValue("display");
             generalMvvm.onHomeNavigate().setValue(8);
         });
 

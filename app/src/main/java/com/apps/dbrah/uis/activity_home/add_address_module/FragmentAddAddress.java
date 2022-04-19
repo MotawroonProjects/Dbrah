@@ -1,6 +1,5 @@
 package com.apps.dbrah.uis.activity_home.add_address_module;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -16,9 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -64,6 +61,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
 public class FragmentAddAddress extends BaseFragment implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
     private HomeActivity activity;
     private FragmentAddAddressBinding binding;
@@ -71,7 +69,7 @@ public class FragmentAddAddress extends BaseFragment implements OnMapReadyCallba
     private AddressModel addressModel;
     private AddAddressModel model;
     private SpinnerTimeAdapter spinnerTimeAdapter;
-    private FragmentAddAddressMvvm fragmentAddAddressMvvm;
+    private FragmentAddAddressMvvm mvvm;
     private View view;
     private FragmentMapTouchListener fragmentMapTouchListener;
     private GoogleMap mMap;
@@ -121,38 +119,49 @@ public class FragmentAddAddress extends BaseFragment implements OnMapReadyCallba
 
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
 
-        fragmentAddAddressMvvm = ViewModelProviders.of(activity).get(FragmentAddAddressMvvm.class);
+        mvvm = ViewModelProviders.of(activity).get(FragmentAddAddressMvvm.class);
 
         view = activity.setUpToolbar(binding.toolbar, getString(R.string.add_address), R.color.white, R.color.black, R.drawable.small_rounded_grey4, false);
 
-        fragmentAddAddressMvvm.getOnDataSuccess().observe(this, new Observer<List<TimeModel>>() {
-            @Override
-            public void onChanged(List<TimeModel> timeModels) {
+        mvvm.getOnDataSuccess().observe(this, timeModels -> {
 
-                if (spinnerTimeAdapter != null) {
-                    spinnerTimeAdapter.updateList(timeModels);
-
-                }
-
+            if (spinnerTimeAdapter != null) {
+                spinnerTimeAdapter.updateList(timeModels);
 
             }
-        });
 
-        generalMvvm.getOnAddressSelectedForUpdate().observe(activity, addressModel -> {
-            this.addressModel = addressModel;
-            model.setTitle(addressModel.getTitle());
-            model.setAdmin_name(addressModel.getAdmin_name());
-            model.setPhone(addressModel.getPhone());
-            model.setTime_id(addressModel.getTime_id());
-            model.setAddress(addressModel.getAddress());
-            model.setLat(Double.parseDouble(addressModel.getLatitude()));
-            model.setLng(Double.parseDouble(addressModel.getLongitude()));
+
+        });
+        mvvm.getOnAddressAdded().observe(activity, addressModel -> {
+            generalMvvm.getOnAddressAdded().setValue(addressModel);
+            generalMvvm.onHomeBackNavigate().setValue(true);
+            model = new AddAddressModel();
             binding.setModel(model);
-            view = activity.setUpToolbar(binding.toolbar, getString(R.string.upd_address), R.color.white, R.color.black, R.drawable.small_rounded_grey4, false);
-            binding.btnAdd.setText(getString(R.string.update));
+        });
+        mvvm.getOnAddressUpdated().observe(activity, addressModel -> {
+            this.addressModel = null;
+            generalMvvm.getOnAddressUpdated().setValue(addressModel);
+            model = new AddAddressModel();
+            binding.setModel(model);
+            generalMvvm.onHomeBackNavigate().setValue(true);
 
         });
 
+
+        generalMvvm.getAddAddressFragmentAction().observe(activity, action -> {
+            if (action.equals("add")) {
+                address ="";
+                lat =0.0;
+                lng =0.0;
+                binding.setAddress(address);
+                model = null;
+                addressModel = null;
+                model = new AddAddressModel();
+                binding.spinner.setSelection(0);
+                binding.setModel(model);
+                checkPermission();
+            }
+        });
         view.setOnClickListener(v -> {
             generalMvvm.onHomeBackNavigate().setValue(true);
 
@@ -181,13 +190,19 @@ public class FragmentAddAddress extends BaseFragment implements OnMapReadyCallba
 
             }
         });
-        fragmentAddAddressMvvm.getTime(activity);
+        mvvm.getTime(activity);
+
 
         binding.btnAdd.setOnClickListener(v -> {
             if (getUserModel() != null) {
-                generalMvvm.onHomeBackNavigate().setValue(true);
-                model = new AddAddressModel();
-                binding.setModel(model);
+                if (addressModel == null) {
+                    mvvm.addAddress(getUserModel(), model, activity);
+
+                } else {
+                    model.setId(addressModel.getId());
+
+                }
+
             }
 
         });
