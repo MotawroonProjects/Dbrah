@@ -67,7 +67,7 @@ public class FragmentMyAddresses extends BaseFragment {
         });
 
         binding.llNewAddress.setOnClickListener(v -> {
-            generalMvvm.onHomeNavigate().setValue(5);
+            generalMvvm.onHomeNavigate().setValue(4);
         });
         binding.recView.setLayoutManager(new LinearLayoutManager(activity));
         binding.recView.setAdapter(addressAdapter);
@@ -78,7 +78,7 @@ public class FragmentMyAddresses extends BaseFragment {
 
     public void setItemAddress(AddressModel addressModel) {
         generalMvvm.getOnAddressSelectedForUpdate().setValue(addressModel);
-        generalMvvm.onHomeNavigate().setValue(5);
+        generalMvvm.onHomeNavigate().setValue(4);
     }
 
     public void delete(AddressModel addressModel, int adapterPosition) {

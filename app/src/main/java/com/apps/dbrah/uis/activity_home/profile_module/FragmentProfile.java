@@ -84,15 +84,15 @@ public class FragmentProfile extends BaseFragment {
         });
 
         binding.profileLayout.cardMyList.setOnClickListener(v -> {
-            generalMvvm.onHomeNavigate().setValue(4);
+            generalMvvm.onHomeNavigate().setValue(3);
         });
 
         binding.profileLayout.cardMyAddresses.setOnClickListener(v -> {
-            generalMvvm.onHomeNavigate().setValue(9);
+            generalMvvm.onHomeNavigate().setValue(8);
         });
 
         binding.profileLayout.carViewSetting.setOnClickListener(v -> {
-            generalMvvm.onHomeNavigate().setValue(6);
+            generalMvvm.onHomeNavigate().setValue(5);
         });
 
     }

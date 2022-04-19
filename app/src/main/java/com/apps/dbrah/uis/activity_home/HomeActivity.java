@@ -87,16 +87,17 @@ public class HomeActivity extends BaseActivity {
 
     private void setUpPager() {
         stack = new Stack<>();
-        fragments = new ArrayList<>();//0
-        fragments.add(FragmentHome.newInstance());//1
-        fragments.add(FragmentNotification.newInstance());//2
-        fragments.add(FragmentSearch.newInstance());//3
-        fragments.add(FragmentMyList.newInstance());//4
-        fragments.add(FragmentAddAddress.newInstance());//5
-        fragments.add(FragmentSetting.newInstance());//6
-        fragments.add(FragmentProductDetials.newInstance());//7
-        fragments.add(FragmentProducts.newInstance());//8
-        fragments.add(FragmentMyAddresses.newInstance());//9
+        fragments = new ArrayList<>();
+
+        fragments.add(FragmentHome.newInstance());//0
+        fragments.add(FragmentNotification.newInstance());//1
+        fragments.add(FragmentSearch.newInstance());//2
+        fragments.add(FragmentMyList.newInstance());//3
+        fragments.add(FragmentAddAddress.newInstance());//4
+        fragments.add(FragmentSetting.newInstance());//5
+        fragments.add(FragmentProductDetials.newInstance());//6
+        fragments.add(FragmentProducts.newInstance());//7
+        fragments.add(FragmentMyAddresses.newInstance());//8
 
         adapter = new MyPagerAdapter(getSupportFragmentManager(), fragments, null);
         binding.pager.setAdapter(adapter);

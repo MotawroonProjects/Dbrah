@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -153,8 +154,11 @@ public class FragmentMarket extends BaseFragment {
         mvvm.getOnMostProductDataModel().observe(activity, list -> {
             binding.swipeRefresh.setRefreshing(false);
             if (list.size() > 0) {
+                binding.flMostSale.setVisibility(View.VISIBLE);
                 binding.tvNoMostSaleProduct.setVisibility(View.GONE);
             } else {
+                binding.flMostSale.setVisibility(View.GONE);
+
                 binding.tvNoMostSaleProduct.setVisibility(View.VISIBLE);
             }
             if (mostSaleProductAdapter != null) {
@@ -177,10 +181,15 @@ public class FragmentMarket extends BaseFragment {
             productPos = getCartItemPosRecent(productModel.getId());
 
             if (mvvm.getOnRecentProductDataModel().getValue() != null) {
-                mvvm.getOnRecentProductDataModel().getValue().get(productPos).setAmount(productModel.getAmount());
-                if (recentProductAdapter != null) {
-                    recentProductAdapter.notifyItemChanged(productPos);
+                try {
+                    mvvm.getOnRecentProductDataModel().getValue().get(productPos).setAmount(productModel.getAmount());
+                    if (recentProductAdapter != null) {
+                        recentProductAdapter.notifyItemChanged(productPos);
+                    }
+                }catch (Exception e){
+                    Log.e("error",e.getMessage());
                 }
+
             }
         });
 
@@ -249,26 +258,37 @@ public class FragmentMarket extends BaseFragment {
 
     }
 
-    public void addProductToCart(ProductModel productModel,String fromList) {
-        if (fromList.equals("most")){
+    public void addProductToCart(ProductModel productModel, String fromList) {
+        if (fromList.equals("most")) {
 
             int productPos = getCartItemPosRecent(productModel.getId());
 
             if (mvvm.getOnRecentProductDataModel().getValue() != null) {
-                mvvm.getOnRecentProductDataModel().getValue().get(productPos).setAmount(productModel.getAmount());
-                if (recentProductAdapter != null) {
-                    recentProductAdapter.notifyItemChanged(productPos);
+                try {
+                    mvvm.getOnRecentProductDataModel().getValue().get(productPos).setAmount(productModel.getAmount());
+                    if (recentProductAdapter != null) {
+                        recentProductAdapter.notifyItemChanged(productPos);
+                    }
+                }catch (Exception e){
+                    Log.e("error",e.getMessage());
                 }
+
             }
-        }else {
+        } else {
             int productPos = getCartItemPosMostSale(productModel.getId());
 
             if (productPos != -1) {
                 if (mvvm.getOnMostProductDataModel().getValue() != null) {
-                    mvvm.getOnMostProductDataModel().getValue().get(productPos).setAmount(productModel.getAmount());
-                    if (mostSaleProductAdapter != null) {
-                        mostSaleProductAdapter.notifyItemChanged(productPos);
+                    try {
+                        mvvm.getOnMostProductDataModel().getValue().get(productPos).setAmount(productModel.getAmount());
+                        if (mostSaleProductAdapter != null) {
+                            mostSaleProductAdapter.notifyItemChanged(productPos);
+                        }
+                    }catch (Exception e){
+                        Log.e("error",e.getMessage());
                     }
+
+
                 }
             }
         }
@@ -277,31 +297,45 @@ public class FragmentMarket extends BaseFragment {
         generalMvvm.getOnCartRefreshed().setValue(true);
     }
 
-    public void removeProductFromCart(ProductModel productModel,String fromList) {
+    public void removeProductFromCart(ProductModel productModel, String fromList) {
         manageCartModel.delete(productModel, activity);
         generalMvvm.getOnCartRefreshed().setValue(true);
 
 
-        if (fromList.equals("most")){
+        if (fromList.equals("most")) {
 
             int productPos = getCartItemPosRecent(productModel.getId());
 
-            if (mvvm.getOnRecentProductDataModel().getValue() != null) {
-                mvvm.getOnRecentProductDataModel().getValue().get(productPos).setAmount(productModel.getAmount());
-                if (recentProductAdapter != null) {
-                    recentProductAdapter.notifyItemChanged(productPos);
+            try {
+                if (mvvm.getOnRecentProductDataModel().getValue() != null) {
+                    mvvm.getOnRecentProductDataModel().getValue().get(productPos).setAmount(productModel.getAmount());
+                    if (recentProductAdapter != null) {
+                        recentProductAdapter.notifyItemChanged(productPos);
+                    }
                 }
+            }catch (Exception e){
+                Log.e("error",e.getMessage());
             }
-        }else {
+
+
+
+        } else {
             int productPos = getCartItemPosMostSale(productModel.getId());
 
             if (productPos != -1) {
-                if (mvvm.getOnMostProductDataModel().getValue() != null) {
-                    mvvm.getOnMostProductDataModel().getValue().get(productPos).setAmount(productModel.getAmount());
-                    if (mostSaleProductAdapter != null) {
-                        mostSaleProductAdapter.notifyItemChanged(productPos);
+
+                try {
+                    if (mvvm.getOnMostProductDataModel().getValue() != null) {
+                        mvvm.getOnMostProductDataModel().getValue().get(productPos).setAmount(productModel.getAmount());
+                        if (mostSaleProductAdapter != null) {
+                            mostSaleProductAdapter.notifyItemChanged(productPos);
+                        }
                     }
+                }catch (Exception e){
+                    Log.e("error",e.getMessage());
                 }
+
+
             }
         }
 

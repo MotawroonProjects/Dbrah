@@ -52,6 +52,7 @@ public class AddAddressModel extends BaseObservable {
     public void setTitle(String title) {
         this.title = title;
         notifyPropertyChanged(BR.title);
+        isDataValid();
     }
 
     @Bindable
@@ -62,6 +63,7 @@ public class AddAddressModel extends BaseObservable {
     public void setAdmin_name(String admin_name) {
         this.admin_name = admin_name;
         notifyPropertyChanged(BR.admin_name);
+        isDataValid();
     }
 
     @Bindable
@@ -82,6 +84,7 @@ public class AddAddressModel extends BaseObservable {
     public void setPhone(String phone) {
         this.phone = phone;
         notifyPropertyChanged(BR.phone);
+        isDataValid();
     }
 
     @Bindable
@@ -91,6 +94,7 @@ public class AddAddressModel extends BaseObservable {
 
     public void setTime_id(String time_id) {
         this.time_id = time_id;
+        isDataValid();
 
     }
 
@@ -102,6 +106,7 @@ public class AddAddressModel extends BaseObservable {
     public void setAddress(String address) {
         this.address = address;
         notifyPropertyChanged(BR.address);
+        isDataValid();
     }
 
     public double getLat() {

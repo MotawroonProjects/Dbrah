@@ -72,7 +72,6 @@ public class FragmentAddAddressMvvm extends AndroidViewModel {
                                 getIsLoading().setValue(false);
                                 List<TimeModel> list = response.body().getData();
                                 list.add(0, new TimeModel(context.getString(R.string.ch_time)));
-
                                 onDataSuccess.setValue(list);
                             }
                         }

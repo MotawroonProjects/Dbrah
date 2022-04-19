@@ -137,5 +137,6 @@
     <string name="empty_cart">السلة فارغة</string>
     <string name="order_all">إطلب الان</string>
     <string name="upd_address">تعديل العنوان</string>
+    <string name="home_work">(المنزل - العمل)...</string>
 
 </resources>

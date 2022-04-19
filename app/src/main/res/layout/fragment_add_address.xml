@@ -24,6 +24,7 @@
             layout="@layout/toolbar" />
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -77,11 +78,12 @@
                         >
 
                         <EditText
+                            android:id="@+id/edtLocation"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@color/transparent"
                             android:fontFamily="@font/font_regular"
-                            android:hint="@string/location_title"
+                            android:hint="@string/home_work"
                             android:lines="1"
                             android:paddingStart="16dp"
                             android:paddingEnd="16dp"
@@ -89,6 +91,7 @@
                             android:textColorHint="@color/grey8"
                             android:textSize="14sp"
                             android:text="@={model.title}"
+                            android:inputType="text"
 
                             />
                     </LinearLayout>
@@ -142,6 +145,7 @@
                             android:textColorHint="@color/grey8"
                             android:textSize="14sp"
                             android:text="@={model.admin_name}"
+                            android:inputType="text"
 
                             />
                     </LinearLayout>
@@ -331,6 +335,7 @@
                                     android:name="com.apps.dbrah.uis.activity_base.FragmentMapTouchListener"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent" />
+
                             </androidx.cardview.widget.CardView>
                         </androidx.cardview.widget.CardView>
 

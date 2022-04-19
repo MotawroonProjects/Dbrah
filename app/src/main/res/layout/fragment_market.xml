@@ -179,6 +179,7 @@
                             </LinearLayout>
 
                             <FrameLayout
+                                android:id="@+id/flMostSale"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
 
@@ -199,7 +200,9 @@
                                     android:text="@string/no_products_to_show"
                                     android:textColor="@color/black"
                                     android:textSize="15sp"
-                                    android:visibility="gone" />
+                                    android:visibility="gone"
+                                    android:fontFamily="@font/font_regular"
+                                    />
 
                                 <com.facebook.shimmer.ShimmerFrameLayout
                                     android:id="@+id/loaderMostSales"

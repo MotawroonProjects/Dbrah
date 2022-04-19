@@ -140,7 +140,7 @@ public class GeneralMethod {
 
     @BindingAdapter({"title", "from", "to"})
     public static void displayDate(TextView textView, String title, long from, long to) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("h", Locale.ENGLISH);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a", Locale.ENGLISH);
         if (title != null) {
             textView.setText(title);
         } else {

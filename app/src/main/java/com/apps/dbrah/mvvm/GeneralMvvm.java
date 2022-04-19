@@ -16,7 +16,6 @@ import java.util.List;
 public class GeneralMvvm extends AndroidViewModel {
     private MutableLiveData<Integer> actionHomeNavigator;
     private MutableLiveData<Integer> actionFragmentHomeNavigator;
-
     private MutableLiveData<Boolean> actionHomeBackNavigator;
     private MutableLiveData<ProductAmount> product_amount;
     private MutableLiveData<Integer> category_pos;
@@ -25,6 +24,7 @@ public class GeneralMvvm extends AndroidViewModel {
     private MutableLiveData<ProductModel> onCartItemUpdated;
     private MutableLiveData<AddressModel> onAddressSelectedForUpdate;
     private MutableLiveData<AddressModel> onAddressSelectedForOrder;
+    private MutableLiveData<AddressModel> onAddressAdded;
 
     public GeneralMvvm(@NonNull Application application) {
         super(application);
@@ -100,5 +100,14 @@ public class GeneralMvvm extends AndroidViewModel {
         }
         return onAddressSelectedForOrder;
     }
+
+    public MutableLiveData<AddressModel> getOnAddressAdded() {
+        if (onAddressAdded == null) {
+            onAddressAdded = new MutableLiveData<>();
+        }
+        return onAddressAdded;
+    }
+    
+
 
 }
