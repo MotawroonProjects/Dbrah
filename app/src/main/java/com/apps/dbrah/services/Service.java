@@ -3,6 +3,7 @@ package com.apps.dbrah.services;
 
 import com.apps.dbrah.model.AddressesDataModel;
 import com.apps.dbrah.model.CategoryDataModel;
+import com.apps.dbrah.model.OrdersModel;
 import com.apps.dbrah.model.RecentProductDataModel;
 import com.apps.dbrah.model.NotificationDataModel;
 import com.apps.dbrah.model.PlaceGeocodeData;
@@ -13,12 +14,16 @@ import com.apps.dbrah.model.SliderDataModel;
 import com.apps.dbrah.model.StatusResponse;
 import com.apps.dbrah.model.TimeDataModel;
 import com.apps.dbrah.model.UserModel;
+import com.apps.dbrah.model.cart_models.CartModel;
+import com.apps.dbrah.model.cart_models.CartResponse;
+import com.apps.dbrah.model.cart_models.CartSingleModel;
 
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Response;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -149,9 +154,15 @@ public interface Service {
                                                    @Field("phone") String phone,
                                                    @Field("address") String address,
                                                    @Field("latitude") double latitude,
-                                                   @Field("longitude") double longitude
+                                                   @Field("longitude") double longitude);
 
+    @POST("api/storeOrder")
+    Single<Response<CartResponse>> sendAllOrder(@Body CartModel cartModel);
 
-    );
+    @POST("api/storeOrder")
+    Single<Response<CartResponse>> sendSingleOrder(@Body CartSingleModel cartModel);
+
+    @GET("api/getOrders")
+    Single<Response<OrdersModel>> getOrders(@Query("user_id") String user_id);
 
 }

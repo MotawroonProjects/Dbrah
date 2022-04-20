@@ -26,12 +26,14 @@ public class RecentProductAdapter extends RecyclerView.Adapter<RecyclerView.View
     private LayoutInflater inflater;
     private Fragment fragment;
     private CountDownTimer countDownTimer;
+    private String lang;
 
 
-    public RecentProductAdapter(Context context, Fragment fragment) {
+    public RecentProductAdapter(Context context, Fragment fragment,String lang) {
         this.context = context;
         this.fragment = fragment;
         inflater = LayoutInflater.from(context);
+        this.lang = lang;
     }
 
     @NonNull
@@ -45,7 +47,7 @@ public class RecentProductAdapter extends RecyclerView.Adapter<RecyclerView.View
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MyHolder myHolder = (MyHolder) holder;
         ProductModel productModel = list.get(position);
-
+        myHolder.binding.setLang(lang);
         myHolder.binding.setModel(productModel);
         myHolder.binding.motion.setTransitionDuration(500);
         myHolder.binding.motion.setTransition(R.id.start, R.id.end);

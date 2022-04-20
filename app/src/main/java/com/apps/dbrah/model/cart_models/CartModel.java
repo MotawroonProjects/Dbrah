@@ -6,13 +6,18 @@ import android.util.Log;
 import com.apps.dbrah.model.CategoryModel;
 import com.apps.dbrah.model.ProductModel;
 import com.apps.dbrah.preferences.Preferences;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CartModel implements Serializable {
+    private String user_id;
+    private String address_id;
+    private String note = "";
 
+    @SerializedName("details")
     private List<CartObject> cartList;
 
     public List<CartObject> getCartList() {
@@ -28,6 +33,7 @@ public class CartModel implements Serializable {
     }
 
     public static class CartObject implements Serializable {
+        private String category_id;
         private CategoryModel categoryModel;
         private List<ProductModel> products;
 
@@ -48,6 +54,14 @@ public class CartModel implements Serializable {
             this.categoryModel = categoryModel;
         }
 
+        public String getCategory_id() {
+            return category_id;
+        }
+
+        public void setCategory_id(String category_id) {
+            this.category_id = category_id;
+        }
+
         public List<ProductModel> getProducts() {
             return products;
         }
@@ -56,7 +70,6 @@ public class CartModel implements Serializable {
             this.products = products;
         }
     }
-
 
     public void addProduct(ProductModel model) {
 
@@ -74,6 +87,7 @@ public class CartModel implements Serializable {
 
 
             }
+
             cartObject.setProducts(products);
             cartList.set(categoryPos, cartObject);
 
@@ -81,10 +95,10 @@ public class CartModel implements Serializable {
             List<ProductModel> products = new ArrayList<>();
             products.add(model);
             CartObject cartObject = new CartObject(categoryModel, products);
+            cartObject.setCategory_id(categoryModel.getId());
             cartList.add(cartObject);
         }
     }
-
 
     public void removeProduct(ProductModel model) {
         CategoryModel categoryModel = model.getCategoryModel();
@@ -102,6 +116,14 @@ public class CartModel implements Serializable {
 
     }
 
+    public void removeCategory(int pos) {
+        try {
+            cartList.remove(pos);
+        } catch (Exception e) {
+
+        }
+
+    }
 
     private int isCategoryExist(String category_id) {
         for (int index = 0; index < cartList.size(); index++) {
@@ -123,7 +145,6 @@ public class CartModel implements Serializable {
         return -1;
     }
 
-
     public int getProductAmount(String product_id) {
         for (CartObject cartObject : cartList) {
             List<ProductModel> products = cartObject.getProducts();
@@ -137,5 +158,37 @@ public class CartModel implements Serializable {
         return 0;
     }
 
+    public CartObject getSingleOrderByPos(int pos) {
+        try {
+            return cartList.get(pos);
+        } catch (Exception e) {
 
+        }
+
+        return null;
+    }
+
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
+    }
+
+    public String getAddress_id() {
+        return address_id;
+    }
+
+    public void setAddress_id(String address_id) {
+        this.address_id = address_id;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
 }

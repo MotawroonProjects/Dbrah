@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.apps.dbrah.R;
 import com.apps.dbrah.databinding.MainCartRowBinding;
 import com.apps.dbrah.model.cart_models.CartModel;
+import com.apps.dbrah.uis.activity_home.cart_module.FragmentCart;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,11 +52,23 @@ public class MainCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         CartAdapter adapter = new CartAdapter(context, fragment, lang);
         myHolder.binding.recView.setAdapter(adapter);
         adapter.updateList(cartObject.getProducts());
+
+        myHolder.binding.btnOrderNow.setOnClickListener(v -> {
+            if (fragment instanceof FragmentCart){
+                FragmentCart fragmentCart = (FragmentCart) fragment;
+                fragmentCart.sendSingleOrder(list.get(myHolder.getAdapterPosition()),myHolder.getAdapterPosition());
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return list != null ? list.size() : 0;
+    }
+
+    public void removeItem(int pos) {
+        list.remove(pos);
+        notifyItemRemoved(pos);
     }
 
     public static class MyHolder extends RecyclerView.ViewHolder {

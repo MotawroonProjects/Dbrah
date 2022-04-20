@@ -35,6 +35,28 @@ public class ManageCartModel implements Serializable {
         preferences.create_update_cart(context, cartModel);
     }
 
+    public void addAddress(String address_id, Context context) {
+        Preferences preferences = Preferences.getInstance();
+
+        cartModel = preferences.getCart(context);
+        if (cartModel == null) {
+            cartModel = new CartModel();
+        }
+        cartModel.setAddress_id(address_id);
+        preferences.create_update_cart(context, cartModel);
+    }
+
+    public void addUser(String user_id, Context context) {
+        Preferences preferences = Preferences.getInstance();
+
+        cartModel = preferences.getCart(context);
+        if (cartModel == null) {
+            cartModel = new CartModel();
+        }
+        cartModel.setUser_id(user_id);
+        preferences.create_update_cart(context, cartModel);
+    }
+
     public void delete(ProductModel productModel, Context context) {
         Preferences preferences = Preferences.getInstance();
 
@@ -46,6 +68,19 @@ public class ManageCartModel implements Serializable {
         preferences.create_update_cart(context, cartModel);
 
     }
+
+    public void deleteMainCategory(int pos, Context context) {
+        Preferences preferences = Preferences.getInstance();
+
+        cartModel = preferences.getCart(context);
+        if (cartModel == null) {
+            cartModel = new CartModel();
+        }
+        cartModel.removeCategory(pos);
+        preferences.create_update_cart(context, cartModel);
+
+    }
+
 
     public List<CartModel.CartObject> getCartList(Context context) {
         Preferences preferences = Preferences.getInstance();
@@ -61,6 +96,13 @@ public class ManageCartModel implements Serializable {
 
     public int getProductAmount(String product_id) {
         return cartModel.getProductAmount(product_id);
+    }
+
+    public CartModel getCartModel(){
+        if (cartModel!=null){
+            return cartModel;
+        }
+        return null;
     }
 
     public void clear(Context context) {

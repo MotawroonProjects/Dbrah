@@ -138,5 +138,7 @@
     <string name="order_all">إطلب الان</string>
     <string name="upd_address">تعديل العنوان</string>
     <string name="home_work">(المنزل - العمل)...</string>
+    <string name="user_not_found">المستخدم غير موجود</string>
+    <string name="no_prov_aval">لا يوجد مقدمين خدمة متاحين لتلك الخدمات في الوقت الحالي</string>
 
 </resources>

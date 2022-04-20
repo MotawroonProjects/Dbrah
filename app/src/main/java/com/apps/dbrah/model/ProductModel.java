@@ -16,6 +16,7 @@ public class ProductModel implements Serializable {
     private String details_en;
     private String created_at;
     private String updated_at;
+    @SerializedName("qty")
     private int amount = 0;
     private List<Image> images;
     @SerializedName("main_category")

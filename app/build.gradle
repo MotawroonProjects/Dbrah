@@ -6,7 +6,11 @@ plugins {
 android {
     compileSdkVersion 28
     compileSdk 31
-
+    bundle {
+        language {
+            enableSplit = false
+        }
+    }
     defaultConfig {
         applicationId "com.apps.dbrah"
         minSdk 19

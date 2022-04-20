@@ -13,19 +13,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.apps.dbrah.R;
 import com.apps.dbrah.databinding.OrderRowBinding;
+import com.apps.dbrah.model.OrderModel;
 import com.apps.dbrah.uis.activity_home.order_module.FragmentCurrentOrder;
 import com.apps.dbrah.uis.activity_home.order_module.FragmentPreviousOrder;
 
 import java.util.List;
 
 public class OrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<Object> list;
+    private List<OrderModel> list;
     private Context context;
     private LayoutInflater inflater;
     private Fragment fragment;
 
-    public OrderAdapter(List<Object> list, Context context, Fragment fragment) {
-        this.list = list;
+    public OrderAdapter(Context context, Fragment fragment) {
         this.context = context;
         this.fragment = fragment;
         inflater = LayoutInflater.from(context);
@@ -69,7 +69,7 @@ public class OrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
     }
 
-    public void updateList(List<Object> list) {
+    public void updateList(List<OrderModel> list) {
         this.list = list;
         notifyDataSetChanged();
     }

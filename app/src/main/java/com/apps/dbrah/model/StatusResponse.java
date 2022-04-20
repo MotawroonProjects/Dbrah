@@ -4,13 +4,13 @@ import java.io.Serializable;
 
 public class StatusResponse implements Serializable {
     protected int status;
-    protected String message;
+    protected Object msg;
 
     public int getStatus() {
         return status;
     }
 
-    public String getMessage() {
-        return message;
+    public Object getMessage() {
+        return msg;
     }
 }

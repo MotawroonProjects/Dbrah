@@ -7,6 +7,10 @@
         <variable
             name="lang"
             type="String" />
+
+        <variable
+            name="model"
+            type="com.apps.dbrah.model.OrderModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -60,7 +64,7 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
                         android:fontFamily="@font/font_regular"
-                        android:text="#65489"
+                        android:text='@{"#"+model.id}'
                         android:textColor="@color/black2"
                         android:textSize="14sp" />
 
@@ -120,6 +124,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_gravity="center_vertical"
+                        android:padding="3dp"
                         android:src="@drawable/ic_date" />
 
                     <TextView
@@ -129,7 +134,7 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
                         android:fontFamily="@font/font_regular"
-                        android:text="2/2/22222"
+                        android:text=""
                         android:textColor="@color/black2"
                         android:textSize="14sp" />
 
@@ -138,7 +143,10 @@
                         android:layout_height="24dp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="16dp"
-                        android:src="@drawable/ic_time" />
+                        android:padding="3dp"
+                        android:src="@drawable/ic_time"
+
+                        />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -147,7 +155,6 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="4dp"
                         android:fontFamily="@font/font_regular"
-                        android:text="03:30"
                         android:textColor="@color/black2"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -161,8 +168,8 @@
                     android:fontFamily="@font/font_regular"
                     android:text="@string/delivered"
                     android:textColor="@color/grey8"
-                    android:visibility="gone"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -170,8 +177,8 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
-                    android:visibility="gone"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <ImageView
                         android:layout_width="24dp"
@@ -243,31 +250,31 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
-                    android:orientation="horizontal"
-                    android:background="@drawable/rounded_white_stroke_color2"
                     android:layout_marginStart="21dp"
-                    android:layout_marginEnd="21dp"
                     android:layout_marginTop="27dp"
+                    android:layout_marginEnd="21dp"
                     android:layout_marginBottom="13dp"
-                    android:padding="12dp"
-                    android:gravity="center">
+                    android:background="@drawable/rounded_white_stroke_color2"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
 
                     <ImageView
                         android:layout_width="16dp"
                         android:layout_height="16dp"
-                        android:src="@drawable/ic_reorder"
-                        android:layout_gravity="center_vertical" />
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_reorder" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/font_regular"
-                        android:text="@string/re_order"
-                        android:textSize="14sp"
-                        android:textColor="@color/color2"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
-                        android:layout_gravity="center_vertical" />
+                        android:fontFamily="@font/font_regular"
+                        android:text="@string/re_order"
+                        android:textColor="@color/color2"
+                        android:textSize="14sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -295,16 +302,16 @@
                 android:orientation="horizontal">
 
                 <ImageView
+                    image="@{model.category.image}"
                     android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/product" />
+                    android:layout_height="24dp" />
 
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/font_regular"
-                    android:text="canned food"
+                    android:text='@{lang.equals("ar")?model.category.title_ar:model.category.title_en}'
                     android:textColor="@color/black"
                     android:textSize="16sp" />
             </LinearLayout>

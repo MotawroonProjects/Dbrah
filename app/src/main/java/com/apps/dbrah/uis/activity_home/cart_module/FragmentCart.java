@@ -18,7 +18,10 @@ import com.apps.dbrah.adapter.MainCartAdapter;
 import com.apps.dbrah.databinding.FragmentCartBinding;
 import com.apps.dbrah.model.AddressModel;
 import com.apps.dbrah.model.ProductModel;
+import com.apps.dbrah.model.cart_models.CartModel;
+import com.apps.dbrah.model.cart_models.CartSingleModel;
 import com.apps.dbrah.model.cart_models.ManageCartModel;
+import com.apps.dbrah.mvvm.FragmentCartMvvm;
 import com.apps.dbrah.mvvm.GeneralMvvm;
 import com.apps.dbrah.uis.activity_base.BaseFragment;
 import com.apps.dbrah.uis.activity_home.HomeActivity;
@@ -29,11 +32,14 @@ import java.util.ArrayList;
 
 public class FragmentCart extends BaseFragment {
     private HomeActivity activity;
+    private FragmentCartMvvm mvvm;
     private FragmentCartBinding binding;
     private ManageCartModel manageCartModel;
     private MainCartAdapter adapter;
     private GeneralMvvm generalMvvm;
     private AddressModel selectedAddress;
+
+    private int selectedOrderPos = -1;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -60,14 +66,44 @@ public class FragmentCart extends BaseFragment {
     }
 
     private void initView() {
+        mvvm = ViewModelProviders.of(activity).get(FragmentCartMvvm.class);
         binding.setLang(getLang());
         manageCartModel = ManageCartModel.newInstance();
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
         generalMvvm.getOnCartRefreshed().observe(activity, isRefreshed -> {
             refreshCart();
         });
-        generalMvvm.getOnAddressSelectedForOrder().observe(activity,addressModel -> {
+
+        generalMvvm.getOnAddressSelectedForOrder().observe(activity, addressModel -> {
             this.selectedAddress = addressModel;
+        });
+
+        mvvm.getOnAllOrderSentSuccess().observe(this, cartModel -> {
+            generalMvvm.getOnCartRefreshed().setValue(true);
+            for (CartModel.CartObject object : cartModel.getCartList()){
+                for (ProductModel productModel :object.getProducts()){
+                    productModel.setAmount(0);
+                    generalMvvm.getOnCartItemUpdated().setValue(productModel);
+
+                }
+            }
+
+        });
+
+        mvvm.getOnSingleOrderSentSuccess().observe(this, cartSingleModel -> {
+            if (selectedOrderPos != -1) {
+                manageCartModel.deleteMainCategory(selectedOrderPos, activity);
+                generalMvvm.getOnCartRefreshed().setValue(true);
+                for (CartModel.CartObject object : cartSingleModel.getCartList()){
+                    for (ProductModel productModel :object.getProducts()){
+                        productModel.setAmount(0);
+                        generalMvvm.getOnCartItemUpdated().setValue(productModel);
+
+                    }
+                }
+                this.selectedOrderPos = -1;
+
+            }
         });
 
         adapter = new MainCartAdapter(activity, this, getLang());
@@ -76,9 +112,15 @@ public class FragmentCart extends BaseFragment {
         binding.tvNoData.setText(R.string.empty_cart);
         binding.flOrderAll.setOnClickListener(v -> {
             if (getUserModel() != null) {
-                if (selectedAddress!=null){
+                manageCartModel.addUser(getUserModel().getData().getId(), activity);
 
-                }else {
+                if (selectedAddress != null) {
+                    manageCartModel.addAddress(selectedAddress.getId(), activity);
+                    if (manageCartModel.getCartModel()!=null){
+                        mvvm.sendAllOrder(activity,manageCartModel.getCartModel());
+
+                    }
+                } else {
                     generalMvvm.getMyAddressFragmentAction().setValue("forOrder");
                     generalMvvm.onHomeNavigate().setValue(9);
 
@@ -89,7 +131,6 @@ public class FragmentCart extends BaseFragment {
 
             }
         });
-
 
         refreshCart();
 
@@ -107,6 +148,9 @@ public class FragmentCart extends BaseFragment {
             binding.tvNoData.setVisibility(View.GONE);
         } else {
             binding.tvNoData.setVisibility(View.VISIBLE);
+            this.selectedAddress = null;
+            manageCartModel.clear(activity);
+
 
         }
         adapter.updateList(manageCartModel.getCartList(activity));
@@ -123,6 +167,28 @@ public class FragmentCart extends BaseFragment {
         generalMvvm.getOnCartItemUpdated().setValue(productModel);
         manageCartModel.delete(productModel, activity);
         generalMvvm.getOnCartRefreshed().setValue(true);
+
+    }
+
+    public void sendSingleOrder(CartModel.CartObject cartObject, int adapterPosition) {
+        selectedOrderPos = adapterPosition;
+        CartSingleModel cartSingleModel = new CartSingleModel();
+        cartSingleModel.addItem(cartObject);
+        if (getUserModel() != null) {
+            cartSingleModel.setUser_id(getUserModel().getData().getId());
+            if (selectedAddress != null) {
+                cartSingleModel.setAddress_id(selectedAddress.getId());
+                 mvvm.sendSingleOrder(activity, cartSingleModel);
+            } else {
+                generalMvvm.getMyAddressFragmentAction().setValue("forOrder");
+                generalMvvm.onHomeNavigate().setValue(9);
+            }
+
+        } else {
+            generalMvvm.getActionFragmentHomeNavigator().setValue(8);
+
+        }
+
 
     }
 

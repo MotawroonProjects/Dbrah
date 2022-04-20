@@ -200,7 +200,7 @@ public class FragmentMarket extends BaseFragment {
         binding.recViewCategory.setAdapter(categoryAdapter);
 
 
-        recentProductAdapter = new RecentProductAdapter(activity, this);
+        recentProductAdapter = new RecentProductAdapter(activity, this,getLang());
         binding.recViewMostRecentProducts.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false));
         binding.recViewMostRecentProducts.setAdapter(recentProductAdapter);
 

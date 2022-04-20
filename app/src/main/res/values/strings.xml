@@ -137,5 +137,7 @@
     <string name="order_all">Order All</string>
     <string name="upd_address">Update Address</string>
     <string name="home_work">(home - work)...</string>
+    <string name="user_not_found">User not found</string>
+    <string name="no_prov_aval">No providers available for these category right now</string>
 
 </resources>
