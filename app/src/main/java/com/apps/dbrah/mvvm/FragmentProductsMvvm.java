@@ -1,6 +1,7 @@
 package com.apps.dbrah.mvvm;
 
 import android.app.Application;
+import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -113,13 +114,13 @@ public class FragmentProductsMvvm extends AndroidViewModel {
         return subCategoryId;
     }
 
-    public void setCategoryId(String categoryId) {
+    public void setCategoryId(String categoryId,Context context) {
         getCategoryId().setValue(categoryId);
-        getSubCategory(categoryId);
+        getSubCategory(categoryId,context);
     }
 
 
-    public void getSubCategory(String cat_id) {
+    public void getSubCategory(String cat_id,Context context) {
         getOnSubCategoryDataSuccess().setValue(new ArrayList<>());
         Api.getService(Tags.base_url).getSubCategory(cat_id)
                 .subscribeOn(Schedulers.io())
@@ -141,7 +142,7 @@ public class FragmentProductsMvvm extends AndroidViewModel {
                                     list.add(0, model);
                                 }
                                 getCategoryId().setValue(cat_id);
-                                searchProduct(getQuery().getValue());
+                                searchProduct(getQuery().getValue(),context);
                                 getOnSubCategoryDataSuccess().setValue(list);
                             }
                         }
@@ -155,7 +156,7 @@ public class FragmentProductsMvvm extends AndroidViewModel {
                 });
     }
 
-    public void searchProduct(String query) {
+    public void searchProduct(String query,Context context) {
         getIsLoading().postValue(true);
 
         Api.getService(Tags.base_url).searchByCatProduct(getCategoryId().getValue(), getSubCategoryId().getValue(), query)
@@ -172,7 +173,7 @@ public class FragmentProductsMvvm extends AndroidViewModel {
                         if (response.isSuccessful() && response.body() != null) {
                             if (response.body().getData() != null && response.body().getStatus() == 200) {
 
-                                prepareProducts(response.body().getData());
+                                prepareProducts(response.body().getData(),context);
                             }
                         }
                     }
@@ -185,10 +186,10 @@ public class FragmentProductsMvvm extends AndroidViewModel {
                 });
     }
 
-    private void prepareProducts(List<ProductModel> data) {
+    private void prepareProducts(List<ProductModel> data, Context context) {
         for (int index = 0; index < data.size(); index++) {
             ProductModel productModel = data.get(index);
-            productModel.setAmount(manageCartModel.getProductAmount(productModel.getId()));
+            productModel.setAmount(manageCartModel.getProductAmount(productModel.getId(),context));
             data.set(index, productModel);
         }
         getIsLoading().setValue(false);

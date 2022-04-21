@@ -7,6 +7,10 @@
         <variable
             name="lang"
             type="String" />
+        <variable
+            name="model"
+            type="com.apps.dbrah.model.OrderModel.Offers" />
+        <import type="android.view.View"/>
     </data>
 
 
@@ -28,7 +32,9 @@
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:src="@drawable/circle_avatar" />
+                android:src="@drawable/circle_avatar"
+                user_image="@{model.provider.image}"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -41,9 +47,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/font_bold"
-                    android:text="Happiness Store"
+                    android:text="@{model.provider.fake_name}"
                     android:textColor="@color/black2"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:lines="1"
+                    android:ellipsize="end"
+                    />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -54,15 +63,24 @@
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="16dp"
-                        android:layout_gravity="center_vertical">
+                        android:layout_gravity="center_vertical"
 
-                        <me.zhanghai.android.materialratingbar.MaterialRatingBar
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:numStars="5"
-                            android:rating="3.5"
-                            android:theme="@style/RatingBar" />
+                        >
+
+                        <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                            android:id="@+id/rateBar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:srb_fillColor="@color/color4"
+                            app:srb_numberOfStars="5"
+                            app:srb_starBackgroundColor="@color/grey14"
+                            app:srb_starBorderWidth="2"
+                            app:srb_starSize="17dp"
+                            app:srb_starCornerRadius="3"
+                            app:srb_isIndicator="true"
+                            rate="@{model.provider.rate}"
+
+                            />
                     </FrameLayout>
 
                     <androidx.legacy.widget.Space
@@ -92,7 +110,7 @@
                             android:layout_width="9dp"
                             android:layout_height="9dp"
                             android:layout_gravity="center_vertical"
-                            android:rotation='@{lang.equals("ar")?180:0}'
+                            android:rotation='@{lang.equals("ar")?0:180}'
                             android:src="@drawable/ic_left_arrow1"
                             app:tint="@color/color2" />
                     </LinearLayout>
@@ -103,23 +121,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="7dp"
-            android:layout_marginTop="17dp"
-            android:layout_marginEnd="7dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="12dp"
             android:background="@drawable/small_rounded_white"
-            android:orientation="vertical">
+            android:orientation="vertical"
+
+            >
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginTop="9dp"
+                android:layout_marginTop="8dp"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
-                android:paddingTop="8dp">
+                android:visibility="@{model.notFound?View.VISIBLE:View.GONE,default=gone}"
+
+                >
 
                 <ImageView
                     android:layout_width="12dp"
@@ -139,15 +161,17 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginTop="11dp"
+                android:layout_marginTop="8dp"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
-                android:paddingBottom="8dp">
+                android:visibility="@{model.other?View.VISIBLE:View.GONE,default=gone}"
+
+                >
 
                 <ImageView
                     android:layout_width="12dp"
@@ -167,14 +191,17 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
-                android:paddingBottom="8dp">
+                android:layout_marginTop="8dp"
+                android:visibility="@{model.less?View.VISIBLE:View.GONE,default=gone}"
+
+                >
 
                 <ImageView
                     android:layout_width="12dp"
@@ -220,7 +247,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:fontFamily="@font/font_bold"
-                    android:text="350"
+                    android:text='@{model.total_price}'
                     android:textColor="@color/black2"
                     android:textSize="18sp" />
 

@@ -110,7 +110,7 @@ public class FragmentProducts extends BaseFragment {
                 binding.recViewMain.setAdapter(mainProductCategoryAdapter);
                 mainProductCategoryAdapter.setSelectedPos(pos);
                 mainProductCategoryAdapter.updateList(list);
-                mvvm.setCategoryId(mvvm.getOnCategoryDataSuccess().getValue().get(pos).getId());
+                mvvm.setCategoryId(mvvm.getOnCategoryDataSuccess().getValue().get(pos).getId(),activity);
 
             }
 
@@ -156,7 +156,7 @@ public class FragmentProducts extends BaseFragment {
         });
 
         binding.swipeRefresh.setOnRefreshListener(() -> {
-            mvvm.searchProduct(mvvm.getQuery().getValue());
+            mvvm.searchProduct(mvvm.getQuery().getValue(),activity);
         });
         mainProductCategoryAdapter = new MainProductCategoryAdapter(activity, this, getLang());
         binding.recViewMain.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false));
@@ -193,7 +193,7 @@ public class FragmentProducts extends BaseFragment {
                 .distinctUntilChanged()
                 .subscribe(query -> {
                     mvvm.getQuery().postValue(query);
-                    mvvm.searchProduct(query);
+                    mvvm.searchProduct(query,activity);
                 });
 
 
@@ -201,12 +201,12 @@ public class FragmentProducts extends BaseFragment {
 
 
     public void getSubCat(CategoryModel categoryModel) {
-        mvvm.setCategoryId(categoryModel.getId());
+        mvvm.setCategoryId(categoryModel.getId(),activity);
     }
 
     public void showProducts(CategoryModel categoryModel) {
         mvvm.getSubCategoryId().setValue(categoryModel.getId());
-        mvvm.searchProduct(mvvm.getQuery().getValue());
+        mvvm.searchProduct(mvvm.getQuery().getValue(),activity);
     }
 
     public void showProductDetails(ProductModel productModel) {

@@ -3,6 +3,7 @@ package com.apps.dbrah.uis.activity_home.order_module;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.apps.dbrah.R;
 import com.apps.dbrah.adapter.OrderAdapter;
 import com.apps.dbrah.databinding.FragmentCurrentOrderBinding;
+import com.apps.dbrah.model.OrderModel;
 import com.apps.dbrah.mvvm.FragmentCurrentOrderMvvm;
 import com.apps.dbrah.mvvm.GeneralMvvm;
 import com.apps.dbrah.uis.activity_base.BaseFragment;
@@ -58,16 +60,35 @@ public class FragmentCurrentOrder extends BaseFragment {
 
     private void initView() {
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
-        mvvm = ViewModelProviders.of(activity).get(FragmentCurrentOrderMvvm.class);
-        adapter = new OrderAdapter( activity, this);
+        mvvm = ViewModelProviders.of(this).get(FragmentCurrentOrderMvvm.class);
+        adapter = new OrderAdapter(activity, this, getLang());
         binding.recViewLayout.recView.setLayoutManager(new LinearLayoutManager(activity));
         binding.recViewLayout.recView.setAdapter(adapter);
+        binding.recViewLayout.swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
+        binding.recViewLayout.tvNoData.setText(R.string.no_orders);
+        mvvm.getIsLoading().observe(activity, isLoading -> {
+            binding.recViewLayout.swipeRefresh.setRefreshing(isLoading);
+        });
+        mvvm.getOnDataSuccess().observe(this, list -> {
+            if (list.size() > 0) {
+                binding.recViewLayout.tvNoData.setVisibility(View.GONE);
+            } else {
+                binding.recViewLayout.tvNoData.setVisibility(View.VISIBLE);
+
+            }
+            if (adapter != null) {
+                adapter.updateList(list);
+            }
+        });
+        binding.recViewLayout.swipeRefresh.setOnRefreshListener(() -> mvvm.getOrders(getUserModel(), "new"));
+        mvvm.getOrders(getUserModel(), "new");
 
     }
 
 
-    public void navigateToDetails() {
+    public void navigateToDetails(OrderModel orderModel) {
         Intent intent = new Intent(activity, CurrentOrderDetailsActivity.class);
+        intent.putExtra("data",orderModel.getId());
         startActivity(intent);
     }
 }

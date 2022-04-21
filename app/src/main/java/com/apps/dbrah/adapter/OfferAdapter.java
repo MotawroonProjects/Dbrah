@@ -13,19 +13,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.apps.dbrah.R;
 import com.apps.dbrah.databinding.OfferDetialsRowBinding;
 import com.apps.dbrah.databinding.OfferRowBinding;
+import com.apps.dbrah.model.OrderModel;
 import com.apps.dbrah.uis.activity_current_order_details.CurrentOrderDetailsActivity;
 
 import java.util.List;
 
 public class OfferAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<Object> list;
+    private List<OrderModel.Offers> list;
     private Context context;
     private LayoutInflater inflater;
+    private String lang;
 
-    public OfferAdapter(List<Object> list, Context context) {
-        this.list = list;
+    public OfferAdapter(Context context,String lang) {
         this.context = context;
         inflater = LayoutInflater.from(context);
+        this.lang = lang;
     }
 
     @NonNull
@@ -38,21 +40,14 @@ public class OfferAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MyHolder myHolder = (MyHolder) holder;
-        myHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (context instanceof CurrentOrderDetailsActivity) {
-                    CurrentOrderDetailsActivity currentOrderDetailsActivity = (CurrentOrderDetailsActivity)
-                            context;
-                    currentOrderDetailsActivity.show();
-                }
-            }
-        });
+        myHolder.binding.setLang(lang);
+        myHolder.binding.setModel(list.get(position));
+
     }
 
     @Override
     public int getItemCount() {
-        return 5;
+        return list!=null?list.size():0;
     }
 
     public static class MyHolder extends RecyclerView.ViewHolder {
@@ -65,7 +60,7 @@ public class OfferAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
     }
 
-    public void updateList(List<Object> list) {
+    public void updateList(List<OrderModel.Offers> list) {
         this.list = list;
         notifyDataSetChanged();
     }

@@ -94,8 +94,15 @@ public class ManageCartModel implements Serializable {
         return cartModel.getCartList();
     }
 
-    public int getProductAmount(String product_id) {
-        return cartModel.getProductAmount(product_id);
+    public int getProductAmount(String product_id,Context context) {
+        Preferences preferences = Preferences.getInstance();
+        cartModel = preferences.getCart(context);
+        if (cartModel!=null){
+            return cartModel.getProductAmount(product_id);
+        }else {
+            return 0;
+        }
+
     }
 
     public CartModel getCartModel(){

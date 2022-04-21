@@ -217,8 +217,8 @@ public class FragmentMarket extends BaseFragment {
     private void getData() {
         mvvm.getSlider();
         mvvm.getCategory();
-        mvvm.getMostSaleProduct();
-        mvvm.getRecentProduct();
+        mvvm.getMostSaleProduct(activity);
+        mvvm.getRecentProduct(activity);
 
     }
 

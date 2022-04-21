@@ -1,24 +1,17 @@
 package com.apps.dbrah.mvvm;
 
 import android.app.Application;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
-import com.apps.dbrah.R;
 import com.apps.dbrah.model.OrderModel;
 import com.apps.dbrah.model.OrdersModel;
+import com.apps.dbrah.model.SingleOrderDataModel;
 import com.apps.dbrah.model.UserModel;
-import com.apps.dbrah.model.cart_models.CartModel;
-import com.apps.dbrah.model.cart_models.CartResponse;
-import com.apps.dbrah.model.cart_models.CartSingleModel;
 import com.apps.dbrah.remote.Api;
-import com.apps.dbrah.share.Common;
 import com.apps.dbrah.tags.Tags;
 
 import java.io.IOException;
@@ -32,17 +25,17 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 
-public class FragmentCurrentOrderMvvm extends AndroidViewModel {
+public class FragmentOrderDetailsMvvm extends AndroidViewModel {
 
     private CompositeDisposable disposable = new CompositeDisposable();
     private MutableLiveData<Boolean> isLoading;
-    private MutableLiveData<List<OrderModel>> onDataSuccess;
+    private MutableLiveData<OrderModel> onDataSuccess;
 
-    public FragmentCurrentOrderMvvm(@NonNull Application application) {
+    public FragmentOrderDetailsMvvm(@NonNull Application application) {
         super(application);
     }
 
-    public MutableLiveData<List<OrderModel>> getOnDataSuccess() {
+    public MutableLiveData<OrderModel> getOnDataSuccess() {
         if (onDataSuccess == null) {
             onDataSuccess = new MutableLiveData<>();
         }
@@ -56,37 +49,26 @@ public class FragmentCurrentOrderMvvm extends AndroidViewModel {
         return isLoading;
     }
 
+    public void getOrderDetails(String order_id) {
 
-    public void getOrders(UserModel userModel,String type) {
-        if (userModel == null) {
-            getIsLoading().setValue(false);
-            getOnDataSuccess().setValue(new ArrayList<>());
-            return;
-        }
         getIsLoading().setValue(true);
         Api.getService(Tags.base_url)
-                .getOrders(userModel.getData().getId())
+                .getOrderDetails(order_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<Response<OrdersModel>>() {
+                .subscribe(new SingleObserver<Response<SingleOrderDataModel>>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
                         disposable.add(d);
                     }
 
                     @Override
-                    public void onSuccess(@NonNull Response<OrdersModel> response) {
+                    public void onSuccess(@NonNull Response<SingleOrderDataModel> response) {
                         getIsLoading().setValue(false);
                         if (response.isSuccessful()) {
                             if (response.body() != null) {
                                 if (response.body().getStatus() == 200) {
-                                    if (type.equals("new")){
-                                        getOnDataSuccess().setValue(response.body().getData().getNew_orders());
-
-                                    }else {
-                                        getOnDataSuccess().setValue(response.body().getData().getOld());
-
-                                    }
+                                    prepareData(response.body().getData());
                                 }
                             }
 
@@ -106,6 +88,30 @@ public class FragmentCurrentOrderMvvm extends AndroidViewModel {
                         getIsLoading().setValue(false);
                     }
                 });
+    }
+
+    private void prepareData(OrderModel data) {
+        List<OrderModel.Offers> offersList = new ArrayList<>();
+        for (OrderModel.Offers offers : data.getOffers()) {
+            for (OrderModel.OfferDetail offerDetail : offers.getOffer_details()) {
+                if (offerDetail.getType().equals("not_found")) {
+                    offers.setNotFound(true);
+                } else if (offerDetail.getType().equals("other")) {
+                    offers.setOther(true);
+
+                } else if (offerDetail.getType().equals("price")) {
+                    offers.setPrice(true);
+                } else if (offerDetail.getType().equals("less")) {
+                    offers.setLess(true);
+                }
+
+
+            }
+            offersList.add(offers);
+        }
+        data.setOffers(offersList);
+        getOnDataSuccess().setValue(data);
+
     }
 
 

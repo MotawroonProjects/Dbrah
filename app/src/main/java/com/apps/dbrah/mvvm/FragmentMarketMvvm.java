@@ -160,7 +160,7 @@ public class FragmentMarketMvvm extends AndroidViewModel {
                 });
     }
 
-    public void getRecentProduct() {
+    public void getRecentProduct(Context context) {
         getIsLoadingRecentProduct().setValue(true);
         Api.getService(Tags.base_url).getRecentProduct()
                 .subscribeOn(Schedulers.io())
@@ -175,7 +175,7 @@ public class FragmentMarketMvvm extends AndroidViewModel {
                     public void onSuccess(@NonNull Response<RecentProductDataModel> response) {
                         if (response.isSuccessful() && response.body() != null) {
                             if (response.body().getData() != null && response.body().getStatus() == 200) {
-                                prepareRecentData(response.body().getData());
+                                prepareRecentData(response.body().getData(),context);
                             }
                         }
                     }
@@ -188,7 +188,7 @@ public class FragmentMarketMvvm extends AndroidViewModel {
     }
 
 
-    public void getMostSaleProduct() {
+    public void getMostSaleProduct(Context context) {
         getIsLoadingMostSaleProduct().setValue(true);
         Api.getService(Tags.base_url).getMostSaleProduct()
                 .subscribeOn(Schedulers.io())
@@ -203,7 +203,7 @@ public class FragmentMarketMvvm extends AndroidViewModel {
                     public void onSuccess(@NonNull Response<RecentProductDataModel> response) {
                         if (response.isSuccessful() && response.body() != null) {
                             if (response.body().getData() != null && response.body().getStatus() == 200) {
-                                prepareMostSaleData(response.body().getData());
+                                prepareMostSaleData(response.body().getData(),context);
                             }
                         }
                     }
@@ -215,10 +215,10 @@ public class FragmentMarketMvvm extends AndroidViewModel {
                 });
     }
 
-    private void prepareRecentData(List<ProductModel> data) {
+    private void prepareRecentData(List<ProductModel> data,Context context) {
         for (int index = 0; index < data.size(); index++) {
             ProductModel productModel = data.get(index);
-            productModel.setAmount(manageCartModel.getProductAmount(productModel.getId()));
+            productModel.setAmount(manageCartModel.getProductAmount(productModel.getId(),context));
             data.set(index, productModel);
         }
         getIsLoadingRecentProduct().setValue(false);
@@ -227,10 +227,10 @@ public class FragmentMarketMvvm extends AndroidViewModel {
     }
 
 
-    private void prepareMostSaleData(List<ProductModel> data) {
+    private void prepareMostSaleData(List<ProductModel> data,Context context) {
         for (int index = 0; index < data.size(); index++) {
             ProductModel productModel = data.get(index);
-            productModel.setAmount(manageCartModel.getProductAmount(productModel.getId()));
+            productModel.setAmount(manageCartModel.getProductAmount(productModel.getId(),context));
             data.set(index, productModel);
         }
         getIsLoadingMostSaleProduct().setValue(false);

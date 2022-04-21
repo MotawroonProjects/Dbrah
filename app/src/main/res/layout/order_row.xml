@@ -11,6 +11,8 @@
         <variable
             name="model"
             type="com.apps.dbrah.model.OrderModel" />
+
+        <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -95,7 +97,7 @@
                             android:layout_width="9dp"
                             android:layout_height="9dp"
                             android:layout_gravity="center_vertical"
-                            android:rotation='@{lang.equals("ar")?180:0}'
+                            android:rotation='@{lang.equals("ar")?0:180}'
                             android:src="@drawable/ic_left_arrow1"
                             app:tint="@color/color2" />
                     </LinearLayout>
@@ -128,13 +130,13 @@
                         android:src="@drawable/ic_date" />
 
                     <TextView
+                        createDate="@{model.created_at}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
                         android:fontFamily="@font/font_regular"
-                        android:text=""
                         android:textColor="@color/black2"
                         android:textSize="14sp" />
 
@@ -149,6 +151,7 @@
                         />
 
                     <TextView
+                        createTime="@{model.created_at}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -156,65 +159,11 @@
                         android:layout_marginEnd="4dp"
                         android:fontFamily="@font/font_regular"
                         android:textColor="@color/black2"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+
+                        />
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:fontFamily="@font/font_regular"
-                    android:text="@string/delivered"
-                    android:textColor="@color/grey8"
-                    android:textSize="12sp"
-                    android:visibility="gone" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/ic_date" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:fontFamily="@font/font_regular"
-                        android:text="2/2/22222"
-                        android:textColor="@color/black2"
-                        android:textSize="14sp" />
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="16dp"
-                        android:src="@drawable/ic_time" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="4dp"
-                        android:fontFamily="@font/font_regular"
-                        android:text="03:30"
-                        android:textColor="@color/black2"
-                        android:textSize="14sp" />
-                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -228,20 +177,23 @@
                     <ProgressBar
                         android:id="@+id/seekbar"
                         style="?android:attr/progressBarStyleHorizontal"
+                        orderProgress="@{model.status}"
                         android:layout_width="0dp"
                         android:layout_height="10dp"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:progress="100"
-                        android:progressDrawable="@drawable/small_rounded_primary" />
+                        android:indeterminate="false"
+                        android:indeterminateOnly="false"
+                        android:max="7"
+                        android:progressDrawable="@drawable/horz_progress_bar" />
 
                     <TextView
+                        status="@{model.status}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginStart="26dp"
+                        android:layout_marginStart="16dp"
                         android:fontFamily="@font/font_bold"
-                        android:text="@string/done"
                         android:textColor="@color/black2"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -257,7 +209,8 @@
                     android:background="@drawable/rounded_white_stroke_color2"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:padding="12dp">
+                    android:padding="12dp"
+                    android:visibility='@{model.status.equals("delivered")?View.VISIBLE:(model.status.equals("rejected")?View.VISIBLE:View.GONE),default=gone}'>
 
                     <ImageView
                         android:layout_width="16dp"

@@ -107,7 +107,7 @@
     <string name="preparing">جاري التحضير</string>
     <string name="on_the_way">فى الطريق</string>
     <string name="edit">تعديل</string>
-    <string name="collecting_packages_from_suppliers">تجميع الطرود من الموردين</string>
+    <string name="collecting_packages_from_suppliers">تجميع الطرود\n من الموردين</string>
     <string name="show_offer">إظهار العرض</string>
     <string name="some_products_are_not_available">بعض المنتجات غير متوفرة</string>
     <string name="there_are_other_brand_to_some_products">هناك ماركات أخرى لبعض المنتجات</string>
@@ -140,5 +140,10 @@
     <string name="home_work">(المنزل - العمل)...</string>
     <string name="user_not_found">المستخدم غير موجود</string>
     <string name="no_prov_aval">لا يوجد مقدمين خدمة متاحين لتلك الخدمات في الوقت الحالي</string>
+    <string name="new1">طلب جديد</string>
+    <string name="new_offer">عرض جديد</string>
+    <string name="offer_accepted">تم قبول العرض</string>
+    <string name="rejected">تم الرفض</string>
+    <string name="no_orders">لا توجد طلبات لعرضها</string>
 
 </resources>

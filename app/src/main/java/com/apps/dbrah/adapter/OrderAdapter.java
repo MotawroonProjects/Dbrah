@@ -24,11 +24,13 @@ public class OrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private Context context;
     private LayoutInflater inflater;
     private Fragment fragment;
+    private String lang;
 
-    public OrderAdapter(Context context, Fragment fragment) {
+    public OrderAdapter(Context context, Fragment fragment,String lang) {
         this.context = context;
         this.fragment = fragment;
         inflater = LayoutInflater.from(context);
+        this.lang = lang;
 
     }
 
@@ -42,21 +44,22 @@ public class OrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MyHolder myHolder = (MyHolder) holder;
-
+        myHolder.binding.setLang(lang);
+        myHolder.binding.setModel(list.get(position));
         myHolder.binding.llDetails.setOnClickListener(view -> {
             if (fragment instanceof FragmentCurrentOrder) {
                 FragmentCurrentOrder fragmentCurrentOrder = (FragmentCurrentOrder) fragment;
-                fragmentCurrentOrder.navigateToDetails();
+                fragmentCurrentOrder.navigateToDetails(list.get(myHolder.getAdapterPosition()));
             } else if (fragment instanceof FragmentPreviousOrder) {
                 FragmentPreviousOrder fragmentPreviousOrder = (FragmentPreviousOrder) fragment;
-                fragmentPreviousOrder.navigateToDetails();
+                fragmentPreviousOrder.navigateToDetails(list.get(myHolder.getAdapterPosition()));
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return 4;
+        return list!=null?list.size():0;
     }
 
     public static class MyHolder extends RecyclerView.ViewHolder {

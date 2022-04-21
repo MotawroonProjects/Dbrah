@@ -1,4 +1,4 @@
-package com.apps.dbrah.uis.activity_preview;
+package com.apps.dbrah.uis.activity_offer_details;
 
 import android.os.Bundle;
 
@@ -14,7 +14,7 @@ import com.apps.dbrah.uis.activity_base.BaseActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OfferDetialsActivity extends BaseActivity {
+public class OfferDetailsActivity extends BaseActivity {
     private ActivityOfferDetialsBinding binding;
     private OfferDetialsAdapter offerDetialsAdapter;
     private List<Object> offerList;

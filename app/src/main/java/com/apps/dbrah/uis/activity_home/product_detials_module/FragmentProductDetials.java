@@ -100,7 +100,7 @@ public class FragmentProductDetials extends BaseFragment {
         fragmentProductDetailsMvvm.getOnDataSuccess().observe(this, productModel -> {
             if (productModel != null) {
                 FragmentProductDetials.this.productModel = productModel;
-                amount = manageCartModel.getProductAmount(FragmentProductDetials.this.productModel.getId());
+                amount = manageCartModel.getProductAmount(FragmentProductDetials.this.productModel.getId(),activity);
                 binding.setAmount(amount);
                 FragmentProductDetials.this.productModel.setAmount(amount);
                 updateData(FragmentProductDetials.this.productModel);
