@@ -9,6 +9,7 @@ import com.apps.dbrah.model.NotificationDataModel;
 import com.apps.dbrah.model.PlaceGeocodeData;
 import com.apps.dbrah.model.SearchHomeDataModel;
 import com.apps.dbrah.model.SingleAddressData;
+import com.apps.dbrah.model.SingleOfferModel;
 import com.apps.dbrah.model.SingleOrderDataModel;
 import com.apps.dbrah.model.SingleProductModel;
 import com.apps.dbrah.model.SliderDataModel;
@@ -168,5 +169,8 @@ public interface Service {
 
     @GET("api/orderDetails")
     Single<Response<SingleOrderDataModel>> getOrderDetails(@Query("order_id") String order_id);
+
+    @GET("api/offerDetails")
+    Single<Response<SingleOfferModel>> getOfferDetails(@Query("offer_id") String offer_id);
 
 }

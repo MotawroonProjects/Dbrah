@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.apps.dbrah.R;
@@ -34,6 +35,7 @@ public class CurrentOrderDetailsActivity extends BaseActivity {
     private void getDataFromIntent() {
         Intent intent = getIntent();
         order_id = intent.getStringExtra("data");
+        Log.e("order_id",order_id+"__");
 
     }
 

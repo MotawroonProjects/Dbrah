@@ -50,7 +50,7 @@ public class FragmentOrderDetailsMvvm extends AndroidViewModel {
     }
 
     public void getOrderDetails(String order_id) {
-
+        Log.e("order_id", order_id);
         getIsLoading().setValue(true);
         Api.getService(Tags.base_url)
                 .getOrderDetails(order_id)
@@ -96,19 +96,23 @@ public class FragmentOrderDetailsMvvm extends AndroidViewModel {
             for (OrderModel.OfferDetail offerDetail : offers.getOffer_details()) {
                 if (offerDetail.getType().equals("not_found")) {
                     offers.setNotFound(true);
-                } else if (offerDetail.getType().equals("other")) {
+                }
+                if (offerDetail.getType().equals("other")) {
                     offers.setOther(true);
-
-                } else if (offerDetail.getType().equals("price")) {
+                }
+                if (offerDetail.getType().equals("price")) {
                     offers.setPrice(true);
-                } else if (offerDetail.getType().equals("less")) {
+                }
+                if (offerDetail.getType().equals("less")) {
                     offers.setLess(true);
                 }
 
 
             }
             offersList.add(offers);
+
         }
+
         data.setOffers(offersList);
         getOnDataSuccess().setValue(data);
 
