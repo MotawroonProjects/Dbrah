@@ -145,5 +145,7 @@
     <string name="offer_accepted">تم قبول العرض</string>
     <string name="rejected">تم الرفض</string>
     <string name="no_orders">لا توجد طلبات لعرضها</string>
-
+    <string name="not_available">غير متاح</string>
+    <string name="alternative_product">منتج بديل</string>
+    <string name="less_quantitiy">كميات أقل</string>
 </resources>

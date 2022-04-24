@@ -3,7 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <variable
+            name="lang"
+            type="String" />
+        <import type="android.view.View"/>
+<variable
 
+    name="model"
+    type="com.apps.dbrah.model.OrderModel.OfferDetail" />
     </data>
 
     <LinearLayout
@@ -25,7 +32,7 @@
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/ic_date"
+                image="@{model.product.main_image}"
                 app:riv_corner_radius="8dp" />
 
             <TextView
@@ -35,7 +42,7 @@
                 android:layout_marginStart="13dp"
                 android:layout_marginEnd="13dp"
                 android:fontFamily="@font/font_regular"
-                android:text="product name"
+                android:text='@{lang.equals("ar")?model.product.title_ar:model.product.title_en}'
                 android:textColor="@color/black2"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -58,13 +65,14 @@
                 android:textSize="14sp" />
 
             <TextView
+                android:id="@+id/tvQunatity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
                 android:fontFamily="@font/font_bold"
-                android:text="2 X"
+                android:text='@{model.qty+"X"}'
                 android:textColor="@color/black2"
                 android:textSize="18sp" />
 
@@ -76,11 +84,13 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility='@{model.type.equals("price")?View.GONE:View.VISIBLE,default=gone}'
                 android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="12dp"
                     android:layout_height="12dp"
+                    type="@{model.type}"
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/circle_primary" />
 
@@ -90,7 +100,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="8dp"
                     android:fontFamily="@font/font_regular"
-                    android:text="Not available"
+                    type="@{model.type}"
                     android:textColor="@color/black2"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -103,6 +113,7 @@
             android:layout_marginStart="18dp"
             android:layout_marginTop="13dp"
             android:layout_marginEnd="18dp"
+            android:visibility='@{model.type.equals("price")||model.type.equals("not_found")?View.GONE:View.VISIBLE,default=gone}'
             android:orientation="horizontal">
 
             <TextView
@@ -121,7 +132,7 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
                 android:fontFamily="@font/font_bold"
-                android:text="2 X"
+                android:text='@{model.available_qty+"X"}'
                 android:textColor="@color/black2"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -132,6 +143,7 @@
             android:layout_marginStart="6dp"
             android:layout_marginTop="18dp"
             android:layout_marginEnd="6dp"
+            android:visibility='@{model.type.equals("other")?View.VISIBLE:View.GONE,default=gone}'
             android:background="@drawable/rounded_color1"
             android:orientation="horizontal">
 
@@ -141,7 +153,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:src="@drawable/ic_date"
+               image="@{model.other_product.main_image}"
                 app:riv_corner_radius="10dp"
                 app:riv_mutate_background="true" />
 
@@ -152,7 +164,7 @@
                 android:layout_marginStart="14dp"
                 android:layout_marginEnd="20dp"
                 android:fontFamily="@font/font_regular"
-                android:text="Product name"
+                android:text='@{lang.equals("ar")?model.other_product.title_ar:model.other_product.title_en}'
                 android:textColor="@color/black2"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -182,7 +194,7 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
                 android:fontFamily="@font/font_regular"
-                android:text="30"
+                android:text="@{model.price}"
                 android:textColor="@color/black2"
                 android:textSize="18sp" />
 
@@ -216,7 +228,7 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
                 android:fontFamily="@font/font_bold"
-                android:text="150"
+                android:text="@{model.total_price}"
                 android:textColor="@color/black2"
                 android:textSize="18sp" />
 

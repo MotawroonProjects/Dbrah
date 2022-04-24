@@ -89,16 +89,16 @@ public class OrderModel implements Serializable {
         this.offers = offers;
     }
 
-    public static class Details implements Serializable{
-       private String id;
-       private String order_id;
-       private String product_id;
-       private String qty;
-       private String category_id;
-       private String sub_category_id;
-       private String user_id;
-       private String created_at;
-       private String updated_at;
+    public static class Details implements Serializable {
+        private String id;
+        private String order_id;
+        private String product_id;
+        private String qty;
+        private String category_id;
+        private String sub_category_id;
+        private String user_id;
+        private String created_at;
+        private String updated_at;
 
         public String getId() {
             return id;
@@ -137,7 +137,7 @@ public class OrderModel implements Serializable {
         }
     }
 
-    public static class Offers implements Serializable{
+    public static class Offers implements Serializable {
         private String id;
         private String order_id;
         private String provider_id;
@@ -246,6 +246,7 @@ public class OrderModel implements Serializable {
         private String created_at;
         private String updated_at;
         private ProductModel product;
+        private ProductModel other_product;
         private int new_qty;
 
         public String getId() {
@@ -300,9 +301,14 @@ public class OrderModel implements Serializable {
             return product;
         }
 
+        public ProductModel getOther_product() {
+            return other_product;
+        }
+
         public int getNew_qty() {
             return new_qty;
         }
     }
+
 
 }

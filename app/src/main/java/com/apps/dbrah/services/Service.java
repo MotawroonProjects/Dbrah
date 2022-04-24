@@ -187,4 +187,9 @@ public interface Service {
 
 
 
+    @FormUrlEncoded
+    @POST("api/updateOfferStatus")
+    Single<Response<StatusResponse>> acceptRefuseOffer(@Field("offer_id") String offer_id,
+                                                       @Field("status") String status);
+
 }

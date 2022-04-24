@@ -112,8 +112,9 @@ public class FragmentMyAddresses extends BaseFragment {
         binding.swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
 
         binding.swipeRefresh.setOnRefreshListener(() -> mvvm.getAddresses(getUserModel().getData().getId()));
-        mvvm.getAddresses(getUserModel().getData().getId());
-
+        if (getUserModel() != null) {
+            mvvm.getAddresses(getUserModel().getData().getId());
+        }
     }
 
 

@@ -144,5 +144,8 @@
     <string name="offer_accepted">Offer accepted</string>
     <string name="rejected">Rejected</string>
     <string name="no_orders">No Orders To Show</string>
+    <string name="not_available">Not available</string>
+    <string name="alternative_product">Alternative Product</string>
+    <string name="less_quantitiy">Smaller Quantities</string>
 
 </resources>

@@ -1,5 +1,6 @@
 package com.apps.dbrah.uis.activity_home.order_module;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -23,6 +26,7 @@ import com.apps.dbrah.mvvm.GeneralMvvm;
 import com.apps.dbrah.uis.activity_base.BaseFragment;
 import com.apps.dbrah.uis.activity_current_order_details.CurrentOrderDetailsActivity;
 import com.apps.dbrah.uis.activity_home.HomeActivity;
+import com.apps.dbrah.uis.activity_previous_order_details.PreviousOrderDetailsActivity;
 
 import java.util.ArrayList;
 
@@ -33,6 +37,7 @@ public class FragmentCurrentOrder extends BaseFragment {
     private HomeActivity activity;
     private FragmentCurrentOrderBinding binding;
     private OrderAdapter adapter;
+    private ActivityResultLauncher<Intent> launcher;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -59,6 +64,19 @@ public class FragmentCurrentOrder extends BaseFragment {
     }
 
     private void initView() {
+        launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (result.getResultCode() == Activity.RESULT_OK) {
+                mvvm.getOrders(getUserModel(), "new");
+
+                if (result.getData()!=null&&result.getData().getStringExtra("data") != null) {
+
+                    Intent intent = new Intent(activity, PreviousOrderDetailsActivity.class);
+
+                    intent.putExtra("data", result.getData());
+                    launcher.launch(intent);
+                }
+            }
+        });
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
         mvvm = ViewModelProviders.of(this).get(FragmentCurrentOrderMvvm.class);
         adapter = new OrderAdapter(activity, this, getLang());
@@ -87,8 +105,14 @@ public class FragmentCurrentOrder extends BaseFragment {
 
 
     public void navigateToDetails(OrderModel orderModel) {
-        Intent intent = new Intent(activity, CurrentOrderDetailsActivity.class);
-        intent.putExtra("data",orderModel.getId());
-        startActivity(intent);
+
+        Intent intent;
+        if (orderModel.getStatus().equals("new") || orderModel.getStatus().equals("offered")) {
+            intent = new Intent(activity, CurrentOrderDetailsActivity.class);
+        } else {
+            intent = new Intent(activity, PreviousOrderDetailsActivity.class);
+        }
+        intent.putExtra("data", orderModel.getId());
+        launcher.launch(intent);
     }
 }

@@ -42,7 +42,15 @@ public class OfferAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         MyHolder myHolder = (MyHolder) holder;
         myHolder.binding.setLang(lang);
         myHolder.binding.setModel(list.get(position));
-
+myHolder.itemView.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        if(context instanceof CurrentOrderDetailsActivity){
+            CurrentOrderDetailsActivity activity=(CurrentOrderDetailsActivity) context;
+            activity.show(list.get(holder.getAdapterPosition()));
+        }
+    }
+});
     }
 
     @Override

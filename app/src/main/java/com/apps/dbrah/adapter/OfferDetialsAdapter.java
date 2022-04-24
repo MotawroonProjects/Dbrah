@@ -12,20 +12,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.apps.dbrah.R;
 import com.apps.dbrah.databinding.OfferDetialsRowBinding;
+import com.apps.dbrah.model.OrderModel;
 
 import java.util.List;
 
 public class OfferDetialsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<Object> list;
+    private List<OrderModel.OfferDetail> list;
     private Context context;
     private LayoutInflater inflater;
-    private AppCompatActivity appCompatActivity;
+    private String lang;
 
-    public OfferDetialsAdapter(List<Object> list, Context context) {
+    public OfferDetialsAdapter(List<OrderModel.OfferDetail> list, Context context,String lang) {
         this.list = list;
         this.context = context;
+        this.lang=lang;
         inflater = LayoutInflater.from(context);
-        appCompatActivity = (AppCompatActivity) context;
     }
 
     @NonNull
@@ -38,11 +39,13 @@ public class OfferDetialsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MyHolder myHolder = (MyHolder) holder;
+        myHolder.binding.setLang(lang);
+        myHolder.binding.setModel(list.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return 5;
+        return list!=null?list.size():0;
     }
 
     public static class MyHolder extends RecyclerView.ViewHolder {
@@ -55,7 +58,7 @@ public class OfferDetialsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
-    public void updateList(List<Object> list) {
+    public void updateList(List<OrderModel.OfferDetail> list) {
         this.list = list;
         notifyDataSetChanged();
     }

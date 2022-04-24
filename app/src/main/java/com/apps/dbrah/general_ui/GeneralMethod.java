@@ -1,6 +1,7 @@
 package com.apps.dbrah.general_ui;
 
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.databinding.BindingAdapter;
 
 
@@ -200,55 +202,55 @@ public class GeneralMethod {
 
     @BindingAdapter("status")
     public static void orderStatus(TextView textView, String status) {
-       if (status!=null){
-           if (status.equals("new")){
-               textView.setText(R.string.new1);
-           }else if (status.equals("offered")){
-               textView.setText(R.string.new_offer);
-           }else if (status.equals("accepted")){
-               textView.setText(R.string.offer_accepted);
+        if (status != null) {
+            if (status.equals("new")) {
+                textView.setText(R.string.new1);
+            } else if (status.equals("offered")) {
+                textView.setText(R.string.new_offer);
+            } else if (status.equals("accepted")) {
+                textView.setText(R.string.offer_accepted);
 
-           }else if (status.equals("rejected")){
-               textView.setText(R.string.rejected);
+            } else if (status.equals("rejected")) {
+                textView.setText(R.string.rejected);
 
-           }else if (status.equals("preparing")){
-               textView.setText(R.string.preparing);
+            } else if (status.equals("preparing")) {
+                textView.setText(R.string.preparing);
 
-           }else if (status.equals("on_way")){
-               textView.setText(R.string.on_the_way);
+            } else if (status.equals("on_way")) {
+                textView.setText(R.string.on_the_way);
 
-           }else if (status.equals("delivered")){
-               textView.setText(R.string.delivered);
+            } else if (status.equals("delivered")) {
+                textView.setText(R.string.delivered);
 
-           }
-       }
+            }
+        }
 
     }
 
     @BindingAdapter("orderProgress")
     public static void orderProgress(ProgressBar bar, String status) {
-        if (status!=null){
+        if (status != null) {
             int maxProgress = 7;
             bar.setMax(maxProgress);
             int progress = 0;
-            if (status.equals("new")){
+            if (status.equals("new")) {
                 progress = 1;
-            }else if (status.equals("offered")){
+            } else if (status.equals("offered")) {
                 progress = 2;
 
-            }else if (status.equals("accepted")){
+            } else if (status.equals("accepted")) {
                 progress = 3;
 
-            }else if (status.equals("rejected")){
+            } else if (status.equals("rejected")) {
                 progress = 4;
 
-            }else if (status.equals("preparing")){
+            } else if (status.equals("preparing")) {
                 progress = 5;
 
-            }else if (status.equals("on_way")){
+            } else if (status.equals("on_way")) {
                 progress = 6;
 
-            }else if (status.equals("delivered")){
+            } else if (status.equals("delivered")) {
                 progress = 7;
 
             }
@@ -259,13 +261,56 @@ public class GeneralMethod {
     }
 
     @BindingAdapter("rate")
-    public static void rate(SimpleRatingBar bar,String rate) {
-        if (rate!=null){
+    public static void rate(SimpleRatingBar bar, String rate) {
+        if (rate != null) {
             bar.setRating(Float.parseFloat(rate));
         }
 
     }
 
+    @BindingAdapter("type")
+    public static void OfferType(TextView btnStatus, String type) {
+
+        if (type.equals("other")) {
+            btnStatus.setText(R.string.alternative_product);
+        } else if (type.equals("less")) {
+            btnStatus.setText(R.string.less_quantitiy);
+        } else if (type.equals("not_found")) {
+            btnStatus.setText(R.string.not_available);
+        }
+
+    }
+
+    @BindingAdapter({"offerDate"})
+    public static void displayOfferDate(TextView textView, String offerDate) {
+        if (offerDate != null) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
+            String m_date = dateFormat.format(new Date(Long.parseLong(offerDate)));
+            textView.setText(m_date);
+        }
+    }
+
+    @BindingAdapter({"offertime"})
+    public static void displayOffertime(TextView textView, String offerDate) {
+        if (offerDate != null) {
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm aa", Locale.ENGLISH);
+            String m_date = dateFormat.format(new Date(Long.parseLong(offerDate)));
+            textView.setText(m_date);
+        }
+    }
+    @BindingAdapter("type")
+    public static void OfferType(ImageView imDot, String type) {
+
+        if (type.equals("other")) {
+            imDot.setColorFilter(ContextCompat.getColor(imDot.getContext(), R.color.color5), PorterDuff.Mode.SRC_IN);
+        } else if (type.equals("less")) {
+        imDot.setColorFilter(ContextCompat.getColor(imDot.getContext(), R.color.color6), PorterDuff.Mode.SRC_IN);
+        } else if (type.equals("not_found")) {
+            imDot.setColorFilter(ContextCompat.getColor(imDot.getContext(), R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+        }
+
+    }
 }
 
 
