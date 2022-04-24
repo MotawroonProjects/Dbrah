@@ -138,6 +138,7 @@ public class FragmentMarket extends BaseFragment {
 
             }
         });
+
         mvvm.getOnRecentProductDataModel().observe(activity, list -> {
             binding.swipeRefresh.setRefreshing(false);
             if (list.size() > 0) {
@@ -154,10 +155,10 @@ public class FragmentMarket extends BaseFragment {
         mvvm.getOnMostProductDataModel().observe(activity, list -> {
             binding.swipeRefresh.setRefreshing(false);
             if (list.size() > 0) {
-                binding.flMostSale.setVisibility(View.VISIBLE);
+                binding.llMostSale.setVisibility(View.VISIBLE);
                 binding.tvNoMostSaleProduct.setVisibility(View.GONE);
             } else {
-                binding.flMostSale.setVisibility(View.GONE);
+                binding.llMostSale.setVisibility(View.GONE);
 
                 binding.tvNoMostSaleProduct.setVisibility(View.VISIBLE);
             }
@@ -166,6 +167,30 @@ public class FragmentMarket extends BaseFragment {
 
             }
 
+        });
+        mvvm.getOnFavUnFavSuccess().observe(activity, model -> {
+            int productPos = getCartItemPosMostSale(model.getId());
+            if (productPos != -1) {
+                if (mvvm.getOnMostProductDataModel().getValue() != null) {
+                    mvvm.getOnMostProductDataModel().getValue().get(productPos).setIs_list(model.getIs_list());
+                    if (mostSaleProductAdapter != null) {
+                        mostSaleProductAdapter.notifyItemChanged(productPos);
+                    }
+                }
+            }
+            productPos = getCartItemPosRecent(model.getId());
+
+            if (productPos != -1 && mvvm.getOnRecentProductDataModel().getValue() != null) {
+                try {
+                    mvvm.getOnRecentProductDataModel().getValue().get(productPos).setIs_list(model.getIs_list());
+                    if (recentProductAdapter != null) {
+                        recentProductAdapter.notifyItemChanged(productPos);
+                    }
+                } catch (Exception e) {
+                    Log.e("error", e.getMessage());
+                }
+
+            }
         });
 
         generalMvvm.getOnCartItemUpdated().observe(activity, productModel -> {
@@ -180,14 +205,40 @@ public class FragmentMarket extends BaseFragment {
             }
             productPos = getCartItemPosRecent(productModel.getId());
 
-            if (mvvm.getOnRecentProductDataModel().getValue() != null) {
+            if (productPos != -1 && mvvm.getOnRecentProductDataModel().getValue() != null) {
                 try {
                     mvvm.getOnRecentProductDataModel().getValue().get(productPos).setAmount(productModel.getAmount());
                     if (recentProductAdapter != null) {
                         recentProductAdapter.notifyItemChanged(productPos);
                     }
-                }catch (Exception e){
-                    Log.e("error",e.getMessage());
+                } catch (Exception e) {
+                    Log.e("error", e.getMessage());
+                }
+
+            }
+        });
+
+        generalMvvm.getOnProductItemUpdated().observe(activity, productModel -> {
+            int productPos = getCartItemPosMostSale(productModel.getId());
+            if (productPos != -1) {
+                if (mvvm.getOnMostProductDataModel().getValue() != null) {
+                    mvvm.getOnMostProductDataModel().getValue().get(productPos).setIs_list(productModel.getIs_list());
+                    if (mostSaleProductAdapter != null) {
+                        mostSaleProductAdapter.updateItem(productModel, productPos);
+
+                    }
+                }
+            }
+            productPos = getCartItemPosRecent(productModel.getId());
+
+            if (productPos != -1 && mvvm.getOnRecentProductDataModel().getValue() != null) {
+                try {
+                    mvvm.getOnRecentProductDataModel().getValue().get(productPos).setIs_list(productModel.getIs_list());
+                    if (recentProductAdapter != null) {
+                        recentProductAdapter.updateItem(productModel, productPos);
+                    }
+                } catch (Exception e) {
+                    Log.e("error", e.getMessage());
                 }
 
             }
@@ -200,7 +251,7 @@ public class FragmentMarket extends BaseFragment {
         binding.recViewCategory.setAdapter(categoryAdapter);
 
 
-        recentProductAdapter = new RecentProductAdapter(activity, this,getLang());
+        recentProductAdapter = new RecentProductAdapter(activity, this, getLang());
         binding.recViewMostRecentProducts.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false));
         binding.recViewMostRecentProducts.setAdapter(recentProductAdapter);
 
@@ -217,8 +268,8 @@ public class FragmentMarket extends BaseFragment {
     private void getData() {
         mvvm.getSlider();
         mvvm.getCategory();
-        mvvm.getMostSaleProduct(activity);
-        mvvm.getRecentProduct(activity);
+        mvvm.getMostSaleProduct(activity, getUserModel());
+        mvvm.getRecentProduct(activity, getUserModel());
 
     }
 
@@ -239,6 +290,11 @@ public class FragmentMarket extends BaseFragment {
     public void showCategoryDetails(CategoryModel categoryModel, int pos) {
         generalMvvm.getCategory_pos().setValue(pos);
         generalMvvm.onHomeNavigate().setValue(7);
+    }
+
+    public void favUnFav(ProductModel productModel, int adapterPosition) {
+        generalMvvm.getOnProductItemUpdated().setValue(productModel);
+        mvvm.favUnFav(getUserModel(), productModel);
     }
 
     public class MyTask extends TimerTask {
@@ -269,8 +325,8 @@ public class FragmentMarket extends BaseFragment {
                     if (recentProductAdapter != null) {
                         recentProductAdapter.notifyItemChanged(productPos);
                     }
-                }catch (Exception e){
-                    Log.e("error",e.getMessage());
+                } catch (Exception e) {
+                    Log.e("error", e.getMessage());
                 }
 
             }
@@ -284,8 +340,8 @@ public class FragmentMarket extends BaseFragment {
                         if (mostSaleProductAdapter != null) {
                             mostSaleProductAdapter.notifyItemChanged(productPos);
                         }
-                    }catch (Exception e){
-                        Log.e("error",e.getMessage());
+                    } catch (Exception e) {
+                        Log.e("error", e.getMessage());
                     }
 
 
@@ -313,10 +369,9 @@ public class FragmentMarket extends BaseFragment {
                         recentProductAdapter.notifyItemChanged(productPos);
                     }
                 }
-            }catch (Exception e){
-                Log.e("error",e.getMessage());
+            } catch (Exception e) {
+                Log.e("error", e.getMessage());
             }
-
 
 
         } else {
@@ -331,8 +386,8 @@ public class FragmentMarket extends BaseFragment {
                             mostSaleProductAdapter.notifyItemChanged(productPos);
                         }
                     }
-                }catch (Exception e){
-                    Log.e("error",e.getMessage());
+                } catch (Exception e) {
+                    Log.e("error", e.getMessage());
                 }
 
 

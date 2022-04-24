@@ -47,7 +47,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:src="@drawable/ic_save"
+            android:src='@{model.is_list.equals("true")?@drawable/ic_fill_tag:@drawable/ic_save}'
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
 

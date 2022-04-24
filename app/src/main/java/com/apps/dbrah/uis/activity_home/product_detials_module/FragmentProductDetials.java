@@ -1,6 +1,7 @@
 package com.apps.dbrah.uis.activity_home.product_detials_module;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import com.apps.dbrah.model.ProductModel;
 import com.apps.dbrah.model.cart_models.ManageCartModel;
 import com.apps.dbrah.mvvm.FragmentProductDetailsMvvm;
 import com.apps.dbrah.mvvm.GeneralMvvm;
+import com.apps.dbrah.tags.Tags;
 import com.apps.dbrah.uis.activity_base.BaseFragment;
 import com.apps.dbrah.uis.activity_home.HomeActivity;
 
@@ -30,7 +32,7 @@ import java.util.TimerTask;
 
 public class FragmentProductDetials extends BaseFragment {
     private GeneralMvvm generalMvvm;
-    private FragmentProductDetailsMvvm fragmentProductDetailsMvvm;
+    private FragmentProductDetailsMvvm mvvm;
     private HomeActivity activity;
     private FragmentProductDetialsBinding binding;
     private String productId;
@@ -76,7 +78,7 @@ public class FragmentProductDetials extends BaseFragment {
         binding.setLang(getLang());
         binding.setAmount(amount);
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
-        fragmentProductDetailsMvvm = ViewModelProviders.of(activity).get(FragmentProductDetailsMvvm.class);
+        mvvm = ViewModelProviders.of(activity).get(FragmentProductDetailsMvvm.class);
         generalMvvm.getProductAmount().observe(activity, productAmount -> {
             if (countDownTimer != null) {
                 countDownTimer.cancel();
@@ -94,23 +96,32 @@ public class FragmentProductDetials extends BaseFragment {
                 amount = 0;
                 binding.setAmount(amount);
                 binding.setPrductModel(null);
-                fragmentProductDetailsMvvm.getSingleProduct(productId);
+                mvvm.getSingleProduct(productId,getUserModel());
             }
         });
-        fragmentProductDetailsMvvm.getOnDataSuccess().observe(this, productModel -> {
+
+        mvvm.getOnDataSuccess().observe(this, productModel -> {
             if (productModel != null) {
                 FragmentProductDetials.this.productModel = productModel;
-                amount = manageCartModel.getProductAmount(FragmentProductDetials.this.productModel.getId(),activity);
+                amount = manageCartModel.getProductAmount(FragmentProductDetials.this.productModel.getId(), activity);
                 binding.setAmount(amount);
                 FragmentProductDetials.this.productModel.setAmount(amount);
                 updateData(FragmentProductDetials.this.productModel);
             }
         });
+        mvvm.getOnFavUnFavSuccess().observe(activity, model -> {
+            generalMvvm.getOnProductItemUpdated().setValue(model);
+        });
+        generalMvvm.getOnProductItemUpdated().observe(activity, productModel -> {
+            if (this.productModel != null) {
+                this.productModel.setIs_list(productModel.getIs_list());
+                binding.setPrductModel(this.productModel);
+            }
 
+        });
         binding.llBack.setOnClickListener(v -> {
             generalMvvm.onHomeBackNavigate().setValue(true);
         });
-
         sliderAdapter = new ProductSliderAdapter(imagesList, activity);
         binding.pager.setAdapter(sliderAdapter);
         binding.pager.setClipToPadding(false);
@@ -169,6 +180,33 @@ public class FragmentProductDetials extends BaseFragment {
 
         });
 
+        binding.imageShare.setOnClickListener(v -> {
+            share();
+        });
+
+        binding.imageTag.setOnClickListener(v -> {
+
+            if (productModel.getIs_list().equals("true")) {
+                productModel.setIs_list("false");
+            } else {
+                productModel.setIs_list("true");
+
+            }
+
+            binding.setPrductModel(productModel);
+            generalMvvm.getOnProductItemUpdated().setValue(productModel);
+            mvvm.favUnFav(getUserModel(), productModel);
+        });
+
+    }
+
+    private void share() {
+        String shareLink = Tags.base_url + "product/details/" + productId;
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TITLE, getString(R.string.app_name));
+        intent.putExtra(Intent.EXTRA_TEXT, shareLink);
+        startActivity(Intent.createChooser(intent, productModel.getTitle_ar()));
 
     }
 

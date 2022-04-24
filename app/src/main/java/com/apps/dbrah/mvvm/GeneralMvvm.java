@@ -28,6 +28,9 @@ public class GeneralMvvm extends AndroidViewModel {
     private MutableLiveData<AddressModel> onAddressUpdated;
     private MutableLiveData<String> addAddressFragmentAction;
     private MutableLiveData<String> myAddressFragmentAction;
+    /////////////////////////////////////////////////////////////////
+    private MutableLiveData<ProductModel> onProductItemUpdated;
+
 
     public GeneralMvvm(@NonNull Application application) {
         super(application);
@@ -83,11 +86,20 @@ public class GeneralMvvm extends AndroidViewModel {
         return onCartRefreshed;
     }
 
-    public MutableLiveData<ProductModel> getOnCartItemUpdated() {
+    public MutableLiveData<ProductModel> getOnCartItemUpdated()
+    {
         if (onCartItemUpdated == null) {
             onCartItemUpdated = new MutableLiveData<>();
         }
         return onCartItemUpdated;
+    }
+
+    public MutableLiveData<ProductModel> getOnProductItemUpdated()
+    {
+        if (onProductItemUpdated == null) {
+            onProductItemUpdated = new MutableLiveData<>();
+        }
+        return onProductItemUpdated;
     }
 
 

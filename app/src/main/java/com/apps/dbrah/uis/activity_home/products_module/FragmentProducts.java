@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,12 +111,42 @@ public class FragmentProducts extends BaseFragment {
                 binding.recViewMain.setAdapter(mainProductCategoryAdapter);
                 mainProductCategoryAdapter.setSelectedPos(pos);
                 mainProductCategoryAdapter.updateList(list);
-                mvvm.setCategoryId(mvvm.getOnCategoryDataSuccess().getValue().get(pos).getId(),activity);
+                mvvm.setCategoryId(mvvm.getOnCategoryDataSuccess().getValue().get(pos).getId(), activity,getUserModel());
 
             }
 
             mvvm.getCategoryPos().setValue(pos);
         });
+
+
+        generalMvvm.getOnCartItemUpdated().observe(activity, productModel -> {
+            int productPos = getProductPos(productModel.getId());
+            if (productPos != -1) {
+                if (mvvm.getOnProductsDataSuccess().getValue() != null) {
+                    mvvm.getOnProductsDataSuccess().getValue().get(productPos).setAmount(productModel.getAmount());
+                    if (productAdapter != null) {
+                        productAdapter.notifyItemChanged(productPos);
+                    }
+                }
+            }
+
+        });
+
+        generalMvvm.getOnProductItemUpdated().observe(activity, productModel -> {
+            int productPos = getProductPos(productModel.getId());
+            if (productPos != -1) {
+                if (mvvm.getOnProductsDataSuccess().getValue() != null) {
+                    mvvm.getOnProductsDataSuccess().getValue().get(productPos).setIs_list(productModel.getIs_list());
+                    if (productAdapter != null) {
+                        //productAdapter.updateItem(productModel, productPos);
+                        productAdapter.notifyItemChanged(productPos);
+
+                    }
+                }
+            }
+
+        });
+
 
         mvvm.getIsLoading().observe(activity, isLoading -> {
             binding.tvNoData.setVisibility(View.GONE);
@@ -156,8 +187,10 @@ public class FragmentProducts extends BaseFragment {
         });
 
         binding.swipeRefresh.setOnRefreshListener(() -> {
-            mvvm.searchProduct(mvvm.getQuery().getValue(),activity);
+            mvvm.searchProduct(mvvm.getQuery().getValue(), activity,getUserModel());
         });
+
+
         mainProductCategoryAdapter = new MainProductCategoryAdapter(activity, this, getLang());
         binding.recViewMain.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false));
         binding.recViewMain.setAdapter(mainProductCategoryAdapter);
@@ -167,7 +200,7 @@ public class FragmentProducts extends BaseFragment {
         binding.recViewSub.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false));
 
 
-        productAdapter = new FilterProductAdapter(activity, this);
+        productAdapter = new FilterProductAdapter(activity, this,getLang());
         binding.recViewProducts.setLayoutManager(new GridLayoutManager(activity, 2));
         binding.recViewProducts.setAdapter(productAdapter);
 
@@ -193,7 +226,7 @@ public class FragmentProducts extends BaseFragment {
                 .distinctUntilChanged()
                 .subscribe(query -> {
                     mvvm.getQuery().postValue(query);
-                    mvvm.searchProduct(query,activity);
+                    mvvm.searchProduct(query, activity,getUserModel());
                 });
 
 
@@ -201,13 +234,15 @@ public class FragmentProducts extends BaseFragment {
 
 
     public void getSubCat(CategoryModel categoryModel) {
-        mvvm.setCategoryId(categoryModel.getId(),activity);
+        mvvm.setCategoryId(categoryModel.getId(), activity,getUserModel());
     }
 
     public void showProducts(CategoryModel categoryModel) {
         mvvm.getSubCategoryId().setValue(categoryModel.getId());
-        mvvm.searchProduct(mvvm.getQuery().getValue(),activity);
+        mvvm.searchProduct(mvvm.getQuery().getValue(), activity,getUserModel());
     }
+
+
 
     public void showProductDetails(ProductModel productModel) {
         ProductAmount productAmount = new ProductAmount(productModel.getId(), productModel.getAmount());
@@ -221,6 +256,7 @@ public class FragmentProducts extends BaseFragment {
         manageCartModel.add(productModel, activity);
         generalMvvm.getOnCartRefreshed().setValue(true);
 
+
     }
 
     public void removeProductFromCart(ProductModel productModel) {
@@ -229,5 +265,22 @@ public class FragmentProducts extends BaseFragment {
         manageCartModel.delete(productModel, activity);
         generalMvvm.getOnCartRefreshed().setValue(true);
 
+    }
+
+    public void favUnFav(ProductModel productModel, int adapterPosition) {
+        generalMvvm.getOnProductItemUpdated().setValue(productModel);
+        mvvm.favUnFav(getUserModel(),productModel);
+    }
+
+    private int getProductPos(String product_id) {
+        if (mvvm.getOnProductsDataSuccess().getValue() != null) {
+            for (int index = 0; index < mvvm.getOnProductsDataSuccess().getValue().size(); index++) {
+                if (mvvm.getOnProductsDataSuccess().getValue().get(index).getId().equals(product_id)) {
+                    return index;
+                }
+            }
+        }
+
+        return -1;
     }
 }

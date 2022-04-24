@@ -48,19 +48,21 @@ public interface Service {
     Single<Response<CategoryDataModel>> getSubCategory(@Query("category_id") String category_id);
 
     @GET("api/latest_products")
-    Single<Response<RecentProductDataModel>> getRecentProduct();
+    Single<Response<RecentProductDataModel>> getRecentProduct(@Query("user_id") String user_id);
 
     @GET("api/mostSales")
-    Single<Response<RecentProductDataModel>> getMostSaleProduct();
+    Single<Response<RecentProductDataModel>> getMostSaleProduct(@Query("user_id") String user_id);
 
 
     @GET("api/search")
-    Single<Response<RecentProductDataModel>> searchByCatProduct(@Query("category_id") String category_id,
+    Single<Response<RecentProductDataModel>> searchByCatProduct(@Query("user_id") String user_id,
+                                                                @Query("category_id") String category_id,
                                                                 @Query("sub_category_id") String sub_category_id,
                                                                 @Query("search_word") String search_word);
 
     @GET("api/home_search")
-    Single<Response<SearchHomeDataModel>> searchProduct(@Query("search_word") String search_word);
+    Single<Response<SearchHomeDataModel>> searchProduct(@Query("user_id") String user_id,
+                                                        @Query("search_word") String search_word);
 
 
     @FormUrlEncoded
@@ -137,7 +139,8 @@ public interface Service {
     );
 
     @GET("api/product_details")
-    Single<Response<SingleProductModel>> getSingleProduct(@Query("id") String id);
+    Single<Response<SingleProductModel>> getSingleProduct(@Query("user_id") String user_id,
+                                                          @Query("id") String id);
 
     @GET("api/delivery_times")
     Single<Response<TimeDataModel>> getTime();
@@ -172,5 +175,16 @@ public interface Service {
 
     @GET("api/offerDetails")
     Single<Response<SingleOfferModel>> getOfferDetails(@Query("offer_id") String offer_id);
+
+    @FormUrlEncoded
+    @POST("api/storeToList")
+    Single<Response<StatusResponse>> favUnFav(@Field("user_id") String user_id,
+                                              @Field("product_id") String product_id
+    );
+
+    @GET("api/myList")
+    Single<Response<RecentProductDataModel>> getMyList(@Query("user_id") String user_id);
+
+
 
 }

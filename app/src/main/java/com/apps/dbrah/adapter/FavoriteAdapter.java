@@ -2,9 +2,7 @@ package com.apps.dbrah.adapter;
 
 import android.content.Context;
 import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -14,14 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.apps.dbrah.R;
 import com.apps.dbrah.databinding.FilterProductRowBinding;
-import com.apps.dbrah.databinding.RecentRowBinding;
 import com.apps.dbrah.model.ProductModel;
 import com.apps.dbrah.uis.activity_home.market_module.FragmentMarket;
+import com.apps.dbrah.uis.activity_home.my_list_module.FragmentMyList;
 import com.apps.dbrah.uis.activity_home.products_module.FragmentProducts;
 
 import java.util.List;
 
-public class FilterProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class FavoriteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<ProductModel> list;
     private Context context;
     private LayoutInflater inflater;
@@ -30,7 +28,7 @@ public class FilterProductAdapter extends RecyclerView.Adapter<RecyclerView.View
     private String lang;
 
 
-    public FilterProductAdapter(Context context, Fragment fragment,String lang) {
+    public FavoriteAdapter(Context context, Fragment fragment, String lang) {
         this.context = context;
         this.fragment = fragment;
         inflater = LayoutInflater.from(context);
@@ -71,9 +69,9 @@ public class FilterProductAdapter extends RecyclerView.Adapter<RecyclerView.View
             list.set(myHolder.getAdapterPosition(), model);
             startTimer(myHolder);
 
-            if (fragment instanceof FragmentProducts) {
-                FragmentProducts fragmentProducts = (FragmentProducts) fragment;
-                fragmentProducts.addProductToCart(model);
+            if (fragment instanceof FragmentMyList) {
+                FragmentMyList fragmentMyList = (FragmentMyList) fragment;
+                fragmentMyList.addProductToCart(model);
             }
 
 
@@ -98,9 +96,9 @@ public class FilterProductAdapter extends RecyclerView.Adapter<RecyclerView.View
             list.set(myHolder.getAdapterPosition(), model);
 
             startTimer(myHolder);
-            if (fragment instanceof FragmentProducts) {
-                FragmentProducts fragmentProducts = (FragmentProducts) fragment;
-                fragmentProducts.addProductToCart(model);
+            if (fragment instanceof FragmentMyList) {
+                FragmentMyList fragmentMyList = (FragmentMyList) fragment;
+                fragmentMyList.addProductToCart(model);
             }
 
         });
@@ -113,9 +111,9 @@ public class FilterProductAdapter extends RecyclerView.Adapter<RecyclerView.View
             list.set(myHolder.getAdapterPosition(), model);
             startTimer(myHolder);
 
-            if (fragment instanceof FragmentProducts) {
-                FragmentProducts fragmentProducts = (FragmentProducts) fragment;
-                fragmentProducts.removeProductFromCart(model);
+            if (fragment instanceof FragmentMyList) {
+                FragmentMyList fragmentMyList = (FragmentMyList) fragment;
+                fragmentMyList.removeProductFromCart(model);
             }
 
 
@@ -123,27 +121,17 @@ public class FilterProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
 
         myHolder.itemView.setOnClickListener(view -> {
-            if (fragment instanceof FragmentMarket) {
-                FragmentMarket fragmentMarket = (FragmentMarket) fragment;
-                fragmentMarket.showProductDetails(list.get(holder.getAdapterPosition()));
-            } else if (fragment instanceof FragmentProducts) {
-                FragmentProducts fragmentProducts = (FragmentProducts) fragment;
-                fragmentProducts.showProductDetails(list.get(holder.getAdapterPosition()));
+            if (fragment instanceof FragmentMyList) {
+                FragmentMyList fragmentMyList = (FragmentMyList) fragment;
+                fragmentMyList.showProductDetails(list.get(holder.getAdapterPosition()));
             }
         });
 
         myHolder.binding.imageTag.setOnClickListener(v -> {
             ProductModel model = list.get(myHolder.getAdapterPosition());
-            if (model.getIs_list().equals("true")) {
-                model.setIs_list("false");
-            } else {
-                model.setIs_list("true");
-
-            }
-
-            if (fragment instanceof FragmentProducts) {
-                FragmentProducts fragmentProducts = (FragmentProducts) fragment;
-                fragmentProducts.favUnFav(list.get(holder.getAdapterPosition()), myHolder.getAdapterPosition());
+            if (fragment instanceof FragmentMyList) {
+                FragmentMyList fragmentMyList = (FragmentMyList) fragment;
+                fragmentMyList.favUnFav(model, myHolder.getAdapterPosition());
             }
 
 

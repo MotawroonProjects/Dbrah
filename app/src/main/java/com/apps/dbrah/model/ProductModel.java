@@ -16,6 +16,7 @@ public class ProductModel implements Serializable {
     private String details_en;
     private String created_at;
     private String updated_at;
+    private String is_list;
     @SerializedName("qty")
     private int amount = 0;
     private List<Image> images;
@@ -92,6 +93,14 @@ public class ProductModel implements Serializable {
 
     public CategoryModel getCategoryModel() {
         return categoryModel;
+    }
+
+    public String getIs_list() {
+        return is_list;
+    }
+
+    public void setIs_list(String is_list) {
+        this.is_list = is_list;
     }
 
     public static class Image implements Serializable {

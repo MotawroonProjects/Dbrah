@@ -26,14 +26,43 @@
         tools:ignore="AllowBackup"
         tools:targetApi="q">
         <activity
+            android:name=".uis.activity_share.ShareActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/splash"
+            android:windowSoftInputMode="adjustResize"
+            tools:ignore="AppLinkUrlError,LockedOrientationActivity"
+
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="dbrah.akaber.in"
+                    android:pathPrefix="/product/details/"
+                    android:scheme="http" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".uis.activity_previous_order_details.PreviousOrderDetailsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".uis.activity_current_order_details.CurrentOrderDetailsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".uis.activity_about_app.AboutAppActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".uis.activity_language.LanguageActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"

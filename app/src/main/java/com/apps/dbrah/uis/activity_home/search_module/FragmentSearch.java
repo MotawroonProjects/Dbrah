@@ -166,19 +166,19 @@ public class FragmentSearch extends BaseFragment {
                     if (productAdapter != null) {
                         productAdapter.updateList(null);
                     }
-                    mvvm.search(query);
+                    mvvm.search(query,getUserModel());
                 });
 
 
         binding.swipeRefresh.setOnRefreshListener(() -> {
             if (mvvm.getSubCategoryId().getValue() != null) {
-                mvvm.getProductBySubCategory();
+                mvvm.getProductBySubCategory(getUserModel());
             } else {
-                mvvm.search(mvvm.getQuery().getValue());
+                mvvm.search(mvvm.getQuery().getValue(),getUserModel());
                 binding.swipeRefresh.setRefreshing(false);
             }
         });
-        mvvm.search(null);
+        mvvm.search(null,getUserModel());
 
     }
 
@@ -192,7 +192,7 @@ public class FragmentSearch extends BaseFragment {
 
     public void setSubCategory(CategoryModel subCategoryModel) {
         mvvm.getSubCategoryId().setValue(subCategoryModel.getId());
-        mvvm.getProductBySubCategory();
+        mvvm.getProductBySubCategory(getUserModel());
     }
 
     @Override

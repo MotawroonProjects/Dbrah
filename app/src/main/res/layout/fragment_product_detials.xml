@@ -67,13 +67,15 @@
                                 android:scaleType="centerCrop" />
 
                             <ImageView
+                                android:id="@+id/imageTag"
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:layout_gravity="end"
                                 android:layout_marginStart="16dp"
                                 android:layout_marginTop="60dp"
                                 android:layout_marginEnd="16dp"
-                                android:src="@drawable/ic_save" />
+                                android:src='@{prductModel.is_list.equals("true")?@drawable/ic_fill_tag:@drawable/ic_save}'
+                                />
 
                             <FrameLayout
                                 android:id="@+id/fl"

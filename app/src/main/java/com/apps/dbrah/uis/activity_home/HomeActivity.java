@@ -15,6 +15,7 @@ import androidx.viewpager.widget.ViewPager;
 
 
 import com.apps.dbrah.adapter.MyPagerAdapter;
+import com.apps.dbrah.model.ProductAmount;
 import com.apps.dbrah.mvvm.GeneralMvvm;
 import com.apps.dbrah.uis.FragmentBaseNavigation;
 import com.apps.dbrah.uis.activity_base.BaseActivity;
@@ -48,14 +49,21 @@ public class HomeActivity extends BaseActivity {
     private MyPagerAdapter adapter;
     private List<Fragment> fragments;
     private Stack<Integer> stack;
-
+    private String product_id =null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home);
+        getDataFromIntent();
         initView();
 
+
+    }
+
+    private void getDataFromIntent() {
+        Intent intent = getIntent();
+        product_id = intent.getStringExtra("product_id");
 
     }
 
@@ -105,7 +113,11 @@ public class HomeActivity extends BaseActivity {
 
         stack.push(0);
 
-
+        if (product_id!=null&&!product_id.isEmpty()){
+            updateStack(6);
+            ProductAmount productAmount = new ProductAmount(product_id, 0);
+            generalMvvm.getProductAmount().setValue(productAmount);
+        }
     }
 
     private void updateStack(int pagePos) {

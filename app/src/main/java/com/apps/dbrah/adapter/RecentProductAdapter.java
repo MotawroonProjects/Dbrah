@@ -122,11 +122,36 @@ public class RecentProductAdapter extends RecyclerView.Adapter<RecyclerView.View
                 fragmentMarket.showProductDetails(list.get(holder.getAdapterPosition()));
             }
         });
+
+        myHolder.binding.imageTag.setOnClickListener(v -> {
+            ProductModel model = list.get(myHolder.getAdapterPosition());
+            if (model.getIs_list().equals("true")) {
+                model.setIs_list("false");
+            } else {
+                model.setIs_list("true");
+
+            }
+
+            if (fragment instanceof FragmentMarket) {
+                FragmentMarket fragmentMarket = (FragmentMarket) fragment;
+                fragmentMarket.favUnFav(list.get(holder.getAdapterPosition()),myHolder.getAdapterPosition());
+            }
+
+
+
+
+        });
     }
 
     @Override
     public int getItemCount() {
         return list != null ? list.size() : 0;
+    }
+
+    public void updateItem(ProductModel productModel, int productPos) {
+        this.list.set(productPos,productModel);
+       // notifyItemChanged(productPos);
+        notifyDataSetChanged();
     }
 
 

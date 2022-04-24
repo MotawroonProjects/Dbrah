@@ -36,6 +36,7 @@ public class MostSaleProductAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         RecentRowBinding rowBinding = DataBindingUtil.inflate(inflater, R.layout.recent_row, parent, false);
+
         return new MyHolder(rowBinding);
     }
 
@@ -68,7 +69,7 @@ public class MostSaleProductAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             if (fragment instanceof FragmentMarket) {
 
                 FragmentMarket fragmentMarket = (FragmentMarket) fragment;
-                fragmentMarket.addProductToCart(model,"most");
+                fragmentMarket.addProductToCart(model, "most");
             }
 
 
@@ -94,7 +95,7 @@ public class MostSaleProductAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             list.set(myHolder.getAdapterPosition(), model);
             if (fragment instanceof FragmentMarket) {
                 FragmentMarket fragmentMarket = (FragmentMarket) fragment;
-                fragmentMarket.addProductToCart(model,"most");
+                fragmentMarket.addProductToCart(model, "most");
             }
 
         });
@@ -108,7 +109,7 @@ public class MostSaleProductAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             startTimer(myHolder);
             if (fragment instanceof FragmentMarket) {
                 FragmentMarket fragmentMarket = (FragmentMarket) fragment;
-                fragmentMarket.removeProductFromCart(model,"most");
+                fragmentMarket.removeProductFromCart(model, "most");
             }
 
         });
@@ -118,6 +119,23 @@ public class MostSaleProductAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 FragmentMarket fragmentMarket = (FragmentMarket) fragment;
                 fragmentMarket.showProductDetails(list.get(holder.getAdapterPosition()));
             }
+        });
+
+        myHolder.binding.imageTag.setOnClickListener(v -> {
+            ProductModel model = list.get(myHolder.getAdapterPosition());
+            if (model.getIs_list().equals("true")) {
+                model.setIs_list("false");
+            } else {
+                model.setIs_list("true");
+
+            }
+
+            if (fragment instanceof FragmentMarket) {
+                FragmentMarket fragmentMarket = (FragmentMarket) fragment;
+                fragmentMarket.favUnFav(list.get(holder.getAdapterPosition()),myHolder.getAdapterPosition());
+            }
+
+
         });
     }
 
@@ -145,6 +163,12 @@ public class MostSaleProductAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     @Override
     public int getItemCount() {
         return list != null ? list.size() : 0;
+    }
+
+    public void updateItem(ProductModel productModel, int productPos) {
+        this.list.set(productPos,productModel);
+        // notifyItemChanged(productPos);
+        notifyDataSetChanged();
     }
 
 

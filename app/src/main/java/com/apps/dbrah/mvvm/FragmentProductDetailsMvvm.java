@@ -9,6 +9,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.apps.dbrah.model.ProductModel;
 import com.apps.dbrah.model.SingleProductModel;
+import com.apps.dbrah.model.StatusResponse;
+import com.apps.dbrah.model.UserModel;
 import com.apps.dbrah.remote.Api;
 import com.apps.dbrah.tags.Tags;
 
@@ -24,6 +26,8 @@ public class FragmentProductDetailsMvvm extends AndroidViewModel {
 
     private MutableLiveData<Boolean> isDataLoading;
     private MutableLiveData<ProductModel> onDataSuccess;
+    private MutableLiveData<ProductModel> onFavUnFavSuccess;
+
     private CompositeDisposable disposable = new CompositeDisposable();
 
     public MutableLiveData<Boolean> getIsDataLoading() {
@@ -44,9 +48,20 @@ public class FragmentProductDetailsMvvm extends AndroidViewModel {
         super(application);
     }
 
-    public void getSingleProduct(String id) {
+    public MutableLiveData<ProductModel> getOnFavUnFavSuccess() {
+        if (onFavUnFavSuccess == null) {
+            onFavUnFavSuccess = new MutableLiveData<>();
+        }
+        return onFavUnFavSuccess;
+    }
+
+    public void getSingleProduct(String id, UserModel userModel) {
+        String user_id = null;
+        if (userModel != null) {
+            user_id = userModel.getData().getId();
+        }
         getIsDataLoading().setValue(true);
-        Api.getService(Tags.base_url).getSingleProduct(id)
+        Api.getService(Tags.base_url).getSingleProduct(user_id, id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<SingleProductModel>>() {
@@ -68,8 +83,69 @@ public class FragmentProductDetailsMvvm extends AndroidViewModel {
                     @Override
                     public void onError(@NonNull Throwable e) {
                         getIsDataLoading().setValue(false);
-                        Log.e("status", e.toString());
+                        Log.e("err", e.toString());
 
+                    }
+                });
+    }
+
+    public void favUnFav(UserModel userModel, ProductModel model) {
+        if (userModel == null) {
+            if (model.getIs_list().equals("true")) {
+                model.setIs_list("false");
+            } else {
+                model.setIs_list("true");
+
+            }
+            getOnFavUnFavSuccess().setValue(model);
+            return;
+        }
+
+        Api.getService(Tags.base_url)
+                .favUnFav(userModel.getData().getId(), model.getId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<Response<StatusResponse>>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        disposable.add(d);
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull Response<StatusResponse> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            if (response.body().getStatus() == 200) {
+                                Log.e("ddd", response.body().getStatus() + "" + response.body().getMessage().toString());
+                            } else {
+                                if (model.getIs_list().equals("true")) {
+                                    model.setIs_list("false");
+                                } else {
+                                    model.setIs_list("true");
+
+                                }
+                                getOnFavUnFavSuccess().setValue(model);
+                            }
+                        } else {
+                            if (model.getIs_list().equals("true")) {
+                                model.setIs_list("false");
+                            } else {
+                                model.setIs_list("true");
+
+                            }
+                            getOnFavUnFavSuccess().setValue(model);
+                        }
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.e("error", e.toString());
+                        if (model.getIs_list().equals("true")) {
+                            model.setIs_list("false");
+                        } else {
+                            model.setIs_list("true");
+
+                        }
+                        getOnFavUnFavSuccess().setValue(model);
                     }
                 });
     }

@@ -13,6 +13,8 @@ import com.apps.dbrah.model.CategoryModel;
 import com.apps.dbrah.model.ProductModel;
 import com.apps.dbrah.model.RecentProductDataModel;
 import com.apps.dbrah.model.SliderDataModel;
+import com.apps.dbrah.model.StatusResponse;
+import com.apps.dbrah.model.UserModel;
 import com.apps.dbrah.model.cart_models.ManageCartModel;
 import com.apps.dbrah.remote.Api;
 import com.apps.dbrah.tags.Tags;
@@ -32,6 +34,7 @@ public class FragmentMarketMvvm extends AndroidViewModel {
     private MutableLiveData<List<CategoryModel>> onCategoryDataSuccess;
     private MutableLiveData<List<ProductModel>> onRecentProductDataModel;
     private MutableLiveData<List<ProductModel>> onMostProductDataModel;
+    private MutableLiveData<ProductModel> onFavUnFavSuccess;
 
     private CompositeDisposable disposable = new CompositeDisposable();
     private MutableLiveData<Boolean> isLoadingSlider;
@@ -100,6 +103,13 @@ public class FragmentMarketMvvm extends AndroidViewModel {
         return onMostProductDataModel;
     }
 
+    public MutableLiveData<ProductModel> getOnFavUnFavSuccess() {
+        if (onFavUnFavSuccess == null) {
+            onFavUnFavSuccess = new MutableLiveData<>();
+        }
+        return onFavUnFavSuccess;
+    }
+
     public void getSlider() {
         getIsLoadingSlider().setValue(true);
         Api.getService(Tags.base_url).getSlider()
@@ -160,9 +170,13 @@ public class FragmentMarketMvvm extends AndroidViewModel {
                 });
     }
 
-    public void getRecentProduct(Context context) {
+    public void getRecentProduct(Context context,UserModel userModel) {
+        String user_id = null;
+        if (userModel!=null){
+            user_id = userModel.getData().getId();
+        }
         getIsLoadingRecentProduct().setValue(true);
-        Api.getService(Tags.base_url).getRecentProduct()
+        Api.getService(Tags.base_url).getRecentProduct(user_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<RecentProductDataModel>>() {
@@ -175,7 +189,7 @@ public class FragmentMarketMvvm extends AndroidViewModel {
                     public void onSuccess(@NonNull Response<RecentProductDataModel> response) {
                         if (response.isSuccessful() && response.body() != null) {
                             if (response.body().getData() != null && response.body().getStatus() == 200) {
-                                prepareRecentData(response.body().getData(),context);
+                                prepareRecentData(response.body().getData(), context);
                             }
                         }
                     }
@@ -188,9 +202,13 @@ public class FragmentMarketMvvm extends AndroidViewModel {
     }
 
 
-    public void getMostSaleProduct(Context context) {
+    public void getMostSaleProduct(Context context,UserModel userModel) {
+        String user_id = null;
+        if (userModel!=null){
+            user_id = userModel.getData().getId();
+        }
         getIsLoadingMostSaleProduct().setValue(true);
-        Api.getService(Tags.base_url).getMostSaleProduct()
+        Api.getService(Tags.base_url).getMostSaleProduct(user_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<RecentProductDataModel>>() {
@@ -203,7 +221,7 @@ public class FragmentMarketMvvm extends AndroidViewModel {
                     public void onSuccess(@NonNull Response<RecentProductDataModel> response) {
                         if (response.isSuccessful() && response.body() != null) {
                             if (response.body().getData() != null && response.body().getStatus() == 200) {
-                                prepareMostSaleData(response.body().getData(),context);
+                                prepareMostSaleData(response.body().getData(), context);
                             }
                         }
                     }
@@ -215,10 +233,10 @@ public class FragmentMarketMvvm extends AndroidViewModel {
                 });
     }
 
-    private void prepareRecentData(List<ProductModel> data,Context context) {
+    private void prepareRecentData(List<ProductModel> data, Context context) {
         for (int index = 0; index < data.size(); index++) {
             ProductModel productModel = data.get(index);
-            productModel.setAmount(manageCartModel.getProductAmount(productModel.getId(),context));
+            productModel.setAmount(manageCartModel.getProductAmount(productModel.getId(), context));
             data.set(index, productModel);
         }
         getIsLoadingRecentProduct().setValue(false);
@@ -227,10 +245,10 @@ public class FragmentMarketMvvm extends AndroidViewModel {
     }
 
 
-    private void prepareMostSaleData(List<ProductModel> data,Context context) {
+    private void prepareMostSaleData(List<ProductModel> data, Context context) {
         for (int index = 0; index < data.size(); index++) {
             ProductModel productModel = data.get(index);
-            productModel.setAmount(manageCartModel.getProductAmount(productModel.getId(),context));
+            productModel.setAmount(manageCartModel.getProductAmount(productModel.getId(), context));
             data.set(index, productModel);
         }
         getIsLoadingMostSaleProduct().setValue(false);
@@ -238,5 +256,65 @@ public class FragmentMarketMvvm extends AndroidViewModel {
         getOnMostProductDataModel().setValue(data);
     }
 
+    public void favUnFav(UserModel userModel, ProductModel model) {
+        if (userModel == null) {
+            if (model.getIs_list().equals("true")){
+                model.setIs_list("false");
+            }else {
+                model.setIs_list("true");
+
+            }
+            getOnFavUnFavSuccess().setValue(model);
+            return;
+        }
+
+        Api.getService(Tags.base_url)
+                .favUnFav(userModel.getData().getId(), model.getId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<Response<StatusResponse>>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        disposable.add(d);
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull Response<StatusResponse> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            if (response.body().getStatus() == 200) {
+                                getOnFavUnFavSuccess().setValue(model);
+                            } else {
+                                if (model.getIs_list().equals("true")) {
+                                    model.setIs_list("false");
+                                } else {
+                                    model.setIs_list("true");
+
+                                }
+                                getOnFavUnFavSuccess().setValue(model);
+                            }
+                        } else {
+                            if (model.getIs_list().equals("true")) {
+                                model.setIs_list("false");
+                            } else {
+                                model.setIs_list("true");
+
+                            }
+                            getOnFavUnFavSuccess().setValue(model);
+                        }
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.e("error", e.toString());
+                        if (model.getIs_list().equals("true")) {
+                            model.setIs_list("false");
+                        } else {
+                            model.setIs_list("true");
+
+                        }
+                        getOnFavUnFavSuccess().setValue(model);
+                    }
+                });
+    }
 
 }
