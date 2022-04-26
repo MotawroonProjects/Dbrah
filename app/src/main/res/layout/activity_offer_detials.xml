@@ -81,7 +81,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:fontFamily="@font/font_bold"
-                                        android:text="@{model.provider.name}"
+                                        android:text="@{model.provider.fake_name}"
                                         android:textColor="@color/black2"
                                         android:textSize="16sp" />
 
@@ -93,16 +93,24 @@
 
                                         <FrameLayout
                                             android:layout_width="wrap_content"
-                                            android:layout_height="16dp"
-                                            android:layout_gravity="center_vertical">
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_marginTop="5dp"
+                                            >
+                                            <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                                                android:id="@+id/rateBar"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                app:srb_fillColor="@color/color4"
+                                                app:srb_numberOfStars="5"
+                                                app:srb_starBorderWidth="2"
+                                                app:srb_starSize="15dp"
+                                                app:srb_starCornerRadius="3"
+                                                app:srb_isIndicator="true"
+                                                rate="@{model.provider.rate}"
 
-                                            <me.zhanghai.android.materialratingbar.MaterialRatingBar
-                                                android:layout_width="match_parent"
-                                                android:layout_height="match_parent"
-                                                android:layout_gravity="center"
-                                                android:numStars="5"
-                                                android:rating='@{model!=null?Float.parseFloat(model.provider.rate):0}'
-                                                android:theme="@style/RatingBar" />
+                                                />
+
                                         </FrameLayout>
 
 

@@ -8,6 +8,7 @@ import com.apps.dbrah.model.RecentProductDataModel;
 import com.apps.dbrah.model.NotificationDataModel;
 import com.apps.dbrah.model.PlaceGeocodeData;
 import com.apps.dbrah.model.SearchHomeDataModel;
+import com.apps.dbrah.model.SettingDataModel;
 import com.apps.dbrah.model.SingleAddressData;
 import com.apps.dbrah.model.SingleOfferModel;
 import com.apps.dbrah.model.SingleOrderDataModel;
@@ -99,6 +100,15 @@ public interface Service {
 
     );
 
+    @Multipart
+    @POST("api/editProfile")
+    Observable<Response<UserModel>> updateProfile(@Part("user_id") RequestBody user_id,
+                                                  @Part("email") RequestBody email,
+                                                  @Part MultipartBody.Part logo
+
+
+    );
+
 
     @FormUrlEncoded
     @POST("api/logout")
@@ -186,10 +196,12 @@ public interface Service {
     Single<Response<RecentProductDataModel>> getMyList(@Query("user_id") String user_id);
 
 
-
     @FormUrlEncoded
     @POST("api/updateOfferStatus")
     Single<Response<StatusResponse>> acceptRefuseOffer(@Field("offer_id") String offer_id,
                                                        @Field("status") String status);
+
+    @GET("api/setting")
+    Single<Response<SettingDataModel>> getSettings();
 
 }

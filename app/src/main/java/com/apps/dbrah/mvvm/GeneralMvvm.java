@@ -21,6 +21,8 @@ public class GeneralMvvm extends AndroidViewModel {
     private MutableLiveData<Integer> category_pos;
     private MutableLiveData<List<CategoryModel>> categoryList;
     private MutableLiveData<Boolean> onCartRefreshed;
+    private MutableLiveData<Boolean> onCartMyListRefreshed;
+
     private MutableLiveData<ProductModel> onCartItemUpdated;
     //////////////////////////////////////////////////////////////////
     private MutableLiveData<AddressModel> onAddressSelectedForOrder;
@@ -84,6 +86,13 @@ public class GeneralMvvm extends AndroidViewModel {
             onCartRefreshed = new MutableLiveData<>();
         }
         return onCartRefreshed;
+    }
+
+    public MutableLiveData<Boolean> getOnCartMyListRefreshed() {
+        if (onCartMyListRefreshed == null) {
+            onCartMyListRefreshed = new MutableLiveData<>();
+        }
+        return onCartMyListRefreshed;
     }
 
     public MutableLiveData<ProductModel> getOnCartItemUpdated()

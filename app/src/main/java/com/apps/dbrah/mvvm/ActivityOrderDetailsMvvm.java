@@ -25,13 +25,13 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 
-public class FragmentOrderDetailsMvvm extends AndroidViewModel {
+public class ActivityOrderDetailsMvvm extends AndroidViewModel {
 
     private CompositeDisposable disposable = new CompositeDisposable();
     private MutableLiveData<Boolean> isLoading;
     private MutableLiveData<OrderModel> onDataSuccess;
 
-    public FragmentOrderDetailsMvvm(@NonNull Application application) {
+    public ActivityOrderDetailsMvvm(@NonNull Application application) {
         super(application);
     }
 

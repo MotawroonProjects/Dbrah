@@ -88,41 +88,30 @@
         <entry key="..\:/Dbrah/app/src/main/res/drawable/small_stroke_primary.xml" value="0.2388888888888889" />
         <entry key="..\:/Dbrah/app/src/main/res/drawable/tab_indicator.xml" value="0.24444444444444444" />
         <entry key="..\:/Dbrah/app/src/main/res/layout/activity_login.xml" value="0.1925925925925926" />
-        <entry key="..\:/Dbrah/app/src/main/res/layout/activity_offer_detials.xml" value="0.21" />
-        <entry key="..\:/Dbrah/app/src/main/res/layout/activity_previous_order_details.xml" value="0.1140625" />
         <entry key="..\:/Dbrah/app/src/main/res/layout/address_row.xml" value="0.23958333333333334" />
         <entry key="..\:/Dbrah/app/src/main/res/layout/base_fragment_cart.xml" value="0.23958333333333334" />
         <entry key="..\:/Dbrah/app/src/main/res/layout/base_fragment_market.xml" value="0.23958333333333334" />
         <entry key="..\:/Dbrah/app/src/main/res/layout/base_fragment_order.xml" value="0.23958333333333334" />
         <entry key="..\:/Dbrah/app/src/main/res/layout/base_fragment_profile.xml" value="0.23958333333333334" />
         <entry key="..\:/Dbrah/app/src/main/res/layout/cart_row.xml" value="0.3611111111111111" />
-        <entry key="..\:/Dbrah/app/src/main/res/layout/category_loader.xml" value="0.1" />
         <entry key="..\:/Dbrah/app/src/main/res/layout/country_spinner_row.xml" value="0.23958333333333334" />
         <entry key="..\:/Dbrah/app/src/main/res/layout/dailog_verification_code.xml" value="0.23958333333333334" />
         <entry key="..\:/Dbrah/app/src/main/res/layout/dialog_choose_image.xml" value="0.23958333333333334" />
         <entry key="..\:/Dbrah/app/src/main/res/layout/dialog_information.xml" value="0.23958333333333334" />
-        <entry key="..\:/Dbrah/app/src/main/res/layout/fragment_add_address.xml" value="0.21" />
         <entry key="..\:/Dbrah/app/src/main/res/layout/fragment_cart.xml" value="0.23958333333333334" />
         <entry key="..\:/Dbrah/app/src/main/res/layout/fragment_market.xml" value="0.1" />
-        <entry key="..\:/Dbrah/app/src/main/res/layout/fragment_my_addresses.xml" value="0.1" />
-        <entry key="..\:/Dbrah/app/src/main/res/layout/fragment_my_list.xml" value="0.1" />
-        <entry key="..\:/Dbrah/app/src/main/res/layout/fragment_notification.xml" value="0.1" />
         <entry key="..\:/Dbrah/app/src/main/res/layout/fragment_order.xml" value="0.23958333333333334" />
         <entry key="..\:/Dbrah/app/src/main/res/layout/fragment_previous_order_detials.xml" value="0.25" />
         <entry key="..\:/Dbrah/app/src/main/res/layout/fragment_product_detials.xml" value="0.22" />
-        <entry key="..\:/Dbrah/app/src/main/res/layout/fragment_products.xml" value="0.1" />
         <entry key="..\:/Dbrah/app/src/main/res/layout/fragment_profile.xml" value="0.23958333333333334" />
         <entry key="..\:/Dbrah/app/src/main/res/layout/fragment_search.xml" value="0.23958333333333334" />
         <entry key="..\:/Dbrah/app/src/main/res/layout/fragment_setting.xml" value="0.23958333333333334" />
         <entry key="..\:/Dbrah/app/src/main/res/layout/main_cart_row.xml" value="0.33" />
-        <entry key="..\:/Dbrah/app/src/main/res/layout/offer_detials_row.xml" value="0.33" />
-        <entry key="..\:/Dbrah/app/src/main/res/layout/offer_row.xml" value="0.33" />
-        <entry key="..\:/Dbrah/app/src/main/res/layout/order_row.xml" value="0.25" />
+        <entry key="..\:/Dbrah/app/src/main/res/layout/order_row.xml" value="0.1140625" />
         <entry key="..\:/Dbrah/app/src/main/res/layout/profile_layout.xml" value="0.23958333333333334" />
         <entry key="..\:/Dbrah/app/src/main/res/layout/profile_login_layout.xml" value="0.1925925925925926" />
         <entry key="..\:/Dbrah/app/src/main/res/layout/recent_row.xml" value="0.23958333333333334" />
         <entry key="..\:/Dbrah/app/src/main/res/layout/recview_layout.xml" value="0.18055555555555555" />
-        <entry key="..\:/Dbrah/app/src/main/res/layout/time_spinner_row.xml" value="0.1" />
         <entry key="..\:/Dbrah/app/src/main/res/layout/toolbar.xml" value="0.23958333333333334" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/drawable/bottom_item_nav_bg.xml" value="0.21614583333333334" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/drawable/bottom_nav_item_bg.xml" value="0.19114583333333332" />
@@ -130,13 +119,17 @@
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/drawable/btn_enabled2.xml" value="0.19114583333333332" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/drawable/btn_small_enabled.xml" value="0.19114583333333332" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/drawable/circle_primary.xml" value="0.21614583333333334" />
+        <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/drawable/circle_stroke_primary.xml" value="0.19114583333333332" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/drawable/circle_white.xml" value="0.19114583333333332" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/drawable/circle_white_stroke.xml" value="0.19114583333333332" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/drawable/dialog_window_bg.xml" value="0.19114583333333332" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/drawable/dialog_window_bg2.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/drawable/edt_enable.xml" value="0.19114583333333332" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/drawable/hor_line.xml" value="0.19114583333333332" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/drawable/hor_line_grey7.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/drawable/horizontal_line.xml" value="0.19114583333333332" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/drawable/horz_progress_bar.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/drawable/ic_arrow_down.xml" value="0.19114583333333332" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/drawable/ic_arrow_left.xml" value="0.19114583333333332" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/drawable/ic_cart.xml" value="0.21614583333333334" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/drawable/ic_fill_tag.xml" value="0.19114583333333332" />
@@ -146,6 +139,7 @@
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/drawable/ic_save.xml" value="0.19114583333333332" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/drawable/pin_view_item.xml" value="0.19114583333333332" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/drawable/rounded_grey6_stroke.xml" value="0.2169230769230769" />
+        <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/drawable/rounded_primary.xml" value="0.19114583333333332" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/drawable/rounded_right.xml" value="0.21296296296296297" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/drawable/rounded_stroke_black.xml" value="0.19114583333333332" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/drawable/rounded_top.xml" value="0.19114583333333332" />
@@ -163,12 +157,14 @@
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/activity_about_app.xml" value="0.17083333333333334" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/activity_about_app2.xml" value="0.17083333333333334" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/activity_contact_us.xml" value="0.22" />
-        <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/activity_current_order_details.xml" value="0.25" />
+        <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/activity_current_order_details.xml" value="0.33" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/activity_home.xml" value="0.22" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/activity_language.xml" value="0.1" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/activity_login.xml" value="0.17083333333333334" />
+        <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/activity_offer_detials.xml" value="0.25" />
+        <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/activity_previous_order_details.xml" value="0.33" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/activity_share.xml" value="0.17083333333333334" />
-        <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/activity_sign_up.xml" value="0.2" />
+        <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/activity_sign_up.xml" value="0.22" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/activity_splash.xml" value="0.18981481481481483" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/activity_verification_code.xml" value="0.17083333333333334" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/address_row.xml" value="0.33" />
@@ -178,6 +174,7 @@
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/base_fragment_order.xml" value="0.2" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/base_fragment_profile.xml" value="0.2" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/bottom_sheet_dialog.xml" value="0.17083333333333334" />
+        <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/cart_row.xml" value="0.40925925925925927" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/category_loader.xml" value="0.17083333333333334" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/category_row.xml" value="0.22" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/country_spinner_row.xml" value="0.22" />
@@ -196,24 +193,27 @@
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/fragment_my_list.xml" value="0.17083333333333334" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/fragment_notification.xml" value="0.26049766718507" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/fragment_order.xml" value="0.2" />
-        <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/fragment_product_detials.xml" value="0.25" />
+        <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/fragment_product_detials.xml" value="0.10852713178294573" />
+        <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/fragment_products.xml" value="0.2" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/fragment_profile.xml" value="0.2" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/fragment_search.xml" value="0.22" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/fragment_setting.xml" value="0.21" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/home_search_sub_category_row.xml" value="0.25" />
+        <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/main_cart_row.xml" value="0.25" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/main_category_row.xml" value="0.17083333333333334" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/most_sale_row.xml" value="0.17083333333333334" />
-        <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/offer_row.xml" value="0.5" />
+        <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/offer_row.xml" value="0.67" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/order_row.xml" value="0.25" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/product_details_loader.xml" value="0.22" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/product_loader_horizontal.xml" value="0.17083333333333334" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/profile_layout.xml" value="0.25" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/profile_login_layout.xml" value="0.17083333333333334" />
-        <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/recent_row.xml" value="0.17465753424657535" />
+        <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/recent_row.xml" value="0.27710843373493976" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/recview_layout.xml" value="0.17447916666666666" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/search_home_product_loader.xml" value="0.25" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/search_home_product_row.xml" value="0.33" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/search_home_sub_category_loader.xml" value="0.5" />
+        <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/search_home_sub_category_row.xml" value="0.17083333333333334" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/sheet_choose_image.xml" value="0.17083333333333334" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/slider_loader.xml" value="0.17083333333333334" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/sub_category_row.xml" value="0.5" />

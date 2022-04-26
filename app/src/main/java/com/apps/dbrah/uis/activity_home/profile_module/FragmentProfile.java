@@ -30,6 +30,7 @@ import com.apps.dbrah.databinding.FragmentProfileBinding;
 import com.apps.dbrah.uis.activity_home.HomeActivity;
 import com.apps.dbrah.uis.activity_home.order_module.FragmentOrder;
 import com.apps.dbrah.uis.activity_login.LoginActivity;
+import com.apps.dbrah.uis.activity_sign_up.SignUpActivity;
 
 import java.util.List;
 
@@ -96,11 +97,21 @@ public class FragmentProfile extends BaseFragment {
             generalMvvm.onHomeNavigate().setValue(5);
         });
 
+        binding.profileLayout.llEditProfile.setOnClickListener(v -> {
+            navigateToSignUpActivity();
+        });
+
     }
 
     private void navigateToLoginActivity() {
         req = 1;
         Intent intent = new Intent(activity, LoginActivity.class);
+        launcher.launch(intent);
+    }
+
+    private void navigateToSignUpActivity() {
+        req = 1;
+        Intent intent = new Intent(activity, SignUpActivity.class);
         launcher.launch(intent);
     }
 

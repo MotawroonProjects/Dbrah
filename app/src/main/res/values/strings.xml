@@ -147,5 +147,6 @@
     <string name="not_available">Not available</string>
     <string name="alternative_product">Alternative Product</string>
     <string name="less_quantitiy">Smaller Quantities</string>
+    <string name="inv_link">invalid link</string>
 
 </resources>

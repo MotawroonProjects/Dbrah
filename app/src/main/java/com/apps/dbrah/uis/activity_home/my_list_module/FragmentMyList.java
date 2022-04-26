@@ -87,7 +87,8 @@ public class FragmentMyList extends BaseFragment {
             }
 
         });
-        generalMvvm.getOnCartRefreshed().observe(activity, isRefreshed -> {
+
+        generalMvvm.getOnCartMyListRefreshed().observe(activity, isRefreshed -> {
             mvvm.getMyList(activity,getUserModel());
 
         });
@@ -150,7 +151,6 @@ public class FragmentMyList extends BaseFragment {
         });
 
         mvvm.getOnFavUnFavSuccess().observe(this,model->{
-            Log.e("model",model.getId());
             model.setIs_list("false");
             generalMvvm.getOnProductItemUpdated().setValue(model);
             if (mvvm.getOnDataSuccess().getValue()!=null&&mvvm.getOnDataSuccess().getValue().size()>0){
@@ -184,7 +184,6 @@ public class FragmentMyList extends BaseFragment {
 
     public void addProductToCart(ProductModel productModel) {
         generalMvvm.getOnCartItemUpdated().setValue(productModel);
-
         manageCartModel.add(productModel, activity);
         generalMvvm.getOnCartRefreshed().setValue(true);
 

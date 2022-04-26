@@ -16,6 +16,7 @@ import androidx.databinding.BindingAdapter;
 
 import com.apps.dbrah.R;
 
+import com.apps.dbrah.model.ProductModel;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
@@ -200,6 +201,30 @@ public class GeneralMethod {
 
     }
 
+    @BindingAdapter("statusTime")
+    public static void orderStatusTime(TextView textView, String date) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH);
+        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        String time = "";
+        if (date != null) {
+
+            try {
+                Date parse = dateFormat.parse(date);
+
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd\nhh:mm a", Locale.ENGLISH);
+                format.setTimeZone(TimeZone.getDefault());
+                time = format.format(parse);
+                textView.setText(time);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        } else {
+
+        }
+
+    }
+
+
     @BindingAdapter("status")
     public static void orderStatus(TextView textView, String status) {
         if (status != null) {
@@ -226,6 +251,72 @@ public class GeneralMethod {
         }
 
     }
+
+    @BindingAdapter("circleStatus1")
+    public static void circle1Status(ImageView imageView, String circleStatus1) {
+        if (circleStatus1 != null) {
+            if (circleStatus1.equals("preparing") || circleStatus1.equals("on_way") || circleStatus1.equals("delivered")) {
+                imageView.setBackgroundResource(R.drawable.circle_primary);
+            } else {
+                imageView.setBackgroundResource(R.drawable.circle_grey11);
+
+            }
+        }
+
+    }
+
+    @BindingAdapter("circleStatus2")
+    public static void circle2Status(ImageView imageView, String circleStatus2) {
+        if (circleStatus2 != null) {
+            if (circleStatus2.equals("on_way") || circleStatus2.equals("delivered")) {
+                imageView.setBackgroundResource(R.drawable.circle_primary);
+            } else {
+                imageView.setBackgroundResource(R.drawable.circle_grey11);
+
+            }
+        }
+
+    }
+
+    @BindingAdapter("circleStatus3")
+    public static void circle3Status(ImageView imageView, String circleStatus3) {
+        if (circleStatus3 != null) {
+            if (circleStatus3.equals("delivered")) {
+                imageView.setBackgroundResource(R.drawable.circle_primary);
+            } else {
+                imageView.setBackgroundResource(R.drawable.circle_grey11);
+
+            }
+        }
+
+    }
+
+    @BindingAdapter("lineStatus1")
+    public static void line1Status(View view, String lineStatus1) {
+        if (lineStatus1 != null) {
+            if (lineStatus1.equals("on_way") || lineStatus1.equals("delivered")) {
+                view.setBackgroundResource(R.color.colorPrimary);
+            } else {
+                view.setBackgroundResource(R.color.grey11);
+
+            }
+        }
+
+    }
+
+    @BindingAdapter("lineStatus2")
+    public static void line2Status(View view, String lineStatus2) {
+        if (lineStatus2 != null) {
+            if (lineStatus2.equals("delivered")) {
+                view.setBackgroundResource(R.color.colorPrimary);
+            } else {
+                view.setBackgroundResource(R.color.grey11);
+
+            }
+        }
+
+    }
+
 
     @BindingAdapter("orderProgress")
     public static void orderProgress(ProgressBar bar, String status) {
@@ -299,13 +390,14 @@ public class GeneralMethod {
             textView.setText(m_date);
         }
     }
+
     @BindingAdapter("type")
     public static void OfferType(ImageView imDot, String type) {
 
         if (type.equals("other")) {
             imDot.setColorFilter(ContextCompat.getColor(imDot.getContext(), R.color.color5), PorterDuff.Mode.SRC_IN);
         } else if (type.equals("less")) {
-        imDot.setColorFilter(ContextCompat.getColor(imDot.getContext(), R.color.color6), PorterDuff.Mode.SRC_IN);
+            imDot.setColorFilter(ContextCompat.getColor(imDot.getContext(), R.color.color6), PorterDuff.Mode.SRC_IN);
         } else if (type.equals("not_found")) {
             imDot.setColorFilter(ContextCompat.getColor(imDot.getContext(), R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
         }

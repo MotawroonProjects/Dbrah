@@ -148,4 +148,5 @@
     <string name="not_available">غير متاح</string>
     <string name="alternative_product">منتج بديل</string>
     <string name="less_quantitiy">كميات أقل</string>
+    <string name="inv_link">الرابط غير صحيح</string>
 </resources>

@@ -276,6 +276,7 @@ public class FragmentProductDetials extends BaseFragment {
     public void removeProductFromCart(ProductModel productModel) {
         manageCartModel.delete(productModel, activity);
         generalMvvm.getOnCartRefreshed().setValue(true);
+        generalMvvm.getOnCartMyListRefreshed().setValue(true);
         productModel.setAmount(0);
         generalMvvm.getOnCartItemUpdated().setValue(productModel);
     }

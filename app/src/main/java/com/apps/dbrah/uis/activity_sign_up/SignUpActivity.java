@@ -36,6 +36,7 @@ import com.apps.dbrah.preferences.Preferences;
 import com.apps.dbrah.share.Common;
 import com.apps.dbrah.uis.activity_base.BaseActivity;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.io.ByteArrayOutputStream;
@@ -80,11 +81,40 @@ public class SignUpActivity extends BaseActivity {
                 finish();
             }
         });
-
-        setUpToolbar(binding.toolbar, getString(R.string.sign_up), R.color.white, R.color.black, R.drawable.small_rounded_grey4, true);
+        String title = getString(R.string.sign_up);
         model = new SignUpModel();
-        model.setPhone_code(phone_code);
-        model.setPhone(phone);
+
+
+        if (getUserModel()!=null){
+            title = getString(R.string.edit_profile);
+            model.setName(getUserModel().getData().getName());
+            model.setEmail(getUserModel().getData().getEmail());
+            model.setPhone_code(getUserModel().getData().getPhone_code());
+            model.setPhone(getUserModel().getData().getPhone());
+            model.setVat(getUserModel().getData().getVat_number());
+            binding.llVat.setVisibility(View.GONE);
+            binding.llSpinner.setEnabled(false);
+            binding.edtName.setEnabled(false);
+            binding.llPhone.setVisibility(View.VISIBLE);
+            if (getUserModel().getData().getImage()!=null){
+                Glide.with(this).asBitmap()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(R.drawable.circle_avatar)
+                        .load(getUserModel().getData().getImage())
+                        .centerCrop()
+                        .into(binding.image);
+
+            }
+        }else {
+            model.setPhone_code(phone_code);
+            model.setPhone(phone);
+            binding.edtName.setEnabled(false);
+            binding.llVat.setVisibility(View.VISIBLE);
+            binding.llPhone.setVisibility(View.GONE);
+        }
+        setUpToolbar(binding.toolbar, title, R.color.white, R.color.black, R.drawable.small_rounded_grey4, true);
+
+
         binding.setModel(model);
         permissions = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), permissions -> {
             if (req == 1) {
@@ -130,7 +160,13 @@ public class SignUpActivity extends BaseActivity {
         });
         binding.flImage.setOnClickListener(v -> openSheet());
         binding.btnSignup.setOnClickListener(view -> {
-            activitySignupMvvm.signUp(model, this);
+            if (getUserModel()==null){
+                activitySignupMvvm.signUp(model, this);
+
+            }else {
+                activitySignupMvvm.update(model,getUserModel().getData().getId(),this);
+
+            }
         });
 
     }

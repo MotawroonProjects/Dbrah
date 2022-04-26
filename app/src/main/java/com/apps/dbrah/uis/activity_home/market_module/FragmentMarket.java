@@ -351,13 +351,13 @@ public class FragmentMarket extends BaseFragment {
 
         manageCartModel.add(productModel, activity);
         generalMvvm.getOnCartRefreshed().setValue(true);
+        generalMvvm.getOnCartMyListRefreshed().setValue(true);
     }
 
     public void removeProductFromCart(ProductModel productModel, String fromList) {
         manageCartModel.delete(productModel, activity);
         generalMvvm.getOnCartRefreshed().setValue(true);
-
-
+        generalMvvm.getOnCartMyListRefreshed().setValue(true);
         if (fromList.equals("most")) {
 
             int productPos = getCartItemPosRecent(productModel.getId());

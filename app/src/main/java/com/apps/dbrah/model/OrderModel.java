@@ -20,6 +20,7 @@ public class OrderModel implements Serializable {
     private List<Offers> offers;
     private CategoryModel category;
     private AddressModel address;
+    private Offers accepted_offer;
 
     public String getId() {
         return id;
@@ -87,6 +88,10 @@ public class OrderModel implements Serializable {
 
     public void setOffers(List<Offers> offers) {
         this.offers = offers;
+    }
+
+    public Offers getAccepted_offer() {
+        return accepted_offer;
     }
 
     public static class Details implements Serializable {
