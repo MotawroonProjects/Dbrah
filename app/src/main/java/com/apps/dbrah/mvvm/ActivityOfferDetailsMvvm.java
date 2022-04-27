@@ -77,7 +77,7 @@ public class ActivityOfferDetailsMvvm extends AndroidViewModel {
                         if (response.isSuccessful()) {
                             if (response.body() != null) {
                                 if (response.body().getStatus() == 200) {
-                                    getOnDataSuccess().postValue(response.body().getData());
+                                    getOnDataSuccess().setValue(response.body().getData());
                                 }
                             }
 
@@ -99,7 +99,7 @@ public class ActivityOfferDetailsMvvm extends AndroidViewModel {
                 });
     }
 
-    public void acceptRefuseOffer( String offer_id, String status, Context context) {
+    public void acceptRefuseOffer(String offer_id, String status, Context context) {
         ProgressDialog dialog = Common.createProgressDialog(context, context.getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
@@ -120,9 +120,9 @@ public class ActivityOfferDetailsMvvm extends AndroidViewModel {
                         if (response.isSuccessful()) {
                             if (response.body() != null) {
                                 if (response.body().getStatus() == 200) {
-                                    if(status.equals("accepted")) {
+                                    if (status.equals("accepted")) {
                                         getOnOrderStatusSuccess().setValue("accepted");
-                                    }else{
+                                    } else {
                                         getOnOrderStatusSuccess().setValue("rejected");
                                     }
 

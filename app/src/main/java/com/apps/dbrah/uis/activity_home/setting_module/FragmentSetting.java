@@ -69,6 +69,13 @@ public class FragmentSetting extends BaseFragment {
 
         });
 
+        mvvm.getOnLoggedOutSuccess().observe(this, loggedOut -> {
+            if (loggedOut) {
+                clearUserModel(activity);
+                generalMvvm.getOnLoggedOutSuccess().setValue(true);
+                generalMvvm.onHomeBackNavigate().setValue(true);
+            }
+        });
         mvvm.getOnDataSuccess().observe(activity, model -> {
             setting = model;
         });
@@ -151,6 +158,10 @@ public class FragmentSetting extends BaseFragment {
             } else {
                 Toast.makeText(activity, R.string.inv_link, Toast.LENGTH_SHORT).show();
             }
+        });
+
+        binding.llLogout.setOnClickListener(v -> {
+            mvvm.logout(getUserModel(),activity);
         });
 
         mvvm.getSettings(activity);

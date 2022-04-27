@@ -46,7 +46,7 @@ public class CurrentOrderDetailsActivity extends BaseActivity {
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == Activity.RESULT_OK) {
                 update = true;
-                if (result.getData()!=null&&result.getData().getStringExtra("data") != null) {
+                if (result.getData() != null && result.getData().getStringExtra("data") != null) {
                     Intent intent = getIntent();
                     intent.putExtra("data", order_id);
                     setResult(RESULT_OK, intent);
@@ -86,6 +86,13 @@ public class CurrentOrderDetailsActivity extends BaseActivity {
 
         mvvm.getOrderDetails(order_id);
 
+        mvvm.getOnOrderCanceled().observe(this,isCanceled->{
+            if (isCanceled){
+                setResult(RESULT_OK);
+                finish();
+            }
+        });
+
         adapter = new OfferAdapter(this, getLang());
         binding.recView.setLayoutManager(new LinearLayoutManager(this));
         binding.recView.setAdapter(adapter);
@@ -93,6 +100,9 @@ public class CurrentOrderDetailsActivity extends BaseActivity {
 
         binding.swipeRefresh.setOnRefreshListener(() -> mvvm.getOrderDetails(order_id));
 
+        binding.llCancelOrder.setOnClickListener(v -> {
+            mvvm.acceptCancelOrder(order_id, this);
+        });
     }
 
     public void show(OrderModel.Offers offers) {

@@ -38,6 +38,7 @@ public class FragmentCurrentOrder extends BaseFragment {
     private FragmentCurrentOrderBinding binding;
     private OrderAdapter adapter;
     private ActivityResultLauncher<Intent> launcher;
+    private int req;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -67,14 +68,18 @@ public class FragmentCurrentOrder extends BaseFragment {
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == Activity.RESULT_OK) {
                 mvvm.getOrders(getUserModel(), "new");
+                if (result.getData() != null) {
+                    if (result.getData().hasExtra("data")) {
+                        if (result.getData().getStringExtra("data") != null) {
+                            Intent intent = new Intent(activity, PreviousOrderDetailsActivity.class);
+                            intent.putExtra("data", result.getData().getStringExtra("data"));
+                            launcher.launch(intent);
+                        }
+                    }
 
-                if (result.getData()!=null&&result.getData().getStringExtra("data") != null) {
-
-                    Intent intent = new Intent(activity, PreviousOrderDetailsActivity.class);
-
-                    intent.putExtra("data", result.getData());
-                    launcher.launch(intent);
                 }
+
+
             }
         });
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
@@ -84,6 +89,26 @@ public class FragmentCurrentOrder extends BaseFragment {
         binding.recViewLayout.recView.setAdapter(adapter);
         binding.recViewLayout.swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
         binding.recViewLayout.tvNoData.setText(R.string.no_orders);
+
+        generalMvvm.getOnCurrentOrderRefreshed().observe(activity, isRefreshed -> {
+            if (isRefreshed) {
+                mvvm.getOrders(getUserModel(), "new");
+            }
+        });
+
+        generalMvvm.getOnLoggedOutSuccess().observe(activity,loggedOut->{
+            if (loggedOut){
+                mvvm.getOrders(getUserModel(), "new");
+
+            }
+        });
+
+        generalMvvm.getOnUserLoggedIn().observe(activity,loggedIn->{
+            if (loggedIn){
+                mvvm.getOrders(getUserModel(), "new");
+
+            }
+        });
         mvvm.getIsLoading().observe(activity, isLoading -> {
             binding.recViewLayout.swipeRefresh.setRefreshing(isLoading);
         });
@@ -105,7 +130,7 @@ public class FragmentCurrentOrder extends BaseFragment {
 
 
     public void navigateToDetails(OrderModel orderModel) {
-
+        req = 1;
         Intent intent;
         if (orderModel.getStatus().equals("new") || orderModel.getStatus().equals("offered")) {
             intent = new Intent(activity, CurrentOrderDetailsActivity.class);

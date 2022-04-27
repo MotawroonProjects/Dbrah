@@ -3,6 +3,7 @@ package com.apps.dbrah.services;
 
 import com.apps.dbrah.model.AddressesDataModel;
 import com.apps.dbrah.model.CategoryDataModel;
+import com.apps.dbrah.model.MessagesDataModel;
 import com.apps.dbrah.model.OrdersModel;
 import com.apps.dbrah.model.RecentProductDataModel;
 import com.apps.dbrah.model.NotificationDataModel;
@@ -10,6 +11,7 @@ import com.apps.dbrah.model.PlaceGeocodeData;
 import com.apps.dbrah.model.SearchHomeDataModel;
 import com.apps.dbrah.model.SettingDataModel;
 import com.apps.dbrah.model.SingleAddressData;
+import com.apps.dbrah.model.SingleMessageModel;
 import com.apps.dbrah.model.SingleOfferModel;
 import com.apps.dbrah.model.SingleOrderDataModel;
 import com.apps.dbrah.model.SingleProductModel;
@@ -111,15 +113,6 @@ public interface Service {
 
 
     @FormUrlEncoded
-    @POST("api/logout")
-    Single<Response<StatusResponse>> logout(@Header("AUTHORIZATION") String token,
-                                            @Field("api_key") String api_key,
-                                            @Field("phone_token") String phone_token
-
-
-    );
-
-    @FormUrlEncoded
     @POST("api/firebase-tokens")
     Single<Response<StatusResponse>> updateFirebasetoken(@Header("AUTHORIZATION") String token,
                                                          @Field("api_key") String api_key,
@@ -203,5 +196,38 @@ public interface Service {
 
     @GET("api/setting")
     Single<Response<SettingDataModel>> getSettings();
+
+    @GET("api/getChat")
+    Single<Response<MessagesDataModel>> getChatMessages(@Query(value = "order_id") String order_id);
+
+    @Multipart
+    @POST("api/storeMessage")
+    Single<Response<SingleMessageModel>> sendMessages(@Part("order_id") RequestBody order_id,
+                                                      @Part("from_type") RequestBody from_type,
+                                                      @Part("type") RequestBody type,
+                                                      @Part("message") RequestBody message,
+                                                      @Part MultipartBody.Part image
+    );
+
+
+    @FormUrlEncoded
+    @POST("api/updateOrderStatus")
+    Single<Response<StatusResponse>> updateOrderStatus(@Field("order_id") String order_id,
+                                                       @Field("status") String status
+    );
+
+    @FormUrlEncoded
+    @POST("api/storeToken")
+    Single<Response<StatusResponse>> updateFireBaseToken(@Field("user_id") String user_id,
+                                                         @Field("token") String token,
+                                                         @Field("type") String type
+
+    );
+
+    @FormUrlEncoded
+    @POST("api/logout")
+    Single<Response<StatusResponse>> logout(@Field("user_id") String user_id,
+                                            @Field("token") String token
+    );
 
 }

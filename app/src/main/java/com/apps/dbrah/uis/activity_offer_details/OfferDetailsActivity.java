@@ -73,31 +73,21 @@ public class OfferDetailsActivity extends BaseActivity {
                         intent.putExtra("data", "accept");
                         setResult(RESULT_OK, intent);
 
-                        finish();
                     } else {
                         setResult(RESULT_OK);
-                        finish();
                     }
+                    finish();
                 }
             }
         });
+
         setUpToolbar(binding.toolbar, getString(R.string.offer_detials), R.color.white, R.color.black, R.drawable.small_rounded_grey4, true);
         offerList = new ArrayList<>();
         offerDetialsAdapter = new OfferDetialsAdapter(offerList, this, getLang());
         binding.recViewOffer.setLayoutManager(new LinearLayoutManager(this));
         binding.recViewOffer.setAdapter(offerDetialsAdapter);
-        binding.llReject.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                activityOfferDetailsMvvm.acceptRefuseOffer(offer_id, "rejected", OfferDetailsActivity.this);
-            }
-        });
-        binding.llAccept.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                activityOfferDetailsMvvm.acceptRefuseOffer(offer_id, "accepted", OfferDetailsActivity.this);
-            }
-        });
+        binding.llReject.setOnClickListener(view -> activityOfferDetailsMvvm.acceptRefuseOffer(offer_id, "rejected", this));
+        binding.llAccept.setOnClickListener(view -> activityOfferDetailsMvvm.acceptRefuseOffer(offer_id, "accepted", this));
         activityOfferDetailsMvvm.getOfferDetails(offer_id);
     }
 }

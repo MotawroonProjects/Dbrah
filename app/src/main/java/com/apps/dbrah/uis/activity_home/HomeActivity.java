@@ -16,6 +16,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.apps.dbrah.adapter.MyPagerAdapter;
 import com.apps.dbrah.model.ProductAmount;
+import com.apps.dbrah.model.UserModel;
+import com.apps.dbrah.mvvm.ActivityHomeMvvm;
 import com.apps.dbrah.mvvm.GeneralMvvm;
 import com.apps.dbrah.uis.FragmentBaseNavigation;
 import com.apps.dbrah.uis.activity_base.BaseActivity;
@@ -44,12 +46,14 @@ import java.util.Stack;
 import io.paperdb.Paper;
 
 public class HomeActivity extends BaseActivity {
+    private ActivityHomeMvvm mvvm;
     private GeneralMvvm generalMvvm;
     private ActivityHomeBinding binding;
     private MyPagerAdapter adapter;
     private List<Fragment> fragments;
     private Stack<Integer> stack;
-    private String product_id =null;
+    private String product_id = null;
+    private String order_id = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +68,7 @@ public class HomeActivity extends BaseActivity {
     private void getDataFromIntent() {
         Intent intent = getIntent();
         product_id = intent.getStringExtra("product_id");
+        order_id = intent.getStringExtra("order_id");
 
     }
 
@@ -75,23 +80,32 @@ public class HomeActivity extends BaseActivity {
         generalMvvm.onHomeBackNavigate().observe(this, value -> {
             onBackPressed();
         });
+        mvvm = ViewModelProviders.of(this).get(ActivityHomeMvvm.class);
 
-       /* homeActivityMvvm = ViewModelProviders.of(this).get(HomeActivityMvvm.class);
 
-
-        homeActivityMvvm.firebase.observe(this, token -> {
+        mvvm.onTokenSuccess().observe(this, userModel -> {
             if (getUserModel() != null) {
-                UserModel userModel = getUserModel();
-                userModel.getData().setFirebase_token(token);
                 setUserModel(userModel);
             }
         });
 
+        generalMvvm.getOnUserLoggedIn().observe(this, isLoggedIn -> {
+            if (isLoggedIn) {
+                if (getUserModel() != null) {
+                    mvvm.updateToken(getUserModel());
+                }
+            }
+        });
+
+
 
         if (getUserModel() != null) {
-            homeActivityMvvm.updateFirebase(this, getUserModel());
-        }*/
+            mvvm.updateToken(getUserModel());
+        }
+
+
     }
+
 
     private void setUpPager() {
         stack = new Stack<>();
@@ -113,11 +127,17 @@ public class HomeActivity extends BaseActivity {
 
         stack.push(0);
 
-        if (product_id!=null&&!product_id.isEmpty()){
+        if (product_id != null && !product_id.isEmpty()) {
             updateStack(6);
             ProductAmount productAmount = new ProductAmount(product_id, 0);
             generalMvvm.getProductAmount().setValue(productAmount);
         }
+
+        if (order_id != null && !order_id.isEmpty()) {
+            updateStack(1);
+        }
+
+
     }
 
     private void updateStack(int pagePos) {
@@ -142,11 +162,6 @@ public class HomeActivity extends BaseActivity {
     }
 
 
-    public void updateFirebase() {
-        if (getUserModel() != null) {
-            // homeActivityMvvm.updateFirebase(this, getUserModel());
-        }
-    }
 
 
     @Override

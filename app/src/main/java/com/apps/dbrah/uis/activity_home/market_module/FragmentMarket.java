@@ -244,6 +244,18 @@ public class FragmentMarket extends BaseFragment {
             }
         });
 
+        generalMvvm.getOnLoggedOutSuccess().observe(activity,loggedOut->{
+            if (loggedOut){
+                getData();
+            }
+        });
+
+        generalMvvm.getOnUserLoggedIn().observe(activity,loggedIn->{
+            if (loggedIn){
+                getData();
+
+            }
+        });
         setUpSliderData();
 
         categoryAdapter = new CategoryAdapter(activity, this, getLang());

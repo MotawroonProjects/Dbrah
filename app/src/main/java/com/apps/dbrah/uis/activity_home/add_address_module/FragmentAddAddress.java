@@ -119,6 +119,23 @@ public class FragmentAddAddress extends BaseFragment implements OnMapReadyCallba
 
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
 
+        generalMvvm.getOnLoggedOutSuccess().observe(this, loggedOut -> {
+            if (loggedOut) {
+                if (googleApiClient != null) {
+                    LocationServices.getFusedLocationProviderClient(activity).removeLocationUpdates(locationCallback);
+                    googleApiClient.disconnect();
+                    googleApiClient = null;
+                }
+
+            }
+        });
+
+        generalMvvm.getOnUserLoggedIn().observe(this, loggedIn -> {
+            if (loggedIn) {
+                mvvm.getTime(activity);
+                setUpMapFragment();
+            }
+        });
         mvvm = ViewModelProviders.of(activity).get(FragmentAddAddressMvvm.class);
 
         view = activity.setUpToolbar(binding.toolbar, getString(R.string.add_address), R.color.white, R.color.black, R.drawable.small_rounded_grey4, false);
@@ -190,7 +207,6 @@ public class FragmentAddAddress extends BaseFragment implements OnMapReadyCallba
 
             }
         });
-        mvvm.getTime(activity);
 
 
         binding.btnAdd.setOnClickListener(v -> {
@@ -207,7 +223,12 @@ public class FragmentAddAddress extends BaseFragment implements OnMapReadyCallba
 
         });
 
-        setUpMapFragment();
+        if (getUserModel()!=null){
+            mvvm.getTime(activity);
+            setUpMapFragment();
+        }
+
+
     }
 
     private void setUpMapFragment() {

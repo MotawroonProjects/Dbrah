@@ -60,6 +60,12 @@ public class FragmentMyAddressesMvvm extends AndroidViewModel {
 
     public void getAddresses(String user_id)
     {
+        if (user_id==null){
+            getIsLoading().setValue(false);
+            getOnDataSuccess().setValue(new ArrayList<>());
+
+            return;
+        }
         getIsLoading().setValue(true);
 
         Api.getService(Tags.base_url).getMyAddresses(user_id)

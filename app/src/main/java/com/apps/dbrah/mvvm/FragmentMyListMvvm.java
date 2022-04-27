@@ -16,6 +16,7 @@ import com.apps.dbrah.model.cart_models.ManageCartModel;
 import com.apps.dbrah.remote.Api;
 import com.apps.dbrah.tags.Tags;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.SingleObserver;
@@ -64,10 +65,14 @@ public class FragmentMyListMvvm extends AndroidViewModel {
 
 
     public void getMyList(Context context, UserModel userModel) {
-        String user_id = null;
-        if (userModel != null) {
-            user_id = userModel.getData().getId();
+
+        if (userModel == null) {
+            getIsLoading().setValue(false);
+            getOnDataSuccess().setValue(new ArrayList<>());
+            return;
         }
+        String user_id = userModel.getData().getId();
+
         getIsLoading().setValue(true);
         Api.getService(Tags.base_url)
                 .getMyList(user_id)

@@ -37,7 +37,7 @@ public class FragmentMyList extends BaseFragment {
     private FragmentMyListMvvm mvvm;
     private FavoriteAdapter adapter;
     private ManageCartModel manageCartModel;
-    private int removePos =-1;
+    private int removePos = -1;
 
 
     public static FragmentMyList newInstance() {
@@ -75,6 +75,24 @@ public class FragmentMyList extends BaseFragment {
 
         });
 
+        generalMvvm.getOnUserLoggedIn().observe(this, loggedIn -> {
+            if (loggedIn) {
+                if (getUserModel() != null) {
+                    mvvm.getMyList(activity,getUserModel());
+                }
+
+            }
+        });
+
+        generalMvvm.getOnLoggedOutSuccess().observe(this, loggedOut -> {
+            if (loggedOut) {
+                mvvm.getMyList(activity,null);
+
+
+            }
+        });
+
+
         generalMvvm.getOnCartItemUpdated().observe(activity, productModel -> {
             int productPos = getProductPos(productModel.getId());
             if (productPos != -1) {
@@ -89,17 +107,17 @@ public class FragmentMyList extends BaseFragment {
         });
 
         generalMvvm.getOnCartMyListRefreshed().observe(activity, isRefreshed -> {
-            mvvm.getMyList(activity,getUserModel());
+            mvvm.getMyList(activity, getUserModel());
 
         });
 
         generalMvvm.getOnProductItemUpdated().observe(activity, productModel -> {
             int productPos = getProductPos(productModel.getId());
-            if (productModel.getIs_list().equals("true")){
+            if (productModel.getIs_list().equals("true")) {
                 if (productPos == -1) {
                     if (mvvm.getOnDataSuccess().getValue() != null) {
                         binding.recViewLayout.tvNoData.setVisibility(View.GONE);
-                        mvvm.getOnDataSuccess().getValue().add(0,productModel);
+                        mvvm.getOnDataSuccess().getValue().add(0, productModel);
                         if (adapter != null) {
                             //productAdapter.updateItem(productModel, productPos);
                             adapter.notifyItemInserted(productPos);
@@ -107,7 +125,7 @@ public class FragmentMyList extends BaseFragment {
                         }
                     }
                 }
-            }else {
+            } else {
 
                 if (productPos != -1) {
                     if (mvvm.getOnDataSuccess().getValue() != null) {
@@ -115,7 +133,7 @@ public class FragmentMyList extends BaseFragment {
                         if (adapter != null) {
                             adapter.notifyItemRemoved(productPos);
 
-                            if (mvvm.getOnDataSuccess().getValue()!=null&&mvvm.getOnDataSuccess().getValue().size() > 0) {
+                            if (mvvm.getOnDataSuccess().getValue() != null && mvvm.getOnDataSuccess().getValue().size() > 0) {
                                 binding.recViewLayout.tvNoData.setVisibility(View.GONE);
 
                             } else {
@@ -150,29 +168,30 @@ public class FragmentMyList extends BaseFragment {
             adapter.updateList(list);
         });
 
-        mvvm.getOnFavUnFavSuccess().observe(this,model->{
+        mvvm.getOnFavUnFavSuccess().observe(this, model -> {
             model.setIs_list("false");
             generalMvvm.getOnProductItemUpdated().setValue(model);
-            if (mvvm.getOnDataSuccess().getValue()!=null&&mvvm.getOnDataSuccess().getValue().size()>0){
+            if (mvvm.getOnDataSuccess().getValue() != null && mvvm.getOnDataSuccess().getValue().size() > 0) {
                 binding.recViewLayout.tvNoData.setVisibility(View.GONE);
-            }else {
+            } else {
                 binding.recViewLayout.tvNoData.setVisibility(View.VISIBLE);
 
             }
-            if (adapter!=null&&removePos!=-1){
+            if (adapter != null && removePos != -1) {
                 adapter.notifyItemRemoved(removePos);
                 removePos = -1;
             }
         });
 
-        adapter = new FavoriteAdapter(activity, this,getLang());
+        adapter = new FavoriteAdapter(activity, this, getLang());
         binding.recViewLayout.recView.setLayoutManager(new GridLayoutManager(activity, 2));
         binding.recViewLayout.recView.setAdapter(adapter);
 
         binding.recViewLayout.swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
-        binding.recViewLayout.swipeRefresh.setOnRefreshListener(()->mvvm.getMyList(activity,getUserModel()));
+        binding.recViewLayout.swipeRefresh.setOnRefreshListener(() -> mvvm.getMyList(activity, getUserModel()));
 
-        mvvm.getMyList(activity,getUserModel());
+
+        mvvm.getMyList(activity, getUserModel());
 
     }
 
@@ -200,7 +219,7 @@ public class FragmentMyList extends BaseFragment {
 
     public void favUnFav(ProductModel productModel, int adapterPosition) {
         removePos = adapterPosition;
-        mvvm.favUnFav(getUserModel(), productModel,adapterPosition);
+        mvvm.favUnFav(getUserModel(), productModel, adapterPosition);
     }
 
     private int getProductPos(String product_id) {

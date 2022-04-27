@@ -69,6 +69,25 @@ public class FragmentPreviousOrder extends BaseFragment {
         binding.recViewLayout.swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
         binding.recViewLayout.tvNoData.setText(R.string.no_orders);
 
+        generalMvvm.getOnPreviousOrderRefreshed().observe(activity,isRefreshed->{
+            if (isRefreshed){
+                mvvm.getOrders(getUserModel(), "old");
+            }
+        });
+
+        generalMvvm.getOnLoggedOutSuccess().observe(activity,loggedOut->{
+            if (loggedOut){
+                mvvm.getOrders(getUserModel(), "old");
+
+            }
+        });
+
+        generalMvvm.getOnUserLoggedIn().observe(activity,loggedIn->{
+            if (loggedIn){
+                mvvm.getOrders(getUserModel(), "old");
+
+            }
+        });
         mvvm.getIsLoading().observe(activity, isLoading -> {
             binding.recViewLayout.swipeRefresh.setRefreshing(isLoading);
         });

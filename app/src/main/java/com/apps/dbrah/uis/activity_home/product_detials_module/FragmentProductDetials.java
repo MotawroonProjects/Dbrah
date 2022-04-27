@@ -96,7 +96,14 @@ public class FragmentProductDetials extends BaseFragment {
                 amount = 0;
                 binding.setAmount(amount);
                 binding.setPrductModel(null);
-                mvvm.getSingleProduct(productId,getUserModel());
+                mvvm.getSingleProduct(productId, getUserModel());
+            }
+        });
+
+        generalMvvm.getOnLoggedOutSuccess().observe(activity, loggedOut -> {
+            if (loggedOut) {
+                mvvm.getSingleProduct(productId, getUserModel());
+
             }
         });
 

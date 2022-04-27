@@ -17,11 +17,15 @@ public class GeneralMvvm extends AndroidViewModel {
     private MutableLiveData<Integer> actionHomeNavigator;
     private MutableLiveData<Integer> actionFragmentHomeNavigator;
     private MutableLiveData<Boolean> actionHomeBackNavigator;
+    private MutableLiveData<Boolean> onUserLoggedIn;
+
     private MutableLiveData<ProductAmount> product_amount;
     private MutableLiveData<Integer> category_pos;
     private MutableLiveData<List<CategoryModel>> categoryList;
     private MutableLiveData<Boolean> onCartRefreshed;
     private MutableLiveData<Boolean> onCartMyListRefreshed;
+    private MutableLiveData<Boolean> onCurrentOrderRefreshed;
+    private MutableLiveData<Boolean> onPreviousOrderRefreshed;
 
     private MutableLiveData<ProductModel> onCartItemUpdated;
     //////////////////////////////////////////////////////////////////
@@ -32,6 +36,8 @@ public class GeneralMvvm extends AndroidViewModel {
     private MutableLiveData<String> myAddressFragmentAction;
     /////////////////////////////////////////////////////////////////
     private MutableLiveData<ProductModel> onProductItemUpdated;
+
+    private MutableLiveData<Boolean> onLoggedOutSuccess;
 
 
     public GeneralMvvm(@NonNull Application application) {
@@ -95,16 +101,14 @@ public class GeneralMvvm extends AndroidViewModel {
         return onCartMyListRefreshed;
     }
 
-    public MutableLiveData<ProductModel> getOnCartItemUpdated()
-    {
+    public MutableLiveData<ProductModel> getOnCartItemUpdated() {
         if (onCartItemUpdated == null) {
             onCartItemUpdated = new MutableLiveData<>();
         }
         return onCartItemUpdated;
     }
 
-    public MutableLiveData<ProductModel> getOnProductItemUpdated()
-    {
+    public MutableLiveData<ProductModel> getOnProductItemUpdated() {
         if (onProductItemUpdated == null) {
             onProductItemUpdated = new MutableLiveData<>();
         }
@@ -148,5 +152,31 @@ public class GeneralMvvm extends AndroidViewModel {
         return myAddressFragmentAction;
     }
 
+    public MutableLiveData<Boolean> getOnCurrentOrderRefreshed() {
+        if (onCurrentOrderRefreshed == null) {
+            onCurrentOrderRefreshed = new MutableLiveData<>();
+        }
+        return onCurrentOrderRefreshed;
+    }
 
+    public MutableLiveData<Boolean> getOnPreviousOrderRefreshed() {
+        if (onPreviousOrderRefreshed == null) {
+            onPreviousOrderRefreshed = new MutableLiveData<>();
+        }
+        return onPreviousOrderRefreshed;
+    }
+
+    public MutableLiveData<Boolean> getOnUserLoggedIn() {
+        if (onUserLoggedIn == null) {
+            onUserLoggedIn = new MutableLiveData<>();
+        }
+        return onUserLoggedIn;
+    }
+
+    public MutableLiveData<Boolean> getOnLoggedOutSuccess() {
+        if (onLoggedOutSuccess == null) {
+            onLoggedOutSuccess = new MutableLiveData<>();
+        }
+        return onLoggedOutSuccess;
+    }
 }

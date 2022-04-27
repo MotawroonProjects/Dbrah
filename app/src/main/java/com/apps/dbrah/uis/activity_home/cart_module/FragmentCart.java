@@ -79,7 +79,10 @@ public class FragmentCart extends BaseFragment {
         });
 
         mvvm.getOnAllOrderSentSuccess().observe(this, cartModel -> {
+            manageCartModel.clear(activity);
+            binding.flOrderAll.setVisibility(View.GONE);
             generalMvvm.getOnCartRefreshed().setValue(true);
+            generalMvvm.getOnCurrentOrderRefreshed().setValue(true);
             for (CartModel.CartObject object : cartModel.getCartList()){
                 for (ProductModel productModel :object.getProducts()){
                     productModel.setAmount(0);
@@ -90,7 +93,10 @@ public class FragmentCart extends BaseFragment {
 
         });
 
+        
         mvvm.getOnSingleOrderSentSuccess().observe(this, cartSingleModel -> {
+            generalMvvm.getOnCurrentOrderRefreshed().setValue(true);
+
             if (selectedOrderPos != -1) {
                 manageCartModel.deleteMainCategory(selectedOrderPos, activity);
                 generalMvvm.getOnCartRefreshed().setValue(true);

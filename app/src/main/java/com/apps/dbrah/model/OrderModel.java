@@ -21,6 +21,7 @@ public class OrderModel implements Serializable {
     private CategoryModel category;
     private AddressModel address;
     private Offers accepted_offer;
+    private String provider_rated;
 
     public String getId() {
         return id;
@@ -52,6 +53,10 @@ public class OrderModel implements Serializable {
 
     public String getStatus() {
         return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getTotal_price() {
@@ -92,6 +97,10 @@ public class OrderModel implements Serializable {
 
     public Offers getAccepted_offer() {
         return accepted_offer;
+    }
+
+    public String getProvider_rated() {
+        return provider_rated;
     }
 
     public static class Details implements Serializable {
@@ -140,6 +149,8 @@ public class OrderModel implements Serializable {
         public String getUpdated_at() {
             return updated_at;
         }
+
+
     }
 
     public static class Offers implements Serializable {

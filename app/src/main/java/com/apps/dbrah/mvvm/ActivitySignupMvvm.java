@@ -4,6 +4,7 @@ import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,8 @@ import com.apps.dbrah.model.UserModel;
 import com.apps.dbrah.remote.Api;
 import com.apps.dbrah.share.Common;
 import com.apps.dbrah.tags.Tags;
+
+import java.io.IOException;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -119,6 +122,7 @@ public class ActivitySignupMvvm extends AndroidViewModel {
 
         MultipartBody.Part image = null;
         if (model.getImage_uri() != null && !model.getImage_uri().isEmpty()) {
+            Log.e("uri",model.getImage_uri()+"");
             image = Common.getMultiPart(context, Uri.parse(model.getImage_uri()), "image");
         }
 
@@ -135,9 +139,13 @@ public class ActivitySignupMvvm extends AndroidViewModel {
                     @Override
                     public void onNext(@NonNull Response<UserModel> response) {
                         dialog.dismiss();
+
                         if (response.isSuccessful()) {
 
+
                             if (response.body() != null) {
+                                Log.e("image",response.body().getStatus()+"__");
+
                                 if (response.body().getStatus() == 200) {
 
                                     getUserData().setValue(response.body());
@@ -145,9 +153,17 @@ public class ActivitySignupMvvm extends AndroidViewModel {
                                     Toast.makeText(context, R.string.ph_found, Toast.LENGTH_LONG).show();
                                 } else if (response.body().getStatus() == 407) {
                                     Toast.makeText(context, R.string.em_found, Toast.LENGTH_LONG).show();
+                                }else {
+                                    Log.e("code",response.body().getStatus()+"");
                                 }
                             }
 
+                        }else {
+                            try {
+                                Log.e("Error",response.code()+"___"+response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
 

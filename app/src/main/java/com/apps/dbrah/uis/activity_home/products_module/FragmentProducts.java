@@ -96,6 +96,15 @@ public class FragmentProducts extends BaseFragment {
             }
         });
 
+        generalMvvm.getOnLoggedOutSuccess().observe(activity,loggedOut->{
+            if (loggedOut){
+                mvvm.searchProduct(mvvm.getQuery().getValue(), activity,getUserModel());
+
+
+            }
+        });
+
+
         generalMvvm.getCategory_pos().observe(activity, pos -> {
 
             if (mainProductCategoryAdapter != null && mvvm.getOnCategoryDataSuccess().getValue() != null) {
@@ -146,7 +155,6 @@ public class FragmentProducts extends BaseFragment {
             }
 
         });
-
 
         mvvm.getIsLoading().observe(activity, isLoading -> {
             binding.tvNoData.setVisibility(View.GONE);

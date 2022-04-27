@@ -149,4 +149,6 @@
     <string name="alternative_product">منتج بديل</string>
     <string name="less_quantitiy">كميات أقل</string>
     <string name="inv_link">الرابط غير صحيح</string>
+    <string name="type_a_message">إكتب رسالتك ...</string>
+    <string name="attach_sent">تم إرسال صورة</string>
 </resources>

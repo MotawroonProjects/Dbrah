@@ -48,6 +48,7 @@ public class FragmentProfile extends BaseFragment {
         activity = (HomeActivity) context;
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (req == 1 && result.getResultCode() == Activity.RESULT_OK) {
+                generalMvvm.getOnUserLoggedIn().setValue(true);
                 binding.setModel(getUserModel());
                 binding.profileLayout.setModel(getUserModel());
             }
@@ -77,6 +78,11 @@ public class FragmentProfile extends BaseFragment {
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
         binding.setModel(getUserModel());
         binding.profileLayout.setLang(getLang());
+        generalMvvm.getOnLoggedOutSuccess().observe(activity, loggedOut -> {
+            if (loggedOut) {
+                binding.setModel(null);
+            }
+        });
         if (getUserModel() != null) {
             binding.profileLayout.setModel(getUserModel());
         }

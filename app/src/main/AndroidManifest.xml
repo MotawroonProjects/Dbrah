@@ -12,6 +12,8 @@
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+
 
     <application
         android:name=".share.App"
@@ -45,6 +47,13 @@
                     android:scheme="http" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".uis.activity_chat.ChatActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".uis.activity_previous_order_details.PreviousOrderDetailsActivity"
             android:exported="false"
@@ -115,6 +124,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service android:name=".chat_service.ChatService"
+            android:exported="false"
+            android:stopWithTask="false"
+            />
 
         <uses-library
             android:name="org.apache.http.legacy"
@@ -136,6 +149,8 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_provider" />
         </provider>
+
+        <receiver android:name=".notifications.BroadcastCancelNotification"/>
     </application>
 
 </manifest>

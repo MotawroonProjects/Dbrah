@@ -72,6 +72,22 @@ public class FragmentMyAddresses extends BaseFragment {
 
         });
 
+        generalMvvm.getOnUserLoggedIn().observe(this, loggedIn -> {
+            if (loggedIn) {
+                if (getUserModel() != null) {
+                    mvvm.getAddresses(getUserModel().getData().getId());
+                }
+
+            }
+        });
+
+        generalMvvm.getOnLoggedOutSuccess().observe(this, loggedOut -> {
+            if (loggedOut) {
+                mvvm.getAddresses(null);
+
+            }
+        });
+
         generalMvvm.getOnAddressAdded().observe(activity, addressModel -> {
             if (mvvm.getOnDataSuccess().getValue() != null) {
                 mvvm.getOnDataSuccess().getValue().add(0, addressModel);

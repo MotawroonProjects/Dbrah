@@ -58,6 +58,22 @@ public class FragmentNotification extends BaseFragment {
             generalMvvm.onHomeBackNavigate().setValue(true);
 
         });
+        generalMvvm.getOnUserLoggedIn().observe(this, loggedIn -> {
+            if (loggedIn) {
+                if (getUserModel() != null) {
+                    //mvvm.getAddresses(getUserModel().getData().getId());
+                }
+
+            }
+        });
+
+        generalMvvm.getOnLoggedOutSuccess().observe(this, loggedOut -> {
+            if (loggedOut) {
+                //mvvm.getAddresses(null);
+
+            }
+        });
+
     }
 
 

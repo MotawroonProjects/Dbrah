@@ -1,5 +1,9 @@
 package com.apps.dbrah.uis.activity_previous_order_details;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
@@ -12,15 +16,19 @@ import android.widget.Toast;
 
 import com.apps.dbrah.R;
 import com.apps.dbrah.databinding.ActivityPreviousOrderDetailsBinding;
+import com.apps.dbrah.model.ChatUserModel;
 import com.apps.dbrah.model.OrderModel;
 import com.apps.dbrah.mvvm.ActivityOrderDetailsMvvm;
 import com.apps.dbrah.uis.activity_base.BaseActivity;
+import com.apps.dbrah.uis.activity_chat.ChatActivity;
 
 public class PreviousOrderDetailsActivity extends BaseActivity {
     private ActivityPreviousOrderDetailsBinding binding;
     private ActivityOrderDetailsMvvm mvvm;
     private OrderModel orderModel;
     private String order_id;
+    private ActivityResultLauncher<Intent> launcher;
+    private int req;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,13 +65,32 @@ public class PreviousOrderDetailsActivity extends BaseActivity {
             }
         });
 
+        launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (req == 1 && result.getResultCode() == RESULT_OK) {
+                orderModel.setStatus("delivered");
+                binding.setModel(orderModel);
+            }
+        });
         binding.imageCall.setOnClickListener(v -> {
-            if (orderModel.getAccepted_offer()!=null){
-                String phone =orderModel.getAccepted_offer().getProvider().getPhone_code()+orderModel.getAccepted_offer().getProvider().getPhone();
-                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+phone));
+            if (orderModel.getAccepted_offer() != null) {
+                String phone = orderModel.getAccepted_offer().getProvider().getPhone_code() + orderModel.getAccepted_offer().getProvider().getPhone();
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone));
                 startActivity(intent);
-            }else {
+            } else {
                 Toast.makeText(this, "Un Available", Toast.LENGTH_SHORT).show();
+            }
+
+
+        });
+
+        binding.imageChat.setOnClickListener(v -> {
+            if (orderModel.getAccepted_offer() != null) {
+                req = 1;
+                ChatUserModel model = new ChatUserModel(orderModel.getAccepted_offer().getProvider().getId(), orderModel.getAccepted_offer().getProvider().getFake_name(), orderModel.getAccepted_offer().getProvider().getPhone_code() + orderModel.getAccepted_offer().getProvider().getPhone(), orderModel.getAccepted_offer().getProvider().getImage(), order_id);
+                Intent intent = new Intent(this, ChatActivity.class);
+                intent.putExtra("data", model);
+                launcher.launch(intent);
+
             }
 
 
