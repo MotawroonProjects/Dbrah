@@ -46,7 +46,6 @@ public class ActivityHomeMvvm extends AndroidViewModel {
     }
 
 
-
     public void updateToken(UserModel userModel) {
         if (userModel == null) {
             return;
@@ -55,7 +54,7 @@ public class ActivityHomeMvvm extends AndroidViewModel {
             if (task.isSuccessful()) {
                 String token = task.getResult();
                 Api.getService(Tags.base_url)
-                        .updateFireBaseToken(userModel.getData().getId(),token, "android")
+                        .updateFireBaseToken(userModel.getData().getId(), token, "android")
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new SingleObserver<Response<StatusResponse>>() {
@@ -69,7 +68,6 @@ public class ActivityHomeMvvm extends AndroidViewModel {
 
                                 if (response.isSuccessful()) {
                                     if (response.body() != null) {
-                                        Log.e("status", response.body().getStatus() + ""+userModel.getData().getId()+"____"+token);
 
                                         if (response.body().getStatus() == 200) {
                                             userModel.setFirebase_token(token);
@@ -100,7 +98,6 @@ public class ActivityHomeMvvm extends AndroidViewModel {
 
 
     }
-
 
 
 }

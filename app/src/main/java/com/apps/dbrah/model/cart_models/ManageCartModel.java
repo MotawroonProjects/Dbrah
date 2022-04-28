@@ -3,6 +3,7 @@ package com.apps.dbrah.model.cart_models;
 import android.content.Context;
 import android.util.Log;
 
+import com.apps.dbrah.model.OrderModel;
 import com.apps.dbrah.model.ProductModel;
 import com.apps.dbrah.preferences.Preferences;
 
@@ -94,19 +95,32 @@ public class ManageCartModel implements Serializable {
         return cartModel.getCartList();
     }
 
-    public int getProductAmount(String product_id,Context context) {
+    public int getProductAmount(String product_id, Context context) {
         Preferences preferences = Preferences.getInstance();
         cartModel = preferences.getCart(context);
-        if (cartModel!=null){
+        if (cartModel != null) {
             return cartModel.getProductAmount(product_id);
-        }else {
+        } else {
             return 0;
         }
 
     }
 
-    public CartModel getCartModel(){
-        if (cartModel!=null){
+    public void resend(OrderModel orderModel, Context context) {
+        Preferences preferences = Preferences.getInstance();
+
+        cartModel = preferences.getCart(context);
+        if (cartModel == null) {
+            cartModel = new CartModel();
+        }
+        cartModel.reOrder(orderModel);
+        preferences.create_update_cart(context, cartModel);
+
+    }
+
+
+    public CartModel getCartModel() {
+        if (cartModel != null) {
             return cartModel;
         }
         return null;

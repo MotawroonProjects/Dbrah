@@ -151,4 +151,8 @@
     <string name="inv_link">الرابط غير صحيح</string>
     <string name="type_a_message">إكتب رسالتك ...</string>
     <string name="attach_sent">تم إرسال صورة</string>
+    <string name="order_num">رقم الطلب</string>
+    <string name="no_notifications">لا توجد إشعارات لعرضها</string>
+    <string name="type_comment_here">إكتب تعليق هنا ...</string>
+    <string name="rate">إضافة تقييم</string>
 </resources>

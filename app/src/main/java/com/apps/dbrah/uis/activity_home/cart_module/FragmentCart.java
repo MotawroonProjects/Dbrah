@@ -79,6 +79,9 @@ public class FragmentCart extends BaseFragment {
         });
 
         mvvm.getOnAllOrderSentSuccess().observe(this, cartModel -> {
+            generalMvvm.onOrderNavigate().setValue(0);
+            generalMvvm.getActionFragmentHomeNavigator().setValue(1);
+
             manageCartModel.clear(activity);
             binding.flOrderAll.setVisibility(View.GONE);
             generalMvvm.getOnCartRefreshed().setValue(true);
@@ -95,6 +98,9 @@ public class FragmentCart extends BaseFragment {
 
         
         mvvm.getOnSingleOrderSentSuccess().observe(this, cartSingleModel -> {
+            generalMvvm.onOrderNavigate().setValue(0);
+            generalMvvm.getActionFragmentHomeNavigator().setValue(1);
+
             generalMvvm.getOnCurrentOrderRefreshed().setValue(true);
 
             if (selectedOrderPos != -1) {

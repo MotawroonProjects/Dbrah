@@ -36,6 +36,7 @@ public class ActivityOrderDetailsMvvm extends AndroidViewModel {
     private MutableLiveData<Boolean> isLoading;
     private MutableLiveData<OrderModel> onDataSuccess;
     private MutableLiveData<Boolean> onOrderCanceled;
+    private MutableLiveData<Boolean> onRateSuccess;
 
 
     public ActivityOrderDetailsMvvm(@NonNull Application application) {
@@ -49,11 +50,20 @@ public class ActivityOrderDetailsMvvm extends AndroidViewModel {
         return onDataSuccess;
     }
 
+
+
     public MutableLiveData<Boolean> getIsLoading() {
         if (isLoading == null) {
             isLoading = new MutableLiveData<>();
         }
         return isLoading;
+    }
+
+    public MutableLiveData<Boolean> getOnRateSuccess() {
+        if (onRateSuccess == null) {
+            onRateSuccess = new MutableLiveData<>();
+        }
+        return onRateSuccess;
     }
 
     public MutableLiveData<Boolean> getOnOrderCanceled() {
@@ -153,6 +163,41 @@ public class ActivityOrderDetailsMvvm extends AndroidViewModel {
                             if (response.body() != null) {
                                 if (response.body().getStatus() == 200) {
                                     getOnOrderCanceled().setValue(true);
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.e("error", e.getMessage());
+                        dialog.dismiss();
+                    }
+                });
+    }
+
+    public void rateOrder(UserModel userModel,OrderModel orderModel ,float rate,String comment, Context context) {
+        ProgressDialog dialog = Common.createProgressDialog(context, context.getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+
+        Api.getService(Tags.base_url).addRate(orderModel.getAccepted_offer().getProvider().getId(),userModel.getData().getId(),rate, comment)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<Response<StatusResponse>>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        disposable.add(d);
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull Response<StatusResponse> response) {
+                        dialog.dismiss();
+                        if (response.isSuccessful()) {
+                            if (response.body() != null) {
+                                if (response.body().getStatus() == 200) {
+                                    getOnRateSuccess().setValue(true);
                                 }
                             }
                         }

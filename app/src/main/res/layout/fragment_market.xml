@@ -9,9 +9,6 @@
             name="lang"
             type="String" />
 
-        <variable
-            name="notificationCount"
-            type="String" />
 
     </data>
 

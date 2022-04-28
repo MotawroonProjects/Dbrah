@@ -15,6 +15,7 @@ import androidx.viewpager.widget.ViewPager;
 
 
 import com.apps.dbrah.adapter.MyPagerAdapter;
+import com.apps.dbrah.model.NotiFire;
 import com.apps.dbrah.model.ProductAmount;
 import com.apps.dbrah.model.UserModel;
 import com.apps.dbrah.mvvm.ActivityHomeMvvm;
@@ -36,6 +37,10 @@ import com.apps.dbrah.uis.activity_home.products_module.FragmentProducts;
 import com.apps.dbrah.uis.activity_home.search_module.FragmentSearch;
 import com.apps.dbrah.uis.activity_home.setting_module.FragmentSetting;
 import com.google.android.material.navigation.NavigationBarView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -98,10 +103,14 @@ public class HomeActivity extends BaseActivity {
         });
 
 
-
         if (getUserModel() != null) {
             mvvm.updateToken(getUserModel());
+            if (!EventBus.getDefault().isRegistered(this)){
+                EventBus.getDefault().register(this);
+            }
         }
+
+
 
 
     }
@@ -146,6 +155,26 @@ public class HomeActivity extends BaseActivity {
 
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onOrderStatusChanged(NotiFire model) {
+        if (!model.getOrder_status().isEmpty()) {
+            String status = model.getOrder_status();
+            if (status.equals("offered")) {
+                generalMvvm.getOnCurrentOrderRefreshed().setValue(true);
+            } else if (status.equals("preparing")) {
+                generalMvvm.getOnCurrentOrderRefreshed().setValue(true);
+
+            } else if (status.equals("on_way")) {
+                generalMvvm.getOnCurrentOrderRefreshed().setValue(true);
+
+            } else if (status.equals("delivered")) {
+                generalMvvm.getOnCurrentOrderRefreshed().setValue(true);
+                generalMvvm.getOnPreviousOrderRefreshed().setValue(true);
+
+            }
+        }
+    }
+
 
     public void refreshActivity(String lang) {
         Paper.book().write("lang", lang);
@@ -160,8 +189,6 @@ public class HomeActivity extends BaseActivity {
 
 
     }
-
-
 
 
     @Override
@@ -180,4 +207,11 @@ public class HomeActivity extends BaseActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (EventBus.getDefault().isRegistered(this)){
+            EventBus.getDefault().unregister(this);
+        }
+    }
 }

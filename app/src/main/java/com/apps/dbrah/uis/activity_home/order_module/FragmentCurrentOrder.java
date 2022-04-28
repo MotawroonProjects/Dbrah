@@ -68,12 +68,17 @@ public class FragmentCurrentOrder extends BaseFragment {
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == Activity.RESULT_OK) {
                 mvvm.getOrders(getUserModel(), "new");
+
                 if (result.getData() != null) {
                     if (result.getData().hasExtra("data")) {
                         if (result.getData().getStringExtra("data") != null) {
                             Intent intent = new Intent(activity, PreviousOrderDetailsActivity.class);
                             intent.putExtra("data", result.getData().getStringExtra("data"));
                             launcher.launch(intent);
+                        }
+                    } else if (result.getData().hasExtra("order_status")) {
+                        if (result.getData().getStringExtra("order_status").equals("delivered")) {
+                            generalMvvm.onOrderNavigate().setValue(1);
                         }
                     }
 
@@ -96,19 +101,20 @@ public class FragmentCurrentOrder extends BaseFragment {
             }
         });
 
-        generalMvvm.getOnLoggedOutSuccess().observe(activity,loggedOut->{
-            if (loggedOut){
+        generalMvvm.getOnLoggedOutSuccess().observe(activity, loggedOut -> {
+            if (loggedOut) {
                 mvvm.getOrders(getUserModel(), "new");
 
             }
         });
 
-        generalMvvm.getOnUserLoggedIn().observe(activity,loggedIn->{
-            if (loggedIn){
+        generalMvvm.getOnUserLoggedIn().observe(activity, loggedIn -> {
+            if (loggedIn) {
                 mvvm.getOrders(getUserModel(), "new");
 
             }
         });
+
         mvvm.getIsLoading().observe(activity, isLoading -> {
             binding.recViewLayout.swipeRefresh.setRefreshing(isLoading);
         });
@@ -123,6 +129,7 @@ public class FragmentCurrentOrder extends BaseFragment {
                 adapter.updateList(list);
             }
         });
+
         binding.recViewLayout.swipeRefresh.setOnRefreshListener(() -> mvvm.getOrders(getUserModel(), "new"));
         mvvm.getOrders(getUserModel(), "new");
 

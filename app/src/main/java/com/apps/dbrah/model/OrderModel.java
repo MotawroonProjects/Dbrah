@@ -103,6 +103,10 @@ public class OrderModel implements Serializable {
         return provider_rated;
     }
 
+    public void setProvider_rated(String provider_rated) {
+        this.provider_rated = provider_rated;
+    }
+
     public static class Details implements Serializable {
         private String id;
         private String order_id;

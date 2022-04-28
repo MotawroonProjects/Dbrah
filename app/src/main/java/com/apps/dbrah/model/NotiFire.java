@@ -3,13 +3,14 @@ package com.apps.dbrah.model;
 import java.io.Serializable;
 
 public class NotiFire implements Serializable {
-    private boolean newData = false;
+    private String order_status = "";
 
-    public NotiFire(boolean newData) {
-        this.newData = newData;
+
+    public NotiFire(String order_status) {
+        this.order_status = order_status;
     }
 
-    public boolean isNewData() {
-        return newData;
+    public String getOrder_status() {
+        return order_status;
     }
 }

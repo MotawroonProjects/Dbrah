@@ -11,10 +11,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.apps.dbrah.R;
+import com.apps.dbrah.adapter.NotificationAdapter;
 import com.apps.dbrah.databinding.FragmentNotificationBinding;
 import com.apps.dbrah.databinding.FragmentOrderBinding;
+import com.apps.dbrah.model.NotificationModel;
+import com.apps.dbrah.mvvm.FragmentNotificationMvvm;
 import com.apps.dbrah.mvvm.GeneralMvvm;
 import com.apps.dbrah.uis.activity_base.BaseFragment;
 import com.apps.dbrah.uis.activity_home.HomeActivity;
@@ -24,7 +28,9 @@ import com.apps.dbrah.uis.activity_home.market_module.FragmentHome;
 public class FragmentNotification extends BaseFragment {
     private HomeActivity activity;
     private FragmentNotificationBinding binding;
+    private FragmentNotificationMvvm mvvm;
     private GeneralMvvm generalMvvm;
+    private NotificationAdapter adapter;
 
 
     public static FragmentNotification newInstance() {
@@ -52,16 +58,18 @@ public class FragmentNotification extends BaseFragment {
     }
 
     private void initView() {
+        mvvm = ViewModelProviders.of(this).get(FragmentNotificationMvvm.class);
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
         View view = activity.setUpToolbar(binding.toolbar, getString(R.string.notifications), R.color.white, R.color.black, R.drawable.small_rounded_grey4, false);
         view.setOnClickListener(v -> {
             generalMvvm.onHomeBackNavigate().setValue(true);
 
         });
+        binding.recViewLayout.swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
         generalMvvm.getOnUserLoggedIn().observe(this, loggedIn -> {
             if (loggedIn) {
                 if (getUserModel() != null) {
-                    //mvvm.getAddresses(getUserModel().getData().getId());
+                    mvvm.getNotifications(getUserModel());
                 }
 
             }
@@ -69,12 +77,40 @@ public class FragmentNotification extends BaseFragment {
 
         generalMvvm.getOnLoggedOutSuccess().observe(this, loggedOut -> {
             if (loggedOut) {
-                //mvvm.getAddresses(null);
+                mvvm.getNotifications(null);
 
             }
         });
 
+        mvvm.getIsLoading().observe(activity, isLoading -> {
+            binding.recViewLayout.swipeRefresh.setRefreshing(isLoading);
+        });
+        mvvm.getOnDataSuccess().observe(activity, list -> {
+            binding.recViewLayout.tvNoData.setText(R.string.no_notifications);
+            if (list.size() > 0) {
+                binding.recViewLayout.tvNoData.setVisibility(View.GONE);
+            } else {
+                binding.recViewLayout.tvNoData.setVisibility(View.VISIBLE);
+
+            }
+
+            if (adapter != null) {
+                adapter.updateList(list);
+            }
+        });
+        adapter = new NotificationAdapter(activity, this);
+        binding.recViewLayout.recView.setLayoutManager(new LinearLayoutManager(activity));
+        binding.recViewLayout.recView.setAdapter(adapter);
+        binding.recViewLayout.swipeRefresh.setOnRefreshListener(() -> mvvm.getNotifications(getUserModel()));
+
+        mvvm.getNotifications(getUserModel());
+
+
     }
 
 
+    public void orderDetails(NotificationModel notificationModel) {
+
+
+    }
 }

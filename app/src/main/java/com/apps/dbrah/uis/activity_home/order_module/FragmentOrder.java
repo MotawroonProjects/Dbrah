@@ -18,7 +18,6 @@ import com.apps.dbrah.databinding.FragmentOrderBinding;
 import com.apps.dbrah.mvvm.GeneralMvvm;
 import com.apps.dbrah.uis.activity_base.BaseFragment;
 import com.apps.dbrah.uis.activity_home.HomeActivity;
-import com.apps.dbrah.uis.activity_home.market_module.FragmentMarket;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +56,9 @@ public class FragmentOrder extends BaseFragment {
 
     private void initView() {
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
-
+        generalMvvm.onOrderNavigate().observe(activity, pos -> {
+            binding.pager.setCurrentItem(pos);
+        });
         setUpPager();
     }
 

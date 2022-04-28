@@ -73,6 +73,7 @@ public class FireBaseNotifications extends FirebaseMessagingService {
         String body = map.get("body");
         String notification_type = map.get("notification_type");
         String order_id = map.get("order_id");
+        String order_status = map.get("status");
 
 
         String sound_Path = "";
@@ -168,6 +169,23 @@ public class FireBaseNotifications extends FirebaseMessagingService {
 
         } else if (notification_type.equals("basic")) {
 
+
+            if (order_status.equals("offered")) {
+                title = getString(R.string.new_offer);
+                body = getString(R.string.new_offer) + "-" + getChatUserModel(map).getProvider_name() + "\n" + getString(R.string.order_num) + " #" + order_id;
+            } else if (order_status.equals("preparing")) {
+                body = getString(R.string.preparing) + " " + getChatUserModel(map).getProvider_name() + "\n" + getString(R.string.order_num) + " #" + order_id;
+
+            } else if (order_status.equals("on_way")) {
+                title = getString(R.string.on_the_way);
+                body = getString(R.string.on_the_way) + " " + getChatUserModel(map).getProvider_name() + "\n" + getString(R.string.order_num) + " #" + order_id;
+
+            } else if (order_status.equals("delivered")) {
+                title = getString(R.string.delivered);
+                body = getString(R.string.delivered) + " " + getChatUserModel(map).getProvider_name() + "\n" + getString(R.string.order_num) + " #" + order_id;
+
+            }
+
             notificationCompat.setContentTitle(title);
             notificationCompat.setContentText(body);
             notificationCompat.setStyle(new NotificationCompat.BigTextStyle().bigText(body));
@@ -182,7 +200,7 @@ public class FireBaseNotifications extends FirebaseMessagingService {
             Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher_round);
             notificationCompat.setLargeIcon(bitmap);
             manager.notify(Tags.not_id, notificationCompat.build());
-            EventBus.getDefault().post(new NotiFire(true));
+            EventBus.getDefault().post(new NotiFire(order_status));
 
         } else {
 
@@ -201,7 +219,7 @@ public class FireBaseNotifications extends FirebaseMessagingService {
             Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher_round);
             notificationCompat.setLargeIcon(bitmap);
             manager.notify(Tags.not_id, notificationCompat.build());
-            EventBus.getDefault().post(new NotiFire(true));
+            EventBus.getDefault().post(new NotiFire(""));
 
         }
 
@@ -259,7 +277,7 @@ public class FireBaseNotifications extends FirebaseMessagingService {
         }
 
         Api.getService(Tags.base_url)
-                .updateFireBaseToken( getUserModel().getData().getId(),s, "android")
+                .updateFireBaseToken(getUserModel().getData().getId(), s, "android")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<StatusResponse>>() {

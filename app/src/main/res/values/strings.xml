@@ -150,5 +150,9 @@
     <string name="inv_link">invalid link</string>
     <string name="type_a_message">Type Here ...</string>
     <string name="attach_sent">Attachment sent</string>
+    <string name="order_num">Order Num</string>
+    <string name="no_notifications">No notifications to show</string>
+    <string name="type_comment_here">Typa a comment here ...</string>
+    <string name="rate">Add Rate</string>
 
 </resources>

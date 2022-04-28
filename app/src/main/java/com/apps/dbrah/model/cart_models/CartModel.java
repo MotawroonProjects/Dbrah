@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.apps.dbrah.model.CategoryModel;
+import com.apps.dbrah.model.OrderModel;
 import com.apps.dbrah.model.ProductModel;
 import com.apps.dbrah.preferences.Preferences;
 import com.google.gson.annotations.SerializedName;
@@ -123,6 +124,25 @@ public class CartModel implements Serializable {
 
         }
 
+    }
+
+    public void reOrder(OrderModel orderModel) {
+
+        if (orderModel.getAccepted_offer() != null) {
+            CartObject cartObject = new CartObject();
+            cartObject.setCategory_id(orderModel.getCategory_id());
+            List<ProductModel> list = new ArrayList<>();
+            for (OrderModel.OfferDetail offerDetail : orderModel.getAccepted_offer().getOffer_details()) {
+                ProductModel productModel = offerDetail.getProduct();
+                productModel.setAmount(Integer.parseInt(offerDetail.getQty()));
+                list.add(productModel);
+            }
+            cartObject.setCategoryModel(orderModel.getCategory());
+            cartObject.setProducts(list);
+
+
+            cartList.add(cartObject);
+        }
     }
 
     private int isCategoryExist(String category_id) {

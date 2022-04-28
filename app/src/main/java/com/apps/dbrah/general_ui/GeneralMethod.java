@@ -16,6 +16,7 @@ import androidx.databinding.BindingAdapter;
 
 import com.apps.dbrah.R;
 
+import com.apps.dbrah.model.NotificationModel;
 import com.apps.dbrah.model.ProductModel;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -403,6 +404,61 @@ public class GeneralMethod {
         }
 
     }
+
+    @BindingAdapter("createAt")
+    public static void createAt(TextView textView, String date) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH);
+        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        if (date != null) {
+
+            try {
+                Date parse = dateFormat.parse(date);
+
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm a", Locale.ENGLISH);
+                format.setTimeZone(TimeZone.getDefault());
+                String time = format.format(parse);
+                textView.setText(time);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        } else {
+
+        }
+
+    }
+
+    @BindingAdapter("notification")
+    public static void notification(TextView textView, NotificationModel model) {
+        if (model != null) {
+            Context context = textView.getContext();
+            String text = "";
+            if (model.getOrder_id() != null && !model.getOrder_id().isEmpty()) {
+                if (model.getStatus().equals("offered")) {
+                    text = context.getString(R.string.new_offer) + "-" + model.getProvider().getFake_name() + "\n" + context.getString(R.string.order_num) + " #" + model.getOrder_id();
+                } else if (model.getStatus().equals("preparing")) {
+                    text = context.getString(R.string.preparing) + " " + model.getProvider().getFake_name() + "\n" + context.getString(R.string.order_num) + " #" + model.getOrder_id();
+
+                } else if (model.getBody().equals("on_way")) {
+                    text = context.getString(R.string.on_the_way) + " " + model.getProvider().getFake_name() + "\n" + context.getString(R.string.order_num) + " #" + model.getOrder_id();
+
+                } else if (model.getBody().equals("delivered")) {
+                    text = context.getString(R.string.delivered) + " " + model.getProvider().getFake_name() + "\n" + context.getString(R.string.order_num) + " #" + model.getOrder_id();
+
+                } else {
+                    text = model.getBody();
+
+                }
+
+                textView.setText(text);
+
+            } else {
+                textView.setText(model.getBody());
+
+            }
+        }
+
+    }
+
 }
 
 

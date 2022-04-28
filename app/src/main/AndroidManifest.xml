@@ -124,6 +124,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service android:name=".chat_service.ChatService"
             android:exported="false"
             android:stopWithTask="false"
@@ -149,6 +150,15 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_provider" />
         </provider>
+
+        <service
+            android:name=".notifications.FireBaseNotifications"
+            android:exported="false"
+            android:stopWithTask="false" >
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
 
         <receiver android:name=".notifications.BroadcastCancelNotification"/>
     </application>

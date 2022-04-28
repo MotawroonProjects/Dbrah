@@ -78,22 +78,24 @@ public class FragmentMarket extends BaseFragment {
         binding.setLang(getLang());
         manageCartModel = ManageCartModel.newInstance();
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
-        binding.setNotificationCount("0");
         binding.swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
 
         mvvm = ViewModelProviders.of(this).get(FragmentMarketMvvm.class);
+
         mvvm.getIsLoadingSlider().observe(activity, isLoading -> {
             if (!isLoading) {
                 binding.loaderSlider.stopShimmer();
                 binding.loaderSlider.setVisibility(View.GONE);
             }
         });
+
         mvvm.getIsLoadingCategory().observe(activity, isLoading -> {
             if (!isLoading) {
                 binding.loaderCategory.stopShimmer();
                 binding.loaderCategory.setVisibility(View.GONE);
             }
         });
+
         mvvm.getIsLoadingRecentProduct().observe(activity, isLoading -> {
             if (!isLoading) {
                 binding.loaderRecent.stopShimmer();
@@ -123,6 +125,7 @@ public class FragmentMarket extends BaseFragment {
                 binding.flSlider.setVisibility(View.GONE);
             }
         });
+
         mvvm.getOnCategoryDataSuccess().observe(activity, list -> {
             binding.swipeRefresh.setRefreshing(false);
             generalMvvm.getCategoryList().setValue(list);
@@ -152,6 +155,7 @@ public class FragmentMarket extends BaseFragment {
             }
 
         });
+
         mvvm.getOnMostProductDataModel().observe(activity, list -> {
             binding.swipeRefresh.setRefreshing(false);
             if (list.size() > 0) {
@@ -168,6 +172,7 @@ public class FragmentMarket extends BaseFragment {
             }
 
         });
+
         mvvm.getOnFavUnFavSuccess().observe(activity, model -> {
             int productPos = getCartItemPosMostSale(model.getId());
             if (productPos != -1) {
@@ -244,14 +249,14 @@ public class FragmentMarket extends BaseFragment {
             }
         });
 
-        generalMvvm.getOnLoggedOutSuccess().observe(activity,loggedOut->{
-            if (loggedOut){
+        generalMvvm.getOnLoggedOutSuccess().observe(activity, loggedOut -> {
+            if (loggedOut) {
                 getData();
             }
         });
 
-        generalMvvm.getOnUserLoggedIn().observe(activity,loggedIn->{
-            if (loggedIn){
+        generalMvvm.getOnUserLoggedIn().observe(activity, loggedIn -> {
+            if (loggedIn) {
                 getData();
 
             }

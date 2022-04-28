@@ -135,12 +135,6 @@ public interface Service {
     );
 
 
-    @GET("api/notifications")
-    Single<Response<NotificationDataModel>> getNotifications(@Header("AUTHORIZATION") String token,
-                                                             @Query(value = "api_key") String api_key,
-                                                             @Query(value = "user_id") String user_id
-    );
-
     @GET("api/product_details")
     Single<Response<SingleProductModel>> getSingleProduct(@Query("user_id") String user_id,
                                                           @Query("id") String id);
@@ -228,6 +222,17 @@ public interface Service {
     @POST("api/logout")
     Single<Response<StatusResponse>> logout(@Field("user_id") String user_id,
                                             @Field("token") String token
+    );
+
+    @GET("api/getNotifications")
+    Single<Response<NotificationDataModel>> getNotifications(@Query(value = "user_id") String user_id);
+
+    @FormUrlEncoded
+    @POST("api/storeRate")
+    Single<Response<StatusResponse>> addRate(@Field("provider_id") String provider_id,
+                                             @Field("user_id") String user_id,
+                                             @Field("rate") float rate,
+                                             @Field("text") String text
     );
 
 }

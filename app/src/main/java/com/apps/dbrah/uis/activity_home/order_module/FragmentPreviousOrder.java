@@ -1,5 +1,6 @@
 package com.apps.dbrah.uis.activity_home.order_module;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -16,13 +21,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.apps.dbrah.R;
 import com.apps.dbrah.adapter.OrderAdapter;
+import com.apps.dbrah.databinding.BottomSheetRateDialogBinding;
 import com.apps.dbrah.databinding.FragmentCurrentOrderBinding;
 import com.apps.dbrah.model.OrderModel;
+import com.apps.dbrah.model.cart_models.ManageCartModel;
 import com.apps.dbrah.mvvm.FragmentCurrentOrderMvvm;
 import com.apps.dbrah.mvvm.GeneralMvvm;
+import com.apps.dbrah.share.Common;
 import com.apps.dbrah.uis.activity_base.BaseFragment;
 import com.apps.dbrah.uis.activity_home.HomeActivity;
 import com.apps.dbrah.uis.activity_previous_order_details.PreviousOrderDetailsActivity;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,11 +43,14 @@ public class FragmentPreviousOrder extends BaseFragment {
     private HomeActivity activity;
     private FragmentCurrentOrderBinding binding;
     private OrderAdapter adapter;
+    private ManageCartModel manageCartModel;
+
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         activity = (HomeActivity) context;
+
     }
 
     public static FragmentPreviousOrder newInstance() {
@@ -60,7 +72,7 @@ public class FragmentPreviousOrder extends BaseFragment {
     }
 
     private void initView() {
-
+        manageCartModel = ManageCartModel.newInstance();
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
         mvvm = ViewModelProviders.of(this).get(FragmentCurrentOrderMvvm.class);
         adapter = new OrderAdapter(activity, this, getLang());
@@ -69,21 +81,21 @@ public class FragmentPreviousOrder extends BaseFragment {
         binding.recViewLayout.swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
         binding.recViewLayout.tvNoData.setText(R.string.no_orders);
 
-        generalMvvm.getOnPreviousOrderRefreshed().observe(activity,isRefreshed->{
-            if (isRefreshed){
+        generalMvvm.getOnPreviousOrderRefreshed().observe(activity, isRefreshed -> {
+            if (isRefreshed) {
                 mvvm.getOrders(getUserModel(), "old");
             }
         });
 
-        generalMvvm.getOnLoggedOutSuccess().observe(activity,loggedOut->{
-            if (loggedOut){
+        generalMvvm.getOnLoggedOutSuccess().observe(activity, loggedOut -> {
+            if (loggedOut) {
                 mvvm.getOrders(getUserModel(), "old");
 
             }
         });
 
-        generalMvvm.getOnUserLoggedIn().observe(activity,loggedIn->{
-            if (loggedIn){
+        generalMvvm.getOnUserLoggedIn().observe(activity, loggedIn -> {
+            if (loggedIn) {
                 mvvm.getOrders(getUserModel(), "old");
 
             }
@@ -109,8 +121,16 @@ public class FragmentPreviousOrder extends BaseFragment {
     }
 
 
-    public void navigateToDetails(OrderModel orderModel) {
+    public void navigateToDetails(OrderModel orderModel, int adapterPosition) {
         Intent intent = new Intent(activity, PreviousOrderDetailsActivity.class);
+        intent.putExtra("order_id", orderModel.getId());
         startActivity(intent);
     }
+
+    public void reSend(OrderModel orderModel) {
+        manageCartModel.resend(orderModel, activity);
+        generalMvvm.getOnCartRefreshed().setValue(true);
+    }
+
+
 }

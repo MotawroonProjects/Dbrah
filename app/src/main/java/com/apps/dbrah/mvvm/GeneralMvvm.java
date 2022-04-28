@@ -34,10 +34,13 @@ public class GeneralMvvm extends AndroidViewModel {
     private MutableLiveData<AddressModel> onAddressUpdated;
     private MutableLiveData<String> addAddressFragmentAction;
     private MutableLiveData<String> myAddressFragmentAction;
+
     /////////////////////////////////////////////////////////////////
     private MutableLiveData<ProductModel> onProductItemUpdated;
 
     private MutableLiveData<Boolean> onLoggedOutSuccess;
+
+    private MutableLiveData<Integer> actionOrderNavigate;
 
 
     public GeneralMvvm(@NonNull Application application) {
@@ -49,6 +52,13 @@ public class GeneralMvvm extends AndroidViewModel {
             actionHomeNavigator = new MutableLiveData<>();
         }
         return actionHomeNavigator;
+    }
+
+    public MutableLiveData<Integer> onOrderNavigate() {
+        if (actionOrderNavigate == null) {
+            actionOrderNavigate = new MutableLiveData<>();
+        }
+        return actionOrderNavigate;
     }
 
     public MutableLiveData<Integer> getActionFragmentHomeNavigator() {
