@@ -9,15 +9,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.apps.dbrah.R;
 import com.apps.dbrah.adapter.OfferAdapter;
 import com.apps.dbrah.databinding.ActivityCurrentOrderDetailsBinding;
+import com.apps.dbrah.model.NotiFire;
 import com.apps.dbrah.model.OrderModel;
 import com.apps.dbrah.mvvm.ActivityOrderDetailsMvvm;
 import com.apps.dbrah.uis.activity_base.BaseActivity;
 import com.apps.dbrah.uis.activity_offer_details.OfferDetailsActivity;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 public class CurrentOrderDetailsActivity extends BaseActivity {
     private ActivityOrderDetailsMvvm mvvm;
@@ -103,6 +109,12 @@ public class CurrentOrderDetailsActivity extends BaseActivity {
         binding.llCancelOrder.setOnClickListener(v -> {
             mvvm.acceptCancelOrder(order_id, this);
         });
+
+        if (getUserModel() != null) {
+            if (!EventBus.getDefault().isRegistered(this)) {
+                EventBus.getDefault().register(this);
+            }
+        }
     }
 
     public void show(OrderModel.Offers offers) {
@@ -111,6 +123,16 @@ public class CurrentOrderDetailsActivity extends BaseActivity {
         launcher.launch(intent);
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onOrderStatusChanged(NotiFire model) {
+        if (!model.getOrder_status().isEmpty()) {
+            String status = model.getOrder_status();
+            Log.e("status",status+"");
+            mvvm.getOrderDetails(order_id);
+        }
+    }
+
+
     @Override
     public void onBackPressed() {
         if (update) {
@@ -118,5 +140,13 @@ public class CurrentOrderDetailsActivity extends BaseActivity {
         }
         finish();
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 }

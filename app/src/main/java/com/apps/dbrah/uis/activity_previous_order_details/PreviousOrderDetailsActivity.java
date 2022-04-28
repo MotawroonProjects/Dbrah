@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
@@ -131,23 +132,14 @@ public class PreviousOrderDetailsActivity extends BaseActivity {
     public void onOrderStatusChanged(NotiFire model) {
         if (!model.getOrder_status().isEmpty()) {
             String status = model.getOrder_status();
+            Log.e("status",status+"");
             orderModel.setStatus(status);
             binding.setModel(orderModel);
             isOrderStatusChanged = true;
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        if (isOrderStatusChanged) {
-            Intent intent = getIntent();
-            intent.putExtra("order_status", orderModel.getStatus());
-            setResult(RESULT_OK);
-        }
-        finish();
 
-    }
 
     public void openSheet(OrderModel model) {
         BottomSheetDialog dialog = new BottomSheetDialog(this);
@@ -171,6 +163,17 @@ public class PreviousOrderDetailsActivity extends BaseActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (isOrderStatusChanged) {
+            Intent intent = getIntent();
+            intent.putExtra("order_status", orderModel.getStatus());
+            setResult(RESULT_OK);
+        }
+        finish();
+
+    }
 
     @Override
     protected void onDestroy() {

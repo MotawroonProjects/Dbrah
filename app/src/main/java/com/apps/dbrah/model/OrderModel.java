@@ -162,6 +162,8 @@ public class OrderModel implements Serializable {
         private String order_id;
         private String provider_id;
         private String total_price;
+        private String total_before_tax;
+        private String total_tax;
         private String status;
         private String delivery_date_time;
         private String note;
@@ -189,6 +191,14 @@ public class OrderModel implements Serializable {
 
         public String getTotal_price() {
             return total_price;
+        }
+
+        public String getTotal_before_tax() {
+            return total_before_tax;
+        }
+
+        public String getTotal_tax() {
+            return total_tax;
         }
 
         public String getStatus() {

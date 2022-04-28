@@ -233,7 +233,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
                                     android:fontFamily="@font/font_regular"
-                                    android:text="@{model.total_price}"
+                                    android:text="@{model.total_before_tax}"
                                     android:textColor="@color/black2"
                                     android:textSize="18sp" />
 
@@ -284,7 +284,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
                                     android:fontFamily="@font/font_regular"
-                                    android:text="350"
+                                    android:text="@{model.total_tax}"
                                     android:textColor="@color/black2"
                                     android:textSize="18sp" />
 
@@ -338,7 +338,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
                                     android:fontFamily="@font/font_bold"
-                                    android:text="350"
+                                    android:text="@{model.total_price}"
                                     android:textColor="@color/black2"
                                     android:textSize="18sp" />
 
