@@ -123,7 +123,7 @@ public class FragmentPreviousOrder extends BaseFragment {
 
     public void navigateToDetails(OrderModel orderModel, int adapterPosition) {
         Intent intent = new Intent(activity, PreviousOrderDetailsActivity.class);
-        intent.putExtra("order_id", orderModel.getId());
+        intent.putExtra("data", orderModel.getId());
         startActivity(intent);
     }
 
