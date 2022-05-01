@@ -132,7 +132,6 @@ public class PreviousOrderDetailsActivity extends BaseActivity {
     public void onOrderStatusChanged(NotiFire model) {
         if (!model.getOrder_status().isEmpty()) {
             String status = model.getOrder_status();
-            Log.e("status",status+"");
             orderModel.setStatus(status);
             binding.setModel(orderModel);
             isOrderStatusChanged = true;

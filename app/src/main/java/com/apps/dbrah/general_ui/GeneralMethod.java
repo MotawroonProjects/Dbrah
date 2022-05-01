@@ -3,6 +3,7 @@ package com.apps.dbrah.general_ui;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.net.Uri;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.EditText;
@@ -438,10 +439,10 @@ public class GeneralMethod {
                 } else if (model.getStatus().equals("preparing")) {
                     text = context.getString(R.string.preparing) + " " + model.getProvider().getFake_name() + "\n" + context.getString(R.string.order_num) + " #" + model.getOrder_id();
 
-                } else if (model.getBody().equals("on_way")) {
+                } else if (model.getStatus().equals("on_way")) {
                     text = context.getString(R.string.on_the_way) + " " + model.getProvider().getFake_name() + "\n" + context.getString(R.string.order_num) + " #" + model.getOrder_id();
 
-                } else if (model.getBody().equals("delivered")) {
+                } else if (model.getStatus().equals("delivered")) {
                     text = context.getString(R.string.delivered) + " " + model.getProvider().getFake_name() + "\n" + context.getString(R.string.order_num) + " #" + model.getOrder_id();
 
                 } else {

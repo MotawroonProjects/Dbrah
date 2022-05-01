@@ -130,6 +130,7 @@ public class FragmentPreviousOrder extends BaseFragment {
     public void reSend(OrderModel orderModel) {
         manageCartModel.resend(orderModel, activity);
         generalMvvm.getOnCartRefreshed().setValue(true);
+        generalMvvm.getActionFragmentHomeNavigator().setValue(2);
     }
 
 

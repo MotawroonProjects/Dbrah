@@ -94,7 +94,7 @@ public class FragmentAddAddress extends BaseFragment implements OnMapReadyCallba
         activity = (HomeActivity) context;
         permission = registerForActivityResult(new ActivityResultContracts.RequestPermission(), result -> {
             if (result) {
-                mMap.setMyLocationEnabled(true);
+                mMap.setMyLocationEnabled(false);
                 initGoogleApi();
             }
         });
@@ -243,7 +243,7 @@ public class FragmentAddAddress extends BaseFragment implements OnMapReadyCallba
         if (ActivityCompat.checkSelfPermission(activity, BaseActivity.FINELOCPerm) != PackageManager.PERMISSION_GRANTED) {
             permission.launch(BaseActivity.FINELOCPerm);
         } else {
-            mMap.setMyLocationEnabled(true);
+            mMap.setMyLocationEnabled(false);
             initGoogleApi();
         }
     }

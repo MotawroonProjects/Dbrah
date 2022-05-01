@@ -103,6 +103,7 @@ public class CartModel implements Serializable {
 
     public void removeProduct(ProductModel model) {
         CategoryModel categoryModel = model.getCategoryModel();
+
         int categoryPos = isCategoryExist(categoryModel.getId());
         CartObject cartObject = cartList.get(categoryPos);
         List<ProductModel> products = cartObject.getProducts();
@@ -127,21 +128,55 @@ public class CartModel implements Serializable {
     }
 
     public void reOrder(OrderModel orderModel) {
+        if (cartList != null) {
+            if (orderModel.getAccepted_offer() != null) {
+                int categoryPos = isCategoryExist(orderModel.getCategory_id());
+                if (categoryPos != -1) {
 
-        if (orderModel.getAccepted_offer() != null) {
-            CartObject cartObject = new CartObject();
-            cartObject.setCategory_id(orderModel.getCategory_id());
-            List<ProductModel> list = new ArrayList<>();
-            for (OrderModel.OfferDetail offerDetail : orderModel.getAccepted_offer().getOffer_details()) {
-                ProductModel productModel = offerDetail.getProduct();
-                productModel.setAmount(Integer.parseInt(offerDetail.getQty()));
-                list.add(productModel);
+                    CartObject cartObject = cartList.get(categoryPos);
+                    List<ProductModel> products = cartObject.getProducts();
+
+                    List<ProductModel> list = new ArrayList<>();
+                    for (OrderModel.OfferDetail offerDetail : orderModel.getAccepted_offer().getOffer_details()) {
+                        ProductModel productModel = offerDetail.getProduct();
+                        productModel.setAmount(Integer.parseInt(offerDetail.getQty()));
+                        list.add(productModel);
+                    }
+
+                    for (ProductModel model : list) {
+                        int productPos = isProductExistInCategory(model.getId(), products);
+
+                        if (productPos != -1) {
+                            products.set(productPos, model);
+                        } else {
+                            products.add(model);
+
+
+                        }
+                    }
+
+                    cartObject.setProducts(products);
+                    cartList.set(categoryPos, cartObject);
+
+
+                } else {
+                    CartObject cartObject = new CartObject();
+                    cartObject.setCategory_id(orderModel.getCategory_id());
+                    List<ProductModel> list = new ArrayList<>();
+                    for (OrderModel.OfferDetail offerDetail : orderModel.getAccepted_offer().getOffer_details()) {
+                        ProductModel productModel = offerDetail.getProduct();
+                        productModel.setAmount(Integer.parseInt(offerDetail.getQty()));
+                        list.add(productModel);
+                    }
+                    cartObject.setCategoryModel(orderModel.getCategory());
+                    cartObject.setProducts(list);
+
+
+                    cartList.add(cartObject);
+                }
+
             }
-            cartObject.setCategoryModel(orderModel.getCategory());
-            cartObject.setProducts(list);
 
-
-            cartList.add(cartObject);
         }
     }
 

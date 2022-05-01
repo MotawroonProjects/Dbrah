@@ -170,6 +170,7 @@ public class HomeActivity extends BaseActivity {
             } else if (status.equals("delivered")) {
                 generalMvvm.getOnCurrentOrderRefreshed().setValue(true);
                 generalMvvm.getOnPreviousOrderRefreshed().setValue(true);
+                generalMvvm.onOrderNavigate().setValue(1);
 
             }
         }

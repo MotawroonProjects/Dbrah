@@ -77,7 +77,9 @@ public class FragmentCurrentOrder extends BaseFragment {
                             launcher.launch(intent);
                         }
                     } else if (result.getData().hasExtra("order_status")) {
+
                         if (result.getData().getStringExtra("order_status").equals("delivered")) {
+                            generalMvvm.getOnPreviousOrderRefreshed().setValue(true);
                             generalMvvm.onOrderNavigate().setValue(1);
                         }
                     }
