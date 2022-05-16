@@ -5,11 +5,16 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -40,6 +45,8 @@ public class PreviousOrderDetailsActivity extends BaseActivity {
     private ActivityResultLauncher<Intent> launcher;
     private int req;
     private boolean isOrderStatusChanged = false;
+    private Intent intent;
+    private static final int REQUEST_PHONE_CALL = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +98,7 @@ public class PreviousOrderDetailsActivity extends BaseActivity {
         binding.imageCall.setOnClickListener(v -> {
             if (orderModel.getAccepted_offer() != null) {
                 String phone = orderModel.getAccepted_offer().getProvider().getPhone_code() + orderModel.getAccepted_offer().getProvider().getPhone();
-                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone));
+                 intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone));
                 startActivity(intent);
             } else {
                 Toast.makeText(this, "Un Available", Toast.LENGTH_SHORT).show();
@@ -103,7 +110,7 @@ public class PreviousOrderDetailsActivity extends BaseActivity {
         binding.imageChat.setOnClickListener(v -> {
             if (orderModel.getAccepted_offer() != null) {
                 req = 1;
-                ChatUserModel model = new ChatUserModel(orderModel.getAccepted_offer().getProvider().getId(), orderModel.getAccepted_offer().getProvider().getFake_name(), orderModel.getAccepted_offer().getProvider().getPhone_code() + orderModel.getAccepted_offer().getProvider().getPhone(), orderModel.getAccepted_offer().getProvider().getImage(), order_id);
+                ChatUserModel model = new ChatUserModel(orderModel.getProvider().getId(), getUserModel().getData().getId(), "", orderModel.getProvider().getName(), orderModel.getProvider().getPhone(), orderModel.getProvider().getImage(), order_id);
                 Intent intent = new Intent(this, ChatActivity.class);
                 intent.putExtra("data", model);
                 launcher.launch(intent);
@@ -111,6 +118,41 @@ public class PreviousOrderDetailsActivity extends BaseActivity {
             }
 
 
+        });
+                binding.imCallReprentative.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (orderModel.getRepresentative() != null) {
+                    intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", orderModel.getRepresentative().getPhone_code() + orderModel.getRepresentative().getPhone(), null));
+                }
+                if (intent != null) {
+                    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        if (ContextCompat.checkSelfPermission(PreviousOrderDetailsActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                            ActivityCompat.requestPermissions(PreviousOrderDetailsActivity.this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_PHONE_CALL);
+                        } else {
+                            startActivity(intent);
+                        }
+                    } else {
+                        startActivity(intent);
+                    }
+                } else {
+                    Toast.makeText(PreviousOrderDetailsActivity.this, getResources().getString(R.string.not_available), Toast.LENGTH_SHORT).show();
+
+                    // Common.CreateAlertDialog(QuestionsActivity.this, getResources().getString(R.string.phone_not_found));
+                }
+
+            }
+        });
+
+            binding.imChatRepresent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                req = 1;
+                ChatUserModel model = new ChatUserModel("", getUserModel().getData().getId(), orderModel.getRepresentative().getId(), orderModel.getRepresentative().getName(), orderModel.getRepresentative().getPhone(), orderModel.getRepresentative().getImage(), order_id);
+                Intent intent = new Intent(PreviousOrderDetailsActivity.this, ChatActivity.class);
+                intent.putExtra("data", model);
+                launcher.launch(intent);
+            }
         });
 
         binding.swipeRefresh.setColorSchemeResources(R.color.colorPrimary);

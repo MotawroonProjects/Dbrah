@@ -6,6 +6,8 @@ public class ProviderModel implements Serializable {
     private String id;
     private String name;
     private String fake_name;
+    private String nationality_id;
+    private String town_id;
     private String email;
     private String phone_code;
     private String phone;
@@ -15,6 +17,9 @@ public class ProviderModel implements Serializable {
     private String created_at;
     private String updated_at;
     private String rate;
+    private String latitude;
+    private String longitude;
+
 
     public String getId() {
         return id;
@@ -26,6 +31,14 @@ public class ProviderModel implements Serializable {
 
     public String getFake_name() {
         return fake_name;
+    }
+
+    public String getNationality_id() {
+        return nationality_id;
+    }
+
+    public String getTown_id() {
+        return town_id;
     }
 
     public String getEmail() {
@@ -62,5 +75,14 @@ public class ProviderModel implements Serializable {
 
     public String getRate() {
         return rate;
+    }
+
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
     }
 }

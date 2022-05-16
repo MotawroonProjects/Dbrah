@@ -8,6 +8,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+
 import com.apps.dbrah.model.AddChatMessageModel;
 import com.apps.dbrah.model.SingleMessageModel;
 import com.apps.dbrah.remote.Api;
@@ -41,18 +42,29 @@ public class ChatService extends Service {
 
     public void sendMessage() {
 
-        RequestBody order_id_part = Common.getRequestBodyText(model.getOrder_id());
-        RequestBody from_type_part = Common.getRequestBodyText("user");
-        RequestBody msg_part = Common.getRequestBodyText(model.getMessage());
+        RequestBody msg_part = Common.getRequestBodyText(model.getText());
+        RequestBody order_part = Common.getRequestBodyText(model.getOrder_id());
+        RequestBody from_part = Common.getRequestBodyText("user");
+        RequestBody repsentative_part = null;
         RequestBody msg_type_part = Common.getRequestBodyText(model.getType());
         MultipartBody.Part imagePart = null;
+        RequestBody user_part = null;
+        user_part = Common.getRequestBodyText(model.getUser_id());
 
+        RequestBody provider_part=null;
+
+        if (model.getRepresentative_id() != null) {
+            repsentative_part =Common.getRequestBodyText(model.getRepresentative_id());
+        }
+        if (model.getProvider_id() != null) {
+            provider_part = Common.getRequestBodyText(model.getProvider_id());
+        }
         if (model.getType().equals("file") && model.getImage() != null) {
             imagePart = Common.getMultiPartFromPath(model.getImage(), "file");
         }
 
 
-        Api.getService(Tags.base_url).sendMessages(order_id_part,from_type_part, msg_type_part, msg_part, imagePart)
+        Api.getService(Tags.base_url).sendMessages(order_part, msg_type_part, from_part, msg_part, repsentative_part, user_part, provider_part, imagePart)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<SingleMessageModel>>() {
@@ -63,6 +75,11 @@ public class ChatService extends Service {
 
                     @Override
                     public void onSuccess(@NonNull Response<SingleMessageModel> response) {
+                        try {
+                            Log.e("jfjj", response.code() + "" + response.errorBody().string());
+                        } catch (Exception e) {
+                            //e.printStackTrace();
+                        }
                         if (response.isSuccessful()) {
                             if (response.body() != null && response.body().getStatus() == 200) {
                                 EventBus.getDefault().post(response.body().getData());

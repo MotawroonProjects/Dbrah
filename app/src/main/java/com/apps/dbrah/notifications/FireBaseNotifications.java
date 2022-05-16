@@ -22,6 +22,7 @@ import com.apps.dbrah.model.ChatUserModel;
 import com.apps.dbrah.model.MessageModel;
 import com.apps.dbrah.model.NotiFire;
 import com.apps.dbrah.model.ProviderModel;
+import com.apps.dbrah.model.RepresentModel;
 import com.apps.dbrah.model.StatusResponse;
 import com.apps.dbrah.model.UserModel;
 import com.apps.dbrah.preferences.Preferences;
@@ -74,7 +75,8 @@ public class FireBaseNotifications extends FirebaseMessagingService {
         String notification_type = map.get("notification_type");
         String order_id = map.get("order_id");
         String order_status = map.get("status");
-
+        String user_id = map.get("provider_id");
+        String representative_id = map.get("representative_id");
 
         String sound_Path = "";
         Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
@@ -99,8 +101,10 @@ public class FireBaseNotifications extends FirebaseMessagingService {
 
             String image = map.get("file");
 
-            if (image != null && !image.isEmpty()) {
+            if (image != null && !image.isEmpty() && !map.get("type").equals("text")) {
                 body = getString(R.string.attach_sent);
+            } else {
+                body = map.get("message");
             }
 
 
@@ -113,9 +117,16 @@ public class FireBaseNotifications extends FirebaseMessagingService {
             TaskStackBuilder taskStackBuilder = TaskStackBuilder.create(this);
             taskStackBuilder.addNextIntent(intent);
             notificationCompat.setContentIntent(taskStackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT));
+            if (user_id == null) {
+                user_id = "";
+            }
+            if (representative_id == null) {
+                representative_id = "";
+            }
 
-
-            if (order_id.equals(getRoomId())) {
+            if (getRoomId() != null && (order_id.equals(getRoomId().getOrder_id())
+                    && (representative_id.equals(getRoomId().getRepresentative_id())
+                    || user_id.equals(getRoomId().getUser_id())))) {
                 ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
                 String className = activityManager.getRunningTasks(1).get(0).topActivity.getClassName();
                 if (className.equals("com.apps.dbrah.uis.activity_chat.ChatActivity")) {
@@ -125,11 +136,11 @@ public class FireBaseNotifications extends FirebaseMessagingService {
                 } else {
 
 
-                    if (getChatUserModel(map).getProvider_image() != null && !getChatUserModel(map).getProvider_image().isEmpty()) {
+                    if (getChatUserModel(map).getUser_image() != null && !getChatUserModel(map).getUser_image().isEmpty()) {
 
                         Glide.with(this)
                                 .asBitmap()
-                                .load(Uri.parse(Tags.base_url + getChatUserModel(map).getProvider_image()))
+                                .load(Uri.parse( getChatUserModel(map).getUser_image()))
                                 .into(new SimpleTarget<Bitmap>() {
                                     @Override
                                     public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
@@ -147,10 +158,10 @@ public class FireBaseNotifications extends FirebaseMessagingService {
 
                 }
             } else {
-                if (getChatUserModel(map).getProvider_image() != null && !getChatUserModel(map).getProvider_image().isEmpty()) {
+                if (getChatUserModel(map).getUser_image() != null && !getChatUserModel(map).getUser_image().isEmpty()) {
                     Glide.with(this)
                             .asBitmap()
-                            .load(Uri.parse(Tags.base_url + getChatUserModel(map).getProvider_image()))
+                            .load(Uri.parse( getChatUserModel(map).getUser_image()))
                             .into(new SimpleTarget<Bitmap>() {
                                 @Override
                                 public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
@@ -172,17 +183,17 @@ public class FireBaseNotifications extends FirebaseMessagingService {
 
             if (order_status.equals("offered")) {
                 title = getString(R.string.new_offer);
-                body = getString(R.string.new_offer) + "-" + getChatUserModel(map).getProvider_name() + "\n" + getString(R.string.order_num) + " #" + order_id;
+                body = getString(R.string.new_offer) + "-" + getChatUserModel(map).getUser_name() + "\n" + getString(R.string.order_num) + " #" + order_id;
             } else if (order_status.equals("preparing")) {
-                body = getString(R.string.preparing) + " " + getChatUserModel(map).getProvider_name() + "\n" + getString(R.string.order_num) + " #" + order_id;
+                body = getString(R.string.preparing) + " " + getChatUserModel(map).getUser_name() + "\n" + getString(R.string.order_num) + " #" + order_id;
 
             } else if (order_status.equals("on_way")) {
                 title = getString(R.string.on_the_way);
-                body = getString(R.string.on_the_way) + " " + getChatUserModel(map).getProvider_name() + "\n" + getString(R.string.order_num) + " #" + order_id;
+                body = getString(R.string.on_the_way) + " " + getChatUserModel(map).getUser_name() + "\n" + getString(R.string.order_num) + " #" + order_id;
 
             } else if (order_status.equals("delivered")) {
                 title = getString(R.string.delivered);
-                body = getString(R.string.delivered) + " " + getChatUserModel(map).getProvider_name() + "\n" + getString(R.string.order_num) + " #" + order_id;
+                body = getString(R.string.delivered) + " " + getChatUserModel(map).getUser_name() + "\n" + getString(R.string.order_num) + " #" + order_id;
 
             }
 
@@ -243,26 +254,42 @@ public class FireBaseNotifications extends FirebaseMessagingService {
 
         }
 
-        UserModel.Data user = new Gson().fromJson(map.get("user"), UserModel.Data.class);
-        ProviderModel providerModel = new Gson().fromJson(map.get("provider"), ProviderModel.class);
+       ProviderModel user = new Gson().fromJson(map.get("provider"), ProviderModel.class);
+        //ClientModel providerModel = new Gson().fromJson(map.get("user"), ClientModel.class);
 
 
-        MessageModel messageModel = new MessageModel(id, order_id, provider_id, user_id, type, message, from_type, file, user, providerModel, created_at);
+        MessageModel messageModel = new MessageModel(id, provider_id, user_id, order_id,from_type, message, file, type, created_at, updated_at);
 
         return messageModel;
     }
 
     private ChatUserModel getChatUserModel(Map<String, String> map) {
         String order_id = map.get("order_id");
+        ProviderModel userModel;
+        ChatUserModel model;
+        RepresentModel representModel;
+        if (map.get("provider") != null) {
+            userModel = new Gson().fromJson(map.get("provider"), ProviderModel.class);
+            String user_id = userModel.getId();
+            //  Log.e("llkkk",user_id);
 
+            String user_name = userModel.getName();
+            String user_phone = userModel.getPhone_code() + userModel.getPhone();
+            String user_image = userModel.getImage();
 
-        ProviderModel providerModel = new Gson().fromJson(map.get("provider"), ProviderModel.class);
-        String provider_id = providerModel.getId();
-        String provider_name = providerModel.getFake_name();
-        String provider_phone = providerModel.getPhone_code() + providerModel.getPhone();
-        String provider_image = providerModel.getImage();
+            model = new ChatUserModel(map.get("provider_id"), map.get("user_id"), "", user_name, user_phone, user_image, order_id);
 
-        ChatUserModel model = new ChatUserModel(provider_id, provider_name, provider_phone, provider_image, order_id);
+        }
+        else {
+            representModel = new Gson().fromJson(map.get("representative"), RepresentModel.class);
+            String user_id = representModel.getId();
+            String user_name = representModel.getName();
+            String user_phone = representModel.getPhone_code() + representModel.getPhone();
+            String user_image = representModel.getImage();
+
+            model = new ChatUserModel("", map.get("user_id"), representModel.getId(), user_name, user_phone, user_image, order_id);
+
+        }
 
 
         return model;
@@ -332,7 +359,7 @@ public class FireBaseNotifications extends FirebaseMessagingService {
     }
 
 
-    public String getRoomId() {
+    public ChatUserModel getRoomId() {
         Preferences preferences = Preferences.getInstance();
         return preferences.getRoomId(this);
     }

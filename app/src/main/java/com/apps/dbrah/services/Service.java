@@ -192,17 +192,22 @@ public interface Service {
     Single<Response<SettingDataModel>> getSettings();
 
     @GET("api/getChat")
-    Single<Response<MessagesDataModel>> getChatMessages(@Query(value = "order_id") String order_id);
+    Single<Response<MessagesDataModel>> getChatMessages(@Query("order_id") String order_id,
+                                                        @Query("representative_id") String representative_id,
+                                                        @Query("user_id") String user_id,
+                                                        @Query("provider_id") String provider_id);
 
     @Multipart
     @POST("api/storeMessage")
     Single<Response<SingleMessageModel>> sendMessages(@Part("order_id") RequestBody order_id,
-                                                      @Part("from_type") RequestBody from_type,
                                                       @Part("type") RequestBody type,
+                                                      @Part("from_type") RequestBody from,
                                                       @Part("message") RequestBody message,
+                                                      @Part("representative_id") RequestBody representative_id,
+                                                      @Part("user_id") RequestBody user_id,
+                                                      @Part("provider_id") RequestBody provider_id,
                                                       @Part MultipartBody.Part image
     );
-
 
     @FormUrlEncoded
     @POST("api/updateOrderStatus")

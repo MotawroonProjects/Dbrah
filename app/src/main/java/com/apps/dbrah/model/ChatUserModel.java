@@ -4,17 +4,21 @@ import java.io.Serializable;
 
 public class ChatUserModel implements Serializable {
     private String provider_id;
-    private String provider_name;
-    private String provider_phone;
-    private String provider_image;
+    private String user_id;
+    private String representative_id;
+    private String user_name;
+    private String user_phone;
+    private String user_image;
     private String order_id;
 
 
-    public ChatUserModel(String provider_id, String provider_name, String provider_phone, String provider_image, String order_id) {
+    public ChatUserModel(String provider_id, String user_id, String representative_id, String user_name, String user_phone, String user_image, String order_id) {
         this.provider_id = provider_id;
-        this.provider_name = provider_name;
-        this.provider_phone = provider_phone;
-        this.provider_image = provider_image;
+        this.user_id = user_id;
+        this.representative_id = representative_id;
+        this.user_name = user_name;
+        this.user_phone = user_phone;
+        this.user_image = user_image;
         this.order_id = order_id;
     }
 
@@ -22,16 +26,24 @@ public class ChatUserModel implements Serializable {
         return provider_id;
     }
 
-    public String getProvider_name() {
-        return provider_name;
+    public String getUser_id() {
+        return user_id;
     }
 
-    public String getProvider_phone() {
-        return provider_phone;
+    public String getRepresentative_id() {
+        return representative_id;
     }
 
-    public String getProvider_image() {
-        return provider_image;
+    public String getUser_name() {
+        return user_name;
+    }
+
+    public String getUser_phone() {
+        return user_phone;
+    }
+
+    public String getUser_image() {
+        return user_image;
     }
 
     public String getOrder_id() {

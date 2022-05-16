@@ -49,10 +49,11 @@ public class ActivityChatMvvm extends AndroidViewModel {
     }
 
 
-    public void getChatMessages(String order_id) {
+    public void getChatMessages(String order_id, String provider_id, String user_id, String representative_id) {
 
+        Log.e("id", order_id+" "+representative_id+" "+user_id);
         getIsLoading().setValue(true);
-        Api.getService(Tags.base_url).getChatMessages(order_id)
+        Api.getService(Tags.base_url).getChatMessages(order_id,representative_id,user_id,provider_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<MessagesDataModel>>() {
@@ -64,6 +65,7 @@ public class ActivityChatMvvm extends AndroidViewModel {
                     @Override
                     public void onSuccess(@NonNull Response<MessagesDataModel> response) {
                         getIsLoading().setValue(false);
+                        Log.e("kdkkdkk",response.code()+" "+response.body().getStatus());
 
                         if (response.isSuccessful()) {
                             if (response.body() != null && response.body().getStatus() == 200) {

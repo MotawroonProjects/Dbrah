@@ -22,6 +22,8 @@ public class OrderModel implements Serializable {
     private AddressModel address;
     private Offers accepted_offer;
     private String provider_rated;
+    private ProviderModel provider;
+    private RepresentModel representative;
 
     public String getId() {
         return id;
@@ -105,6 +107,14 @@ public class OrderModel implements Serializable {
 
     public void setProvider_rated(String provider_rated) {
         this.provider_rated = provider_rated;
+    }
+
+    public ProviderModel getProvider() {
+        return provider;
+    }
+
+    public RepresentModel getRepresentative() {
+        return representative;
     }
 
     public static class Details implements Serializable {
