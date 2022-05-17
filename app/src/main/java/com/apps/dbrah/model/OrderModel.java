@@ -23,7 +23,7 @@ public class OrderModel implements Serializable {
     private Offers accepted_offer;
     private String provider_rated;
     private ProviderModel provider;
-    private RepresentModel representative;
+    private OrderRepresentative order_representative;
 
     public String getId() {
         return id;
@@ -113,8 +113,9 @@ public class OrderModel implements Serializable {
         return provider;
     }
 
-    public RepresentModel getRepresentative() {
-        return representative;
+
+    public OrderRepresentative getOrder_representative() {
+        return order_representative;
     }
 
     public static class Details implements Serializable {
@@ -350,5 +351,12 @@ public class OrderModel implements Serializable {
         }
     }
 
+    public class OrderRepresentative implements Serializable {
+        private RepresentModel representative;
+        public RepresentModel getRepresentative() {
+            return representative;
+        }
+
+    }
 
 }

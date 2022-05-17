@@ -155,4 +155,7 @@
     <string name="no_notifications">لا توجد إشعارات لعرضها</string>
     <string name="type_comment_here">إكتب تعليق هنا ...</string>
     <string name="rate">إضافة تقييم</string>
+    <string name="picked_up">تم التسليم</string>
+    <string name="your_order_accepted">تم قبول طلبك من المندوب</string>
+
 </resources>

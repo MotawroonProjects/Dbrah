@@ -438,7 +438,7 @@
                         android:layout_marginEnd="16dp"
                         app:cardBackgroundColor="@color/white"
                         app:cardCornerRadius="10dp"
-                        android:visibility='@{model.representative!=null?View.VISIBLE:View.GONE,default=visible}'
+                        android:visibility='@{model.order_representative!=null?View.VISIBLE:View.GONE,default=visible}'
                         app:cardElevation="10dp">
 
                         <LinearLayout
@@ -448,7 +448,7 @@
                             android:orientation="horizontal">
 
                             <de.hdodenhof.circleimageview.CircleImageView
-                                user_image="@{model.representative.image}"
+                                user_image="@{model.order_representative.representative.image}"
                                 android:layout_width="70dp"
 
                                 android:layout_height="70dp"
@@ -469,7 +469,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/font_bold"
-                                    android:text="@{model.representative.name}"
+                                    android:text="@{model.order_representative.representative.name}"
                                     android:textColor="@color/black2"
                                     android:textSize="16sp" />
 

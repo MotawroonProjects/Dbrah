@@ -154,5 +154,7 @@
     <string name="no_notifications">No notifications to show</string>
     <string name="type_comment_here">Typa a comment here ...</string>
     <string name="rate">Add Rate</string>
+    <string name="picked_up">Picked Up</string>
+    <string name="your_order_accepted">Your Order Accepted By Representative</string>
 
 </resources>

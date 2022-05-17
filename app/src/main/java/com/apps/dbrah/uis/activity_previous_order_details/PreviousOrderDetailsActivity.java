@@ -99,7 +99,15 @@ public class PreviousOrderDetailsActivity extends BaseActivity {
             if (orderModel.getAccepted_offer() != null) {
                 String phone = orderModel.getAccepted_offer().getProvider().getPhone_code() + orderModel.getAccepted_offer().getProvider().getPhone();
                  intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone));
-                startActivity(intent);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (ContextCompat.checkSelfPermission(PreviousOrderDetailsActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(PreviousOrderDetailsActivity.this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_PHONE_CALL);
+                    } else {
+                        startActivity(intent);
+                    }
+                } else {
+                    startActivity(intent);
+                }
             } else {
                 Toast.makeText(this, "Un Available", Toast.LENGTH_SHORT).show();
             }
@@ -110,7 +118,7 @@ public class PreviousOrderDetailsActivity extends BaseActivity {
         binding.imageChat.setOnClickListener(v -> {
             if (orderModel.getAccepted_offer() != null) {
                 req = 1;
-                ChatUserModel model = new ChatUserModel(orderModel.getProvider().getId(), getUserModel().getData().getId(), "", orderModel.getProvider().getName(), orderModel.getProvider().getPhone(), orderModel.getProvider().getImage(), order_id);
+                ChatUserModel model = new ChatUserModel(orderModel.getAccepted_offer().getProvider().getId(), getUserModel().getData().getId(), "", orderModel.getAccepted_offer().getProvider().getName(), orderModel.getAccepted_offer().getProvider().getPhone(), orderModel.getAccepted_offer().getProvider().getImage(), order_id);
                 Intent intent = new Intent(this, ChatActivity.class);
                 intent.putExtra("data", model);
                 launcher.launch(intent);
@@ -122,8 +130,8 @@ public class PreviousOrderDetailsActivity extends BaseActivity {
                 binding.imCallReprentative.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (orderModel.getRepresentative() != null) {
-                    intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", orderModel.getRepresentative().getPhone_code() + orderModel.getRepresentative().getPhone(), null));
+                if (orderModel.getOrder_representative().getRepresentative() != null) {
+                    intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", orderModel.getOrder_representative().getRepresentative().getPhone_code() + orderModel.getOrder_representative().getRepresentative().getPhone(), null));
                 }
                 if (intent != null) {
                     if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -148,7 +156,7 @@ public class PreviousOrderDetailsActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 req = 1;
-                ChatUserModel model = new ChatUserModel("", getUserModel().getData().getId(), orderModel.getRepresentative().getId(), orderModel.getRepresentative().getName(), orderModel.getRepresentative().getPhone(), orderModel.getRepresentative().getImage(), order_id);
+                ChatUserModel model = new ChatUserModel("", getUserModel().getData().getId(), orderModel.getOrder_representative().getRepresentative().getId(), orderModel.getOrder_representative().getRepresentative().getName(), orderModel.getOrder_representative().getRepresentative().getPhone(), orderModel.getOrder_representative().getRepresentative().getImage(), order_id);
                 Intent intent = new Intent(PreviousOrderDetailsActivity.this, ChatActivity.class);
                 intent.putExtra("data", model);
                 launcher.launch(intent);

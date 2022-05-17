@@ -435,15 +435,25 @@ public class GeneralMethod {
             String text = "";
             if (model.getOrder_id() != null && !model.getOrder_id().isEmpty()) {
                 if (model.getStatus().equals("offered")) {
-                    text = context.getString(R.string.new_offer) + "-" + model.getProvider().getFake_name() + "\n" + context.getString(R.string.order_num) + " #" + model.getOrder_id();
+                    text = context.getString(R.string.new_offer) + "-" + model.getProvider().getName() + "\n" + context.getString(R.string.order_num) + " #" + model.getOrder_id();
                 } else if (model.getStatus().equals("preparing")) {
-                    text = context.getString(R.string.preparing) + " " + model.getProvider().getFake_name() + "\n" + context.getString(R.string.order_num) + " #" + model.getOrder_id();
+
+                    if(model.getBody().equals("order is accepted by a representative")){
+                        text = context.getString(R.string.your_order_accepted) + " " + model.getRepresentative().getName() + "\n" + context.getString(R.string.order_num) + " #" + model.getOrder_id();
+                    }
+                    else  if(model.getBody().equals("order is picked up by the delivery")){
+                        text = context.getString(R.string.picked_up) + " " + model.getRepresentative().getName() + "\n" + context.getString(R.string.order_num) + " #" + model.getOrder_id();
+                    }
+                    else{
+                        text = context.getString(R.string.preparing) + " " + model.getProvider().getName() + "\n" + context.getString(R.string.order_num) + " #" + model.getOrder_id();
+
+                    }
 
                 } else if (model.getStatus().equals("on_way")) {
-                    text = context.getString(R.string.on_the_way) + " " + model.getProvider().getFake_name() + "\n" + context.getString(R.string.order_num) + " #" + model.getOrder_id();
+                    text = context.getString(R.string.on_the_way) + " " + model.getRepresentative().getName() + "\n" + context.getString(R.string.order_num) + " #" + model.getOrder_id();
 
                 } else if (model.getStatus().equals("delivered")) {
-                    text = context.getString(R.string.delivered) + " " + model.getProvider().getFake_name() + "\n" + context.getString(R.string.order_num) + " #" + model.getOrder_id();
+                    text = context.getString(R.string.delivered) + " " + model.getRepresentative().getName() + "\n" + context.getString(R.string.order_num) + " #" + model.getOrder_id();
 
                 } else {
                     text = model.getBody();

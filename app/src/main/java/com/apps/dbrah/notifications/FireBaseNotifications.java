@@ -126,7 +126,7 @@ public class FireBaseNotifications extends FirebaseMessagingService {
 
             if (getRoomId() != null && (order_id.equals(getRoomId().getOrder_id())
                     && (representative_id.equals(getRoomId().getRepresentative_id())
-                    || user_id.equals(getRoomId().getUser_id())))) {
+                    || user_id.equals(getRoomId().getProvider_id())))) {
                 ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
                 String className = activityManager.getRunningTasks(1).get(0).topActivity.getClassName();
                 if (className.equals("com.apps.dbrah.uis.activity_chat.ChatActivity")) {
@@ -185,8 +185,18 @@ public class FireBaseNotifications extends FirebaseMessagingService {
                 title = getString(R.string.new_offer);
                 body = getString(R.string.new_offer) + "-" + getChatUserModel(map).getUser_name() + "\n" + getString(R.string.order_num) + " #" + order_id;
             } else if (order_status.equals("preparing")) {
-                body = getString(R.string.preparing) + " " + getChatUserModel(map).getUser_name() + "\n" + getString(R.string.order_num) + " #" + order_id;
+                if(body.equals("order is accepted by a representative")){
+                    title = getString(R.string.your_order_accepted);
+                    body = getString(R.string.your_order_accepted) + " " + getChatUserModel(map).getUser_name() + "\n" + getString(R.string.order_num) + " #" + order_id;
+                }
+                else  if(body.equals("order is picked up by the delivery")){
+                    title = getString(R.string.picked_up);
+                    body = getString(R.string.picked_up) + " " + getChatUserModel(map).getUser_name() + "\n" + getString(R.string.order_num) + " #" + order_id;
+                }
+                else {
+                    body = getString(R.string.preparing) + " " + getChatUserModel(map).getUser_name() + "\n" + getString(R.string.order_num) + " #" + order_id;
 
+                }
             } else if (order_status.equals("on_way")) {
                 title = getString(R.string.on_the_way);
                 body = getString(R.string.on_the_way) + " " + getChatUserModel(map).getUser_name() + "\n" + getString(R.string.order_num) + " #" + order_id;

@@ -14,6 +14,7 @@ public class NotificationModel implements Serializable {
     private String updated_at;
     private UserModel.Data user;
     private ProviderModel provider;
+    private RepresentModel representative;
 
     public String getId() {
         return id;
@@ -57,5 +58,9 @@ public class NotificationModel implements Serializable {
 
     public ProviderModel getProvider() {
         return provider;
+    }
+
+    public RepresentModel getRepresentative() {
+        return representative;
     }
 }
