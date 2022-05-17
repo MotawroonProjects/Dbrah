@@ -278,7 +278,7 @@ public class FireBaseNotifications extends FirebaseMessagingService {
         ProviderModel userModel;
         ChatUserModel model;
         RepresentModel representModel;
-        if (map.get("provider") != null) {
+        if (map.get("provider") != null&&((map.get("status")!=null&&(!map.get("status").equals("preparing")&&!map.get("status").equals("delivered"))||map.get("notification_type").equals("chat")))) {
             userModel = new Gson().fromJson(map.get("provider"), ProviderModel.class);
             String user_id = userModel.getId();
             //  Log.e("llkkk",user_id);
