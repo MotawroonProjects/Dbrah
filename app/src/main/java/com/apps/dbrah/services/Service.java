@@ -236,6 +236,7 @@ public interface Service {
     @POST("api/storeRate")
     Single<Response<StatusResponse>> addRate(@Field("provider_id") String provider_id,
                                              @Field("user_id") String user_id,
+                                             @Field("order_id") String order_id,
                                              @Field("rate") float rate,
                                              @Field("text") String text
     );

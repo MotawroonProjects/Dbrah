@@ -181,9 +181,9 @@ public class ActivityOrderDetailsMvvm extends AndroidViewModel {
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
+        Api.getService(Tags.base_url).addRate(orderModel.getAccepted_offer().getProvider().getId(),userModel.getData().getId(),orderModel.getId(),rate, comment)
 
-        Api.getService(Tags.base_url).addRate(orderModel.getAccepted_offer().getProvider().getId(),userModel.getData().getId(),rate, comment)
-                .subscribeOn(Schedulers.io())
+.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<StatusResponse>>() {
                     @Override

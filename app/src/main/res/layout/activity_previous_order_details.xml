@@ -484,6 +484,8 @@
                                         android:id="@+id/imCallReprentative"
                                         android:layout_width="35dp"
                                         android:layout_height="35dp"
+                                        android:visibility='@{model.status.equals("delivered")?View.GONE:View.VISIBLE}'
+
                                         android:layout_gravity="center"
                                         android:layout_marginStart="5dp"
                                         android:layout_marginEnd="5dp"
@@ -494,6 +496,8 @@
                                         android:layout_width="35dp"
                                         android:layout_height="35dp"
                                         android:layout_gravity="center"
+                                        android:visibility='@{model.status.equals("delivered")?View.GONE:View.VISIBLE}'
+
                                         android:layout_marginStart="5dp"
                                         android:layout_marginEnd="5dp"
                                         android:src="@drawable/ic_chat"
