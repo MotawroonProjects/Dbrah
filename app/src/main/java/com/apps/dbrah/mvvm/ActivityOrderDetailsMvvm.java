@@ -176,6 +176,7 @@ public class ActivityOrderDetailsMvvm extends AndroidViewModel {
                 });
     }
 
+
     public void rateOrder(UserModel userModel,OrderModel orderModel ,float rate,String comment, Context context) {
         ProgressDialog dialog = Common.createProgressDialog(context, context.getString(R.string.wait));
         dialog.setCancelable(false);
