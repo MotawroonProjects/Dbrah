@@ -25,6 +25,8 @@ import com.apps.dbrah.uis.activity_home.cart_module.FragmentCart;
 import com.apps.dbrah.uis.activity_home.order_module.FragmentOrder;
 import com.apps.dbrah.uis.activity_home.products_module.FragmentProducts;
 import com.apps.dbrah.uis.activity_home.profile_module.FragmentProfile;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
@@ -87,7 +89,10 @@ public class FragmentHome extends BaseFragment implements ViewPager.OnPageChange
             generalMvvm.onHomeNavigate().setValue(5);
         });
         setUpPager();
-
+        generalMvvm.getOnCartRefreshed().observe(activity, isRefreshed -> {
+            updateCartcount(getCartCount());
+        });
+        updateCartcount(getCartCount());
     }
 
     private void setUpPager() {
@@ -131,6 +136,7 @@ public class FragmentHome extends BaseFragment implements ViewPager.OnPageChange
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+
     }
 
     @Override
@@ -152,6 +158,17 @@ public class FragmentHome extends BaseFragment implements ViewPager.OnPageChange
         }else {
             binding.flSetting.setVisibility(View.GONE);
 
+        }
+    }
+
+    public void updateCartcount(int count) {
+        binding.bottomNavigationView.getOrCreateBadge(R.id.cart).setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+       binding.bottomNavigationView.getOrCreateBadge(R.id.cart).setBadgeTextColor(getResources().getColor(R.color.white));
+        if (count > 0) {
+            binding.bottomNavigationView.getOrCreateBadge(R.id.cart).setNumber(count);
+        }
+        else{
+            binding.bottomNavigationView.removeBadge(R.id.cart);
         }
     }
 
