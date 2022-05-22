@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.apps.dbrah.R;
 
@@ -306,7 +307,7 @@ public class FragmentMarket extends BaseFragment {
 
     public void showCategoryDetails(CategoryModel categoryModel, int pos) {
         generalMvvm.getCategory_pos().setValue(pos);
-        generalMvvm.onHomeNavigate().setValue(7);
+        generalMvvm.onHomeNavigate().setValue(9);
     }
 
     public void favUnFav(ProductModel productModel, int adapterPosition) {
@@ -369,6 +370,7 @@ public class FragmentMarket extends BaseFragment {
         manageCartModel.add(productModel, activity);
         generalMvvm.getOnCartRefreshed().setValue(true);
         generalMvvm.getOnCartMyListRefreshed().setValue(true);
+        Toast.makeText(activity, R.string.added_cart_suc, Toast.LENGTH_LONG).show();
     }
 
     public void removeProductFromCart(ProductModel productModel, String fromList) {

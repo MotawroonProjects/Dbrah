@@ -135,7 +135,7 @@
     <string name="no_search_results">لا توجد نتائج للبحث</string>
     <string name="ch_time">إختر الوقت</string>
     <string name="empty_cart">السلة فارغة</string>
-    <string name="order_all">إطلب الان</string>
+    <string name="order_all">إرسال جميع الطلبات</string>
     <string name="upd_address">تعديل العنوان</string>
     <string name="home_work">(المنزل - العمل)...</string>
     <string name="user_not_found">المستخدم غير موجود</string>
@@ -157,5 +157,7 @@
     <string name="rate">إضافة تقييم</string>
     <string name="picked_up">تم التسليم</string>
     <string name="your_order_accepted">تم قبول طلبك من المندوب</string>
+    <string name="added_cart_suc">تم الإضافة الى السلة بنجاح</string>
+    <string name="send_order">إرسال الطلب</string>
 
 </resources>

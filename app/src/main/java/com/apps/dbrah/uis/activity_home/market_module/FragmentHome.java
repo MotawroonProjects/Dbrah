@@ -2,6 +2,7 @@ package com.apps.dbrah.uis.activity_home.market_module;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +23,7 @@ import com.apps.dbrah.uis.activity_base.BaseFragment;
 import com.apps.dbrah.uis.activity_home.HomeActivity;
 import com.apps.dbrah.uis.activity_home.cart_module.FragmentCart;
 import com.apps.dbrah.uis.activity_home.order_module.FragmentOrder;
+import com.apps.dbrah.uis.activity_home.products_module.FragmentProducts;
 import com.apps.dbrah.uis.activity_home.profile_module.FragmentProfile;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -68,9 +70,22 @@ public class FragmentHome extends BaseFragment implements ViewPager.OnPageChange
     private void initView() {
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
         binding.setNotificationCount("0");
+        binding.setModel(getUserModel());
         binding.llSearch.setOnClickListener(v -> generalMvvm.onHomeNavigate().setValue(2));
         binding.flNotification.setOnClickListener(v -> generalMvvm.onHomeNavigate().setValue(1));
         generalMvvm.getActionFragmentHomeNavigator().observe(activity, this::setItemPos);
+        generalMvvm.getOnUserLoggedIn().observe(activity, isLoggedIn -> {
+            binding.setModel(getUserModel());
+
+        });
+
+        generalMvvm.getOnLoggedOutSuccess().observe(activity, isLoggedOut -> {
+            binding.setModel(getUserModel());
+
+        });
+        binding.flSetting.setOnClickListener(v -> {
+            generalMvvm.onHomeNavigate().setValue(5);
+        });
         setUpPager();
 
     }
@@ -89,11 +104,14 @@ public class FragmentHome extends BaseFragment implements ViewPager.OnPageChange
         map.put(1, R.id.order);
         map.put(2, R.id.cart);
         map.put(3, R.id.profile);
+        map.put(4, R.id.products);
 
         fragments.add(FragmentMarket.newInstance());
         fragments.add(FragmentOrder.newInstance());
         fragments.add(FragmentCart.newInstance());
         fragments.add(FragmentProfile.newInstance());
+        fragments.add(FragmentProducts.newInstance());
+
         adapter = new MyPagerAdapter(getChildFragmentManager(), fragments, null);
         binding.pager.setAdapter(adapter);
         binding.pager.setOffscreenPageLimit(fragments.size());
@@ -101,6 +119,13 @@ public class FragmentHome extends BaseFragment implements ViewPager.OnPageChange
         binding.pager.addOnPageChangeListener(this);
         binding.bottomNavigationView.setOnItemSelectedListener(this);
 
+        binding.bottomNavigationView.getMenu().getItem(4).setVisible(false);
+
+        generalMvvm.onHomeNavigate().observe(activity,pos->{
+            if (pos==9){
+                setItemPos(4);
+            }
+        });
     }
 
     @Override
@@ -113,6 +138,20 @@ public class FragmentHome extends BaseFragment implements ViewPager.OnPageChange
         int itemId = map.get(position);
         if (itemId != binding.bottomNavigationView.getSelectedItemId()) {
             binding.bottomNavigationView.setSelectedItemId(itemId);
+        }
+        if (position == 2) {
+            binding.llSearch.setVisibility(View.INVISIBLE);
+        } else {
+            binding.llSearch.setVisibility(View.VISIBLE);
+
+        }
+
+
+        if (getUserModel()==null){
+            binding.flSetting.setVisibility(View.VISIBLE);
+        }else {
+            binding.flSetting.setVisibility(View.GONE);
+
         }
     }
 
@@ -131,8 +170,8 @@ public class FragmentHome extends BaseFragment implements ViewPager.OnPageChange
     }
 
 
-
     private void setItemPos(int pos) {
+
         binding.pager.setCurrentItem(pos);
         stack.push(pos);
     }

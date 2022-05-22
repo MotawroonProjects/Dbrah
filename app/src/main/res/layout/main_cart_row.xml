@@ -50,7 +50,7 @@
                     android:layout_marginBottom="17dp"
                     android:background="@drawable/rounded_primary"
                     android:fontFamily="@font/font_regular"
-                    android:text="@string/order"
+                    android:text="@string/send_order"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
             </LinearLayout>

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -75,7 +76,7 @@ public class FragmentMyList extends BaseFragment {
 
         });
 
-        generalMvvm.getOnUserLoggedIn().observe(this, loggedIn -> {
+        generalMvvm.getOnUserLoggedIn().observe(activity, loggedIn -> {
             if (loggedIn) {
                 if (getUserModel() != null) {
                     mvvm.getMyList(activity,getUserModel());
@@ -84,7 +85,7 @@ public class FragmentMyList extends BaseFragment {
             }
         });
 
-        generalMvvm.getOnLoggedOutSuccess().observe(this, loggedOut -> {
+        generalMvvm.getOnLoggedOutSuccess().observe(activity, loggedOut -> {
             if (loggedOut) {
                 mvvm.getMyList(activity,null);
 
@@ -168,7 +169,7 @@ public class FragmentMyList extends BaseFragment {
             adapter.updateList(list);
         });
 
-        mvvm.getOnFavUnFavSuccess().observe(this, model -> {
+        mvvm.getOnFavUnFavSuccess().observe(activity, model -> {
             model.setIs_list("false");
             generalMvvm.getOnProductItemUpdated().setValue(model);
             if (mvvm.getOnDataSuccess().getValue() != null && mvvm.getOnDataSuccess().getValue().size() > 0) {
@@ -205,6 +206,7 @@ public class FragmentMyList extends BaseFragment {
         generalMvvm.getOnCartItemUpdated().setValue(productModel);
         manageCartModel.add(productModel, activity);
         generalMvvm.getOnCartRefreshed().setValue(true);
+        Toast.makeText(activity, R.string.added_cart_suc, Toast.LENGTH_LONG).show();
 
 
     }

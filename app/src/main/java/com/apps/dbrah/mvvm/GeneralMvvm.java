@@ -18,6 +18,7 @@ public class GeneralMvvm extends AndroidViewModel {
     private MutableLiveData<Integer> actionFragmentHomeNavigator;
     private MutableLiveData<Boolean> actionHomeBackNavigator;
     private MutableLiveData<Boolean> onUserLoggedIn;
+    private MutableLiveData<Boolean> actionProductsBackNavigator;
 
     private MutableLiveData<ProductAmount> product_amount;
     private MutableLiveData<Integer> category_pos;
@@ -73,6 +74,13 @@ public class GeneralMvvm extends AndroidViewModel {
             actionHomeBackNavigator = new MutableLiveData<>();
         }
         return actionHomeBackNavigator;
+    }
+
+    public MutableLiveData<Boolean> getActionProductsBackNavigator() {
+        if (actionProductsBackNavigator == null) {
+            actionProductsBackNavigator = new MutableLiveData<>();
+        }
+        return actionProductsBackNavigator;
     }
 
     public MutableLiveData<ProductAmount> getProductAmount() {

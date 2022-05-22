@@ -96,7 +96,7 @@ public class FragmentProfile extends BaseFragment {
 
         binding.profileLayout.cardMyAddresses.setOnClickListener(v -> {
             generalMvvm.getMyAddressFragmentAction().setValue("display");
-            generalMvvm.onHomeNavigate().setValue(8);
+            generalMvvm.onHomeNavigate().setValue(7);
         });
 
         binding.profileLayout.carViewSetting.setOnClickListener(v -> {

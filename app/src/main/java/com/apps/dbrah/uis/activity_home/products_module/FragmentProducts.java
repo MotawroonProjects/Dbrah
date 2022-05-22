@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.apps.dbrah.R;
 import com.apps.dbrah.adapter.FilterProductAdapter;
@@ -83,11 +84,11 @@ public class FragmentProducts extends BaseFragment {
 
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
         mvvm = ViewModelProviders.of(activity).get(FragmentProductsMvvm.class);
-        View view = activity.setUpToolbar(binding.toolbar, getString(R.string.products), R.color.white, R.color.black, R.drawable.small_rounded_grey4, false);
+        /*View view = activity.setUpToolbar(binding.toolbar, getString(R.string.products), R.color.white, R.color.black, R.drawable.small_rounded_grey4, false);
 
         view.setOnClickListener(v -> {
-            generalMvvm.onHomeBackNavigate().setValue(true);
-        });
+           // generalMvvm.onHomeBackNavigate().setValue(true);
+        });*/
 
         generalMvvm.getCategoryList().observe(activity, list -> {
             mvvm.getOnCategoryDataSuccess().setValue(list);
@@ -263,6 +264,7 @@ public class FragmentProducts extends BaseFragment {
 
         manageCartModel.add(productModel, activity);
         generalMvvm.getOnCartRefreshed().setValue(true);
+        Toast.makeText(activity, R.string.added_cart_suc, Toast.LENGTH_LONG).show();
 
 
     }

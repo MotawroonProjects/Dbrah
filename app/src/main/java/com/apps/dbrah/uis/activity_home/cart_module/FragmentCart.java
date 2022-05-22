@@ -78,7 +78,7 @@ public class FragmentCart extends BaseFragment {
             this.selectedAddress = addressModel;
         });
 
-        mvvm.getOnAllOrderSentSuccess().observe(this, cartModel -> {
+        mvvm.getOnAllOrderSentSuccess().observe(activity, cartModel -> {
             generalMvvm.onOrderNavigate().setValue(0);
             generalMvvm.getActionFragmentHomeNavigator().setValue(1);
 
@@ -97,7 +97,7 @@ public class FragmentCart extends BaseFragment {
         });
 
         
-        mvvm.getOnSingleOrderSentSuccess().observe(this, cartSingleModel -> {
+        mvvm.getOnSingleOrderSentSuccess().observe(activity, cartSingleModel -> {
             generalMvvm.onOrderNavigate().setValue(0);
             generalMvvm.getActionFragmentHomeNavigator().setValue(1);
 
@@ -193,7 +193,7 @@ public class FragmentCart extends BaseFragment {
                  mvvm.sendSingleOrder(activity, cartSingleModel);
             } else {
                 generalMvvm.getMyAddressFragmentAction().setValue("forOrder");
-                generalMvvm.onHomeNavigate().setValue(9);
+                generalMvvm.onHomeNavigate().setValue(7);
             }
 
         } else {

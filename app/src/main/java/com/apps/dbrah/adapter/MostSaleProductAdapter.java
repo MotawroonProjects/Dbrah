@@ -51,6 +51,7 @@ public class MostSaleProductAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         myHolder.binding.tvCartAmount.setOnClickListener(v -> {
             myHolder.binding.motion.transitionToEnd();
+            startTimer(myHolder);
 
         });
 
@@ -144,7 +145,7 @@ public class MostSaleProductAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }
-        countDownTimer = new CountDownTimer(1500, 1000) {
+        countDownTimer = new CountDownTimer(4000, 1000) {
 
             @Override
             public void onTick(long millisUntilFinished) {

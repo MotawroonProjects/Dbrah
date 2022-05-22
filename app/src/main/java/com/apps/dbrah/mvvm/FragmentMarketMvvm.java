@@ -172,7 +172,7 @@ public class FragmentMarketMvvm extends AndroidViewModel {
 
     public void getRecentProduct(Context context,UserModel userModel) {
         String user_id = null;
-        if (userModel!=null){
+        if (userModel!=null&&userModel.getData()!=null&&userModel.getData().getId()!=null){
             user_id = userModel.getData().getId();
         }
         getIsLoadingRecentProduct().setValue(true);
@@ -204,7 +204,8 @@ public class FragmentMarketMvvm extends AndroidViewModel {
 
     public void getMostSaleProduct(Context context,UserModel userModel) {
         String user_id = null;
-        if (userModel!=null){
+        if (userModel!=null&&userModel.getData()!=null&&userModel.getData().getId()!=null){
+            Log.e("id",userModel.getData().getId()+"");
             user_id = userModel.getData().getId();
         }
         getIsLoadingMostSaleProduct().setValue(true);

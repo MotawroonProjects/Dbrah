@@ -12,9 +12,11 @@
         android:background="@color/grey9"
         android:orientation="vertical">
 
-        <include
+        <!--<include
             android:id="@+id/toolbar"
-            layout="@layout/toolbar" />
+            layout="@layout/toolbar"
+
+            />-->
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"

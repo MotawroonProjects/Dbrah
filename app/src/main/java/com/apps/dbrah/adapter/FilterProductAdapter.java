@@ -55,6 +55,7 @@ public class FilterProductAdapter extends RecyclerView.Adapter<RecyclerView.View
         myHolder.binding.motion.setTransition(R.id.start, R.id.end);
         myHolder.binding.tvCartAmount.setOnClickListener(v -> {
             myHolder.binding.motion.transitionToEnd();
+            startTimer(myHolder);
 
         });
 
@@ -154,7 +155,7 @@ public class FilterProductAdapter extends RecyclerView.Adapter<RecyclerView.View
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }
-        countDownTimer = new CountDownTimer(1500, 1000) {
+        countDownTimer = new CountDownTimer(4000, 1000) {
 
             @Override
             public void onTick(long millisUntilFinished) {

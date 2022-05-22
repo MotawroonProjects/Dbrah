@@ -7,6 +7,7 @@ import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -107,7 +108,7 @@ public class FragmentProductDetials extends BaseFragment {
             }
         });
 
-        mvvm.getOnDataSuccess().observe(this, productModel -> {
+        mvvm.getOnDataSuccess().observe(activity, productModel -> {
             if (productModel != null) {
                 FragmentProductDetials.this.productModel = productModel;
                 amount = manageCartModel.getProductAmount(FragmentProductDetials.this.productModel.getId(), activity);
@@ -277,6 +278,7 @@ public class FragmentProductDetials extends BaseFragment {
         manageCartModel.add(productModel, activity);
         generalMvvm.getOnCartRefreshed().setValue(true);
         generalMvvm.getOnCartItemUpdated().setValue(productModel);
+        Toast.makeText(activity, R.string.added_cart_suc, Toast.LENGTH_LONG).show();
 
     }
 

@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
@@ -108,7 +109,7 @@ public class SignUpActivity extends BaseActivity {
         }else {
             model.setPhone_code(phone_code);
             model.setPhone(phone);
-            binding.edtName.setEnabled(false);
+            binding.edtName.setEnabled(true);
             binding.llVat.setVisibility(View.VISIBLE);
             binding.llPhone.setVisibility(View.GONE);
         }
@@ -144,6 +145,7 @@ public class SignUpActivity extends BaseActivity {
             } else if (req == 1 && result.getResultCode() == RESULT_OK) {
                 model.setImage_uri(outPutUri.toString());
                 model.setImage_path(imagePath);
+                Log.e("uri",outPutUri+"__");
 
                 Glide.with(this)
                         .asBitmap()

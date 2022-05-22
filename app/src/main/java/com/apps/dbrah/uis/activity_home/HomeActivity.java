@@ -127,7 +127,7 @@ public class HomeActivity extends BaseActivity {
         fragments.add(FragmentAddAddress.newInstance());//4
         fragments.add(FragmentSetting.newInstance());//5
         fragments.add(FragmentProductDetials.newInstance());//6
-        fragments.add(FragmentProducts.newInstance());//7
+        //fragments.add(FragmentProducts.newInstance());//7
         fragments.add(FragmentMyAddresses.newInstance());//8
 
         adapter = new MyPagerAdapter(getSupportFragmentManager(), fragments, null);
@@ -150,8 +150,11 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void updateStack(int pagePos) {
-        stack.push(pagePos);
-        binding.pager.setCurrentItem(pagePos);
+        if (pagePos!=9){
+            stack.push(pagePos);
+            binding.pager.setCurrentItem(pagePos);
+        }
+
 
     }
 

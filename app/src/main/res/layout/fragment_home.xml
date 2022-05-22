@@ -12,6 +12,10 @@
         <variable
             name="notificationCount"
             type="String" />
+        <variable
+            name="model"
+            type="com.apps.dbrah.model.UserModel" />
+        <import type="android.view.View"/>
     </data>
 
     <LinearLayout
@@ -77,12 +81,37 @@
                     android:layout_height="0dp" />
 
                 <FrameLayout
+                    android:id="@+id/flSetting"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:visibility='@{model==null?View.VISIBLE:View.GONE,default=gone}'
+
+                    >
+
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_settings" />
+
+
+                </FrameLayout>
+
+                <androidx.legacy.widget.Space
+                    android:layout_width="4dp"
+                    android:layout_height="0dp" />
+
+                <FrameLayout
                     android:id="@+id/flNotification"
 
                     android:layout_width="48dp"
                     android:layout_height="48dp"
+                    android:visibility='@{model==null?View.GONE:View.VISIBLE}'
+
 
                     >
+
 
                     <ImageView
                         android:layout_width="24dp"

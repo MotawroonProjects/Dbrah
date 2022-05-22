@@ -98,6 +98,10 @@ public class ActivityHomeMvvm extends AndroidViewModel {
 
 
     }
-
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        disposable.clear();
+    }
 
 }

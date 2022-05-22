@@ -8,6 +8,10 @@
         <variable
             name="lang"
             type="String" />
+        <import type="android.view.View"/>
+        <variable
+            name="model"
+            type="com.apps.dbrah.model.UserModel" />
 
     </data>
 
@@ -273,6 +277,7 @@
                         android:layout_height="68dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
+                        android:visibility="@{model==null?View.GONE:View.VISIBLE}"
 
                         >
 

@@ -156,5 +156,7 @@
     <string name="rate">Add Rate</string>
     <string name="picked_up">Picked Up</string>
     <string name="your_order_accepted">Your Order Accepted By Representative</string>
+    <string name="added_cart_suc">Added to cart successfully</string>
+    <string name="send_order">Send Order</string>
 
 </resources>

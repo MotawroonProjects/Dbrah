@@ -63,13 +63,22 @@ public class FragmentSetting extends BaseFragment {
         binding.setLang(getLang());
         mvvm = ViewModelProviders.of(this).get(FragmentSettingMvvm.class);
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
+
         View view = activity.setUpToolbar(binding.toolbar, getString(R.string.settings), R.color.white, R.color.black, R.drawable.small_rounded_grey4, false);
+
         view.setOnClickListener(v -> {
             generalMvvm.onHomeBackNavigate().setValue(true);
 
         });
+        generalMvvm.getOnUserLoggedIn().observe(activity,success->{
+            binding.setModel(getUserModel());
+        });
 
-        mvvm.getOnLoggedOutSuccess().observe(this, loggedOut -> {
+        generalMvvm.getOnLoggedOutSuccess().observe(activity,success->{
+            binding.setModel(getUserModel());
+        });
+        binding.setModel(getUserModel());
+        mvvm.getOnLoggedOutSuccess().observe(activity, loggedOut -> {
             if (loggedOut) {
                 clearUserModel(activity);
                 generalMvvm.getOnLoggedOutSuccess().setValue(true);
@@ -79,7 +88,6 @@ public class FragmentSetting extends BaseFragment {
         mvvm.getOnDataSuccess().observe(activity, model -> {
             setting = model;
         });
-
         binding.llContactUs.setOnClickListener(v -> {
             Intent intent = new Intent(activity, ContactUsActivity.class);
             startActivity(intent);

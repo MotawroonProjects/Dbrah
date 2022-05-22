@@ -122,8 +122,7 @@ public class ActivitySignupMvvm extends AndroidViewModel {
 
         MultipartBody.Part image = null;
         if (model.getImage_uri() != null && !model.getImage_uri().isEmpty()) {
-            Log.e("uri",model.getImage_uri()+"");
-            image = Common.getMultiPart(context, Uri.parse(model.getImage_uri()), "image");
+            image = Common.getMultiPartFromPath(model.getImage_path(), "image");
         }
 
 

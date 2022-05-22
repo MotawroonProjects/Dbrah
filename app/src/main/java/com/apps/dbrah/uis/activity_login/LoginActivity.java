@@ -100,16 +100,13 @@ public class LoginActivity extends BaseActivity {
             }
 
         });
-        mvvm.getUserData().observe(this, new Observer<UserModel>() {
-            @Override
-            public void onChanged(UserModel userModel) {
-                if (userModel != null) {
-                    setUserModel(userModel);
-                    setResult(RESULT_OK);
-                    finish();
-                } else {
-                    createVerificationCodeDialog();
-                }
+        mvvm.getUserData().observe(this, userModel -> {
+            if (userModel != null) {
+                setUserModel(userModel);
+                setResult(RESULT_OK);
+                finish();
+            } else {
+                createVerificationCodeDialog();
             }
         });
 

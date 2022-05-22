@@ -53,10 +53,12 @@ public class RecentProductAdapter extends RecyclerView.Adapter<RecyclerView.View
         myHolder.binding.motion.setTransition(R.id.start, R.id.end);
         myHolder.binding.tvCartAmount.setOnClickListener(v -> {
             myHolder.binding.motion.transitionToEnd();
+            startTimer(myHolder);
 
         });
 
         myHolder.binding.imgCart.setOnClickListener(v -> {
+
             myHolder.binding.motion.transitionToEnd();
             startTimer(myHolder);
         });
@@ -174,15 +176,17 @@ public class RecentProductAdapter extends RecyclerView.Adapter<RecyclerView.View
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }
-        countDownTimer = new CountDownTimer(1500, 1000) {
+        countDownTimer = new CountDownTimer(4000, 1000) {
 
             @Override
             public void onTick(long millisUntilFinished) {
-
+                Log.e("time",millisUntilFinished+"__");
             }
 
             @Override
             public void onFinish() {
+                Log.e("time2","finished"+"__");
+
                 myHolder.binding.motion.transitionToStart();
             }
         };
