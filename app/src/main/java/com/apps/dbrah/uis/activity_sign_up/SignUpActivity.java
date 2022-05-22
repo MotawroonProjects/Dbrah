@@ -31,6 +31,7 @@ import com.apps.dbrah.R;
 import com.apps.dbrah.databinding.ActivitySignUpBinding;
 import com.apps.dbrah.databinding.DialogChooseImageBinding;
 import com.apps.dbrah.databinding.DialogInformationBinding;
+import com.apps.dbrah.model.SettingDataModel;
 import com.apps.dbrah.model.SignUpModel;
 import com.apps.dbrah.mvvm.ActivitySignupMvvm;
 import com.apps.dbrah.preferences.Preferences;
@@ -57,6 +58,7 @@ public class SignUpActivity extends BaseActivity {
     private Uri outPutUri = null;
     private String imagePath = "";
     private int req;
+    private SettingDataModel.Data setting;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,6 +77,12 @@ public class SignUpActivity extends BaseActivity {
 
     private void initView() {
         activitySignupMvvm = ViewModelProviders.of(this).get(ActivitySignupMvvm.class);
+        activitySignupMvvm.getOnDataSuccess().observe(this, model -> {
+            setting = model;
+            if(setting!=null){
+                binding.imageInfo.setVisibility(View.VISIBLE);
+            }
+        });
         activitySignupMvvm.getUserData().observe(this, userModel -> {
             if (userModel != null) {
                 setUserModel(userModel);
@@ -170,6 +178,7 @@ public class SignUpActivity extends BaseActivity {
 
             }
         });
+        activitySignupMvvm.getSettings(this);
 
     }
 
@@ -201,7 +210,7 @@ public class SignUpActivity extends BaseActivity {
         dialog.setView(informationBinding.getRoot());
         dialog.setCanceledOnTouchOutside(true);
         dialog.setCancelable(true);
-        informationBinding.tvDetails.setText(Html.fromHtml(getString(R.string.sign_up_inf)));
+        informationBinding.tvDetails.setText(Html.fromHtml(setting.getUser_info()));
         informationBinding.tvCancel.setOnClickListener(v -> {
             dialog.dismiss();
         });

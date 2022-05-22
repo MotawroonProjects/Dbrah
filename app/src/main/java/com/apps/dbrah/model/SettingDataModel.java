@@ -16,7 +16,8 @@ public class SettingDataModel extends StatusResponse implements Serializable {
         private String insta;
         private String twitter;
         private String snapchat;
-
+        private String user_info;
+        private String provider_info;
         public String getTerms() {
             return terms;
         }
@@ -39,6 +40,14 @@ public class SettingDataModel extends StatusResponse implements Serializable {
 
         public String getSnapchat() {
             return snapchat;
+        }
+
+        public String getUser_info() {
+            return user_info;
+        }
+
+        public String getProvider_info() {
+            return provider_info;
         }
     }
 }

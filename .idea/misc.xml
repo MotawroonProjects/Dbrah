@@ -134,6 +134,8 @@
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/drawable/ic_cart.xml" value="0.21614583333333334" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/drawable/ic_fill_tag.xml" value="0.19114583333333332" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/drawable/ic_home.xml" value="0.21614583333333334" />
+        <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/drawable/ic_inf.xml" value="0.1065" />
+        <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/drawable/ic_info2.xml" value="0.1065" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/drawable/ic_left_msg_bg.xml" value="0.33" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/drawable/ic_nav_home.xml" value="0.21614583333333334" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/drawable/ic_profile.xml" value="0.19114583333333332" />
@@ -198,7 +200,7 @@
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/dialog_choose_image.xml" value="0.17083333333333334" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/dialog_information.xml" value="0.17083333333333334" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/filter_product_row.xml" value="0.17083333333333334" />
-        <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/fragment_add_address.xml" value="0.22" />
+        <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/fragment_add_address.xml" value="0.25" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/fragment_cart.xml" value="0.2" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/fragment_current_order.xml" value="0.17083333333333334" />
         <entry key="..\:/Users/Arb Develpor/Desktop/emad/Projects/Dbrah/app/src/main/res/layout/fragment_home.xml" value="0.25" />
