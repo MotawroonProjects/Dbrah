@@ -101,7 +101,7 @@ public class SignUpActivity extends BaseActivity {
             model.setPhone_code(getUserModel().getData().getPhone_code());
             model.setPhone(getUserModel().getData().getPhone());
             model.setVat(getUserModel().getData().getVat_number());
-            binding.llVat.setVisibility(View.GONE);
+            //binding.llVat.setVisibility(View.GONE);
             binding.llSpinner.setEnabled(false);
             binding.edtName.setEnabled(false);
             binding.llPhone.setVisibility(View.VISIBLE);
@@ -114,12 +114,15 @@ public class SignUpActivity extends BaseActivity {
                         .into(binding.image);
 
             }
+            binding.btnSignup.setText(R.string.save);
         }else {
             model.setPhone_code(phone_code);
             model.setPhone(phone);
             binding.edtName.setEnabled(true);
-            binding.llVat.setVisibility(View.VISIBLE);
+            //binding.llVat.setVisibility(View.VISIBLE);
             binding.llPhone.setVisibility(View.GONE);
+            binding.btnSignup.setText(R.string.let_s_start);
+
         }
         setUpToolbar(binding.toolbar, title, R.color.white, R.color.black, R.drawable.small_rounded_grey4, true);
 

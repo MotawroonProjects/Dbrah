@@ -82,6 +82,14 @@ public class ManageCartModel implements Serializable {
 
     }
 
+    public int getItemsCount(Context context){
+        int count = 0;
+        for (CartModel.CartObject object:getCartList(context)){
+            count += object.getProducts().size();
+        }
+
+        return count;
+    }
 
     public List<CartModel.CartObject> getCartList(Context context) {
         Preferences preferences = Preferences.getInstance();

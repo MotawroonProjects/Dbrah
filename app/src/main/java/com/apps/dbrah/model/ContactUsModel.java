@@ -15,6 +15,7 @@ import java.io.Serializable;
 
 
 public class ContactUsModel extends BaseObservable implements Serializable {
+    private String order_id;
     private String name;
     private String email;
     private String subject;
@@ -143,5 +144,13 @@ public class ContactUsModel extends BaseObservable implements Serializable {
     public void setValid(boolean valid) {
         this.valid = valid;
         notifyPropertyChanged(BR.valid);
+    }
+
+    public String getOrder_id() {
+        return order_id;
+    }
+
+    public void setOrder_id(String order_id) {
+        this.order_id = order_id;
     }
 }

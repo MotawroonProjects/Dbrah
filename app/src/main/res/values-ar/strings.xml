@@ -159,5 +159,7 @@
     <string name="your_order_accepted">تم قبول طلبك من المندوب</string>
     <string name="added_cart_suc">تم الإضافة الى السلة بنجاح</string>
     <string name="send_order">إرسال الطلب</string>
+    <string name="in_cart">مضاف للسلة</string>
+    <string name="save">حفظ</string>
 
 </resources>

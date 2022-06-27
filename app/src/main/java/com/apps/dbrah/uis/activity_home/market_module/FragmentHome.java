@@ -17,7 +17,9 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.apps.dbrah.R;
 import com.apps.dbrah.adapter.MyPagerAdapter;
+import com.apps.dbrah.databinding.CartCountBinding;
 import com.apps.dbrah.databinding.FragmentHomeBinding;
+import com.apps.dbrah.model.cart_models.ManageCartModel;
 import com.apps.dbrah.mvvm.GeneralMvvm;
 import com.apps.dbrah.uis.activity_base.BaseFragment;
 import com.apps.dbrah.uis.activity_home.HomeActivity;
@@ -25,6 +27,8 @@ import com.apps.dbrah.uis.activity_home.cart_module.FragmentCart;
 import com.apps.dbrah.uis.activity_home.order_module.FragmentOrder;
 import com.apps.dbrah.uis.activity_home.products_module.FragmentProducts;
 import com.apps.dbrah.uis.activity_home.profile_module.FragmentProfile;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
@@ -42,7 +46,8 @@ public class FragmentHome extends BaseFragment implements ViewPager.OnPageChange
     private Map<Integer, Integer> map;
     private List<Fragment> fragments;
     private MyPagerAdapter adapter;
-
+    private CartCountBinding countBinding;
+    private ManageCartModel manageCartModel;
     public static FragmentHome newInstance() {
         return new FragmentHome();
     }
@@ -68,6 +73,7 @@ public class FragmentHome extends BaseFragment implements ViewPager.OnPageChange
     }
 
     private void initView() {
+        manageCartModel = ManageCartModel.newInstance();
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
         binding.setNotificationCount("0");
         binding.setModel(getUserModel());
@@ -83,9 +89,21 @@ public class FragmentHome extends BaseFragment implements ViewPager.OnPageChange
             binding.setModel(getUserModel());
 
         });
+        generalMvvm.getOnCartRefreshed().observe(activity,isRefreshed->{
+            countBinding.setCounter(manageCartModel.getItemsCount(activity));
+
+        });
+
         binding.flSetting.setOnClickListener(v -> {
             generalMvvm.onHomeNavigate().setValue(5);
         });
+
+
+        countBinding = DataBindingUtil.inflate(LayoutInflater.from(activity),R.layout.cart_count,null,false);
+        countBinding.setCounter(manageCartModel.getItemsCount(activity));
+        BottomNavigationMenuView bottomNavigationMenuView = (BottomNavigationMenuView) binding.bottomNavigationView.getChildAt(0);
+        BottomNavigationItemView bottomNavigationItemView = (BottomNavigationItemView) bottomNavigationMenuView.getChildAt(2);
+        bottomNavigationItemView.addView(countBinding.getRoot());
         setUpPager();
 
     }

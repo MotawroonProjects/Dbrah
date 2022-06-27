@@ -158,5 +158,7 @@
     <string name="your_order_accepted">Your Order Accepted By Representative</string>
     <string name="added_cart_suc">Added to cart successfully</string>
     <string name="send_order">Send Order</string>
+    <string name="in_cart">In Cart</string>
+    <string name="save">Save</string>
 
 </resources>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="counter"
+            type="Integer" />
+        <import type="android.view.View"/>
+    </data>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <TextView
+            android:id="@+id/tvCount"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dp"
+            android:layout_marginEnd="16dp"
+            android:lines="1"
+            android:text="@{String.valueOf(counter)}"
+            android:textColor="@color/white"
+            android:background="@drawable/circle_primary"
+            android:visibility="@{counter>0?View.VISIBLE:View.GONE}"
+            />
+    </FrameLayout>
+</layout>

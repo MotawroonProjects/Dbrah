@@ -225,7 +225,6 @@
                                     android:layout_marginStart="16dp"
                                     android:layout_marginTop="8dp"
                                     android:layout_marginEnd="16dp"
-                                    android:layout_marginBottom="19dp"
                                     android:gravity="center_vertical"
                                     android:orientation="horizontal">
 
@@ -246,6 +245,42 @@
                                         android:textSize="14sp" />
 
                                 </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="8dp"
+                                    android:layout_marginBottom="16dp"
+                                    android:orientation="horizontal"
+                                    android:layout_marginStart="16dp"
+                                    android:layout_marginEnd="16dp"
+                                    >
+
+                                    <ImageView
+                                        android:layout_width="24dp"
+                                        android:layout_height="24dp"
+                                        android:layout_gravity="top"
+                                        android:src="@drawable/ic_pin"
+                                        android:padding="3dp"
+                                        android:tint="@color/colorPrimary"
+                                        />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center_vertical"
+                                        android:layout_marginStart="8dp"
+                                        android:layout_marginEnd="8dp"
+                                        android:fontFamily="@font/font_regular"
+                                        android:text='@{model.address.address}'
+                                        android:textColor="@color/black2"
+                                        android:textSize="14sp"
+
+                                        />
+
+
+                                </LinearLayout>
+
 
                             </LinearLayout>
 

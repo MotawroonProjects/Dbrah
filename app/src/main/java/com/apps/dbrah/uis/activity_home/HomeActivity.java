@@ -150,6 +150,7 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void updateStack(int pagePos) {
+        Log.e("pos",pagePos+"_");
         if (pagePos!=9){
             stack.push(pagePos);
             binding.pager.setCurrentItem(pagePos);

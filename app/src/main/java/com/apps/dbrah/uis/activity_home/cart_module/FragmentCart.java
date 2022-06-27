@@ -197,7 +197,7 @@ public class FragmentCart extends BaseFragment {
             }
 
         } else {
-            generalMvvm.getActionFragmentHomeNavigator().setValue(8);
+            generalMvvm.getActionFragmentHomeNavigator().setValue(3);
 
         }
 

@@ -112,6 +112,11 @@ public class FragmentProductDetials extends BaseFragment {
             if (productModel != null) {
                 FragmentProductDetials.this.productModel = productModel;
                 amount = manageCartModel.getProductAmount(FragmentProductDetials.this.productModel.getId(), activity);
+                if(amount>0){
+                    binding.motion.transitionToEnd();
+                }else {
+                    binding.motion.transitionToStart();
+                }
                 binding.setAmount(amount);
                 FragmentProductDetials.this.productModel.setAmount(amount);
                 updateData(FragmentProductDetials.this.productModel);
@@ -138,21 +143,21 @@ public class FragmentProductDetials extends BaseFragment {
 
         binding.tvCartAmount.setOnClickListener(v -> {
             binding.motion.transitionToEnd();
-            startTimer();
+            //startTimer();
 
 
         });
 
         binding.imgCart.setOnClickListener(v -> {
             binding.motion.transitionToEnd();
-            startTimer();
+            //startTimer();
         });
 
         binding.imageIncrease.setOnClickListener(v -> {
 
             amount += 1;
             binding.setAmount(amount);
-            startTimer();
+            //startTimer();
             productModel.setAmount(amount);
             addProductToCart(productModel);
 
@@ -176,7 +181,7 @@ public class FragmentProductDetials extends BaseFragment {
             productModel.setAmount(amount);
             addProductToCart(productModel);
 
-            startTimer();
+           // startTimer();
         });
 
         binding.imageDelete.setOnClickListener(v -> {
@@ -184,7 +189,7 @@ public class FragmentProductDetials extends BaseFragment {
             binding.setAmount(0);
             productModel.setAmount(amount);
             removeProductFromCart(productModel);
-            startTimer();
+            //startTimer();
 
         });
 

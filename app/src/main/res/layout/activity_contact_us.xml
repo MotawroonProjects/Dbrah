@@ -6,8 +6,12 @@
 
 
         <variable
+            name="model"
+            type="com.apps.dbrah.model.UserModel" />
+        <variable
             name="contactModel"
             type="com.apps.dbrah.model.ContactUsModel" />
+        <import type="android.view.View"/>
 
     </data>
 
@@ -53,10 +57,27 @@
 
                         />
 
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="53dp"
+                        android:background="@drawable/small_rounded_stroke_grey7"
+                        android:layout_marginTop="48dp"
+                        android:layout_marginStart="21dp"
+                        android:layout_marginEnd="21dp"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:visibility="@{model==null?View.INVISIBLE:View.VISIBLE}"
+                        >
+                        <Spinner
+                            android:id="@+id/spinner"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            />
+                    </FrameLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="48dp"
+                        android:layout_marginTop="16dp"
                         android:layout_marginStart="21dp"
                         android:layout_marginEnd="21dp"
                         android:gravity="center_vertical"

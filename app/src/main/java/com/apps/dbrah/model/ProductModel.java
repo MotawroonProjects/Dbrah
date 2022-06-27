@@ -22,6 +22,8 @@ public class ProductModel implements Serializable {
     private List<Image> images;
     @SerializedName("main_category")
     private CategoryModel categoryModel;
+    private CategoryModel sub_category;
+
 
     public String getId() {
         return id;
@@ -101,6 +103,10 @@ public class ProductModel implements Serializable {
 
     public void setIs_list(String is_list) {
         this.is_list = is_list;
+    }
+
+    public CategoryModel getSub_category() {
+        return sub_category;
     }
 
     public static class Image implements Serializable {

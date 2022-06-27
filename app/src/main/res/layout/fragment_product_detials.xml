@@ -123,12 +123,43 @@
 
                         />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="13dp"
-                        android:layout_marginEnd="16dp" />
+                   <LinearLayout
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:orientation="horizontal"
+                       android:gravity="center_vertical"
+                       android:layout_marginStart="16dp"
+                       android:layout_marginEnd="16dp"
+                       android:layout_marginTop="16dp"
+                       >
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="48dp"
+                           android:background="@drawable/rounded_color1"
+                           android:text='@{lang.equals("ar")?prductModel.categoryModel.title_ar:prductModel.title_en}'
+                           android:gravity="center"
+                           android:paddingStart="8dp"
+                           android:paddingEnd="8dp"
+                           android:textColor="@color/black"
+                           android:fontFamily="@font/font_regular"
+                           />
+                       <androidx.legacy.widget.Space
+                           android:layout_width="16dp"
+                           android:layout_height="0dp"/>
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="48dp"
+                           android:background="@drawable/rounded_color1"
+                           android:text='@{lang.equals("ar")?prductModel.sub_category.title_ar:prductModel.title_en}'
+                           android:gravity="center"
+                           android:paddingStart="8dp"
+                           android:paddingEnd="8dp"
+                           android:textColor="@color/black"
+                           android:fontFamily="@font/font_regular"
+
+                           />
+                   </LinearLayout>
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -205,7 +236,7 @@
                     android:layout_marginEnd="16dp"
                     android:fontFamily="@font/font_regular"
                     android:gravity="center"
-                    android:text="@string/add_to_cart"
+                    android:text="@{amount==0?@string/add_to_cart:@string/in_cart}"
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
