@@ -105,7 +105,10 @@ public class FragmentHome extends BaseFragment implements ViewPager.OnPageChange
         BottomNavigationItemView bottomNavigationItemView = (BottomNavigationItemView) bottomNavigationMenuView.getChildAt(2);
         bottomNavigationItemView.addView(countBinding.getRoot());
         setUpPager();
-
+        generalMvvm.getOnCartRefreshed().observe(activity, isRefreshed -> {
+            updateCartcount(getCartCount());
+        });
+        updateCartcount(getCartCount());
     }
 
     private void setUpPager() {
@@ -149,6 +152,7 @@ public class FragmentHome extends BaseFragment implements ViewPager.OnPageChange
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+
     }
 
     @Override
@@ -170,6 +174,17 @@ public class FragmentHome extends BaseFragment implements ViewPager.OnPageChange
         }else {
             binding.flSetting.setVisibility(View.GONE);
 
+        }
+    }
+
+    public void updateCartcount(int count) {
+        binding.bottomNavigationView.getOrCreateBadge(R.id.cart).setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+       binding.bottomNavigationView.getOrCreateBadge(R.id.cart).setBadgeTextColor(getResources().getColor(R.color.white));
+        if (count > 0) {
+            binding.bottomNavigationView.getOrCreateBadge(R.id.cart).setNumber(count);
+        }
+        else{
+            binding.bottomNavigationView.removeBadge(R.id.cart);
         }
     }
 

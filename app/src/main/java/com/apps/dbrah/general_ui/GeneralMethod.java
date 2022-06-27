@@ -435,7 +435,7 @@ public class GeneralMethod {
             String text = "";
             if (model.getOrder_id() != null && !model.getOrder_id().isEmpty()) {
                 if (model.getStatus().equals("offered")) {
-                    text = context.getString(R.string.new_offer) + "-" + model.getProvider().getName() + "\n" + context.getString(R.string.order_num) + " #" + model.getOrder_id();
+                    text = context.getString(R.string.new_offer)   + "\n" + context.getString(R.string.order_num) + " #" + model.getOrder_id();
                 } else if (model.getStatus().equals("preparing")) {
 
                     if(model.getBody().equals("order is accepted by a representative")){

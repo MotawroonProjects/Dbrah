@@ -81,7 +81,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:fontFamily="@font/font_bold"
-                                        android:text="@{model.provider.fake_name}"
+                                        android:text="@{model.provider.name}"
                                         android:textColor="@color/black2"
                                         android:textSize="16sp" />
 
@@ -181,8 +181,9 @@
                                     android:layout_marginStart="8dp"
                                     android:layout_marginEnd="8dp"
                                     android:fontFamily="@font/font_regular"
-                                    offertime="@{model.delivery_date_time}"
-                                    android:textColor="@color/black2"
+                                    title="@{model.delivery_date.title}"
+                                    from="@{model.delivery_date.from}"
+                                    to="@{model.delivery_date.to}"                                    android:textColor="@color/black2"
                                     android:textSize="14sp" />
                             </LinearLayout>
                         </LinearLayout>

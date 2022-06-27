@@ -96,72 +96,51 @@ public class FireBaseNotifications extends FirebaseMessagingService {
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setSound(Uri.parse(sound_Path), AudioManager.STREAM_NOTIFICATION);
 
+if(notification_type!=null) {
+    if (notification_type.equals("chat")) {
 
-        if (notification_type.equals("chat")) {
+        String image = map.get("file");
 
-            String image = map.get("file");
+        if (image != null && !image.isEmpty() && !map.get("type").equals("text")) {
+            body = getString(R.string.attach_sent);
+        } else {
+            body = map.get("message");
+        }
 
-            if (image != null && !image.isEmpty() && !map.get("type").equals("text")) {
-                body = getString(R.string.attach_sent);
+
+        notificationCompat.setContentTitle(title);
+        notificationCompat.setStyle(new NotificationCompat.BigTextStyle().bigText(body));
+
+        Intent intent = new Intent(this, ChatActivity.class);
+        intent.putExtra("data", getChatUserModel(map));
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        TaskStackBuilder taskStackBuilder = TaskStackBuilder.create(this);
+        taskStackBuilder.addNextIntent(intent);
+        notificationCompat.setContentIntent(taskStackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT));
+        if (user_id == null) {
+            user_id = "";
+        }
+        if (representative_id == null) {
+            representative_id = "";
+        }
+
+        if (getRoomId() != null && (order_id.equals(getRoomId().getOrder_id())
+                && (representative_id.equals(getRoomId().getRepresentative_id())
+                || user_id.equals(getRoomId().getProvider_id())))) {
+            ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+            String className = activityManager.getRunningTasks(1).get(0).topActivity.getClassName();
+            if (className.equals("com.apps.dbrah.uis.activity_chat.ChatActivity")) {
+
+                EventBus.getDefault().post(getMessageModel(map));
+
             } else {
-                body = map.get("message");
-            }
 
 
-            notificationCompat.setContentTitle(title);
-            notificationCompat.setStyle(new NotificationCompat.BigTextStyle().bigText(body));
-
-            Intent intent = new Intent(this, ChatActivity.class);
-            intent.putExtra("data", getChatUserModel(map));
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            TaskStackBuilder taskStackBuilder = TaskStackBuilder.create(this);
-            taskStackBuilder.addNextIntent(intent);
-            notificationCompat.setContentIntent(taskStackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT));
-            if (user_id == null) {
-                user_id = "";
-            }
-            if (representative_id == null) {
-                representative_id = "";
-            }
-
-            if (getRoomId() != null && (order_id.equals(getRoomId().getOrder_id())
-                    && (representative_id.equals(getRoomId().getRepresentative_id())
-                    || user_id.equals(getRoomId().getProvider_id())))) {
-                ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-                String className = activityManager.getRunningTasks(1).get(0).topActivity.getClassName();
-                if (className.equals("com.apps.dbrah.uis.activity_chat.ChatActivity")) {
-
-                    EventBus.getDefault().post(getMessageModel(map));
-
-                } else {
-
-
-                    if (getChatUserModel(map).getUser_image() != null && !getChatUserModel(map).getUser_image().isEmpty()) {
-
-                        Glide.with(this)
-                                .asBitmap()
-                                .load(Uri.parse( getChatUserModel(map).getUser_image()))
-                                .into(new SimpleTarget<Bitmap>() {
-                                    @Override
-                                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                                        notificationCompat.setLargeIcon(resource);
-                                        manager.notify(Tags.not_id, notificationCompat.build());
-
-                                    }
-                                });
-                    } else {
-                        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher_round);
-                        notificationCompat.setLargeIcon(bitmap);
-                        manager.notify(Tags.not_id, notificationCompat.build());
-                    }
-
-
-                }
-            } else {
                 if (getChatUserModel(map).getUser_image() != null && !getChatUserModel(map).getUser_image().isEmpty()) {
+
                     Glide.with(this)
                             .asBitmap()
-                            .load(Uri.parse( getChatUserModel(map).getUser_image()))
+                            .load(Uri.parse(getChatUserModel(map).getUser_image()))
                             .into(new SimpleTarget<Bitmap>() {
                                 @Override
                                 public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
@@ -176,74 +155,92 @@ public class FireBaseNotifications extends FirebaseMessagingService {
                     manager.notify(Tags.not_id, notificationCompat.build());
                 }
 
-            }
-
-        } else if (notification_type.equals("basic")) {
-
-
-            if (order_status.equals("offered")) {
-                title = getString(R.string.new_offer);
-                body = getString(R.string.new_offer) + "-" + getChatUserModel(map).getUser_name() + "\n" + getString(R.string.order_num) + " #" + order_id;
-            } else if (order_status.equals("preparing")) {
-                if(body.equals("order is accepted by a representative")){
-                    title = getString(R.string.your_order_accepted);
-                    body = getString(R.string.your_order_accepted) + " " + getChatUserModel(map).getUser_name() + "\n" + getString(R.string.order_num) + " #" + order_id;
-                }
-                else  if(body.equals("order is picked up by the delivery")){
-                    title = getString(R.string.picked_up);
-                    body = getString(R.string.picked_up) + " " + getChatUserModel(map).getUser_name() + "\n" + getString(R.string.order_num) + " #" + order_id;
-                }
-                else {
-                    body = getString(R.string.preparing) + " " + getChatUserModel(map).getUser_name() + "\n" + getString(R.string.order_num) + " #" + order_id;
-
-                }
-            } else if (order_status.equals("on_way")) {
-                title = getString(R.string.on_the_way);
-                body = getString(R.string.on_the_way) + " " + getChatUserModel(map).getUser_name() + "\n" + getString(R.string.order_num) + " #" + order_id;
-
-            } else if (order_status.equals("delivered")) {
-                title = getString(R.string.delivered);
-                body = getString(R.string.delivered) + " " + getChatUserModel(map).getUser_name() + "\n" + getString(R.string.order_num) + " #" + order_id;
 
             }
-
-            notificationCompat.setContentTitle(title);
-            notificationCompat.setContentText(body);
-            notificationCompat.setStyle(new NotificationCompat.BigTextStyle().bigText(body));
-
-            Intent intent = new Intent(this, HomeActivity.class);
-            intent.putExtra("order_id", order_id);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            TaskStackBuilder taskStackBuilder = TaskStackBuilder.create(this);
-            taskStackBuilder.addNextIntent(intent);
-            notificationCompat.setContentIntent(taskStackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT));
-
-            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher_round);
-            notificationCompat.setLargeIcon(bitmap);
-            manager.notify(Tags.not_id, notificationCompat.build());
-            EventBus.getDefault().post(new NotiFire(order_status));
-
         } else {
+            if (getChatUserModel(map).getUser_image() != null && !getChatUserModel(map).getUser_image().isEmpty()) {
+                Glide.with(this)
+                        .asBitmap()
+                        .load(Uri.parse(getChatUserModel(map).getUser_image()))
+                        .into(new SimpleTarget<Bitmap>() {
+                            @Override
+                            public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                                notificationCompat.setLargeIcon(resource);
+                                manager.notify(Tags.not_id, notificationCompat.build());
 
-            notificationCompat.setContentTitle(title);
-            notificationCompat.setContentText(body);
-            notificationCompat.setStyle(new NotificationCompat.BigTextStyle().bigText(body));
-
-            Intent intent = new Intent(this, HomeActivity.class);
-            intent.putExtra("order_id", "");
-
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            TaskStackBuilder taskStackBuilder = TaskStackBuilder.create(this);
-            taskStackBuilder.addNextIntent(intent);
-            notificationCompat.setContentIntent(taskStackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT));
-
-            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher_round);
-            notificationCompat.setLargeIcon(bitmap);
-            manager.notify(Tags.not_id, notificationCompat.build());
-            EventBus.getDefault().post(new NotiFire(""));
+                            }
+                        });
+            } else {
+                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher_round);
+                notificationCompat.setLargeIcon(bitmap);
+                manager.notify(Tags.not_id, notificationCompat.build());
+            }
 
         }
 
+    } else if (notification_type.equals("basic")) {
+
+
+        if (order_status.equals("offered")) {
+            title = getString(R.string.new_offer);
+            body = getString(R.string.new_offer) + "\n" + getString(R.string.order_num) + " #" + order_id;
+        } else if (order_status.equals("preparing")) {
+            if (body.equals("order is accepted by a representative")) {
+                title = getString(R.string.your_order_accepted);
+                body = getString(R.string.your_order_accepted) + " " + getChatUserModel(map).getUser_name() + "\n" + getString(R.string.order_num) + " #" + order_id;
+            } else if (body.equals("order is picked up by the delivery")) {
+                title = getString(R.string.picked_up);
+                body = getString(R.string.picked_up) + " " + getChatUserModel(map).getUser_name() + "\n" + getString(R.string.order_num) + " #" + order_id;
+            } else {
+                body = getString(R.string.preparing) + " " + getChatUserModel(map).getUser_name() + "\n" + getString(R.string.order_num) + " #" + order_id;
+
+            }
+        } else if (order_status.equals("on_way")) {
+            title = getString(R.string.on_the_way);
+            body = getString(R.string.on_the_way) + " " + getChatUserModel(map).getUser_name() + "\n" + getString(R.string.order_num) + " #" + order_id;
+
+        } else if (order_status.equals("delivered")) {
+            title = getString(R.string.delivered);
+            body = getString(R.string.delivered) + " " + getChatUserModel(map).getUser_name() + "\n" + getString(R.string.order_num) + " #" + order_id;
+
+        }
+
+        notificationCompat.setContentTitle(title);
+        notificationCompat.setContentText(body);
+        notificationCompat.setStyle(new NotificationCompat.BigTextStyle().bigText(body));
+
+        Intent intent = new Intent(this, HomeActivity.class);
+        intent.putExtra("order_id", order_id);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        TaskStackBuilder taskStackBuilder = TaskStackBuilder.create(this);
+        taskStackBuilder.addNextIntent(intent);
+        notificationCompat.setContentIntent(taskStackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT));
+
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher_round);
+        notificationCompat.setLargeIcon(bitmap);
+        manager.notify(Tags.not_id, notificationCompat.build());
+        EventBus.getDefault().post(new NotiFire(order_status));
+
+    } else {
+        notificationCompat.setContentTitle(notification_type + title);
+        notificationCompat.setContentText(body);
+        notificationCompat.setStyle(new NotificationCompat.BigTextStyle().bigText(body));
+
+        Intent intent = new Intent(this, HomeActivity.class);
+        intent.putExtra("order_id", "");
+
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        TaskStackBuilder taskStackBuilder = TaskStackBuilder.create(this);
+        taskStackBuilder.addNextIntent(intent);
+        notificationCompat.setContentIntent(taskStackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT));
+
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher_round);
+        notificationCompat.setLargeIcon(bitmap);
+        manager.notify(Tags.not_id, notificationCompat.build());
+        EventBus.getDefault().post(new NotiFire(""));
+
+    }
+}
     }
 
 

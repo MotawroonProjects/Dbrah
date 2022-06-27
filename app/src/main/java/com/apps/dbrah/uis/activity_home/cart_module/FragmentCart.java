@@ -132,9 +132,10 @@ public class FragmentCart extends BaseFragment {
                         mvvm.sendAllOrder(activity,manageCartModel.getCartModel());
 
                     }
-                } else {
+                }
+                else {
                     generalMvvm.getMyAddressFragmentAction().setValue("forOrder");
-                    generalMvvm.onHomeNavigate().setValue(9);
+                    generalMvvm.onHomeNavigate().setValue(7);
 
                 }
             } else {

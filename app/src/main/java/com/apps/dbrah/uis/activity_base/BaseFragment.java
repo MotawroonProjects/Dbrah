@@ -32,6 +32,16 @@ public class BaseFragment extends Fragment {
 
     }
 
+    protected int getCartCount() {
+        Preferences preferences = Preferences.getInstance();
+       if(preferences.getCart(context)!=null){
+          return preferences.getCart(context).getCartList().size();
+       }
+       else{
+           return 0;
+       }
+
+    }
     protected void clearUserModel(Context context) {
         Preferences preferences = Preferences.getInstance();
         preferences.clearUserData(context);

@@ -180,6 +180,7 @@ public class OrderModel implements Serializable {
         private String note;
         private String created_at;
         private String updated_at;
+        private TimeModel delivery_date;
         private List<OfferDetail> offer_details;
         private ProviderModel provider;
         private boolean isNotFound;
@@ -230,6 +231,10 @@ public class OrderModel implements Serializable {
 
         public String getUpdated_at() {
             return updated_at;
+        }
+
+        public TimeModel getDelivery_date() {
+            return delivery_date;
         }
 
         public List<OfferDetail> getOffer_details() {
