@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/profile"
-        android:name="com.apps.dbrah.uis.activity_home.profile_module.FragmentProfile"
+        android:name="com.app.dbrah.uis.activity_home.profile_module.FragmentProfile"
         android:label=""
         tools:layout="@layout/fragment_profile" />
 

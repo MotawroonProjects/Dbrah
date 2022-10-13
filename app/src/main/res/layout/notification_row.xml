@@ -6,7 +6,7 @@
 
         <variable
             name="model"
-            type="com.apps.dbrah.model.NotificationModel" />
+            type="com.app.dbrah.model.NotificationModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -9,7 +9,7 @@
 
         <variable
             name="model"
-            type="com.apps.dbrah.model.MessageModel" />
+            type="com.app.dbrah.model.MessageModel" />
         <import type="android.view.View" />
 
     </data>

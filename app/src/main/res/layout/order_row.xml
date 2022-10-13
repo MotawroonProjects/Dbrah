@@ -10,7 +10,7 @@
 
         <variable
             name="model"
-            type="com.apps.dbrah.model.OrderModel" />
+            type="com.app.dbrah.model.OrderModel" />
 
         <import type="android.view.View" />
     </data>

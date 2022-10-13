@@ -10,7 +10,7 @@
 <variable
 
     name="model"
-    type="com.apps.dbrah.model.OrderModel.OfferDetail" />
+    type="com.app.dbrah.model.OrderModel.OfferDetail" />
     </data>
 
     <LinearLayout

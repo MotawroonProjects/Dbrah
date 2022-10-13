@@ -5,7 +5,7 @@
 
         <variable
             name="model"
-            type="com.apps.dbrah.model.CountryCodeModel" />
+            type="com.app.dbrah.model.CountryCodeModel" />
     </data>
 
     <LinearLayout

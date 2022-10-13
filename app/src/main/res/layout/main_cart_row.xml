@@ -10,7 +10,7 @@
 
         <variable
             name="model"
-            type="com.apps.dbrah.model.cart_models.CartModel.CartObject" />
+            type="com.app.dbrah.model.cart_models.CartModel.CartObject" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -10,7 +10,7 @@
 
         <variable
             name="model"
-            type="com.apps.dbrah.model.LoginModel" />
+            type="com.app.dbrah.model.LoginModel" />
     </data>
 
     <LinearLayout

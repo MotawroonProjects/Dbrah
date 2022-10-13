@@ -13,7 +13,7 @@
 
         <variable
             name="model"
-            type="com.apps.dbrah.model.UserModel" />
+            type="com.app.dbrah.model.UserModel" />
 
 
     </data>

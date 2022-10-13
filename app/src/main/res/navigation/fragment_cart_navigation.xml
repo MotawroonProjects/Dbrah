@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/cart"
-        android:name="com.apps.dbrah.uis.activity_home.cart_module.FragmentCart"
+        android:name="com.app.dbrah.uis.activity_home.cart_module.FragmentCart"
         android:label=""
         tools:layout="@layout/fragment_cart" />
 

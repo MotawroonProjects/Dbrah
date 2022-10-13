@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/market"
-        android:name="com.apps.dbrah.uis.activity_home.market_module.FragmentMarket"
+        android:name="com.app.dbrah.uis.activity_home.market_module.FragmentMarket"
         android:label=""
         tools:layout="@layout/fragment_market" />
 

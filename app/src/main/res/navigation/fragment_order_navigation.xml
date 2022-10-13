@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/order"
-        android:name="com.apps.dbrah.uis.activity_home.order_module.FragmentOrder"
+        android:name="com.app.dbrah.uis.activity_home.order_module.FragmentOrder"
         android:label=""
         tools:layout="@layout/fragment_order" />
 

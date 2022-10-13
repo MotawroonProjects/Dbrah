@@ -14,7 +14,7 @@
             type="String" />
         <variable
             name="model"
-            type="com.apps.dbrah.model.UserModel" />
+            type="com.app.dbrah.model.UserModel" />
         <import type="android.view.View"/>
     </data>
 
@@ -157,7 +157,7 @@
         </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>
 
-        <com.apps.dbrah.uis.NonSwipeablePager
+        <com.app.dbrah.uis.NonSwipeablePager
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

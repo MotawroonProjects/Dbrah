@@ -5,7 +5,7 @@
     <data>
         <variable
             name="model"
-            type="com.apps.dbrah.model.OrderModel" />
+            type="com.app.dbrah.model.OrderModel" />
     </data>
     <LinearLayout
         android:layout_width="match_parent"

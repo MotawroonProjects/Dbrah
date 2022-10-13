@@ -6,7 +6,7 @@
     <data>
 <variable
     name="model"
-    type="com.apps.dbrah.model.OrderModel.Offers" />
+    type="com.app.dbrah.model.OrderModel.Offers" />
     </data>
 
     <FrameLayout

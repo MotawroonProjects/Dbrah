@@ -5,7 +5,7 @@
 
         <variable
             name="model"
-            type="com.apps.dbrah.model.TimeModel" />
+            type="com.app.dbrah.model.TimeModel" />
     </data>
 
     <LinearLayout

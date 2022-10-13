@@ -18,7 +18,7 @@
 
         <variable
             name="prductModel"
-            type="com.apps.dbrah.model.ProductModel" />
+            type="com.app.dbrah.model.ProductModel" />
     </data>
 
     <FrameLayout

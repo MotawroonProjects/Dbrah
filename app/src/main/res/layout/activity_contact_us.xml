@@ -7,10 +7,10 @@
 
         <variable
             name="model"
-            type="com.apps.dbrah.model.UserModel" />
+            type="com.app.dbrah.model.UserModel" />
         <variable
             name="contactModel"
-            type="com.apps.dbrah.model.ContactUsModel" />
+            type="com.app.dbrah.model.ContactUsModel" />
         <import type="android.view.View"/>
 
     </data>
