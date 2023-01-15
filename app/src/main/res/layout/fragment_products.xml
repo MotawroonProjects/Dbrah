@@ -91,12 +91,14 @@
 
                     <EditText
                         android:id="@+id/edtSearch"
+                        android:focusable="true"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@color/transparent"
                         android:fontFamily="@font/font_regular"
                         android:hint="@string/search_for_product"
                         android:lines="1"
+                        android:singleLine="true"
                         android:textColor="@color/black"
                         android:textColorHint="@color/grey7"
                         android:textSize="13sp" />

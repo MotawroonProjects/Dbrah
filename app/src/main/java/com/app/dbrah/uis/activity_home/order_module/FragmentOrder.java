@@ -68,7 +68,7 @@ public class FragmentOrder extends BaseFragment {
         fragments.add(FragmentCurrentOrder.newInstance());
         fragments.add(FragmentPreviousOrder.newInstance());
         titles.add(getString(R.string.current));
-        titles.add(getString(R.string.prev));
+        titles.add(getString(R.string.re_order));
         adapter = new MyPagerAdapter(getChildFragmentManager(), fragments, titles);
         binding.pager.setAdapter(adapter);
         binding.pager.setOffscreenPageLimit(fragments.size());

@@ -31,6 +31,7 @@ import com.app.dbrah.mvvm.ActivityOrderDetailsMvvm;
 import com.app.dbrah.share.Common;
 import com.app.dbrah.uis.activity_base.BaseActivity;
 import com.app.dbrah.uis.activity_chat.ChatActivity;
+import com.app.dbrah.uis.activity_contact_us.ContactUsActivity;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import org.greenrobot.eventbus.EventBus;
@@ -73,7 +74,10 @@ public class PreviousOrderDetailsActivity extends BaseActivity {
                 binding.scrollView.setVisibility(View.GONE);
             }
         });
-
+        binding.llCancelOrder.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ContactUsActivity.class);
+            startActivity(intent);
+        });
         mvvm.getOnRateSuccess().observe(this, success -> {
             if (success) {
                 orderModel.setProvider_rated("true");
@@ -85,6 +89,7 @@ public class PreviousOrderDetailsActivity extends BaseActivity {
                 binding.scrollView.setVisibility(View.VISIBLE);
                 orderModel = model;
                 binding.setModel(orderModel);
+                Log.e("D;dldlld",orderModel.getStatus());
 
             }
         });

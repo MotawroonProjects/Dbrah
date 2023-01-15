@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,6 +100,7 @@ public class FragmentSearch extends BaseFragment {
             binding.swipeRefresh.setRefreshing(isLoading);
         });
         mvvm.getOnDataSuccess().observe(activity, data -> {
+            Log.e("llll",data.getProducts().size()+"");
             if (subCategoryAdapter != null) {
 
                 subCategoryAdapter.updateList(data.getCategories());
@@ -134,40 +136,63 @@ public class FragmentSearch extends BaseFragment {
         productAdapter = new SearchHomeProductAdapter(activity, this, getLang());
         binding.recView.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false));
         binding.recView.setAdapter(productAdapter);
+        binding.edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
 
-        Observable.create((ObservableOnSubscribe<String>) emitter -> {
-            binding.edtSearch.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (subCategoryAdapter != null) {
+                    subCategoryAdapter.updateList(null);
                 }
 
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                if (productAdapter != null) {
+                    productAdapter.updateList(null);
                 }
+                mvvm.search(binding.edtSearch.getText().toString(),getUserModel());
+            }
+        });
 
-                @Override
-                public void afterTextChanged(Editable editable) {
-                    emitter.onNext(editable.toString());
-                }
-            });
 
-        }).debounce(2, TimeUnit.SECONDS)
-                .distinctUntilChanged()
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(query -> {
-                    if (subCategoryAdapter != null) {
-                        subCategoryAdapter.updateList(null);
-                    }
-
-                    if (productAdapter != null) {
-                        productAdapter.updateList(null);
-                    }
-                    mvvm.search(query,getUserModel());
-                });
+//        Observable.create((ObservableOnSubscribe<String>) emitter -> {
+//            binding.edtSearch.addTextChangedListener(new TextWatcher() {
+//                @Override
+//                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//                }
+//
+//                @Override
+//                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//                }
+//
+//                @Override
+//                public void afterTextChanged(Editable editable) {
+//                    emitter.onNext(editable.toString());
+//                }
+//            });
+//
+//        }).debounce(2, TimeUnit.SECONDS)
+//                .distinctUntilChanged()
+//                .subscribeOn(Schedulers.computation())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(query -> {
+//                    if (subCategoryAdapter != null) {
+//                        subCategoryAdapter.updateList(null);
+//                    }
+//
+//                    if (productAdapter != null) {
+//                        productAdapter.updateList(null);
+//                    }
+//                    mvvm.search(query,getUserModel());
+//                });
 
 
         binding.swipeRefresh.setOnRefreshListener(() -> {

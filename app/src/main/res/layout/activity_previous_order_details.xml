@@ -116,6 +116,32 @@
                                         </LinearLayout>
 
                                     </LinearLayout>
+                                    <LinearLayout
+                                        android:id="@+id/llCancelOrder"
+                                        android:layout_width="0dp"
+                                        android:layout_height="47dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/rounded_primary"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:visibility='@{model.status.equals("accepted")?View.VISIBLE:View.GONE}'
+                                        >
+
+                                        <ImageView
+                                            android:layout_width="16dp"
+                                            android:layout_height="16dp"
+                                            android:src="@drawable/ic_close"
+                                            app:tint="@color/white" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="8dp"
+                                            android:fontFamily="@font/font_regular"
+                                            android:text="@string/cancel"
+                                            android:textColor="@color/white"
+                                            android:textSize="14sp" />
+                                    </LinearLayout>
 
                                     <LinearLayout
                                         android:id="@+id/addRate"

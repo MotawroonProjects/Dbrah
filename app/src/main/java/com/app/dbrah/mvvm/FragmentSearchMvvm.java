@@ -93,10 +93,13 @@ public class FragmentSearchMvvm extends AndroidViewModel {
         String user_id = null;
         if (userModel!=null){
             user_id = userModel.getData().getId();
+            Log.e("lllll",user_id);
         }
+        if(query!=null){
+        Log.e("lllll",query);}
         getQuery().setValue(query);
         getIsLoading().setValue(true);
-        Api.getService(Tags.base_url).searchProduct(query,user_id)
+        Api.getService(Tags.base_url).searchProduct(user_id,query)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<SearchHomeDataModel>>() {
@@ -107,6 +110,7 @@ public class FragmentSearchMvvm extends AndroidViewModel {
 
                     @Override
                     public void onSuccess(@NonNull Response<SearchHomeDataModel> response) {
+                       //Log.e("dlkdkdk",response.body().getStatus()+"");
                         if (response.isSuccessful() && response.body() != null) {
                             if (response.body().getData() != null && response.body().getStatus() == 200) {
                                 getIsLoading().setValue(false);
