@@ -69,16 +69,16 @@
                         android:orientation="horizontal"
                         android:paddingStart="16dp"
                         android:paddingEnd="16dp"
+                        android:paddingTop="7dp"
                         android:visibility="@{model==null?View.INVISIBLE:View.VISIBLE}">
 
 
                         <AutoCompleteTextView
                             android:id="@+id/edtSearch"
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
                             android:layout_height="35dp"
                             android:layout_marginStart="8dp"
                             android:layout_marginEnd="8dp"
-                            android:layout_weight="3"
                             android:background="@color/white"
                             android:clickable="true"
                             android:focusable="true"

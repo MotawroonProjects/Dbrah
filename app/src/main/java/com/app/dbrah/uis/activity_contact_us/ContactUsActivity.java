@@ -118,5 +118,7 @@ public class ContactUsActivity extends BaseActivity {
     public void setorder(String id) {
         contactUsModel.setOrder_id(id);
         binding.setContactModel(contactUsModel);
+        binding.edtSearch.setText(id);
+
     }
 }
