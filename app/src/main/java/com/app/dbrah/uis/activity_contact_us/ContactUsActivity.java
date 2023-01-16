@@ -76,7 +76,7 @@ public class ContactUsActivity extends BaseActivity {
             public void afterTextChanged(Editable s) {
                 query = binding.edtSearch.getText().toString();
                 if (query.isEmpty()) {
-                    query = "";
+                    query =binding.edtSearch.getText().toString();
                 }
                 contactusActivityMvvm.search(query,getUserModel());
                // presenter.getproducts(userModel, stock, query);
