@@ -10,20 +10,21 @@ public class SettingDataModel extends StatusResponse implements Serializable {
     }
 
     public static class Data implements Serializable{
-        private String terms;
-        private String privacy;
+        private String terms_en;
+        private String privacy_en;
         private String facebook;
         private String insta;
         private String twitter;
         private String snapchat;
         private String user_info;
         private String provider_info;
-        public String getTerms() {
-            return terms;
+
+        public String getTerms_en() {
+            return terms_en;
         }
 
-        public String getPrivacy() {
-            return privacy;
+        public String getPrivacy_en() {
+            return privacy_en;
         }
 
         public String getFacebook() {

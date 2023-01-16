@@ -160,5 +160,6 @@
     <string name="send_order">Send Order</string>
     <string name="in_cart">In Cart</string>
     <string name="save">Save</string>
+    <string name="enter_id">Enter Order id</string>
 
 </resources>

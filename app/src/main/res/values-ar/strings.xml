@@ -161,5 +161,6 @@
     <string name="send_order">إرسال الطلب</string>
     <string name="in_cart">مضاف للسلة</string>
     <string name="save">حفظ</string>
+    <string name="enter_id">ادخل رقم الطلب</string>
 
 </resources>

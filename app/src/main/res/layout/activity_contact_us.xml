@@ -8,10 +8,12 @@
         <variable
             name="model"
             type="com.app.dbrah.model.UserModel" />
+
         <variable
             name="contactModel"
             type="com.app.dbrah.model.ContactUsModel" />
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
 
     </data>
 
@@ -33,12 +35,12 @@
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/small_rounded_white"
-                android:fillViewport="true"
-                android:layout_marginTop="8dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="14dp"
+                android:background="@drawable/small_rounded_white"
+                android:fillViewport="true"
 
                 >
 
@@ -57,28 +59,46 @@
 
                         />
 
-                    <FrameLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="53dp"
-                        android:background="@drawable/small_rounded_stroke_grey7"
-                        android:layout_marginTop="48dp"
                         android:layout_marginStart="21dp"
+                        android:layout_marginTop="48dp"
                         android:layout_marginEnd="21dp"
+                        android:background="@drawable/small_rounded_stroke_grey7"
+                        android:orientation="horizontal"
                         android:paddingStart="16dp"
                         android:paddingEnd="16dp"
-                        android:visibility="@{model==null?View.INVISIBLE:View.VISIBLE}"
-                        >
-                        <Spinner
-                            android:id="@+id/spinner"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            />
-                    </FrameLayout>
+                        android:visibility="@{model==null?View.INVISIBLE:View.VISIBLE}">
+
+
+                        <AutoCompleteTextView
+                            android:id="@+id/edtSearch"
+                            android:layout_width="0dp"
+                            android:layout_height="35dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_weight="3"
+                            android:background="@color/white"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:hint="@string/enter_id"
+                            android:inputType="textAutoComplete"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:scrollHorizontally="true"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textSize="13sp" />
+
+
+                    </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
                         android:layout_marginStart="21dp"
+                        android:layout_marginTop="16dp"
                         android:layout_marginEnd="21dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
@@ -105,24 +125,24 @@
                         error="@{contactModel.error_name}"
                         android:layout_width="match_parent"
                         android:layout_height="53dp"
+                        android:layout_marginStart="21dp"
                         android:layout_marginTop="8dp"
+                        android:layout_marginEnd="21dp"
                         android:background="@drawable/small_rounded_stroke_grey7"
+                        android:fontFamily="@font/font_regular"
                         android:hint="@string/name"
                         android:lines="1"
-                        android:layout_marginStart="21dp"
-                        android:layout_marginEnd="21dp"
                         android:padding="16dp"
                         android:text="@={contactModel.name}"
-                        android:textColorHint="@color/grey8"
                         android:textColor="@color/black"
-                        android:textSize="14sp"
-                        android:fontFamily="@font/font_regular" />
+                        android:textColorHint="@color/grey8"
+                        android:textSize="14sp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
                         android:layout_marginStart="21dp"
+                        android:layout_marginTop="16dp"
                         android:layout_marginEnd="21dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
@@ -149,27 +169,27 @@
                         error="@{contactModel.error_email}"
                         android:layout_width="match_parent"
                         android:layout_height="53dp"
+                        android:layout_marginStart="21dp"
                         android:layout_marginTop="8dp"
+                        android:layout_marginEnd="21dp"
                         android:background="@drawable/small_rounded_stroke_grey7"
+                        android:fontFamily="@font/font_regular"
                         android:hint="@string/email"
                         android:inputType="textEmailAddress"
                         android:lines="1"
                         android:padding="16dp"
-                        android:layout_marginStart="21dp"
-                        android:layout_marginEnd="21dp"
-                        android:textColorHint="@color/grey8"
                         android:text="@={contactModel.email}"
                         android:textColor="@color/black"
+                        android:textColorHint="@color/grey8"
                         android:textSize="14sp"
-                        android:fontFamily="@font/font_regular"
 
                         />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
                         android:layout_marginStart="21dp"
+                        android:layout_marginTop="16dp"
                         android:layout_marginEnd="21dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
@@ -196,18 +216,18 @@
                         error="@{contactModel.error_subject}"
                         android:layout_width="match_parent"
                         android:layout_height="53dp"
+                        android:layout_marginStart="21dp"
                         android:layout_marginTop="8dp"
+                        android:layout_marginEnd="21dp"
                         android:background="@drawable/small_rounded_stroke_grey7"
+                        android:fontFamily="@font/font_regular"
                         android:hint="@string/subject"
                         android:lines="1"
                         android:padding="16dp"
-                        android:layout_marginStart="21dp"
-                        android:layout_marginEnd="21dp"
-                        android:textColorHint="@color/grey8"
                         android:text="@={contactModel.subject}"
                         android:textColor="@color/black"
+                        android:textColorHint="@color/grey8"
                         android:textSize="14sp"
-                        android:fontFamily="@font/font_regular"
 
                         />
 
@@ -215,8 +235,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
                         android:layout_marginStart="21dp"
+                        android:layout_marginTop="16dp"
                         android:layout_marginEnd="21dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
@@ -243,19 +263,19 @@
                         error="@{contactModel.error_message}"
                         android:layout_width="match_parent"
                         android:layout_height="114dp"
+                        android:layout_marginStart="21dp"
                         android:layout_marginTop="8dp"
+                        android:layout_marginEnd="21dp"
                         android:background="@drawable/small_rounded_stroke_grey7"
+                        android:fontFamily="@font/font_regular"
                         android:gravity="top|start"
                         android:hint="@string/message"
                         android:lines="1"
                         android:padding="16dp"
-                        android:layout_marginStart="21dp"
-                        android:layout_marginEnd="21dp"
-                        android:textColorHint="@color/grey8"
                         android:text="@={contactModel.message}"
                         android:textColor="@color/black"
+                        android:textColorHint="@color/grey8"
                         android:textSize="14sp"
-                        android:fontFamily="@font/font_regular"
 
                         />
 
@@ -280,8 +300,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="24dp"
-                android:background="@drawable/shadow_top"
-                android:alpha=".5" />
+                android:alpha=".5"
+                android:background="@drawable/shadow_top" />
         </FrameLayout>
 
 

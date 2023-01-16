@@ -4,6 +4,7 @@ package com.app.dbrah.services;
 import com.app.dbrah.model.AddressesDataModel;
 import com.app.dbrah.model.CategoryDataModel;
 import com.app.dbrah.model.MessagesDataModel;
+import com.app.dbrah.model.OrderDataModel;
 import com.app.dbrah.model.OrdersModel;
 import com.app.dbrah.model.RecentProductDataModel;
 import com.app.dbrah.model.NotificationDataModel;
@@ -73,7 +74,8 @@ public interface Service {
     Single<Response<StatusResponse>> contactUs(@Field("name") String name,
                                                @Field("email") String email,
                                                @Field("subject") String subject,
-                                               @Field("message") String message
+                                               @Field("message") String message,
+                                               @Field("order_id") String order_id
 
 
     );
@@ -123,16 +125,7 @@ public interface Service {
 
     );
 
-    @FormUrlEncoded
-    @POST("api/contact-us")
-    Single<Response<StatusResponse>> contactUs(@Field("api_key") String api_key,
-                                               @Field("name") String name,
-                                               @Field("email") String email,
-                                               @Field("subject") String phone,
-                                               @Field("message") String message
 
-
-    );
 
 
     @GET("api/product_details")
@@ -240,5 +233,8 @@ public interface Service {
                                              @Field("rate") float rate,
                                              @Field("text") String text
     );
+    @GET("api/searchOrders")
+    Single<Response<OrderDataModel>> searchOrders(@Query("user_id") String user_id,
+                                                  @Query("search_key") String search_key);
 
 }

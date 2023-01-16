@@ -41,24 +41,6 @@ public class AboutAppActivity extends BaseActivity {
             title = getString(R.string.privacy_policy);
         }
         setUpToolbar(binding.toolbar, title, R.color.white, R.color.black, R.drawable.small_rounded_grey4, true);
-
-        binding.webView.getSettings().setSupportZoom(true);
-        binding.webView.getSettings().setJavaScriptEnabled(true);
-        binding.webView.getSettings().setAllowContentAccess(true);
-        binding.webView.loadUrl(url);
-        binding.webView.setWebViewClient(new WebViewClient() {
-            @Override
-            public void onPageCommitVisible(WebView view, String url) {
-                super.onPageCommitVisible(view, url);
-                binding.progBar.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-                binding.progBar.setVisibility(View.GONE);
-
-            }
-        });
+binding.setData(url);
     }
 }

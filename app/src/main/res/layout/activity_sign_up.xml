@@ -120,6 +120,7 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
+                        android:singleLine="true"
                         android:background="@drawable/edt_enable"
                         android:fontFamily="@font/font_regular"
                         android:hint="@string/facility_name"

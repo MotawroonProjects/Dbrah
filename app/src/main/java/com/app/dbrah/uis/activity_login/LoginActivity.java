@@ -50,6 +50,7 @@ public class LoginActivity extends BaseActivity {
 
     private void initView() {
         mvvm = ViewModelProviders.of(this).get(ActivityLoginMvvm.class);
+
         binding.setLang(getLang());
         setUpToolbar(binding.toolbar, getString(R.string.login), R.color.white, R.color.black, 0, true);
         model = new LoginModel();
@@ -83,14 +84,16 @@ public class LoginActivity extends BaseActivity {
             mvvm.login(this, model.getPhone_code(), model.getPhone());
         });
 
-        mvvm.getTime().observe(this, time -> {
+        mvvm.timereturn.observe(this, time -> {
             if (dailogVerificationCodeBinding != null) {
                 dailogVerificationCodeBinding.tvResend.setText(time);
 
             }
         });
-
-        mvvm.canResend().observe(this, canResend -> {
+        mvvm.smscode.observe(this, smsCode -> {
+            dailogVerificationCodeBinding.edtCode.setText(smsCode);
+        });
+        mvvm.canresnd.observe(this, canResend -> {
             if (dailogVerificationCodeBinding != null) {
                 dailogVerificationCodeBinding.tvResend.setEnabled(canResend);
                 if (canResend) {
@@ -102,9 +105,13 @@ public class LoginActivity extends BaseActivity {
         });
         mvvm.getUserData().observe(this, userModel -> {
             if (userModel != null) {
+                if(userModel.getData()!=null){
                 setUserModel(userModel);
                 setResult(RESULT_OK);
-                finish();
+                finish();}
+                else {
+                    navigateToSignUpActivity();
+                }
             } else {
                 createVerificationCodeDialog();
             }
@@ -137,6 +144,8 @@ public class LoginActivity extends BaseActivity {
 
 
     private void createVerificationCodeDialog() {
+        mvvm.sendSmsCode(getLang(), model.getPhone_code(), model.getPhone(), this);
+
         AlertDialog builder = new AlertDialog.Builder(this)
                 .create();
         builder.getWindow().setBackgroundDrawableResource(R.drawable.dialog_window_bg);
@@ -162,11 +171,11 @@ public class LoginActivity extends BaseActivity {
 
             }
         });
-        dailogVerificationCodeBinding.tvResend.setOnClickListener(v -> mvvm.reSendSmsCode(model));
+        dailogVerificationCodeBinding.tvResend.setOnClickListener(v ->mvvm.sendSmsCode(getLang(), phone_code, phone, this));
         builder.show();
 
         dailogVerificationCodeBinding.btnVerify.setOnClickListener(v -> {
-            navigateToSignUpActivity();
+           mvvm.checkValidCode(dailogVerificationCodeBinding.edtCode.getText().toString(),this);
         });
         builder.setOnCancelListener(dialog -> mvvm.stopTimer());
 

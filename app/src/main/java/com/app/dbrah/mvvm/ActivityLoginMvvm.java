@@ -16,6 +16,11 @@ import com.app.dbrah.model.UserModel;
 import com.app.dbrah.remote.Api;
 import com.app.dbrah.share.Common;
 import com.app.dbrah.tags.Tags;
+import com.app.dbrah.uis.activity_login.LoginActivity;
+import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthProvider;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -31,9 +36,17 @@ import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 
 public class ActivityLoginMvvm extends AndroidViewModel {
-    private MutableLiveData<String> onSmsCodeSuccess;
-    private MutableLiveData<String> onTimeStarted;
-    private MutableLiveData<Boolean> onCanResend;
+    private static final String TAG = "ActivityVerificationMvvm";
+    private Context context;
+    private FirebaseAuth mAuth;
+    private String verificationId;
+    private String smsCode;
+    private boolean canSend = false;
+    private String time;
+    private String phone, phone_code;
+    public MutableLiveData<String> smscode = new MutableLiveData<>();
+    public MutableLiveData<Boolean> canresnd = new MutableLiveData<>();
+    public MutableLiveData<String> timereturn = new MutableLiveData<>();
     private MutableLiveData<UserModel> onUserDataSuccess;
 
     private CompositeDisposable disposable = new CompositeDisposable();
@@ -42,52 +55,60 @@ public class ActivityLoginMvvm extends AndroidViewModel {
         super(application);
 
 
+        context = application.getApplicationContext();
+        mAuth = FirebaseAuth.getInstance();
+
+
     }
 
-    public MutableLiveData<String> getSmsCode() {
-        if (onSmsCodeSuccess == null) {
-            onSmsCodeSuccess = new MutableLiveData<>();
-        }
-        return onSmsCodeSuccess;
-    }
+    public void sendSmsCode(String lang, String phone_code, String phone, LoginActivity activity) {
 
-    public MutableLiveData<String> getTime() {
-        if (onTimeStarted == null) {
-            onTimeStarted = new MutableLiveData<>();
-        }
-        return onTimeStarted;
-    }
-
-    public MutableLiveData<Boolean> canResend() {
-        if (onCanResend == null) {
-            onCanResend = new MutableLiveData<>();
-        }
-        return onCanResend;
-    }
-
-    public MutableLiveData<UserModel> getUserData() {
-        if (onUserDataSuccess == null) {
-            onUserDataSuccess = new MutableLiveData<>();
-        }
-        return onUserDataSuccess;
-    }
-
-
-    public void sendSmsCode(LoginModel model) {
         startTimer();
+        this.phone_code = phone_code;
+        this.phone = phone;
+        mAuth.setLanguageCode(lang);
+        PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallBack = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+
+            @Override
+            public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
+                smsCode = phoneAuthCredential.getSmsCode();
+                smscode.postValue(smsCode);
+                checkValidCode(smsCode, activity);
+            }
+
+            @Override
+            public void onCodeSent(@NonNull String verification_id, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+                super.onCodeSent(verification_id, forceResendingToken);
+                verificationId = verification_id;
+            }
 
 
-    }
+            @Override
+            public void onVerificationFailed(@NonNull FirebaseException e) {
+                Log.e("dkdkdk", e.toString());
+                if (e.getMessage() != null) {
+                } else {
 
-    public void reSendSmsCode(LoginModel model) {
-        startTimer();
+                }
+            }
+        };
+        PhoneAuthProvider.getInstance()
+                .verifyPhoneNumber(
+                        phone_code + phone,
+                        120,
+                        TimeUnit.SECONDS,
+                        activity,
+                        mCallBack
+
+                );
 
 
     }
 
     private void startTimer() {
-        canResend().setValue(false);
-        Observable.intervalRange(1, 60, 0, 1, TimeUnit.SECONDS)
+        canSend = false;
+        canresnd.postValue(canSend);
+        Observable.intervalRange(1, 120, 1, 1, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Long>() {
@@ -98,29 +119,69 @@ public class ActivityLoginMvvm extends AndroidViewModel {
 
                     @Override
                     public void onNext(@NonNull Long aLong) {
-                        long diff = 60 - aLong;
+                        long diff = 120 - aLong;
                         int min = ((int) diff / 60);
                         int sec = ((int) diff % 60);
-                        String time = String.format(Locale.ENGLISH, "%02d:%02d", min, sec);
-                        getTime().setValue(time);
+                        time = String.format(Locale.ENGLISH, "%02d:%02d", min, sec);
+                        timereturn.postValue(time);
 
 
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Log.e("onErrorVerCode", e.getMessage() + "_");
+
                     }
 
                     @Override
                     public void onComplete() {
-                        getTime().setValue("00:00");
-                        canResend().setValue(true);
+                        canSend = true;
+                        time = "00:00";
+                        timereturn.postValue("00:00");
 
+                        canresnd.postValue(true);
                     }
                 });
 
     }
+
+
+    public void checkValidCode(String code, LoginActivity activity) {
+        //login(activity);
+       if (verificationId != null) {
+            PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
+            mAuth.signInWithCredential(credential)
+                    .addOnSuccessListener(authResult -> {
+                       // login(activity);
+                        getUserData().setValue(new UserModel());
+                    }).addOnFailureListener(e -> {
+                if (e.getMessage() != null) {
+                } else {
+
+                }
+            });
+        } else {
+           Toast.makeText(context, "wait sms", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+
+
+
+
+    public MutableLiveData<UserModel> getUserData() {
+        if (onUserDataSuccess == null) {
+            onUserDataSuccess = new MutableLiveData<>();
+        }
+        return onUserDataSuccess;
+    }
+
+
+
+
+
+
 
 
     public void login(Context context, String phone_code, String phone) {

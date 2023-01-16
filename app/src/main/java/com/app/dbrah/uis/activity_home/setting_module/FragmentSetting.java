@@ -102,22 +102,21 @@ public class FragmentSetting extends BaseFragment {
             }
         });
 
+
         binding.llTerms.setOnClickListener(v -> {
-            if (setting != null && setting.getTerms() != null) {
-                String url = Tags.base_url + "webView?type=" + setting.getTerms();
-                navigateToAboutAppActivity("1", url);
+            if (setting != null && setting.getTerms_en() != null) {
+                navigateToAboutAppActivity("1", setting.getTerms_en());
             } else {
-                Toast.makeText(activity, R.string.inv_link, Toast.LENGTH_SHORT).show();
+             //   Toast.makeText(activity, R.string.inv_link, Toast.LENGTH_SHORT).show();
             }
 
         });
 
         binding.llPrivacy.setOnClickListener(v -> {
-            if (setting != null && setting.getPrivacy() != null) {
-                String url = Tags.base_url + "webView?type=" + setting.getPrivacy();
-                navigateToAboutAppActivity("2", url);
+            if (setting != null && setting.getPrivacy_en() != null) {
+                navigateToAboutAppActivity("2",setting.getPrivacy_en());
             } else {
-                Toast.makeText(activity, R.string.inv_link, Toast.LENGTH_SHORT).show();
+             //   Toast.makeText(activity, R.string.inv_link, Toast.LENGTH_SHORT).show();
             }
         });
 
