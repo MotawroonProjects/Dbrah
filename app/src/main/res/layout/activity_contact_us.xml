@@ -61,7 +61,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="53dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="21dp"
                         android:layout_marginTop="48dp"
                         android:layout_marginEnd="21dp"
@@ -76,18 +76,20 @@
                         <AutoCompleteTextView
                             android:id="@+id/edtSearch"
                             android:layout_width="match_parent"
-                            android:layout_height="35dp"
+                            android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:layout_marginEnd="8dp"
+                            android:layout_marginBottom="7dp"
+                            android:minHeight="35dp"
                             android:background="@color/white"
-                            android:clickable="true"
-                            android:focusable="true"
                             android:hint="@string/enter_id"
                             android:inputType="textAutoComplete"
                             android:paddingLeft="5dp"
                             android:paddingRight="5dp"
-                            android:scrollHorizontally="true"
+
+                            android:completionThreshold="1"
                             android:singleLine="true"
+
                             android:textColor="@color/black"
                             android:textSize="13sp" />
 

@@ -97,11 +97,12 @@ public class ActivityContactUsMvvm extends AndroidViewModel {
 
                     @Override
                     public void onSuccess(@NonNull Response<OrderDataModel> response) {
-                        //Log.e("dlkdkdk",response.body().getStatus()+"");
+                       // Log.e("dlkdkdk",response.body().getStatus()+"");
                         if (response.isSuccessful() && response.body() != null) {
                             if (response.body().getData() != null && response.body().getStatus() == 200) {
+                              //  Log.e("dlkdkdk",response.body().getStatus()+"");
                                 //getIsLoading().setValue(false);
-                                onDataSuccess.setValue(response.body().getData());
+                                onDataSuccess.postValue(response.body().getData());
                             }
                         }
                     }

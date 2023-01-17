@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -18,6 +19,8 @@ import com.app.dbrah.model.UserModel;
 import com.app.dbrah.mvvm.ActivityContactUsMvvm;
 import com.app.dbrah.preferences.Preferences;
 import com.app.dbrah.uis.activity_base.BaseActivity;
+
+import java.util.ArrayList;
 
 public class ContactUsActivity extends BaseActivity {
     private ActivityContactUsBinding binding;
@@ -40,6 +43,8 @@ public class ContactUsActivity extends BaseActivity {
 
     private void initView() {
         productsAdapter = new OrderAutoAdapter(this, R.layout.product_auto_row);
+        productsAdapter.updateList(new ArrayList<>());
+
         binding.edtSearch.setAdapter(productsAdapter);
 
         preferences = Preferences.getInstance();
@@ -53,14 +58,19 @@ public class ContactUsActivity extends BaseActivity {
             if(userModel.getData().getEmail()!=null) {
                 contactUsModel.setEmail(userModel.getData().getEmail());
             }
+            contactusActivityMvvm.search(query,getUserModel());
+
         }
         contactusActivityMvvm.getOnDataSuccess().observe(this, list -> {
-
+            Log.e("fkfkssskfk",list.size()+"");
             if (productsAdapter != null) {
+             //   Log.e("fkfkssskfk",list.size()+"");
+                if(productsAdapter.getCount()==0){
+                    productsAdapter.updateList(new ArrayList<>());
+                }
                 productsAdapter.updateList(list);
             }
         });
-
         binding.edtSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -74,9 +84,11 @@ public class ContactUsActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+
                 query = binding.edtSearch.getText().toString();
+
                 if (query.isEmpty()) {
-                    query =binding.edtSearch.getText().toString();
+                    query=s.toString();
                 }
                 contactusActivityMvvm.search(query,getUserModel());
                // presenter.getproducts(userModel, stock, query);
