@@ -121,8 +121,8 @@ public class LoginActivity extends BaseActivity {
 
     private void setUpSpinner() {
         List<CountryCodeModel> list = new ArrayList<>();
-        list.add(new CountryCodeModel(R.drawable.saudi_arabia, getString(R.string.saudi_arabia), "+966"));
-        list.add(new CountryCodeModel(R.drawable.egypt_flag, getString(R.string.egypt), "+20"));
+        list.add(new CountryCodeModel(R.drawable.saudi_arabia, getString(R.string.saudi_arabia), "+966","SA"));
+        list.add(new CountryCodeModel(R.drawable.egypt_flag, getString(R.string.egypt), "+20","EG "));
         CountryCodeAdapter adapter = new CountryCodeAdapter(this);
         adapter.updateList(list);
         binding.spinner.setAdapter(adapter);
@@ -131,6 +131,7 @@ public class LoginActivity extends BaseActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 CountryCodeModel model = (CountryCodeModel) parent.getAdapter().getItem(position);
                 LoginActivity.this.model.setPhone_code(model.getCode());
+                LoginActivity.this.model.setCode(model.getCountry_code());
                 binding.setModel(LoginActivity.this.model);
             }
 
