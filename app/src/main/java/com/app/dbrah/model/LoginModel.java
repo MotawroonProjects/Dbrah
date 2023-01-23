@@ -20,7 +20,7 @@ public class LoginModel extends BaseObservable implements Serializable {
     private String code;
     private String phone;
     private boolean valid;
-
+    PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
     public LoginModel() {
         phone_code = "+966";
         phone = "";
@@ -29,7 +29,7 @@ public class LoginModel extends BaseObservable implements Serializable {
     }
 
     public void isDataValid() {
-        PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
+
         Phonenumber.PhoneNumber swissNumberProto;
         boolean isValid=false;
 

@@ -24,6 +24,7 @@ import com.app.dbrah.R;
 import com.app.dbrah.adapter.FilterProductAdapter;
 import com.app.dbrah.adapter.MainProductCategoryAdapter;
 import com.app.dbrah.adapter.SubProductCategoryAdapter;
+import com.app.dbrah.adapter.SubSubProductCategoryAdapter;
 import com.app.dbrah.databinding.FragmentProductsBinding;
 import com.app.dbrah.model.CategoryModel;
 import com.app.dbrah.model.ProductAmount;
@@ -49,6 +50,8 @@ public class FragmentProducts extends BaseFragment {
     private FragmentProductsBinding binding;
     private MainProductCategoryAdapter mainProductCategoryAdapter;
     private SubProductCategoryAdapter subProductCategoryAdapter;
+    private SubSubProductCategoryAdapter subSubProductCategoryAdapter;
+
     private FilterProductAdapter productAdapter;
     private String query = "";
     private ManageCartModel manageCartModel;
@@ -194,6 +197,25 @@ public class FragmentProducts extends BaseFragment {
                 subProductCategoryAdapter.updateList(subCategoryList);
             }
         });
+        mvvm.getOnSubSubCategoryDataSuccess().observe(this, modelList -> {
+            if (subSubProductCategoryAdapter != null) {
+                List<CategoryModel> subCategoryList = new ArrayList<>();
+                for (CategoryModel model : modelList) {
+                    model.setSelected(false);
+                    subCategoryList.add(model);
+                }
+                if (subCategoryList.size() > 0) {
+                    CategoryModel model = subCategoryList.get(0);
+                    model.setSelected(true);
+                    subCategoryList.set(0, model);
+                }
+                subSubProductCategoryAdapter = new SubSubProductCategoryAdapter(activity,this, getLang());
+                binding.recViewSubSub.setAdapter(subSubProductCategoryAdapter);
+                binding.recViewSubSub.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false));
+                subSubProductCategoryAdapter.setSelectedPos(0);
+                subSubProductCategoryAdapter.updateList(subCategoryList);
+            }
+        });
 
         binding.swipeRefresh.setOnRefreshListener(() -> {
             mvvm.searchProduct(mvvm.getQuery().getValue(), activity,getUserModel());
@@ -207,7 +229,9 @@ public class FragmentProducts extends BaseFragment {
         subProductCategoryAdapter = new SubProductCategoryAdapter(activity, this, getLang());
         binding.recViewSub.setAdapter(subProductCategoryAdapter);
         binding.recViewSub.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false));
-
+        subSubProductCategoryAdapter = new SubSubProductCategoryAdapter(activity,this, getLang());
+        binding.recViewSubSub.setAdapter(subSubProductCategoryAdapter);
+        binding.recViewSubSub.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false));
 
         productAdapter = new FilterProductAdapter(activity, this,getLang());
         binding.recViewProducts.setLayoutManager(new GridLayoutManager(activity, 2));
@@ -245,12 +269,24 @@ public class FragmentProducts extends BaseFragment {
     public void getSubCat(CategoryModel categoryModel) {
         mvvm.setCategoryId(categoryModel.getId(), activity,getUserModel());
     }
-
-    public void showProducts(CategoryModel categoryModel) {
+    public void showSubsubCat(CategoryModel categoryModel) {
+       //Log.e("dldkdkk",categoryModel.getId());
         mvvm.getSubCategoryId().setValue(categoryModel.getId());
-        mvvm.searchProduct(mvvm.getQuery().getValue(), activity,getUserModel());
+       if(categoryModel.getId()!=null){
+        mvvm.getSubSubCategory(mvvm.getSubCategoryId().getValue(), getUserModel(),activity);
+    }
+    else{
+           mvvm.getOnSubSubCategoryDataSuccess().postValue(new ArrayList<>());
+
+           mvvm.searchProduct(mvvm.getQuery().getValue(), activity,getUserModel());
+
+       }
     }
 
+    public void showProducts(CategoryModel categoryModel) {
+        mvvm.getSubsubCategoryId().setValue(categoryModel.getId());
+        mvvm.searchProduct(mvvm.getQuery().getValue(), activity,getUserModel());
+    }
 
 
     public void showProductDetails(ProductModel productModel) {

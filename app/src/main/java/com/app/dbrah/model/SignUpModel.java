@@ -25,7 +25,7 @@ public class SignUpModel extends BaseObservable {
     public void isDataValid() {
         if (!name.trim().isEmpty() &&
                 Patterns.EMAIL_ADDRESS.matcher(email.trim()).matches() &&
-                !vat.isEmpty()
+                 (vat.isEmpty() || vat.length() == 15)
 
         ) {
             setValid(true);

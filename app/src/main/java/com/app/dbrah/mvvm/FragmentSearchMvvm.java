@@ -134,7 +134,7 @@ public class FragmentSearchMvvm extends AndroidViewModel {
         }
         getIsLoadingProducts().setValue(true);
 
-        Api.getService(Tags.base_url).searchByCatProduct(user_id,null, getSubCategoryId().getValue(), null)
+        Api.getService(Tags.base_url).searchByCatProduct(user_id,null, getSubCategoryId().getValue(), null,null)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<RecentProductDataModel>>() {

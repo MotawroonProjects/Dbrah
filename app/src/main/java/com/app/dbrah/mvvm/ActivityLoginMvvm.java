@@ -66,6 +66,7 @@ public class ActivityLoginMvvm extends AndroidViewModel {
         startTimer();
         this.phone_code = phone_code;
         this.phone = phone;
+        Log.e("Dldldlld",phone);
         mAuth.setLanguageCode(lang);
         PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallBack = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 

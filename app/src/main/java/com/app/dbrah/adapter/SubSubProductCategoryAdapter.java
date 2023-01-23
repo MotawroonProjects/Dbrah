@@ -11,13 +11,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.dbrah.R;
 import com.app.dbrah.databinding.SubCategoryRowBinding;
-import com.app.dbrah.model.CategoryDataModel;
 import com.app.dbrah.model.CategoryModel;
 import com.app.dbrah.uis.activity_home.products_module.FragmentProducts;
 
 import java.util.List;
 
-public class SubProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class SubSubProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<CategoryModel> list;
     private Context context;
     private LayoutInflater inflater;
@@ -26,7 +25,7 @@ public class SubProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView
     private MyHolder oldHolder;
     private int selectedPos = 0;
 
-    public SubProductCategoryAdapter(Context context, Fragment fragment, String lang) {
+    public SubSubProductCategoryAdapter(Context context, Fragment fragment, String lang) {
         this.context = context;
         this.fragment = fragment;
         this.lang = lang;
@@ -42,7 +41,7 @@ public class SubProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        MyHolder myHolder = (MyHolder) holder;
+      MyHolder myHolder = (MyHolder) holder;
         CategoryModel model = list.get(position);
         if (oldHolder == null) {
             if (selectedPos == position) {
@@ -71,7 +70,7 @@ public class SubProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView
 
                 if (fragment instanceof FragmentProducts) {
                     FragmentProducts fragmentProducts = (FragmentProducts) fragment;
-                    fragmentProducts.showSubsubCat(categoryModel);
+                    fragmentProducts.showProducts(categoryModel);
                 }
             }
 

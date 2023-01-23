@@ -172,7 +172,7 @@ public class LoginActivity extends BaseActivity {
 
             }
         });
-        dailogVerificationCodeBinding.tvResend.setOnClickListener(v ->mvvm.sendSmsCode(getLang(), phone_code, phone, this));
+        dailogVerificationCodeBinding.tvResend.setOnClickListener(v ->mvvm.sendSmsCode(getLang(), model.getPhone_code(), model.getPhone(), this));
         builder.show();
 
         dailogVerificationCodeBinding.btnVerify.setOnClickListener(v -> {

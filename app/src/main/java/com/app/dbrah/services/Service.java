@@ -62,6 +62,7 @@ public interface Service {
     Single<Response<RecentProductDataModel>> searchByCatProduct(@Query("user_id") String user_id,
                                                                 @Query("category_id") String category_id,
                                                                 @Query("sub_category_id") String sub_category_id,
+                                                                @Query("sub_sub_category_id") String sub_sub_category_id,
                                                                 @Query("search_word") String search_word);
 
     @GET("api/home_search")
@@ -237,4 +238,6 @@ public interface Service {
     Single<Response<OrderDataModel>> searchOrders(@Query("user_id") String user_id,
                                                   @Query("search_key") String search_key);
 
+    @GET("api/sub_sub_categories")
+    Single<Response<CategoryDataModel>> getSubSubCategory(@Query("sub_category_id") String sub_category_id);
 }

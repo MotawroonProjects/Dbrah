@@ -66,6 +66,20 @@
                         android:layout_marginBottom="10dp" />
 
                 </FrameLayout>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color8">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recViewSubSub"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp" />
+
+                </FrameLayout>
 
                 <LinearLayout
                     android:id="@+id/llSearch"
