@@ -122,7 +122,7 @@ public class LoginActivity extends BaseActivity {
     private void setUpSpinner() {
         List<CountryCodeModel> list = new ArrayList<>();
         list.add(new CountryCodeModel(R.drawable.saudi_arabia, getString(R.string.saudi_arabia), "+966","SA"));
-        list.add(new CountryCodeModel(R.drawable.egypt_flag, getString(R.string.egypt), "+20","EG "));
+        list.add(new CountryCodeModel(R.drawable.egypt_flag, getString(R.string.egypt), "+20","EG"));
         CountryCodeAdapter adapter = new CountryCodeAdapter(this);
         adapter.updateList(list);
         binding.spinner.setAdapter(adapter);
