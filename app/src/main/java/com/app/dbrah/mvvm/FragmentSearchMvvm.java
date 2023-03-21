@@ -15,6 +15,7 @@ import com.app.dbrah.model.UserModel;
 import com.app.dbrah.remote.Api;
 import com.app.dbrah.tags.Tags;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.SingleObserver;
@@ -95,6 +96,12 @@ public class FragmentSearchMvvm extends AndroidViewModel {
             user_id = userModel.getData().getId();
             Log.e("lllll",user_id);
         }
+        SearchHomeDataModel.Data searchHomeDataModel=new SearchHomeDataModel.Data();
+        searchHomeDataModel.categories=new ArrayList<>();
+        searchHomeDataModel.products=new ArrayList<>();
+
+        onDataSuccess.setValue(searchHomeDataModel);
+
         if(query!=null){
         Log.e("lllll",query);}
         getQuery().setValue(query);

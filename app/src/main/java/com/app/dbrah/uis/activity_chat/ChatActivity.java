@@ -150,7 +150,13 @@ public class ChatActivity extends BaseActivity {
 
     private void sendMessage(String type, String msg, String image_url) {
         AddChatMessageModel addChatMessageModel = new AddChatMessageModel(type, msg, image_url, model.getOrder_id(), model.getProvider_id(), model.getUser_id(), model.getRepresentative_id());
-        Intent intent = new Intent(this, ChatService.class);
+        Intent intent = new Intent(this,
+
+
+
+
+
+                ChatService.class);
         intent.putExtra("data", addChatMessageModel);
         startService(intent);
 

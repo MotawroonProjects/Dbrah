@@ -85,6 +85,7 @@ public class FragmentProductsMvvm extends AndroidViewModel {
         }
         return onSubCategoryDataSuccess;
     }
+
     public MutableLiveData<List<CategoryModel>> getOnSubSubCategoryDataSuccess() {
         if (onSubSubCategoryDataSuccess == null) {
             onSubSubCategoryDataSuccess = new MutableLiveData<>();
@@ -134,6 +135,7 @@ public class FragmentProductsMvvm extends AndroidViewModel {
         }
         return subCategoryId;
     }
+
     public MutableLiveData<String> getSubsubCategoryId() {
         if (subsubCategoryId == null) {
             subsubCategoryId = new MutableLiveData<>();
@@ -141,14 +143,14 @@ public class FragmentProductsMvvm extends AndroidViewModel {
         return subsubCategoryId;
     }
 
-    public void setCategoryId(String categoryId,Context context,UserModel userModel) {
+    public void setCategoryId(String categoryId, Context context, UserModel userModel) {
         getCategoryId().setValue(categoryId);
-        getSubCategory(categoryId,context,userModel);
+        getSubCategory(categoryId, context, userModel);
     }
 
 
-    public void getSubCategory(String cat_id,Context context,UserModel userModel) {
-
+    public void getSubCategory(String cat_id, Context context, UserModel userModel) {
+        getIsLoading().postValue(true);
         getOnSubCategoryDataSuccess().setValue(new ArrayList<>());
         getOnSubSubCategoryDataSuccess().setValue(new ArrayList<>());
 
@@ -171,10 +173,27 @@ public class FragmentProductsMvvm extends AndroidViewModel {
                                     CategoryModel model = new CategoryModel(null, "الكل", "All", null, true);
                                     list.add(0, model);
                                 }
+                                Log.e("d;dlldl", response.code() + "" + response.body().getStatus() + "" + list.size());
+
                                 getCategoryId().setValue(cat_id);
-                                searchProduct(getQuery().getValue(),context,userModel);
-                                getOnSubCategoryDataSuccess().setValue(list);
+                                if (list.size() > 0) {
+                                    getSubCategoryId().setValue(list.get(0).getId());
+                                    getOnSubCategoryDataSuccess().setValue(list);
+                                    getSubSubCategory(getSubCategoryId().getValue(), userModel, context);
+                                }
+                                else {
+                                    getSubCategoryId().setValue(null);
+                                    getSubSubCategory(null, userModel, context);
+
+                                    //  searchProduct(getQuery().getValue(),context,userModel);
+                                }
                             }
+                        }
+                        else{
+                            getSubCategoryId().setValue(null);
+
+                            getSubSubCategory(null, userModel, context);
+
                         }
                     }
 
@@ -185,7 +204,9 @@ public class FragmentProductsMvvm extends AndroidViewModel {
                     }
                 });
     }
-    public void getSubSubCategory(String sub_cat_id,UserModel userModel,Context context) {
+
+    public void getSubSubCategory(String sub_cat_id, UserModel userModel, Context context) {
+        getIsLoading().postValue(true);
         getOnSubSubCategoryDataSuccess().setValue(new ArrayList<>());
         Api.getService(Tags.base_url).getSubSubCategory(sub_cat_id)
                 .subscribeOn(Schedulers.io())
@@ -198,7 +219,7 @@ public class FragmentProductsMvvm extends AndroidViewModel {
 
                     @Override
                     public void onSuccess(@NonNull Response<CategoryDataModel> response) {
-                        Log.e("d;dlldl",response.code()+""+response.body().getStatus());
+                        Log.e("d;dlldlsss", response.code() + "" + response.body().getStatus());
                         if (response.isSuccessful() && response.body() != null) {
                             if (response.body().getData() != null && response.body().getStatus() == 200) {
                                 List<CategoryModel> list = response.body().getData();
@@ -207,11 +228,19 @@ public class FragmentProductsMvvm extends AndroidViewModel {
                                     CategoryModel model = new CategoryModel(null, "الكل", "All", null, true);
                                     list.add(0, model);
                                 }
-                                Log.e("d;dlldl",response.code()+""+response.body().getStatus()+""+ list.size());
+                                Log.e("d;dlldl", response.code() + "" + response.body().getStatus() + "" + list.size());
 
                                 getSubCategoryId().setValue(sub_cat_id);
-                                searchProduct(getQuery().getValue(),context,userModel);
+                                if(list.size()>0){
+                                    getSubsubCategoryId().setValue(list.get(0).getId());}
                                 getOnSubSubCategoryDataSuccess().setValue(list);
+                                searchProduct(getQuery().getValue(), context, userModel);
+
+                            }
+                            else{
+                                getSubsubCategoryId().setValue(null);
+                                searchProduct(getQuery().getValue(), context, userModel);
+
                             }
                         }
                     }
@@ -226,12 +255,14 @@ public class FragmentProductsMvvm extends AndroidViewModel {
 
     public void searchProduct(String query, Context context, UserModel userModel) {
         String user_id = null;
-        if (userModel!=null){
+        if (userModel != null) {
             user_id = userModel.getData().getId();
         }
-        getIsLoading().postValue(true);
+        getOnProductsDataSuccess().postValue(new ArrayList<>());
 
-        Api.getService(Tags.base_url).searchByCatProduct(user_id,getCategoryId().getValue(), getSubCategoryId().getValue(),getSubsubCategoryId().getValue(), query)
+        getIsLoading().postValue(true);
+        Log.e("kfkfkfk", user_id + " " + getCategoryId().getValue() + " " + getSubCategoryId().getValue() + " " + getSubsubCategoryId().getValue() + " " + query);
+        Api.getService(Tags.base_url).searchByCatProduct(user_id, getCategoryId().getValue(), getSubCategoryId().getValue(), getSubsubCategoryId().getValue(), query)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<RecentProductDataModel>>() {
@@ -245,7 +276,7 @@ public class FragmentProductsMvvm extends AndroidViewModel {
                         if (response.isSuccessful() && response.body() != null) {
                             if (response.body().getData() != null && response.body().getStatus() == 200) {
 
-                                prepareProducts(response.body().getData(),context);
+                                prepareProducts(response.body().getData(), context);
                             }
                         }
                     }
@@ -261,7 +292,7 @@ public class FragmentProductsMvvm extends AndroidViewModel {
     private void prepareProducts(List<ProductModel> data, Context context) {
         for (int index = 0; index < data.size(); index++) {
             ProductModel productModel = data.get(index);
-            productModel.setAmount(manageCartModel.getProductAmount(productModel.getId(),context));
+            productModel.setAmount(manageCartModel.getProductAmount(productModel.getId(), context));
             data.set(index, productModel);
         }
         getIsLoading().setValue(false);
@@ -270,9 +301,9 @@ public class FragmentProductsMvvm extends AndroidViewModel {
 
     public void favUnFav(UserModel userModel, ProductModel model) {
         if (userModel == null) {
-            if (model.getIs_list().equals("true")){
+            if (model.getIs_list().equals("true")) {
                 model.setIs_list("false");
-            }else {
+            } else {
                 model.setIs_list("true");
 
             }
@@ -294,7 +325,7 @@ public class FragmentProductsMvvm extends AndroidViewModel {
                     public void onSuccess(@NonNull Response<StatusResponse> response) {
                         if (response.isSuccessful() && response.body() != null) {
                             if (response.body().getStatus() == 200) {
-                                Log.e("ddd",response.body().getStatus()+""+response.body().getMessage().toString());
+                                Log.e("ddd", response.body().getStatus() + "" + response.body().getMessage().toString());
                             } else {
                                 if (model.getIs_list().equals("true")) {
                                     model.setIs_list("false");

@@ -30,6 +30,7 @@ import com.app.dbrah.databinding.FragmentProfileBinding;
 import com.app.dbrah.uis.activity_home.HomeActivity;
 import com.app.dbrah.uis.activity_home.order_module.FragmentOrder;
 import com.app.dbrah.uis.activity_login.LoginActivity;
+import com.app.dbrah.uis.activity_previous_order.PreviousOrderActivity;
 import com.app.dbrah.uis.activity_sign_up.SignUpActivity;
 
 import java.util.List;
@@ -89,6 +90,9 @@ public class FragmentProfile extends BaseFragment {
         binding.profileNotLoggedLayout.btnLogin.setOnClickListener(v -> {
             navigateToLoginActivity();
         });
+        binding.profileLayout.cardOrder.setOnClickListener(v -> {
+            navigateToOrder();
+        });
 
         binding.profileLayout.cardMyList.setOnClickListener(v -> {
             generalMvvm.onHomeNavigate().setValue(3);
@@ -113,6 +117,11 @@ public class FragmentProfile extends BaseFragment {
         req = 1;
         Intent intent = new Intent(activity, LoginActivity.class);
         launcher.launch(intent);
+    }
+   private void navigateToOrder() {
+
+        Intent intent = new Intent(activity, PreviousOrderActivity.class);
+        startActivity(intent);
     }
 
     private void navigateToSignUpActivity() {

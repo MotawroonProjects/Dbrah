@@ -98,6 +98,9 @@ public class ActivitySignupMvvm extends AndroidViewModel {
                                 } else if (response.body().getStatus() == 407) {
                                     Toast.makeText(context, R.string.em_found, Toast.LENGTH_LONG).show();
                                 }
+                                else {
+                                    Toast.makeText(context, R.string.vat_found, Toast.LENGTH_LONG).show();
+                                }
                             }
 
                         }

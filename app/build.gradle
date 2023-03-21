@@ -7,10 +7,25 @@ android {
     compileSdkVersion 28
     compileSdk 33
     bundle {
+
+
         language {
+            // Specifies that the app bundle should not support
+            // configuration APKs for language resources. These
+            // resources are instead packaged with each base and
+            // dynamic feature APK.
             enableSplit = false
         }
+        density {
+            // This property is set to true by default.
+            enableSplit = true
+        }
+        abi {
+            // This property is set to true by default.
+            enableSplit = true
+        }
     }
+
     defaultConfig {
         applicationId "com.app.dbrah"
         minSdk 19
@@ -80,6 +95,7 @@ dependencies {
     implementation 'com.iarcuschin:simpleratingbar:0.1.5'
     implementation 'org.greenrobot:eventbus:3.2.0'
     implementation "androidx.multidex:multidex:2.0.1"
+    implementation 'androidx.browser:browser:1.2.0'
 
 
 }

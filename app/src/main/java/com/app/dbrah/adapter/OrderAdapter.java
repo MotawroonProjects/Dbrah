@@ -16,6 +16,7 @@ import com.app.dbrah.databinding.OrderRowBinding;
 import com.app.dbrah.model.OrderModel;
 import com.app.dbrah.uis.activity_home.order_module.FragmentCurrentOrder;
 import com.app.dbrah.uis.activity_home.order_module.FragmentPreviousOrder;
+import com.app.dbrah.uis.activity_previous_order.PreviousOrderActivity;
 
 import java.util.List;
 
@@ -44,6 +45,9 @@ public class OrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MyHolder myHolder = (MyHolder) holder;
+        if(context instanceof PreviousOrderActivity){
+            myHolder.binding.llResend.setVisibility(View.GONE);
+        }
         myHolder.binding.setLang(lang);
         myHolder.binding.setModel(list.get(position));
         myHolder.binding.llDetails.setOnClickListener(view -> {

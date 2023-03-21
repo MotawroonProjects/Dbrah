@@ -100,7 +100,7 @@ public class FragmentSearch extends BaseFragment {
             binding.swipeRefresh.setRefreshing(isLoading);
         });
         mvvm.getOnDataSuccess().observe(activity, data -> {
-            Log.e("llll",data.getProducts().size()+"");
+            Log.e("llll",data.getProducts().size()+" ر"+data.getCategories().size());
             if (subCategoryAdapter != null) {
 
                 subCategoryAdapter.updateList(data.getCategories());

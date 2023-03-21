@@ -39,6 +39,7 @@ public class LoginActivity extends BaseActivity {
     private ActivityResultLauncher<Intent> launcher;
     private ActivityLoginMvvm mvvm;
     private DailogVerificationCodeBinding dailogVerificationCodeBinding;
+    private UserModel userModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,18 +105,28 @@ public class LoginActivity extends BaseActivity {
 
         });
         mvvm.getUserData().observe(this, userModel -> {
-            if (userModel != null) {
-                if(userModel.getData()!=null){
+            if(this.userModel!=null){
                 setUserModel(userModel);
                 setResult(RESULT_OK);
-                finish();}
+                finish();
+            }
+            else{
+            this.userModel=userModel;
+            if (userModel != null) {
+                if(userModel.getData()!=null){
+
+                    createVerificationCodeDialog();
+//                setUserModel(userModel);
+//                setResult(RESULT_OK);
+//                finish();
+                }
                 else {
                     navigateToSignUpActivity();
                 }
             } else {
                 createVerificationCodeDialog();
             }
-        });
+        }});
 
     }
 

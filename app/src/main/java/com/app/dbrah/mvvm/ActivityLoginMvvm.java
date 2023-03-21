@@ -154,7 +154,11 @@ public class ActivityLoginMvvm extends AndroidViewModel {
             mAuth.signInWithCredential(credential)
                     .addOnSuccessListener(authResult -> {
                        // login(activity);
-                        getUserData().setValue(new UserModel());
+                        if(getUserData().getValue()!=null){
+                            getUserData().setValue(getUserData().getValue());
+                        }
+                        else{
+                        getUserData().setValue(new UserModel());}
                     }).addOnFailureListener(e -> {
                 if (e.getMessage() != null) {
                 } else {

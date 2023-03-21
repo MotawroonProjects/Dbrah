@@ -85,6 +85,7 @@ public class FragmentHome extends BaseFragment implements ViewPager.OnPageChange
 
         });
 
+
         generalMvvm.getOnLoggedOutSuccess().observe(activity, isLoggedOut -> {
             binding.setModel(getUserModel());
 

@@ -103,7 +103,7 @@ public class FragmentPreviousOrder extends BaseFragment {
         mvvm.getIsLoading().observe(activity, isLoading -> {
             binding.recViewLayout.swipeRefresh.setRefreshing(isLoading);
         });
-        mvvm.getOnDataSuccess().observe(this, list -> {
+        mvvm.getOnDataSuccess().observe(activity, list -> {
             if (list.size() > 0) {
                 binding.recViewLayout.tvNoData.setVisibility(View.GONE);
             } else {

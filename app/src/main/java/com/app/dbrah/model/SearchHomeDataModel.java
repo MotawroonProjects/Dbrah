@@ -11,8 +11,8 @@ public class SearchHomeDataModel extends StatusResponse implements Serializable 
     }
 
     public static class Data implements Serializable {
-        private List<CategoryModel> categories;
-        private List<ProductModel> products;
+        public    List<CategoryModel> categories;
+        public        List<ProductModel> products;
 
         public List<CategoryModel> getCategories() {
             return categories;
