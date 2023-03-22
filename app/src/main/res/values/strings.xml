@@ -162,5 +162,6 @@
     <string name="save">Save</string>
     <string name="enter_id">Enter Order id</string>
     <string name="vat_found">Vat Number Found</string>
+    <string name="num_requird">(15 Numbers)</string>
 
 </resources>

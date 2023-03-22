@@ -214,11 +214,11 @@ public class FragmentProductDetials extends BaseFragment {
     }
 
     private void share() {
-        String shareLink = Tags.base_url + "product/details/" + productId;
+       // String shareLink = Tags.base_url + "product/details/" + productId;
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TITLE, getString(R.string.app_name));
-        intent.putExtra(Intent.EXTRA_TEXT, shareLink);
+        intent.putExtra(Intent.EXTRA_TEXT, productModel.getLink_to_share());
         startActivity(Intent.createChooser(intent, productModel.getTitle_ar()));
 
     }

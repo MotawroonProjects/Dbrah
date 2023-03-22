@@ -3,6 +3,7 @@ package com.app.dbrah.uis.activity_splash;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -16,6 +17,7 @@ import com.app.dbrah.uis.activity_base.BaseActivity;
 import com.app.dbrah.uis.activity_home.HomeActivity;
 import com.app.dbrah.databinding.ActivitySplashBinding;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -28,6 +30,7 @@ import io.reactivex.schedulers.Schedulers;
 public class SplashActivity extends BaseActivity {
     private ActivitySplashBinding binding;
     private CompositeDisposable disposable = new CompositeDisposable();
+    private String ad_id=null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,8 +40,27 @@ public class SplashActivity extends BaseActivity {
         decorView.setSystemUiVisibility(uiOptions);
       */
         binding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
+        getDataFromIntent();
         initView();
 
+    }
+
+    private void getDataFromIntent() {
+        Intent intent = getIntent();
+        if (intent != null) {
+            if (intent.getData() != null) {
+                String segment = intent.getData().getEncodedSchemeSpecificPart();
+                Log.e("fkfkfk", segment);
+                if (segment != null) {
+                     ad_id = segment.split("&")[0].replace("?", "").split("=")[1];
+                    Log.e("fkfkfk", ad_id);
+                }
+                // ad_id = Integer.parseInt(segment.get(segment.size()- 1));
+
+
+            }
+
+        }
     }
 
     private void initView() {
@@ -75,6 +97,7 @@ public class SplashActivity extends BaseActivity {
     private void navigateToHomeActivity() {
         Intent intent = new Intent(this, HomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.putExtra("product_id", ad_id );
         startActivity(intent);
         finish();
     }

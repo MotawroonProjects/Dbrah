@@ -13,6 +13,7 @@ public class ProductModel implements Serializable {
     private String category_id;
     private String sub_category_id;
     private String details_at;
+    private String link_to_share;
     private String details_en;
     private String created_at;
     private String updated_at;
@@ -67,6 +68,10 @@ public class ProductModel implements Serializable {
 
     public List<Image> getImages() {
         return images;
+    }
+
+    public String getLink_to_share() {
+        return link_to_share;
     }
 
     public void setId(String id) {
