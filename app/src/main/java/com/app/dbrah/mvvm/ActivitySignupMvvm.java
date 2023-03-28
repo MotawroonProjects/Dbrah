@@ -15,6 +15,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.app.dbrah.R;
 import com.app.dbrah.model.SettingDataModel;
 import com.app.dbrah.model.SignUpModel;
+import com.app.dbrah.model.StatusResponse;
 import com.app.dbrah.model.UserModel;
 import com.app.dbrah.remote.Api;
 import com.app.dbrah.share.Common;
@@ -35,6 +36,7 @@ import retrofit2.Response;
 public class ActivitySignupMvvm extends AndroidViewModel {
     public MutableLiveData<UserModel> onUserDataSuccess;
     private MutableLiveData<SettingDataModel.Data> onDataSuccess;
+    private MutableLiveData<Boolean> onCodeSend;
 
     private CompositeDisposable disposable = new CompositeDisposable();
 
@@ -54,6 +56,13 @@ public class ActivitySignupMvvm extends AndroidViewModel {
             onUserDataSuccess = new MutableLiveData<>();
         }
         return onUserDataSuccess;
+    }
+
+    public MutableLiveData<Boolean> getOnCodeSend() {
+        if (onCodeSend == null) {
+            onCodeSend = new MutableLiveData<>();
+        }
+        return onCodeSend;
     }
 
     public void signUp(SignUpModel model, Context context) {
@@ -115,6 +124,87 @@ public class ActivitySignupMvvm extends AndroidViewModel {
                     public void onComplete() {
                         dialog.dismiss();
                     }
+                });
+    }
+    public void sendCode(SignUpModel model, Context context) {
+
+        ProgressDialog dialog = Common.createProgressDialog(context, context.getResources().getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.show();
+
+
+
+
+        Api.getService(Tags.base_url).sendcode(model.getEmail())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<Response<StatusResponse>>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        disposable.add(d);
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull Response<StatusResponse> response) {
+                        dialog.dismiss();
+                        if (response.isSuccessful()) {
+
+
+                                getOnCodeSend().postValue(true);
+
+
+                        }
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable throwable) {
+                        dialog.dismiss();
+                    }
+
+
+                });
+    }
+    public void checkCode(SignUpModel model,String code, Context context) {
+
+        ProgressDialog dialog = Common.createProgressDialog(context, context.getResources().getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.show();
+
+
+
+
+        Api.getService(Tags.base_url).checkCode(model.getEmail(),code)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<Response<StatusResponse>>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        disposable.add(d);
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull Response<StatusResponse> response) {
+                        dialog.dismiss();
+                        if (response.isSuccessful()) {
+
+                            if (response.body() != null) {
+                                if(response.body().getStatus()==200){
+                                    signUp(model,context);
+                                }
+                                else{
+                                    Toast.makeText(context,context.getResources().getString(R.string.incorrect_code),Toast.LENGTH_LONG).show();
+                                }
+                            }
+
+                        }
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable throwable) {
+                        dialog.dismiss();
+                    }
+
+
                 });
     }
 

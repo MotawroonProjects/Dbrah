@@ -20,7 +20,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.Editable;
 import android.text.Html;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +33,7 @@ import com.app.dbrah.R;
 import com.app.dbrah.databinding.ActivitySignUpBinding;
 import com.app.dbrah.databinding.DialogChooseImageBinding;
 import com.app.dbrah.databinding.DialogInformationBinding;
+import com.app.dbrah.databinding.DialogVerfiyEmailBinding;
 import com.app.dbrah.model.SettingDataModel;
 import com.app.dbrah.model.SignUpModel;
 import com.app.dbrah.mvvm.ActivitySignupMvvm;
@@ -53,6 +56,8 @@ public class SignUpActivity extends BaseActivity {
     private SignUpModel model;
     private ActivitySignupMvvm activitySignupMvvm;
     private String phone_code, phone;
+    private DialogVerfiyEmailBinding dialogVerfiyEmailBinding;
+
     private ActivityResultLauncher<String[]> permissions;
     private ActivityResultLauncher<Intent> launcher;
     private Uri outPutUri = null;
@@ -88,6 +93,11 @@ public class SignUpActivity extends BaseActivity {
                 setUserModel(userModel);
                 setResult(RESULT_OK);
                 finish();
+            }
+        });
+        activitySignupMvvm.getOnCodeSend().observe(this,aBoolean -> {
+            if(aBoolean){
+createVerificationCodeDialog();
             }
         });
         String title = getString(R.string.sign_up);
@@ -174,7 +184,7 @@ public class SignUpActivity extends BaseActivity {
         binding.flImage.setOnClickListener(v -> openSheet());
         binding.btnSignup.setOnClickListener(view -> {
             if (getUserModel()==null){
-                activitySignupMvvm.signUp(model, this);
+                activitySignupMvvm.sendCode(model, this);
 
             }else {
                 activitySignupMvvm.update(model,getUserModel().getData().getId(),this);
@@ -285,6 +295,46 @@ public class SignUpActivity extends BaseActivity {
         }
 
         return file;
+    }
+    private void createVerificationCodeDialog() {
+
+        AlertDialog builder = new AlertDialog.Builder(this)
+                .create();
+        builder.getWindow().setBackgroundDrawableResource(R.drawable.dialog_window_bg);
+        dialogVerfiyEmailBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.dialog_verfiy_email, null, false);
+        dialogVerfiyEmailBinding.setModel(model);
+        builder.setView(dialogVerfiyEmailBinding.getRoot());
+        builder.setCancelable(true);
+        builder.setCanceledOnTouchOutside(false);
+        dialogVerfiyEmailBinding.edtCode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                dialogVerfiyEmailBinding.btnVerify.setEnabled(s.toString().length() == 6);
+
+            }
+        });
+//        dialogVerfiyEmailBinding.tvResend.setOnClickListener(v ->{
+//
+//            activitySignupMvvm.sendCode( model, this);
+//
+//        });
+        builder.show();
+
+        dialogVerfiyEmailBinding.btnVerify.setOnClickListener(v -> {
+
+            activitySignupMvvm.checkCode(model,dialogVerfiyEmailBinding.edtCode.getText().toString(),this);
+        });
+
     }
 
 }

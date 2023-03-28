@@ -104,7 +104,15 @@ public interface Service {
 
 
     );
-
+    @FormUrlEncoded
+    @POST("api/auth/check/email")
+    Single<Response<StatusResponse>> sendcode(@Field("email") String email
+    );
+    @FormUrlEncoded
+    @POST("api/auth/check/code")
+    Single<Response<StatusResponse>> checkCode(@Field("email") String email,
+                                          @Field("code") String code
+    );
     @Multipart
     @POST("api/editProfile")
     Observable<Response<UserModel>> updateProfile(@Part("user_id") RequestBody user_id,

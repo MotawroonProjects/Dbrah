@@ -73,6 +73,7 @@
     <string name="saudi_arabia">Saudi Arabia</string>
     <string name="egypt">Egypt</string>
     <string name="we_sent_an_code_to_verify_yor_phone">We sent an code to verify yor phone</string>
+    <string name="we_sent_an_code_to_verify_yor_email">We sent an code to verify yor Email</string>
     <string name="enter_your_verification_code">Enter your verification code</string>
     <string name="verify">Verify</string>
     <string name="facility_name">Facility name</string>
@@ -163,5 +164,6 @@
     <string name="enter_id">Enter Order id</string>
     <string name="vat_found">Vat Number Found</string>
     <string name="num_requird">(15 Numbers)</string>
+    <string name="incorrect_code">Incorrect Code</string>
 
 </resources>

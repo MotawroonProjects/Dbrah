@@ -57,6 +57,7 @@ public class ActivityLoginMvvm extends AndroidViewModel {
 
         context = application.getApplicationContext();
         mAuth = FirebaseAuth.getInstance();
+      //  mAuth.getFirebaseAuthSettings().setAppVerificationDisabledForTesting(true);
 
 
     }

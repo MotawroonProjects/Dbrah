@@ -124,7 +124,9 @@ public class LoginActivity extends BaseActivity {
                     navigateToSignUpActivity();
                 }
             } else {
-                navigateToSignUpActivity();
+                createVerificationCodeDialog();
+
+                //  navigateToSignUpActivity();
             }
         }});
 

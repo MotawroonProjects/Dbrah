@@ -74,6 +74,7 @@
     <string name="saudi_arabia">المملكة العربية السعودية</string>
     <string name="egypt">مصر</string>
     <string name="we_sent_an_code_to_verify_yor_phone">لقد ارسلنا رمز التحقق الى</string>
+    <string name="we_sent_an_code_to_verify_yor_email">لقد ارسلنا رمز التحقق الى</string>
     <string name="enter_your_verification_code">من فضلك أدخل رمز التحقق</string>
     <string name="verify">تحقق</string>
     <string name="facility_name">إسم المنشأة</string>
@@ -164,5 +165,6 @@
     <string name="enter_id">ادخل رقم الطلب</string>
     <string name="vat_found">الرقم الضريبى موجود  من قبل</string>
     <string name="num_requird">(15 رقم)</string>
+    <string name="incorrect_code">كود خاظئ</string>
 
 </resources>
