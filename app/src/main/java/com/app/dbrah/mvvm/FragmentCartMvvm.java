@@ -17,6 +17,7 @@ import com.app.dbrah.model.cart_models.CartSingleModel;
 import com.app.dbrah.remote.Api;
 import com.app.dbrah.share.Common;
 import com.app.dbrah.tags.Tags;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.List;
@@ -117,6 +118,8 @@ public class FragmentCartMvvm extends AndroidViewModel {
     }
 
     public void sendSingleOrder(Context context, CartSingleModel cartModel) {
+        String data = new Gson().toJson(cartModel);
+        Log.e("data",data);
         ProgressDialog dialog = Common.createProgressDialog(context, context.getResources().getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();

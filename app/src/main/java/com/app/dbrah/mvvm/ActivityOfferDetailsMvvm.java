@@ -11,6 +11,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.app.dbrah.R;
 import com.app.dbrah.model.OrderModel;
+import com.app.dbrah.model.PayDataModel;
 import com.app.dbrah.model.SingleOfferModel;
 import com.app.dbrah.model.SingleOrderDataModel;
 import com.app.dbrah.model.StatusResponse;
@@ -35,6 +36,7 @@ public class ActivityOfferDetailsMvvm extends AndroidViewModel {
     private MutableLiveData<Boolean> isLoading;
     private MutableLiveData<OrderModel.Offers> onDataSuccess;
     private MutableLiveData<String> onStatusSuccess;
+    private MutableLiveData<String> paymenturl;
 
     public ActivityOfferDetailsMvvm(@NonNull Application application) {
         super(application);
@@ -59,6 +61,14 @@ public class ActivityOfferDetailsMvvm extends AndroidViewModel {
         }
         return onStatusSuccess;
     }
+
+    public MutableLiveData<String> getPaymenturl() {
+        if (paymenturl == null) {
+            paymenturl = new MutableLiveData<>();
+        }
+        return paymenturl;
+    }
+
     public void getOfferDetails(String offer_id) {
         getIsLoading().setValue(true);
         Api.getService(Tags.base_url)
@@ -99,29 +109,30 @@ public class ActivityOfferDetailsMvvm extends AndroidViewModel {
                 });
     }
 
-    public void acceptRefuseOffer(String offer_id, String status, Context context) {
+    public void acceptRefuseOffer(String offer_id, String status,String amount, Context context) {
         ProgressDialog dialog = Common.createProgressDialog(context, context.getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
 
-        Api.getService(Tags.base_url).acceptRefuseOffer(offer_id, status)
+        Api.getService(Tags.base_url).acceptRefuseOffer(offer_id, status,amount)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<Response<StatusResponse>>() {
+                .subscribe(new SingleObserver<Response<PayDataModel>>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
                         disposable.add(d);
                     }
 
                     @Override
-                    public void onSuccess(@NonNull Response<StatusResponse> response) {
+                    public void onSuccess(@NonNull Response<PayDataModel> response) {
                         dialog.dismiss();
                         if (response.isSuccessful()) {
                             if (response.body() != null) {
                                 if (response.body().getStatus() == 200) {
                                     if (status.equals("accepted")) {
-                                        getOnOrderStatusSuccess().setValue("accepted");
+                                        getPaymenturl().setValue(response.body().getData().getPayment_url());
+                                       //getOnOrderStatusSuccess().setValue("accepted");
                                     } else {
                                         getOnOrderStatusSuccess().setValue("rejected");
                                     }

@@ -166,5 +166,8 @@
     <string name="vat_found">الرقم الضريبى موجود  من قبل</string>
     <string name="num_requird">(15 رقم)</string>
     <string name="incorrect_code">كود خاظئ</string>
+    <string name="payment">دفع</string>
+    <string name="payment_suc">تم الدفع بنجاح</string>
+    <string name="payment_faild">فشل عملية الدفع</string>
 
 </resources>

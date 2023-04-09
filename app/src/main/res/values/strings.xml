@@ -165,5 +165,8 @@
     <string name="vat_found">Vat Number Found</string>
     <string name="num_requird">(15 Numbers)</string>
     <string name="incorrect_code">Incorrect Code</string>
+    <string name="payment">payment</string>
+    <string name="payment_suc">Payment Success</string>
+    <string name="payment_faild">Payment Faild</string>
 
 </resources>

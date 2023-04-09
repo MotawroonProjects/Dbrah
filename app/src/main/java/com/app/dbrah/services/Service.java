@@ -6,6 +6,7 @@ import com.app.dbrah.model.CategoryDataModel;
 import com.app.dbrah.model.MessagesDataModel;
 import com.app.dbrah.model.OrderDataModel;
 import com.app.dbrah.model.OrdersModel;
+import com.app.dbrah.model.PayDataModel;
 import com.app.dbrah.model.RecentProductDataModel;
 import com.app.dbrah.model.NotificationDataModel;
 import com.app.dbrah.model.PlaceGeocodeData;
@@ -187,8 +188,10 @@ public interface Service {
 
     @FormUrlEncoded
     @POST("api/updateOfferStatus")
-    Single<Response<StatusResponse>> acceptRefuseOffer(@Field("offer_id") String offer_id,
-                                                       @Field("status") String status);
+    Single<Response<PayDataModel>> acceptRefuseOffer(@Field("offer_id") String offer_id,
+                                                     @Field("status") String status,
+                                                     @Field("amount") String amount
+    );
 
     @GET("api/setting")
     Single<Response<SettingDataModel>> getSettings();
