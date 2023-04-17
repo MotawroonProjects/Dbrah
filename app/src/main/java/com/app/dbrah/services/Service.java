@@ -118,6 +118,7 @@ public interface Service {
     @POST("api/editProfile")
     Observable<Response<UserModel>> updateProfile(@Part("user_id") RequestBody user_id,
                                                   @Part("email") RequestBody email,
+                                                  @Part("vat_number") RequestBody vat_number,
                                                   @Part MultipartBody.Part logo
 
 

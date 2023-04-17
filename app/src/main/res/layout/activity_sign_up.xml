@@ -365,7 +365,7 @@
                             android:fontFamily="@font/font_regular"
                             android:hint="#### #### #### ###"
                             android:lines="1"
-                            android:inputType="number"
+                            android:inputType=""
                             android:paddingStart="16dp"
                             android:paddingEnd="16dp"
                             android:text="@={model.vat}"
