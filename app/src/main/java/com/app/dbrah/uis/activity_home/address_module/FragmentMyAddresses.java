@@ -143,6 +143,6 @@ public class FragmentMyAddresses extends BaseFragment {
     }
 
     public void delete(AddressModel addressModel, int adapterPosition) {
-
+mvvm.deleteAddress(addressModel);
     }
 }

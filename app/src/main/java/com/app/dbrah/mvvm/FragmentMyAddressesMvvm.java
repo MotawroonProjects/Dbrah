@@ -13,12 +13,15 @@ import com.app.dbrah.model.CategoryDataModel;
 import com.app.dbrah.model.CategoryModel;
 import com.app.dbrah.model.ProductModel;
 import com.app.dbrah.model.RecentProductDataModel;
+import com.app.dbrah.model.StatusResponse;
+import com.app.dbrah.model.UserModel;
 import com.app.dbrah.model.cart_models.ManageCartModel;
 import com.app.dbrah.remote.Api;
 import com.app.dbrah.tags.Tags;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -91,6 +94,38 @@ public class FragmentMyAddressesMvvm extends AndroidViewModel {
                     public void onError(@NonNull Throwable e) {
 
                         Log.e("error", e.toString());
+                    }
+                });
+    }
+    public void deleteAddress( AddressModel model) {
+
+        Api.getService(Tags.base_url)
+                .deleteaddress( model.getId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<Response<StatusResponse>>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        disposable.add(d);
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull Response<StatusResponse> response) {
+                        if (response.isSuccessful() ) {
+                            if (response.body().getStatus() == 200) {
+                                Objects.requireNonNull(getOnDataSuccess().getValue()).remove(model);
+                                getOnDataSuccess().setValue(getOnDataSuccess().getValue());
+                            } else {
+
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.e("error", e.toString());
+
                     }
                 });
     }

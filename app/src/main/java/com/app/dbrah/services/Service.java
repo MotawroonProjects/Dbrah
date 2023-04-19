@@ -160,7 +160,11 @@ public interface Service {
                                                    @Field("phone") String phone,
                                                    @Field("address") String address,
                                                    @Field("latitude") double latitude,
-                                                   @Field("longitude") double longitude);
+                                                   @Field("longitude") double longitude);    @FormUrlEncoded
+    @POST("api/deleteAddress")
+    Single<Response<StatusResponse>> deleteaddress(
+                                                   @Field("address_id") String address_id
+                                          );
 
     @POST("api/storeOrder")
     Single<Response<CartResponse>> sendAllOrder(@Body CartModel cartModel);
