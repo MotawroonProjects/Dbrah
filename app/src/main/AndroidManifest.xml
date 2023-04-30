@@ -43,9 +43,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="dbrah.akaber.in"
-                    android:pathPrefix="/product/details/"
-                    android:scheme="http" />
+                    android:host="dbrahapp.com"
+                     android:pathPrefix="/product_details"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
 
@@ -120,8 +120,8 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="/rsuppliers.com"
-                    android:pathPrefix="/product_details?"
+                    android:host="dbrahapp.com"
+                     android:pathPrefix="/product_details"
                     android:scheme="https" />
             </intent-filter>
         </activity>
@@ -149,9 +149,8 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="rsuppliers.com"
-                    android:pathPrefix="/product_details"
-
+                    android:host="dbrahapp.com"
+                     android:pathPrefix="/product_details"
                     android:scheme="https" />
             </intent-filter>
             <intent-filter>

@@ -169,5 +169,6 @@
     <string name="payment">دفع</string>
     <string name="payment_suc">تم الدفع بنجاح</string>
     <string name="payment_faild">فشل عملية الدفع</string>
+    <string name="ch_address">Choose Address</string>
 
 </resources>

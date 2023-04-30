@@ -7,6 +7,7 @@ import com.app.dbrah.model.MessagesDataModel;
 import com.app.dbrah.model.OrderDataModel;
 import com.app.dbrah.model.OrdersModel;
 import com.app.dbrah.model.PayDataModel;
+import com.app.dbrah.model.PlaceMapDetailsData;
 import com.app.dbrah.model.RecentProductDataModel;
 import com.app.dbrah.model.NotificationDataModel;
 import com.app.dbrah.model.PlaceGeocodeData;
@@ -29,6 +30,7 @@ import io.reactivex.Observable;
 import io.reactivex.Single;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -254,6 +256,13 @@ public interface Service {
     Single<Response<OrderDataModel>> searchOrders(@Query("user_id") String user_id,
                                                   @Query("search_key") String search_key);
 
+    @GET("place/findplacefromtext/json")
+    Call<PlaceMapDetailsData> searchOnMap(@Query(value = "inputtype") String inputtype,
+                                          @Query(value = "input") String input,
+                                          @Query(value = "fields") String fields,
+                                          @Query(value = "language") String language,
+                                          @Query(value = "key") String key
+    );
     @GET("api/sub_sub_categories")
     Single<Response<CategoryDataModel>> getSubSubCategory(@Query("sub_category_id") String sub_category_id);
 }
