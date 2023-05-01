@@ -48,6 +48,7 @@ public class PreviousOrderDetailsActivity extends BaseActivity {
     private boolean isOrderStatusChanged = false;
     private Intent intent;
     private static final int REQUEST_PHONE_CALL = 1;
+    private String rate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +61,7 @@ public class PreviousOrderDetailsActivity extends BaseActivity {
     private void getDataFromIntent() {
         Intent intent = getIntent();
         order_id = intent.getStringExtra("data");
+        rate = intent.getStringExtra("rate");
 
     }
 
@@ -181,6 +183,9 @@ public class PreviousOrderDetailsActivity extends BaseActivity {
         binding.addRate.setOnClickListener(v -> {
             openSheet(orderModel);
         });
+        if(rate!=null){
+            openSheet(orderModel); 
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

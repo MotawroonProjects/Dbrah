@@ -107,6 +107,7 @@
                     android:background="@color/white"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
+                    android:enabled="false"
                     android:imeOptions="actionSearch"
                     android:singleLine="true"
                     android:scrollHorizontally="true"

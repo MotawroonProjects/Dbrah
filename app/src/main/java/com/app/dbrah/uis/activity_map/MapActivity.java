@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
@@ -54,6 +56,9 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import io.paperdb.Paper;
 import retrofit2.Call;
@@ -73,22 +78,15 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
     private LocationCallback locationCallback;
     private final String fineLocPerm = Manifest.permission.ACCESS_FINE_LOCATION;
     private final int loc_req = 1225;
-    private String from ="";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_map);
-        getDataFromIntent();
         initView();
     }
 
-    private void getDataFromIntent() {
-        Intent intent = getIntent();
-        if (intent.hasExtra("from")){
-            from = intent.getStringExtra("from");
-        }
-    }
 
     private void initView() {
         Paper.init(this);
@@ -100,7 +98,7 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
                 String query = binding.edtSearch.getText().toString();
                 if (!TextUtils.isEmpty(query)) {
                     Common.CloseKeyBoard(MapActivity.this, binding.edtSearch);
-                    Search(query);
+                  //  Search(query);
                     return false;
                 }
             }
@@ -167,102 +165,126 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
                 lat = latLng.latitude;
                 lng = latLng.longitude;
                 AddMarker(lat, lng);
-                getGeoData(lat, lng);
+                getAddress(lat, lng);
 
             });
 
         }
     }
 
-    private void Search(String query) {
+//    private void Search(String query) {
+//
+//        binding.progBar.setVisibility(View.VISIBLE);
+//
+//        String fields = "id,place_id,name,geometry,formatted_address";
+//
+//        Api.getService("https://maps.googleapis.com/maps/api/")
+//                .searchOnMap("textquery", query, fields, lang, getString(R.string.map_key))
+//                .enqueue(new Callback<PlaceMapDetailsData>() {
+//                    @Override
+//                    public void onResponse(Call<PlaceMapDetailsData> call, Response<PlaceMapDetailsData> response) {
+//                        binding.progBar.setVisibility(View.GONE);
+//
+//                        if (response.isSuccessful() && response.body() != null) {
+//
+//
+//                            if (response.body().getCandidates().size() > 0) {
+//
+//                                address = response.body().getCandidates().get(0).getFormatted_address().replace("Unnamed Road,", "");
+//                                binding.edtSearch.setText(address + "");
+//                                AddMarker(response.body().getCandidates().get(0).getGeometry().getLocation().getLat(), response.body().getCandidates().get(0).getGeometry().getLocation().getLng());
+//                            }
+//                        } else {
+//                            binding.progBar.setVisibility(View.GONE);
+//
+//                            try {
+//                                Log.e("error_code", response.errorBody().string());
+//                            } catch (IOException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//
+//
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<PlaceMapDetailsData> call, Throwable t) {
+//                        try {
+//                            binding.progBar.setVisibility(View.GONE);
+//
+//                            //  Toast.makeText(MapActivity.this, getString(R.string.something), Toast.LENGTH_LONG).show();
+//                        } catch (Exception e) {
+//
+//                        }
+//                    }
+//                });
+//    }
+private void getAddress(double lat, double lng) {
+    Geocoder geocoder;
+    List<Address> addressList = new ArrayList<>();
+    geocoder = new Geocoder(this, Locale.ENGLISH);
+    try {
+        addressList = geocoder.getFromLocation(lat, lng, 1);
+        if (addressList.size() > 0) {
+            Address address = addressList.get(0);
+            if (address != null) {
+                this.address = address.getAddressLine(0) + "-" + address.getLocality() + "-" + address.getCountryName();
+            } else {
+                this.address = "UnKnown";
+            }
+        } else {
+            address = "UnKnown";
+        }
+ binding.edtSearch.setText(address + "");
 
-        binding.progBar.setVisibility(View.VISIBLE);
-
-        String fields = "id,place_id,name,geometry,formatted_address";
-
-        Api.getService("https://maps.googleapis.com/maps/api/")
-                .searchOnMap("textquery", query, fields, lang, getString(R.string.map_key))
-                .enqueue(new Callback<PlaceMapDetailsData>() {
-                    @Override
-                    public void onResponse(Call<PlaceMapDetailsData> call, Response<PlaceMapDetailsData> response) {
-                        binding.progBar.setVisibility(View.GONE);
-
-                        if (response.isSuccessful() && response.body() != null) {
-
-
-                            if (response.body().getCandidates().size() > 0) {
-
-                                address = response.body().getCandidates().get(0).getFormatted_address().replace("Unnamed Road,", "");
-                                binding.edtSearch.setText(address + "");
-                                AddMarker(response.body().getCandidates().get(0).getGeometry().getLocation().getLat(), response.body().getCandidates().get(0).getGeometry().getLocation().getLng());
-                            }
-                        } else {
-                            binding.progBar.setVisibility(View.GONE);
-
-                            try {
-                                Log.e("error_code", response.errorBody().string());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<PlaceMapDetailsData> call, Throwable t) {
-                        try {
-                            binding.progBar.setVisibility(View.GONE);
-
-                            //  Toast.makeText(MapActivity.this, getString(R.string.something), Toast.LENGTH_LONG).show();
-                        } catch (Exception e) {
-
-                        }
-                    }
-                });
+//        model.setAddress(address);
+//        model.setLng(lat);
+//        model.setLng(lng);
+    } catch (IOException e) {
+        e.printStackTrace();
     }
 
-    private void getGeoData(final double lat, double lng) {
-        binding.progBar.setVisibility(View.VISIBLE);
-        String location = lat + "," + lng;
-        Api.getService("https://maps.googleapis.com/maps/api/")
-                .getGeoData(location, lang, getString(R.string.map_key))
-                .enqueue(new Callback<PlaceGeocodeData>() {
-                    @Override
-                    public void onResponse(Call<PlaceGeocodeData> call, Response<PlaceGeocodeData> response) {
-                        binding.progBar.setVisibility(View.GONE);
-
-                        if (response.isSuccessful() && response.body() != null) {
-
-                            if (response.body().getResults().size() > 0) {
-                                binding.btnSelect.setVisibility(View.VISIBLE);
-                                address = response.body().getResults().get(0).getFormatted_address().replace("Unnamed Road,", "");
-                                binding.edtSearch.setText(address + "");
-                            }
-                        } else {
-
-                            try {
-                                Log.e("error_code", response.errorBody().string());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<PlaceGeocodeData> call, Throwable t) {
-                        try {
-                            binding.progBar.setVisibility(View.GONE);
-
-                            //   Toast.makeText(MapActivity.this, getString(R.string.something), Toast.LENGTH_LONG).show();
-                        } catch (Exception e) {
-
-                        }
-                    }
-                });
-    }
+}
+//    private void getAddress(final double lat, double lng) {
+//        binding.progBar.setVisibility(View.VISIBLE);
+//        String location = lat + "," + lng;
+//        Api.getService("https://maps.googleapis.com/maps/api/")
+//                .getAddress(location, lang, getString(R.string.map_key)).enqueue(new Callback<PlaceGeocodeData>() {
+//                    @Override
+//                    public void onResponse(Call<PlaceGeocodeData> call, Response<PlaceGeocodeData> response) {
+//                        binding.progBar.setVisibility(View.GONE);
+//
+//                        if (response.isSuccessful() && response.body() != null) {
+//
+//                            if (response.body().getResults().size() > 0) {
+//                                binding.btnSelect.setVisibility(View.VISIBLE);
+//                                address = response.body().getResults().get(0).getFormatted_address().replace("Unnamed Road,", "");
+//                                binding.edtSearch.setText(address + "");
+//                            }
+//                        } else {
+//
+//                            try {
+//                                Log.e("error_code", response.errorBody().string());
+//                            } catch (IOException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//
+//
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<PlaceGeocodeData> call, Throwable t) {
+//                        try {
+//                            binding.progBar.setVisibility(View.GONE);
+//
+//                            //   Toast.makeText(MapActivity.this, getString(R.string.something), Toast.LENGTH_LONG).show();
+//                        } catch (Exception e) {
+//
+//                        }
+//                    }
+//                });
+//    }
 
     private void AddMarker(double lat, double lng) {
 
@@ -349,7 +371,7 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
         lat = location.getLatitude();
         lng = location.getLongitude();
         AddMarker(lat, lng);
-        getGeoData(lat, lng);
+        getAddress(lat, lng);
 
         if (googleApiClient != null) {
             LocationServices.getFusedLocationProviderClient(this).removeLocationUpdates(locationCallback);
@@ -397,8 +419,8 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
 
     @Override
     public void onBackPressed() {
-        if (from!=null&&!from.isEmpty()){
+      
             super.onBackPressed();
-        }
+        
     }
 }

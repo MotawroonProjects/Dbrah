@@ -33,6 +33,7 @@ public class GeneralMvvm extends AndroidViewModel {
     private MutableLiveData<AddressModel> onAddressSelectedForOrder;
     private MutableLiveData<AddressModel> onAddressAdded;
     private MutableLiveData<AddressModel> onAddressUpdated;
+    private MutableLiveData<AddressModel> onAddressEdit;
     private MutableLiveData<String> addAddressFragmentAction;
     private MutableLiveData<String> myAddressFragmentAction;
 
@@ -153,6 +154,13 @@ public class GeneralMvvm extends AndroidViewModel {
             onAddressUpdated = new MutableLiveData<>();
         }
         return onAddressUpdated;
+    }
+
+    public MutableLiveData<AddressModel> getOnAddressEdit() {
+        if (onAddressEdit == null) {
+            onAddressEdit = new MutableLiveData<>();
+        }
+        return onAddressEdit;
     }
 
     public MutableLiveData<String> getAddAddressFragmentAction() {

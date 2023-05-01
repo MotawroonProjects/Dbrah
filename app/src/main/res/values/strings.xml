@@ -169,5 +169,6 @@
     <string name="payment_suc">Payment Success</string>
     <string name="payment_faild">Payment Faild</string>
     <string name="ch_address">Choose Address</string>
+    <string name="edit_address">Edit Address</string>
 
 </resources>

@@ -49,10 +49,10 @@ public class AddressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             }
         });
 
-        myHolder.binding.imgDelete.setOnClickListener(v -> {
+        myHolder.binding.imgEdit.setOnClickListener(v -> {
             if (fragment instanceof FragmentMyAddresses) {
                 FragmentMyAddresses fragmentMyAddresses = (FragmentMyAddresses) fragment;
-                fragmentMyAddresses.delete(list.get(myHolder.getAdapterPosition()),myHolder.getAdapterPosition());
+                fragmentMyAddresses.edit(list.get(myHolder.getAdapterPosition()),myHolder.getAdapterPosition());
             }
         });
     }

@@ -151,7 +151,7 @@ public class FragmentAddAddressMvvm extends AndroidViewModel {
         ProgressDialog dialog = Common.createProgressDialog(context, context.getResources().getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
-        Api.getService(Tags.base_url).addAddress(userModel.getData().getId(),model.getTime_id(), model.getTitle(),model.getAdmin_name(), model.getPhone_code(), model.getPhone(),model.getAddress(), model.getLat(), model.getLng())
+        Api.getService(Tags.base_url).editAddress(model.getId(),userModel.getData().getId(),model.getTime_id(), model.getTitle(),model.getAdmin_name(), model.getPhone_code(), model.getPhone(),model.getAddress(), model.getLat(), model.getLng())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<SingleAddressData>>() {
@@ -167,7 +167,7 @@ public class FragmentAddAddressMvvm extends AndroidViewModel {
                         if (response.isSuccessful()) {
                             if (response.body() != null) {
                                 if (response.body().getStatus() == 200) {
-                                    getOnAddressAdded().setValue(response.body().getData());
+                                    getOnAddressUpdated().setValue(response.body().getData());
                                 }
                             }
 

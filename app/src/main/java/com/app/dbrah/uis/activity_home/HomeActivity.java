@@ -36,6 +36,7 @@ import com.app.dbrah.uis.activity_home.product_detials_module.FragmentProductDet
 import com.app.dbrah.uis.activity_home.products_module.FragmentProducts;
 import com.app.dbrah.uis.activity_home.search_module.FragmentSearch;
 import com.app.dbrah.uis.activity_home.setting_module.FragmentSetting;
+import com.app.dbrah.uis.activity_previous_order_details.PreviousOrderDetailsActivity;
 import com.google.android.material.navigation.NavigationBarView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -59,6 +60,7 @@ public class HomeActivity extends BaseActivity {
     private Stack<Integer> stack;
     private String product_id = null;
     private String order_id = null;
+    private String delivered;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +76,7 @@ public class HomeActivity extends BaseActivity {
         Intent intent = getIntent();
         product_id = intent.getStringExtra("product_id");
         order_id = intent.getStringExtra("order_id");
+        delivered = intent.getStringExtra("delivered");
 
     }
 
@@ -143,7 +146,14 @@ public class HomeActivity extends BaseActivity {
         }
 
         if (order_id != null && !order_id.isEmpty()) {
-            updateStack(1);
+            if(delivered==null){
+            updateStack(1);}
+            else{
+                Intent intent = new Intent(this, PreviousOrderDetailsActivity.class);
+                intent.putExtra("data", order_id);
+                intent.putExtra("rate", "rate");
+                startActivity(intent);
+            }
         }
 
 

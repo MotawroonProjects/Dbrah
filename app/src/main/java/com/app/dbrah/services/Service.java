@@ -85,10 +85,9 @@ public interface Service {
     );
 
     @GET("geocode/json")
-    Single<Response<PlaceGeocodeData>> getGeoData(@Query(value = "latlng") String latlng,
-                                                  @Query(value = "language") String language,
-                                                  @Query(value = "key") String key);
-
+    Call<PlaceGeocodeData> getGeoData(@Query(value = "latlng") String latlng,
+                                      @Query(value = "language") String language,
+                                      @Query(value = "key") String key);
 
     @FormUrlEncoded
     @POST("api/login")
@@ -107,15 +106,18 @@ public interface Service {
 
 
     );
+
     @FormUrlEncoded
     @POST("api/auth/check/email")
     Single<Response<StatusResponse>> sendcode(@Field("email") String email
     );
+
     @FormUrlEncoded
     @POST("api/auth/check/code")
     Single<Response<StatusResponse>> checkCode(@Field("email") String email,
-                                          @Field("code") String code
+                                               @Field("code") String code
     );
+
     @Multipart
     @POST("api/editProfile")
     Observable<Response<UserModel>> updateProfile(@Part("user_id") RequestBody user_id,
@@ -139,8 +141,6 @@ public interface Service {
     );
 
 
-
-
     @GET("api/product_details")
     Single<Response<SingleProductModel>> getSingleProduct(@Query("user_id") String user_id,
                                                           @Query("id") String id);
@@ -162,11 +162,26 @@ public interface Service {
                                                    @Field("phone") String phone,
                                                    @Field("address") String address,
                                                    @Field("latitude") double latitude,
-                                                   @Field("longitude") double longitude);    @FormUrlEncoded
+                                                   @Field("longitude") double longitude);
+
+    @FormUrlEncoded
+    @POST("api/editAddress")
+    Single<Response<SingleAddressData>> editAddress(@Field("address_id") String address_id,
+                                                   @Field("user_id") String user_id,
+                                                   @Field("time_id") String time_id,
+                                                   @Field("title") String title,
+                                                   @Field("admin_name") String admin_name,
+                                                   @Field("phone_code") String phone_code,
+                                                   @Field("phone") String phone,
+                                                   @Field("address") String address,
+                                                   @Field("latitude") double latitude,
+                                                   @Field("longitude") double longitude);
+
+    @FormUrlEncoded
     @POST("api/deleteAddress")
     Single<Response<StatusResponse>> deleteaddress(
-                                                   @Field("address_id") String address_id
-                                          );
+            @Field("address_id") String address_id
+    );
 
     @POST("api/storeOrder")
     Single<Response<CartResponse>> sendAllOrder(@Body CartModel cartModel);
@@ -252,6 +267,7 @@ public interface Service {
                                              @Field("rate") float rate,
                                              @Field("text") String text
     );
+
     @GET("api/searchOrders")
     Single<Response<OrderDataModel>> searchOrders(@Query("user_id") String user_id,
                                                   @Query("search_key") String search_key);
@@ -263,6 +279,7 @@ public interface Service {
                                           @Query(value = "language") String language,
                                           @Query(value = "key") String key
     );
+
     @GET("api/sub_sub_categories")
     Single<Response<CategoryDataModel>> getSubSubCategory(@Query("sub_category_id") String sub_category_id);
 }

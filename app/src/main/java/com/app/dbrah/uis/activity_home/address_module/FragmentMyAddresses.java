@@ -97,6 +97,7 @@ public class FragmentMyAddresses extends BaseFragment {
             }
         });
         generalMvvm.getOnAddressUpdated().observe(activity, addressModel -> {
+            Log.e("ddldll",selectedAddressPos+"");
             if (mvvm.getOnDataSuccess().getValue() != null) {
                 if (selectedAddressPos != -1) {
                     mvvm.getOnDataSuccess().getValue().set(selectedAddressPos, addressModel);
@@ -144,5 +145,12 @@ public class FragmentMyAddresses extends BaseFragment {
 
     public void delete(AddressModel addressModel, int adapterPosition) {
 mvvm.deleteAddress(addressModel);
+    }
+
+    public void edit(AddressModel addressModel, int adapterPosition) {
+        selectedAddressPos=adapterPosition;
+        generalMvvm.getOnAddressEdit().setValue(addressModel);
+        generalMvvm.getAddAddressFragmentAction().setValue("update");
+        generalMvvm.onHomeNavigate().setValue(4);
     }
 }
