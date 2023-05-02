@@ -77,7 +77,7 @@ public class HomeActivity extends BaseActivity {
         product_id = intent.getStringExtra("product_id");
         order_id = intent.getStringExtra("order_id");
         delivered = intent.getStringExtra("delivered");
-
+       // Log.e("dldlld", order_id);
     }
 
 
@@ -108,12 +108,10 @@ public class HomeActivity extends BaseActivity {
 
         if (getUserModel() != null) {
             mvvm.updateToken(getUserModel());
-            if (!EventBus.getDefault().isRegistered(this)){
+            if (!EventBus.getDefault().isRegistered(this)) {
                 EventBus.getDefault().register(this);
             }
         }
-
-
 
 
     }
@@ -146,9 +144,9 @@ public class HomeActivity extends BaseActivity {
         }
 
         if (order_id != null && !order_id.isEmpty()) {
-            if(delivered==null){
-            updateStack(1);}
-            else{
+            if (delivered == null) {
+                updateStack(1);
+            } else {
                 Intent intent = new Intent(this, PreviousOrderDetailsActivity.class);
                 intent.putExtra("data", order_id);
                 intent.putExtra("rate", "rate");
@@ -160,8 +158,8 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void updateStack(int pagePos) {
-        Log.e("pos",pagePos+"_");
-        if (pagePos!=9){
+        Log.e("pos", pagePos + "_");
+        if (pagePos != 9) {
             stack.push(pagePos);
             binding.pager.setCurrentItem(pagePos);
         }
@@ -225,7 +223,7 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (EventBus.getDefault().isRegistered(this)){
+        if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
     }
