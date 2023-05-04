@@ -92,7 +92,9 @@ public class PreviousOrderDetailsActivity extends BaseActivity {
                 orderModel = model;
                 binding.setModel(orderModel);
                 Log.e("D;dldlld",orderModel.getStatus());
-
+                if(rate!=null){
+                    openSheet(orderModel);
+                }
             }
         });
 
@@ -183,9 +185,7 @@ public class PreviousOrderDetailsActivity extends BaseActivity {
         binding.addRate.setOnClickListener(v -> {
             openSheet(orderModel);
         });
-        if(rate!=null){
-            openSheet(orderModel); 
-        }
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
