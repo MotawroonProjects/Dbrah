@@ -45,7 +45,7 @@ public class PreviousOrderDetailsActivity extends BaseActivity {
     private String order_id;
     private ActivityResultLauncher<Intent> launcher;
     private int req;
-    private boolean isOrderStatusChanged = false;
+    private boolean  isOrderStatusChanged = false;
     private Intent intent;
     private static final int REQUEST_PHONE_CALL = 1;
     private String rate;
