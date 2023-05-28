@@ -12,6 +12,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.app.dbrah.R;
 import com.app.dbrah.model.OrderModel;
 import com.app.dbrah.model.OrdersModel;
+import com.app.dbrah.model.PayDataModel;
 import com.app.dbrah.model.SingleOrderDataModel;
 import com.app.dbrah.model.StatusResponse;
 import com.app.dbrah.model.UserModel;
@@ -201,6 +202,42 @@ public class ActivityOrderDetailsMvvm extends AndroidViewModel {
                                     getOnRateSuccess().setValue(true);
                                 }
                             }
+                        }
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.e("error", e.getMessage());
+                        dialog.dismiss();
+                    }
+                });
+    }
+    public void refuseAllOffer(String order_id, Context context) {
+        ProgressDialog dialog = Common.createProgressDialog(context, context.getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+
+        Api.getService(Tags.base_url).refuseAllOffer(order_id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<Response<StatusResponse>>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        disposable.add(d);
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull Response<StatusResponse> response) {
+                        dialog.dismiss();
+                        if (response.isSuccessful()) {
+                            if (response.body() != null) {
+                                if (response.body().getStatus() == 200) {
+                                   getOrderDetails(order_id);
+                                }
+                            }
+                        } else {
+
                         }
                     }
 

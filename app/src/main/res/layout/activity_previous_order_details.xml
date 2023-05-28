@@ -7,6 +7,7 @@
         <variable
             name="lang"
             type="String" />
+        <import type="java.util.Locale"/>
 
         <variable
             name="model"
@@ -475,7 +476,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:fontFamily="@font/font_bold"
-                                android:text="@{model.accepted_offer.total_price}"
+                                android:text='@{model.accepted_offer.total_price!=null?String.format(Locale.ENGLISH,"%.3f",Double.parseDouble(model.accepted_offer.total_price)):""}'
+
                                 android:textColor="@color/black2"
                                 android:textSize="18sp" />
 

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -49,6 +50,8 @@ public class CurrentOrderDetailsActivity extends BaseActivity {
     }
 
     private void initView() {
+
+        binding.tvCancel.setPaintFlags(binding.tvCancel.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == Activity.RESULT_OK) {
                 update = true;
@@ -109,6 +112,7 @@ public class CurrentOrderDetailsActivity extends BaseActivity {
         binding.llCancelOrder.setOnClickListener(v -> {
             mvvm.acceptCancelOrder(order_id, this);
         });
+        binding.tvCancel.setOnClickListener(view -> mvvm.refuseAllOffer(order_id,  this));
 
         if (getUserModel() != null) {
             if (!EventBus.getDefault().isRegistered(this)) {

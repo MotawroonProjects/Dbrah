@@ -7,6 +7,7 @@
             name="lang"
             type="String" />
         <import type="android.view.View"/>
+        <import type="java.util.Locale"/>
 <variable
 
     name="model"
@@ -185,7 +186,7 @@
                 android:fontFamily="@font/font_regular"
                 android:text="@string/single_price2"
                 android:textColor="@color/black2"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -194,9 +195,9 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
                 android:fontFamily="@font/font_regular"
-                android:text="@{model.price}"
+                android:text='@{String.format(Locale.ENGLISH,"%.3f",Double.parseDouble(model.price))}'
                 android:textColor="@color/black2"
-                android:textSize="18sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -205,7 +206,7 @@
                 android:fontFamily="@font/font_regular"
                 android:text="@string/sar"
                 android:textColor="@color/grey8"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
             <androidx.legacy.widget.Space
                 android:layout_width="0dp"
@@ -219,7 +220,7 @@
                 android:fontFamily="@font/font_regular"
                 android:text="@string/total_price2"
                 android:textColor="@color/black2"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -228,9 +229,9 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
                 android:fontFamily="@font/font_bold"
-                android:text="@{model.total_price}"
+                android:text='@{String.format(Locale.ENGLISH,"%.3f",Double.parseDouble(model.total_price))}'
                 android:textColor="@color/black2"
-                android:textSize="18sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -239,7 +240,7 @@
                 android:fontFamily="@font/font_regular"
                 android:text="@string/sar"
                 android:textColor="@color/grey8"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>
 </layout>

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+<import type="java.util.Locale"/>
         <variable
             name="lang"
             type="String" />
@@ -109,7 +109,7 @@
                             android:layout_width="9dp"
                             android:layout_height="9dp"
                             android:layout_gravity="center_vertical"
-                            android:rotation='@{lang.equals("ar")?0:180}'
+                            android:rotation='@{lang.equals("ar")?0:140}'
                             android:src="@drawable/ic_left_arrow1"
                             app:tint="@color/color2" />
                     </LinearLayout>
@@ -234,7 +234,7 @@
                     android:fontFamily="@font/font_regular"
                     android:text="@string/total_cost"
                     android:textColor="@color/black2"
-                    android:textSize="16sp" />
+                    android:textSize="12sp" />
 
                 <androidx.legacy.widget.Space
                     android:layout_width="0dp"
@@ -246,9 +246,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:fontFamily="@font/font_bold"
-                    android:text='@{model.total_price}'
+                    android:text='@{String.format(Locale.ENGLISH,"%.3f",Double.parseDouble(model.total_price))}'
                     android:textColor="@color/black2"
-                    android:textSize="18sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -259,7 +259,7 @@
                     android:fontFamily="@font/font_regular"
                     android:text="@string/sar"
                     android:textColor="@color/grey8"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
             </LinearLayout>
 
         </LinearLayout>

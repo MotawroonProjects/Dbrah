@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="java.util.Locale"/>
 <variable
     name="model"
     type="com.app.dbrah.model.OrderModel.Offers" />
@@ -234,7 +235,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
                                     android:fontFamily="@font/font_regular"
-                                    android:text="@{model.total_before_tax}"
+                                    android:text='@{model.total_before_tax!=null?String.format(Locale.ENGLISH,"%.3f",Double.parseDouble(model.total_before_tax.trim())):""}'
                                     android:textColor="@color/black2"
                                     android:textSize="18sp" />
 
@@ -285,7 +286,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
                                     android:fontFamily="@font/font_regular"
-                                    android:text="@{model.total_tax}"
+                                    android:text='@{model.total_tax!=null?String.format(Locale.ENGLISH,"%.3f",Double.parseDouble(model.total_tax.trim())):""}'
                                     android:textColor="@color/black2"
                                     android:textSize="18sp" />
 
@@ -339,7 +340,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
                                     android:fontFamily="@font/font_bold"
-                                    android:text="@{model.total_price}"
+                                    android:text='@{model.total_price!=null?String.format(Locale.ENGLISH,"%.3f",Double.parseDouble(model.total_price.trim())):""}'
                                     android:textColor="@color/black2"
                                     android:textSize="18sp" />
 

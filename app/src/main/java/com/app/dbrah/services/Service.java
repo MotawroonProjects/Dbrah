@@ -214,6 +214,11 @@ public interface Service {
                                                      @Field("status") String status,
                                                      @Field("amount") String amount
     );
+   @FormUrlEncoded
+    @POST("api/refuseOffers")
+    Single<Response<StatusResponse>> refuseAllOffer(@Field("order_id") String order_id
+
+    );
 
     @GET("api/setting")
     Single<Response<SettingDataModel>> getSettings();
