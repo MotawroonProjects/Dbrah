@@ -40,6 +40,8 @@ public class FragmentCart extends BaseFragment {
     private AddressModel selectedAddress;
 
     private int selectedOrderPos = -1;
+    private int type=1;
+    private CartSingleModel cartSingleModel;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -76,6 +78,18 @@ public class FragmentCart extends BaseFragment {
 
         generalMvvm.getOnAddressSelectedForOrder().observe(activity, addressModel -> {
             this.selectedAddress = addressModel;
+           if(type==2){
+            manageCartModel.addAddress(selectedAddress.getId(), activity);
+            if (manageCartModel.getCartModel()!=null){
+                mvvm.sendAllOrder(activity,manageCartModel.getCartModel());
+
+            }}
+           else if(type==1){
+               if (selectedAddress != null) {
+                   cartSingleModel.setAddress_id(selectedAddress.getId());
+                   mvvm.sendSingleOrder(activity, cartSingleModel);
+               }
+           }
         });
 
         mvvm.getOnAllOrderSentSuccess().observe(activity, cartModel -> {
@@ -123,6 +137,7 @@ public class FragmentCart extends BaseFragment {
         binding.recView.setAdapter(adapter);
         binding.tvNoData.setText(R.string.empty_cart);
         binding.flOrderAll.setOnClickListener(v -> {
+            type=2;
             if (getUserModel() != null) {
                 manageCartModel.addUser(getUserModel().getData().getId(), activity);
 
@@ -184,8 +199,9 @@ public class FragmentCart extends BaseFragment {
     }
 
     public void sendSingleOrder(CartModel.CartObject cartObject, int adapterPosition) {
+        type=1;
         selectedOrderPos = adapterPosition;
-        CartSingleModel cartSingleModel = new CartSingleModel();
+         cartSingleModel = new CartSingleModel();
         cartSingleModel.addItem(cartObject);
         if (getUserModel() != null) {
             cartSingleModel.setUser_id(getUserModel().getData().getId());

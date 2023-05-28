@@ -322,6 +322,7 @@ public class FragmentAddAddress extends BaseFragment implements OnMapReadyCallba
             fragmentMapTouchListener.getMapAsync(this);
 
         }
+
     }
 
     private void checkPermission() {
@@ -365,8 +366,12 @@ public class FragmentAddAddress extends BaseFragment implements OnMapReadyCallba
             }
 
             mMap.setOnMapClickListener(latLng -> {
-                addMarker(latLng);
-                getAddress(latLng.latitude, latLng.longitude);
+                req = 1;
+                Intent intent = new Intent(activity, MapActivity.class);
+
+                launcher.launch(intent);
+//                addMarker(latLng);
+//                getAddress(latLng.latitude, latLng.longitude);
             });
         }
     }
