@@ -215,7 +215,7 @@ public interface Service {
                                                      @Field("amount") String amount
     );
    @FormUrlEncoded
-    @POST("api/refuseOffers")
+    @POST("api/cancelOrderOffers")
     Single<Response<StatusResponse>> refuseAllOffer(@Field("order_id") String order_id
 
     );

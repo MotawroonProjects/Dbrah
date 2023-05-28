@@ -317,7 +317,7 @@ public class FragmentAddAddress extends BaseFragment implements OnMapReadyCallba
     }
 
     private void setUpMapFragment() {
-        fragmentMapTouchListener = (FragmentMapTouchListener) getChildFragmentManager().findFragmentById(R.id.map);
+        fragmentMapTouchListener = (FragmentMapTouchListener) getChildFragmentManager().findFragmentById(R.id.map1);
         if (fragmentMapTouchListener != null) {
             fragmentMapTouchListener.getMapAsync(this);
 

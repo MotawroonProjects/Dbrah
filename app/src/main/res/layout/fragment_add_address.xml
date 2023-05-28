@@ -333,7 +333,7 @@
 
 
                                 <fragment
-                                    android:id="@+id/map"
+                                    android:id="@+id/map1"
                                     android:name="com.app.dbrah.uis.activity_base.FragmentMapTouchListener"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent" />
