@@ -115,10 +115,10 @@ public class LoginActivity extends BaseActivity {
             if (userModel != null) {
                 if(userModel.getData()!=null){
 
- //                   createVerificationCodeDialog();
-                setUserModel(userModel);
-                setResult(RESULT_OK);
-                finish();
+   createVerificationCodeDialog();
+//                setUserModel(userModel);
+//                setResult(RESULT_OK);
+//                finish();
                 }
                 else {
                     navigateToSignUpActivity();

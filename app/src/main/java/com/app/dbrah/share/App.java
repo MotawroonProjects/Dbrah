@@ -4,6 +4,7 @@ package com.app.dbrah.share;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.RingtoneManager;
@@ -17,7 +18,11 @@ import com.app.dbrah.language.Language;
 public class App extends MultiDexApplication {
     public static final String CHANNEL_ID = "dubrh_id_1099";
     public static final String CHANNEL_NAME = "dubrh_channel";
-
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        //update your notifications there is no need for a Thread
+    }
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(Language.updateResources(newBase, "ar"));
@@ -41,10 +46,12 @@ public class App extends MultiDexApplication {
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
             channel.setShowBadge(true);
             channel.setDescription("dubrh channel");
+
             channel.setSound(Uri.parse(sound_Path), new AudioAttributes.Builder()
                     .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                     .setUsage(AudioAttributes.USAGE_NOTIFICATION_EVENT)
                     .setLegacyStreamType(AudioManager.STREAM_NOTIFICATION)
+
                     .build());
 
             manager.createNotificationChannel(channel);

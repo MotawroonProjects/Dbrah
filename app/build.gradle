@@ -6,6 +6,7 @@ plugins {
 android {
     compileSdkVersion 28
     compileSdk 33
+
     bundle {
 
 
@@ -31,6 +32,7 @@ android {
         minSdk 19
         targetSdk 33
         versionCode 3
+        resConfigs "en", "ar"
         versionName "1.2"
         multiDexEnabled true
 

@@ -14,6 +14,7 @@ public class BroadcastCancelNotification extends BroadcastReceiver {
 
         if (manager != null) {
             manager.cancel(Tags.not_id);
+
         }
     }
 }
