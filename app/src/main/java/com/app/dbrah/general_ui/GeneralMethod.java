@@ -445,7 +445,7 @@ public class GeneralMethod {
                         text = context.getString(R.string.picked_up) + " " + model.getRepresentative().getName() + "\n" + context.getString(R.string.order_num) + " #" + model.getOrder_id();
                     }
                     else{
-                        text = context.getString(R.string.preparing) + " " + model.getProvider().getName() + "\n" + context.getString(R.string.order_num) + " #" + model.getOrder_id();
+                        text = context.getString(R.string.preparing) + " " +( model.getProvider()!=null? model.getProvider().getName():"") + "\n" + context.getString(R.string.order_num) + " #" + model.getOrder_id();
 
                     }
 
