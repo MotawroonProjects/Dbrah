@@ -139,7 +139,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_marginStart="8dp"
                                             android:fontFamily="@font/font_regular"
-                                            android:text="@string/cancel"
+                                            android:text="@string/cancel1"
                                             android:textColor="@color/white"
                                             android:textSize="14sp" />
                                     </LinearLayout>
@@ -476,7 +476,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:fontFamily="@font/font_bold"
-                                android:text='@{model.accepted_offer.total_price!=null?String.format(Locale.ENGLISH,"%.3f",Double.parseDouble(model.accepted_offer.total_price)):""}'
+                                android:text='@{model.accepted_offer.total_price!=null?String.format(Locale.ENGLISH,"%.2f",Double.parseDouble(model.accepted_offer.total_price)):""}'
 
                                 android:textColor="@color/black2"
                                 android:textSize="18sp" />

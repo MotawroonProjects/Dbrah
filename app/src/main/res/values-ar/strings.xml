@@ -51,6 +51,7 @@
     <string name="gallery">معرض الصور</string>
     <string name="camera">كاميرا</string>
     <string name="cancel">الغاء</string>
+    <string name="cancel1"> الغاء الطلب</string>
     <string name="perm_image_denied">لا يمكنك الوصول للصور</string>
     <string name="user_found">مستخدم موجود</string>
     <string name="suc">تم بنجاح</string>

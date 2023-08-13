@@ -235,7 +235,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
                                     android:fontFamily="@font/font_regular"
-                                    android:text='@{model.total_before_tax!=null?String.format(Locale.ENGLISH,"%.3f",Double.parseDouble(model.total_before_tax.trim())):""}'
+                                    android:text='@{model.total_before_tax!=null?String.format(Locale.ENGLISH,"%.2f",Double.parseDouble(model.total_before_tax.trim())):""}'
                                     android:textColor="@color/black2"
                                     android:textSize="18sp" />
 
@@ -286,7 +286,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
                                     android:fontFamily="@font/font_regular"
-                                    android:text='@{model.total_tax!=null?String.format(Locale.ENGLISH,"%.3f",Double.parseDouble(model.total_tax.trim())):""}'
+                                    android:text='@{model.total_tax!=null?String.format(Locale.ENGLISH,"%.2f",Double.parseDouble(model.total_tax.trim())):""}'
                                     android:textColor="@color/black2"
                                     android:textSize="18sp" />
 
@@ -340,7 +340,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
                                     android:fontFamily="@font/font_bold"
-                                    android:text='@{model.total_price!=null?String.format(Locale.ENGLISH,"%.3f",Double.parseDouble(model.total_price.trim())):""}'
+                                    android:text='@{model.total_price!=null?String.format(Locale.ENGLISH,"%.2f",Double.parseDouble(model.total_price.trim())):""}'
                                     android:textColor="@color/black2"
                                     android:textSize="18sp" />
 

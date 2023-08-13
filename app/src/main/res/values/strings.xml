@@ -50,6 +50,8 @@
     <string name="gallery">Gallery</string>
     <string name="camera">Camera</string>
     <string name="cancel">Cancel</string>
+    <string name="cancel1">Cancel Order</string>
+
     <string name="perm_image_denied">Permission image denied</string>
     <string name="user_found">User Found</string>
     <string name="suc">Success</string>

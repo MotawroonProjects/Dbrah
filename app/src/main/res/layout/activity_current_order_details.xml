@@ -199,8 +199,7 @@
                                         android:layout_gravity="top"
                                         android:src="@drawable/ic_pin"
                                         android:padding="3dp"
-                                        android:tint="@color/colorPrimary"
-                                        />
+                                        app:tint="@color/colorPrimary" />
 
                                     <TextView
                                         android:layout_width="wrap_content"
@@ -249,7 +248,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_marginStart="8dp"
                                             android:fontFamily="@font/font_regular"
-                                            android:text="@string/cancel"
+                                            android:text="@string/cancel1"
                                             android:textColor="@color/white"
                                             android:textSize="14sp" />
                                     </LinearLayout>
