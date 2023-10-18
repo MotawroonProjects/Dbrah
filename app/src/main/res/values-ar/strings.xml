@@ -173,5 +173,6 @@
     <string name="ch_address">اختر العنوان</string>
     <string name="edit_address">تعديل العنوان</string>
     <string name="refuse_all">رفض كل العروض</string>
+    <string name="select">حدد</string>
 
 </resources>

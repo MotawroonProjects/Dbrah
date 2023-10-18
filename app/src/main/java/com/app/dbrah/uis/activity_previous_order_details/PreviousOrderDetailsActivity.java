@@ -9,6 +9,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.Manifest;
 import android.content.Intent;
@@ -22,6 +23,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.app.dbrah.R;
+import com.app.dbrah.adapter.OrderProductAdapter;
 import com.app.dbrah.databinding.ActivityPreviousOrderDetailsBinding;
 import com.app.dbrah.databinding.BottomSheetRateDialogBinding;
 import com.app.dbrah.model.ChatUserModel;
@@ -49,6 +51,7 @@ public class PreviousOrderDetailsActivity extends BaseActivity {
     private Intent intent;
     private static final int REQUEST_PHONE_CALL = 1;
     private String rate;
+    private OrderProductAdapter orderProductAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +69,9 @@ public class PreviousOrderDetailsActivity extends BaseActivity {
     }
 
     private void initView() {
+        orderProductAdapter = new OrderProductAdapter(this,null,getLang());
+        binding.recViewProduct.setLayoutManager(new LinearLayoutManager(this));
+        binding.recViewProduct.setAdapter(orderProductAdapter);
         binding.setLang(getLang());
         mvvm = ViewModelProviders.of(this).get(ActivityOrderDetailsMvvm.class);
         setUpToolbar(binding.toolbar, getString(R.string.order_details), R.color.white, R.color.black, R.drawable.small_rounded_grey4, false);
@@ -84,6 +90,9 @@ public class PreviousOrderDetailsActivity extends BaseActivity {
             if (success) {
                 orderModel.setProvider_rated("true");
                 binding.setModel(orderModel);
+                if(orderProductAdapter!=null){
+                    orderProductAdapter.updateList(orderModel.getDetails());
+                }
             }
         });
         mvvm.getOnDataSuccess().observe(this, model -> {

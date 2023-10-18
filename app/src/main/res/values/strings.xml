@@ -173,5 +173,6 @@
     <string name="ch_address">Choose Address</string>
     <string name="edit_address">Edit Address</string>
     <string name="refuse_all">Refuse All Offers</string>
+    <string name="select">Select</string>
 
 </resources>

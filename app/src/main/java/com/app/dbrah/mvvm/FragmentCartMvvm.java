@@ -11,6 +11,8 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.app.dbrah.R;
+import com.app.dbrah.model.TimeDataModel;
+import com.app.dbrah.model.TimeModel;
 import com.app.dbrah.model.cart_models.CartModel;
 import com.app.dbrah.model.cart_models.CartResponse;
 import com.app.dbrah.model.cart_models.CartSingleModel;
@@ -30,6 +32,7 @@ import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 
 public class FragmentCartMvvm extends AndroidViewModel {
+    private MutableLiveData<List<TimeModel>> onDataSuccess;
 
     private CompositeDisposable disposable = new CompositeDisposable();
     private MutableLiveData<CartModel> onAllOrderSentSuccess;
@@ -167,6 +170,42 @@ public class FragmentCartMvvm extends AndroidViewModel {
                         Log.e("error",e.getMessage());
                         dialog.dismiss();
 
+                    }
+                });
+    }
+    public MutableLiveData<List<TimeModel>> getOnDataSuccess() {
+        if (onDataSuccess == null) {
+            onDataSuccess = new MutableLiveData<>();
+        }
+        return onDataSuccess;
+    }
+    public void getTime(Context context) {
+
+      //  getIsLoading().setValue(true);
+        Api.getService(Tags.base_url).getTime()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<Response<TimeDataModel>>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        disposable.add(d);
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull Response<TimeDataModel> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            if (response.body().getData() != null && response.body().getStatus() == 200) {
+                              //  getIsLoading().setValue(false);
+                                List<TimeModel> list = response.body().getData();
+                                list.add(0, new TimeModel(context.getString(R.string.ch_time)));
+                                onDataSuccess.setValue(list);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.e("error", e.toString());
                     }
                 });
     }

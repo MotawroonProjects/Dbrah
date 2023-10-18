@@ -13,8 +13,27 @@ import java.util.List;
 public class ManageCartModel implements Serializable {
     public static ManageCartModel instance = null;
     private CartModel cartModel;
-
+    private String delivery_date_time_id;
+    private String delivery_date_time;
+    private String time;
+    private String date;
     private ManageCartModel() {
+    }
+
+    public void setDelivery_date_time_id(String delivery_date_time_id) {
+        this.delivery_date_time_id = delivery_date_time_id;
+    }
+
+    public void setDelivery_date_time(String delivery_date_time) {
+        this.delivery_date_time = delivery_date_time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public static synchronized ManageCartModel newInstance() {
@@ -29,6 +48,7 @@ public class ManageCartModel implements Serializable {
         Preferences preferences = Preferences.getInstance();
 
         cartModel = preferences.getCart(context);
+
         if (cartModel == null) {
             cartModel = new CartModel();
         }

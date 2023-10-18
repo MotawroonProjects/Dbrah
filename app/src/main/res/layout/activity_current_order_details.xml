@@ -323,7 +323,13 @@
                             </LinearLayout>
                         </FrameLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
-
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recViewProduct"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="34dp"
+                        android:layout_marginEnd="16dp" />
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">

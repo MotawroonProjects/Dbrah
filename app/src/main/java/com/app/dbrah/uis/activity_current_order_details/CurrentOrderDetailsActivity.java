@@ -15,6 +15,7 @@ import android.view.View;
 
 import com.app.dbrah.R;
 import com.app.dbrah.adapter.OfferAdapter;
+import com.app.dbrah.adapter.OrderProductAdapter;
 import com.app.dbrah.databinding.ActivityCurrentOrderDetailsBinding;
 import com.app.dbrah.model.NotiFire;
 import com.app.dbrah.model.OrderModel;
@@ -30,6 +31,7 @@ public class CurrentOrderDetailsActivity extends BaseActivity {
     private ActivityOrderDetailsMvvm mvvm;
     private ActivityCurrentOrderDetailsBinding binding;
     private OfferAdapter adapter;
+    private OrderProductAdapter orderProductAdapter;
     private OrderModel orderModel;
     private String order_id;
     private ActivityResultLauncher<Intent> launcher;
@@ -80,6 +82,7 @@ public class CurrentOrderDetailsActivity extends BaseActivity {
                 binding.scrollView.setVisibility(View.VISIBLE);
                 orderModel = model;
                 binding.setModel(orderModel);
+
                 if (orderModel.getOffers().size() > 0) {
                     binding.llNoOffer.setVisibility(View.GONE);
                 } else {
@@ -89,6 +92,9 @@ public class CurrentOrderDetailsActivity extends BaseActivity {
 
                 if (adapter != null) {
                     adapter.updateList(orderModel.getOffers());
+                }
+                if(orderProductAdapter!=null){
+                    orderProductAdapter.updateList(orderModel.getDetails());
                 }
             }
         });
@@ -105,6 +111,9 @@ public class CurrentOrderDetailsActivity extends BaseActivity {
         adapter = new OfferAdapter(this, getLang());
         binding.recView.setLayoutManager(new LinearLayoutManager(this));
         binding.recView.setAdapter(adapter);
+        orderProductAdapter = new OrderProductAdapter(this,null,getLang());
+        binding.recViewProduct.setLayoutManager(new LinearLayoutManager(this));
+        binding.recViewProduct.setAdapter(orderProductAdapter);
         binding.swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
 
         binding.swipeRefresh.setOnRefreshListener(() -> mvvm.getOrderDetails(order_id));

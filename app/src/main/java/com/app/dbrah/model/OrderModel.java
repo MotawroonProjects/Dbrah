@@ -129,6 +129,8 @@ public class OrderModel implements Serializable {
         private String created_at;
         private String updated_at;
 
+        private ProductModel product;
+
         public String getId() {
             return id;
         }
@@ -165,7 +167,9 @@ public class OrderModel implements Serializable {
             return updated_at;
         }
 
-
+        public ProductModel getProduct() {
+            return product;
+        }
     }
 
     public static class Offers implements Serializable {

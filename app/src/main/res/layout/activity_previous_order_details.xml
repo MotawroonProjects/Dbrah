@@ -289,8 +289,7 @@
                                         android:layout_gravity="top"
                                         android:src="@drawable/ic_pin"
                                         android:padding="3dp"
-                                        android:tint="@color/colorPrimary"
-                                        />
+                                        app:tint="@color/colorPrimary" />
 
                                     <TextView
                                         android:layout_width="wrap_content"
@@ -352,7 +351,10 @@
                             </LinearLayout>
                         </FrameLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
-
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recViewProduct"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

@@ -31,9 +31,9 @@ android {
         applicationId "com.app.dbrah"
         minSdk 19
         targetSdk 33
-        versionCode 5
+        versionCode 6
         resConfigs "en", "ar"
-        versionName "1.4"
+        versionName "1.5"
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -97,6 +97,7 @@ dependencies {
     implementation 'com.iarcuschin:simpleratingbar:0.1.5'
     implementation 'org.greenrobot:eventbus:3.2.0'
     implementation "androidx.multidex:multidex:2.0.1"
+    implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
     implementation 'androidx.browser:browser:1.2.0'
     implementation 'com.google.android.gms:play-services-safetynet:18.0.1'
 
