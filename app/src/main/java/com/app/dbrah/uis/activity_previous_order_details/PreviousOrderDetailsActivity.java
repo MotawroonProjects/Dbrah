@@ -90,9 +90,9 @@ public class PreviousOrderDetailsActivity extends BaseActivity {
             if (success) {
                 orderModel.setProvider_rated("true");
                 binding.setModel(orderModel);
-                if(orderProductAdapter!=null){
+              /*  if(orderProductAdapter!=null){
                     orderProductAdapter.updateList(orderModel.getDetails());
-                }
+                }*/
             }
         });
         mvvm.getOnDataSuccess().observe(this, model -> {
@@ -103,6 +103,9 @@ public class PreviousOrderDetailsActivity extends BaseActivity {
                 Log.e("D;dldlld",orderModel.getStatus());
                 if(rate!=null){
                     openSheet(orderModel);
+                }
+                 if(orderProductAdapter!=null){
+                    orderProductAdapter.updateList(orderModel.getDetails());
                 }
             }
         });
