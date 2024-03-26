@@ -65,12 +65,13 @@
                             android:layout_width="16dp"
                             android:layout_height="0dp" />
 
-                        <EditText
+                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
                             android:id="@+id/edtSearch"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/transparent"
                             android:fontFamily="@font/font_regular"
+                            android:completionThreshold="0"
                             android:hint="@string/what_are_you_looking_for"
                             android:lines="1"
                             android:singleLine="true"
@@ -138,7 +139,7 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recView"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
 
                         />
 
