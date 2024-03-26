@@ -3,12 +3,14 @@ package com.app.dbrah.uis.activity_home.search_module;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,13 +32,7 @@ import com.app.dbrah.mvvm.GeneralMvvm;
 import com.app.dbrah.uis.activity_base.BaseFragment;
 import com.app.dbrah.uis.activity_home.HomeActivity;
 
-import java.util.concurrent.TimeUnit;
-
-import io.reactivex.Observable;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
 
 
 public class FragmentSearch extends BaseFragment {
@@ -47,7 +43,8 @@ public class FragmentSearch extends BaseFragment {
     private SearchHomeSubCategoryAdapter subCategoryAdapter;
     private SearchHomeProductAdapter productAdapter;
     private CompositeDisposable disposable = new CompositeDisposable();
-
+    SearchHistoryViewModel searchHistoryViewModel;
+    ArrayAdapter searchAdapter;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -75,6 +72,9 @@ public class FragmentSearch extends BaseFragment {
 
     @SuppressLint("CheckResult")
     private void initView() {
+        searchHistoryViewModel = ViewModelProviders.of(this).get(SearchHistoryViewModel.class);
+        searchAdapter = new ArrayAdapter(requireContext(), R.layout.simple_list_item, searchHistoryViewModel.getStringList());
+
         binding.setLang(getLang());
         generalMvvm = ViewModelProviders.of(activity).get(GeneralMvvm.class);
         binding.arrow.setOnClickListener(v -> {
@@ -88,42 +88,44 @@ public class FragmentSearch extends BaseFragment {
                 binding.loaderSubCategory.setVisibility(View.VISIBLE);
                 binding.loaderProduct.startShimmer();
                 binding.loaderProduct.setVisibility(View.VISIBLE);
+                binding.tvNoData.setVisibility(View.GONE);
             } else {
                 binding.loaderSubCategory.stopShimmer();
                 binding.loaderSubCategory.setVisibility(View.GONE);
 
                 binding.loaderProduct.stopShimmer();
                 binding.loaderProduct.setVisibility(View.GONE);
+
             }
         });
         mvvm.getIsLoadingProducts().observe(activity, isLoading -> {
             binding.swipeRefresh.setRefreshing(isLoading);
         });
         mvvm.getOnDataSuccess().observe(activity, data -> {
-            Log.e("llll",data.getProducts().size()+" ر"+data.getCategories().size());
-            if (subCategoryAdapter != null) {
+            Log.e("llll", data.getProducts().size() + " ر" + data.getCategories().size());
 
+            if (subCategoryAdapter != null) {
                 subCategoryAdapter.updateList(data.getCategories());
             }
 
-            if (data.getProducts().size() > 0) {
-                binding.tvNoData.setVisibility(View.GONE);
-            } else {
-                binding.tvNoData.setVisibility(View.VISIBLE);
-
-            }
             if (productAdapter != null) {
                 productAdapter.updateList(data.getProducts());
             }
+
+
+            if (!data.products.isEmpty()) {
+                binding.tvNoData.setVisibility(View.GONE);
+                searchHistoryViewModel.addString(binding.edtSearch.getText().toString());
+                searchAdapter.clear();
+                searchAdapter.addAll(searchHistoryViewModel.getStringList());
+                searchAdapter.notifyDataSetChanged();
+            } else {
+                binding.tvNoData.setVisibility(View.VISIBLE);
+            }
+
         });
         mvvm.getOnProductsDataSuccess().observe(activity, list -> {
 
-            if (list.size() > 0) {
-                binding.tvNoData.setVisibility(View.GONE);
-            } else {
-                binding.tvNoData.setVisibility(View.VISIBLE);
-
-            }
             if (productAdapter != null) {
                 productAdapter.updateList(list);
             }
@@ -134,31 +136,11 @@ public class FragmentSearch extends BaseFragment {
         binding.recViewSubCategory.setAdapter(subCategoryAdapter);
 
         productAdapter = new SearchHomeProductAdapter(activity, this, getLang());
-        binding.recView.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false));
+        binding.recView.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.VERTICAL, false));
         binding.recView.setAdapter(productAdapter);
-        binding.edtSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            }
 
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if (subCategoryAdapter != null) {
-                    subCategoryAdapter.updateList(null);
-                }
-
-                if (productAdapter != null) {
-                    productAdapter.updateList(null);
-                }
-                mvvm.search(binding.edtSearch.getText().toString(),getUserModel());
-            }
-        });
+        setupSearch();
 
 
 //        Observable.create((ObservableOnSubscribe<String>) emitter -> {
@@ -199,12 +181,55 @@ public class FragmentSearch extends BaseFragment {
             if (mvvm.getSubCategoryId().getValue() != null) {
                 mvvm.getProductBySubCategory(getUserModel());
             } else {
-                mvvm.search(mvvm.getQuery().getValue(),getUserModel());
+                mvvm.search(mvvm.getQuery().getValue(), getUserModel());
                 binding.swipeRefresh.setRefreshing(false);
             }
         });
-        mvvm.search(null,getUserModel());
+        mvvm.search(null, getUserModel());
 
+    }
+
+    private void setupSearch() {
+        binding.edtSearch.setAdapter(searchAdapter);
+        Handler handler = new Handler();
+        Runnable runnable = () -> {
+            if (subCategoryAdapter != null) {
+                subCategoryAdapter.updateList(null);
+            }
+
+            if (productAdapter != null) {
+                productAdapter.updateList(null);
+            }
+            mvvm.search(binding.edtSearch.getText().toString(), getUserModel());
+
+
+        };
+        binding.edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                handler.removeCallbacks(runnable);
+                handler.postDelayed(runnable, 400);
+            }
+        });
+
+        binding.edtSearch.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                if (binding.edtSearch.getAdapter() != null) {
+                    binding.edtSearch.showDropDown();
+                }
+            }
+        });
     }
 
 
